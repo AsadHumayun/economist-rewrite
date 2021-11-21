@@ -1,2 +1,2 @@
 # economist-rewrite
- The rewrite of Economist for my Computer Science 'A' Level NEA.
+ A rewritten version of my original Economist (almostStatic/Economist@master) for my computer science coursework.
