@@ -11,7 +11,7 @@ module.exports = {
 		var content = args.slice(1).join(' ');
 		if (content.length > 500) return message.reply({ content: `${client.config.statics.defaults.emoji.err} Your replacer content may not exceed 500 characters.` });
 		const data = await client.db.get(`replacers${message.author.id}`) || {};
-		if (Object.keys(data).length > 10 && (message.author.id != client.config.owner)) return message.reply(`You may not have more than 10 instantaneous replacers; please remove one before continuing.`);
+		if (Object.keys(data).length > 10 && (message.author.id != client.config.owner)) return message.reply({ content: `You may not have more than 10 instantaneous replacers; please remove one before adding more!` });
 		const newData = Object.assign({}, data, { [keyword]: { content: content, created: Date.now() } });
 		await client.db.set(`replacers${message.author.id}`, newData);
 		message.reply({ embeds: [

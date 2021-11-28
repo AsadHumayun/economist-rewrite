@@ -426,7 +426,6 @@ client.on("messageCreate", async (message) => {
 			.setDescription("```\n" + message.content + "\n```")
 		});
 	};
-	
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 	const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
@@ -434,7 +433,7 @@ client.on("messageCreate", async (message) => {
 	if (blacklisted && (!cst.includes("administrator132465798"))) return message.reply(`You're not allowed to use any commands while you're blacklisted! (∞ minutes left)`);
 	let stnb = await client.db.get("stnb" + message.author.id) || "stunned";	
 	if (cst.includes("pstn") && (!cst.includes("antistun"))) {
-		return message.reply(`You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)`)
+		return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
 	};
 	if (!command || (command)) {
 		let k = command ? command.name : commandName || "";
@@ -445,7 +444,7 @@ client.on("messageCreate", async (message) => {
 			if (stun && (!cst.includes("antistun"))) {
 				stun = Number(stun) * 60_000;
 				if (stun - message.createdTimestamp >= 1000) {
-					return message.reply(`You can't do anything while you're ${stnb}! (${client.cooldown(message.createdTimestamp, stun)} left)`);
+					return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.cooldown(message.createdTimestamp, stun)} left)` });
 				};
 			};
 		};
@@ -530,49 +529,51 @@ client.on("messageCreate", async (message) => {
 				.setDescription(`\`\`\`\n${e.stack}\n\`\`\``) //<- `e.stack` reveals file path, and is therefore limited to administrators only.
 			]})
 		};
-		client.channels.cache.get(client.config.statics.defaults.channels.err).send({
-			content: ``
-		})
-	 };
-
+	};
+	let old = await client.db.get("cmds") || "0";
+	await client.db.set("cmds", Number(old) + 1);
+	let LOG = `${old + 1} ${Math.trunc(message.createdTimestamp / 60000)} ${message.guild.name} (${message.guild.id}) [${message.channel.name} (${message.channel.id})]: <${message.author.tag} (${message.author.id})>: "${message.content}"\n`;
 	try {
-		await command.run(client, message, args)
-			.catch(err);
+		await command.run(client, message, args);
 	} catch (e) {
+		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
+			content: `Exception at ${Math.trunc(Date.now() / 60_000)} (type: unhandledRejection, onCommand?: true; sent to console):\n\`${e}\``,
+			embeds: [
+				new Discord.MessageEmbed()
+				.setColor(client.config.statics.defaults.colors.invisible)
+				.setDescription(LOG) //embed description has a max of 4k chars, very very unlikely that a normal message sent by a user will ever exceed that
+			]
+		});
 		err(e);
 	};
-		let old = await client.db.get("cmds") || "0";
-		await client.db.set("cmds", Number(old) + 1);
-		
-		try {
-			let Old = await client.db.get("cmds" + message.author.id) || 0;
-			await client.db.set('cmds' + message.author.id, Number(Old + 1));
-		} catch (err) {
-			client.channels.cache.get(client.config.statics.defaults.channels.err).send({
-				content: `${message.createdTimestamp / 60_000}: error while updating db values "cmds${message.author.id}"`
-			})
-		};
-		if (command && (!message.emit)) {
-			let LOG = `${old + 1} ${Math.trunc(message.createdTimestamp / 60000)} ${message.guild.name} (${message.guild.id}) [${message.channel.name} (${message.channel.id})]: <${message.author.tag} (${message.author.id})>: "${message.content}"\n`;
-				LOG = Discord.Util.splitMessage(LOG, { maxLength: 2_000, char: "" });
-			LOG.forEach(async(cntnt) => {
-				await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt,  allowedMentions: {} })
-			});
-			if (command.logs || (["administrator132465798", "tmod", "moderator", "srmod"].includes(command.cst)) || (command.name == "get")) {
-				if (!command.logs) command.logs = [];
-				if (["tmod", "moderator", "srmod"].includes(command.cst)) command.logs.push(client.config.statics.defaults.channels.modlog);
-				if (command.cst == "administrator132465798" || (command.name == "get")) command.logs.push(client.config.statics.defaults.channels.adminlog)
-				let pst = [];
-				for (id of command.logs) {
-					if (pst.includes(id)) continue;
-					pst.push(id);
-					id0 = !isNaN(id) ? id : eval(id);
-					client.channels.cache.get(id0).send(LOG, { allowedMentions: {}, split: { char: "" } })
-					id0 = null;
-					await delay(3000);
-				};
+	LOG = Discord.Util.splitMessage(LOG, { maxLength: 2_000, char: "" }); 
+	try {
+		let Old = await client.db.get("cmds" + message.author.id) || 0;
+		await client.db.set('cmds' + message.author.id, Number(Old + 1));
+	} catch (err) {
+		client.channels.cache.get(client.config.statics.defaults.channels.err).send({
+			content: `${message.createdTimestamp / 60_000}: error while updating db values "cmds${message.author.id}"`
+		})
+	};
+	if (command && (!message.emit)) {
+		LOG.forEach(async(cntnt) => {
+			await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt,  allowedMentions: {} })
+		});
+		if (command.logs || (["administrator132465798", "tmod", "moderator", "srmod"].includes(command.cst)) || (command.name == "get")) {
+			if (!command.logs) command.logs = [];
+			if (["tmod", "moderator", "srmod"].includes(command.cst)) command.logs.push(client.config.statics.defaults.channels.modlog);
+			if (command.cst == "administrator132465798" || (command.name == "get")) command.logs.push(client.config.statics.defaults.channels.adminlog)
+			let pst = [];
+			for (id of command.logs) {
+				if (pst.includes(id)) continue;
+				pst.push(id);
+				id0 = !isNaN(id) ? id : eval(id);
+				client.channels.cache.get(id0).send(LOG, { allowedMentions: {}, split: { char: "" } })
+				id0 = null;
+				await delay(3000);
 			};
 		};
+	};
 });
 
 /**
@@ -589,7 +590,7 @@ client.on("messageCreate", async (message) => {
 			 content: `Exception at ${Math.trunc(Date.now() / 60_000)} (type: \`unhandledRejection\`, sent to console):\n\`${e}\``
 			 //very unliekly that a normal exception will exceed 2,000 characters in length.
 		});	
-	if (msgCont) {
+	if (!msgCont) {
 
 	} else {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
