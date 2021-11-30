@@ -19,7 +19,7 @@ module.exports = {
       .setColor(message.author.color)
       .setTitle(`${usr.tag}'s Personal Bank Vault [${v[0]}]`)
       .setDescription(`\`${message.guild.prefix}vault <user>\` to view a user's vault;\n\`${message.guild.prefix}deposit <amount>\` to deposit \`<amount>\` money into your Bank Vault;\n\`${message.guild.prefix}withdraw <amount>\` to withdraw \`<amount>\` money from your Bank Vault and gain it as balance money;\n\`${message.guild.prefix}vupgrade\` to upgrade your Bank Vault thus increasing the amount of money it can hold.`)
-      .addField("Your Bank Vault contains", `:dollar: ${client.comma(v[1])}/${v[0] >= 9999999999 ? "∞" : client.comma(client.noExponents(v[0] * 5000))}`)
+      .addField("Your Bank Vault contains", `:dollar: ${client.comma(v[1])}/${v[0] >= 9999999999 ? "∞" : client.comma(client.config.noExponents(v[0] * 5000))}`)
     });
   },
 };

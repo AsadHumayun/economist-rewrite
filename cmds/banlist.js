@@ -10,7 +10,7 @@ module.exports = {
 	category: "mod",
     cst: "moderator",
 	async run(client, message, args) {
-	 message.guild.fetchBans(true)
+	 message.guild.bans.fetch({ cache: true })
 		.then(async(bans) => {
 			if (bans.size == 0) {
 				return message.reply(`${client.config.emojis.success} There are no users banned from **${message.guild.name}**!`)

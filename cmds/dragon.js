@@ -58,21 +58,21 @@ module.exports = {
 				.addField(
 					"Basic Stats",
 `
-${emojis[0]} Health     —     ${client.noExponents(health)}/10000
-${emojis[1]} Energy     —     ${client.noExponents(energy)}/100
+${emojis[0]} Health     —     ${client.config.noExponents(health)}/10000
+${emojis[1]} Energy     —     ${client.config.noExponents(energy)}/100
 `
 , true
 				)
 				.addField(
 					"Advanced Stats",
 `
-${emojis[2]} Experience     —     ${message.author.com == 1 ? client.noExponents(xp) : client.comma(client.noExponents(xp))}/${message.author.com == 1 ? client.noExponents(nextLevel) : client.comma(client.noExponents(nextLevel))}
-${emojis[3]} Credits     —     ${message.author.com == 1 ? client.noExponents(cred) : client.comma(client.noExponents(cred))}
-${emojis[4]} Intellect     —     ${client.noExponents(intel)}
-${emojis[5]} Endurance     —     ${client.noExponents(endur)}
-${emojis[6]} Strength     —     ${client.noExponents(str)}
-${emojis[7]} Affection     —     ${client.noExponents(affec)}
-${emojis[8]} Glycogenesis     —     ${client.noExponents(glyc)}
+${emojis[2]} Experience     —     ${message.author.com == 1 ? client.config.noExponents(xp) : client.comma(client.config.noExponents(xp))}/${message.author.com == 1 ? client.config.noExponents(nextLevel) : client.comma(client.config.noExponents(nextLevel))}
+${emojis[3]} Credits     —     ${message.author.com == 1 ? client.config.noExponents(cred) : client.comma(client.config.noExponents(cred))}
+${emojis[4]} Intellect     —     ${client.config.noExponents(intel)}
+${emojis[5]} Endurance     —     ${client.config.noExponents(endur)}
+${emojis[6]} Strength     —     ${client.config.noExponents(str)}
+${emojis[7]} Affection     —     ${client.config.noExponents(affec)}
+${emojis[8]} Glycogenesis     —     ${client.config.noExponents(glyc)}
 `					
 				)
 			return message.reply({ embed: emb })

@@ -11,9 +11,9 @@ module.exports = {
 		if (!usr) usr = message.author;
 		const bal = await client.db.get('bal' + usr.id) || "0";
 		message.reply({
-			embed: new MessageEmbed()
+			embeds: [new MessageEmbed()
 			.setColor(message.author.color)
-			.setDescription(`${usr.tag}'s account contains :dollar: ${client.digits(bal)}`)
-		});
+			.setDescription(`${usr.tag}'s account contains :dollar: ${client.config.digits(bal)}`)
+			]});
 	},
 };

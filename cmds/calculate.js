@@ -12,7 +12,7 @@ module.exports = {
         message.reply({
             embed: new MessageEmbed()
             .setColor(message.author.color)
-            .setDescription(client.noExponents(number))
+            .setDescription(client.config.noExponents(number))
         })
     }
 }

@@ -9,7 +9,7 @@ const ms = require("ms");
 /**Client config values (defaults, functions, IDs, etc) */
 const ClientConfiguration = require("./config.js");
 
-/**Used for storing user command cooldowns*/
+/**Used for storing user command cooldowns and rate limits - there used to be 2 separate collections to store each, but that used more memory*/
 const collection = new Discord.Collection();
 
 /**The currently instantiated Discord.Client*/
@@ -97,31 +97,41 @@ client.on("channelUpdate", async (oldChannel, newChannel) => {
 	oldChannel = await oldChannel.fetch(true);
 	newChannel = await newChannel.fetch(true);
 	if (oldChannel.guild.id != client.config.statics.supportServer) return;
-	let oldPerms = oldChannel.permissionOverwrites.array().filter((d) => d.type == "member");
-	let newPerms = newChannel.permissionOverwrites.array().filter((d) => d.type == "member");
-	if (oldPerms.join(",") == newPerms.join(",")) return; //no edit to chnl spcfc perms to M:
+	//console.log([...oldChannel.permissionOverwrites.cache.values()])
+	let oldPerms = [...oldChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
+	let newPerms = [...newChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
+	console.log("x2")
 	let rmv = [];
 	for (x in oldPerms) {
 		if (!newPerms.map(({ id }) => id).includes(oldPerms[x].id)) {
 			rmv.push(oldPerms[x].id);
 		} else continue;
 	};
-	newChannel.permissionOverwrites.forEach(async(x) => {
+	newPerms.forEach(async(x) => {
 		if (x.type != "member") return;
 		let usr = await client.config.fetchUser(x.id);
-		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry received at ${Math.trunc(Date.now() / 60000)}\nM:<${usr.tag} (${usr.id})>: d(${x.deny.bitfield}) a(${x.allow.bitfield})` });
 		let chn = await client.db.get("chnl" + x.id);
 			chn = chn ? client.config.listToMatrix(chn.split(";"), 3) : [];
 		let indx = chn.findIndex((x) => x[0] == newChannel.id);
-		if (indx < 0) {
-			chn.push([newChannel.id, x.deny.bitfield, x.allow.bitfield]);
-		} else {
+		let ignore = false;
+		if (indx >= 0) {
+			if ((chn[indx][1] == x.deny.bitfield && (chn[indx][2] == x.allow.bitfield)) && (indx >= 0)) {
+				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry received at ${Math.trunc(Date.now() / 60000)} in regard to M:<${usr.tag} (${usr.id})> was ignored.` });
+				ignore = true;
+			};
 			chn[indx][1] = x.deny.bitfield;
 			chn[indx][2] = x.allow.bitfield;
+		} else {
+			chn.push([newChannel.id, x.deny.bitfield, x.allow.bitfield]);
+			indx = chn.length - 1;
 		};
-		chn = chn.map((x) => Array.from(x).join(";"));
-		await client.db.set("chnl" + x.id, chn.join(";"));
-		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${Math.trunc(Date.now() / 60000)} U:<${usr.tag} (${usr.id})>: Successfully set U.chnl as ${chn.join(";")} `}, { split: { char: "" } });
+		if (ignore == false) {
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry received at ${Math.trunc(Date.now() / 60000)}\nM:<${usr.tag} (${usr.id})>: d(${x.deny.bitfield}) a(${x.allow.bitfield})` });
+			chn = chn.map((x) => Array.from(x).join(";"));
+			chn = [...new Set(chn)];
+			await client.db.set("chnl" + x.id, chn.join(";"));
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${Math.trunc(Date.now() / 60000)} U:<${usr.tag} (${usr.id})>: Successfully set U.chnl as ${client.config.trim(chn.join(";"), 1900)} `});	
+		};
 	});
 	rmv.forEach(async(id) => {
 		let usr = await client.config.fetchUser(id);
@@ -174,6 +184,8 @@ client.on("guildDelete", async (g) => {
 
 client.on('guildMemberUpdate', async (oldMember, newMember) => {
 	if (oldMember.guild.id != client.config.statics.supportServer) return;
+	oldMember = await oldMember.fetch(true);
+	newMember = await newMember.fetch(true);
 	let cst = await client.db.get("cst" + newMember.id);
 		cst = cst ? cst.split(";") : [];	
 	if (newMember.roles.cache.has(client.config.statics.defaults.roles.SERVER_BOOSTER) && (!cst.includes("booster"))) {
@@ -187,8 +199,8 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
 	if (oldMember.nickname != newMember.nickname) {
 		 await client.db.set('nick' + oldMember.user.id, newMember.nickname);
 	};
-	let oldRoles = oldMember.roles.cache.array().filter((r) => r.id != newMember.guild.id).map(({ id }) => id);
-	let newRoles = newMember.roles.cache.array().filter((r) => r.id != newMember.guild.id).map(({ id }) => id);
+	let oldRoles = [...oldMember.roles.cache.keys()].filter((r) => r.id != newMember.guild.id)//.map(({ id }) => id);
+	let newRoles = [...newMember.roles.cache.keys()].filter((r) => r.id != newMember.guild.id)//.map(({ id }) => id);
 	client.config.statics.cstSpecials.forEach((s) => {
 		cst = cst.map((f) => f == s[0] ? s[1] : f);
 	});
@@ -214,7 +226,6 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
 
 client.on("guildMemberAdd", async member => {
 	if (member.guild.id != client.config.statics.supportServer) return;
-	const now = Date.now();
 	let cst = await client.db.get("cst" + member.id);
 		cst = cst ? cst.split(";") : [];
 	const channel = member.guild.channels.cache.get(client.config.statics.defaults.channels.general);
@@ -236,24 +247,28 @@ client.on("guildMemberAdd", async member => {
 	};
 	member.roles.add(rle)
 		.catch((x) => {});
-	let chn = await client.db.get("chnl" + member.id);
+	let chn = await client.db.get("chnl" + member.id) || undefined;
 	if (chn) {
 		chn = client.config.listToMatrix(chn.split(";"), 3);
 		chn.forEach(async(x) => {
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Date.now() / 60000}: Attempting to restore permissions for M:<${member.user.tag} ${member.user.id}> (d: ${x[1]}, a: ${x[2]})...`)
-			client.channels.cache.get(x[0]).send({ content: `R -> U:<${member.user.tag} (${member.id})>: d=${x[1]} a=${x[2]}` });
-												// 		"R -> U:<benzene#6666 (501710994293129216)>: d=1024 a=256"
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60000)}: Attempting to restore permissions for M:<${member.user.tag} (${member.user.id})>: ${x[0]} -> d: ${x[1]}, a: ${x[2]}...`)
+			try {
+				client.channels.cache.get(x[0]).send({ content: `${Math.trunc(Date.now() / 60_000)}: Attempting to restore channel permissions for M:(${member.id})> (data: ${x.join(";")})` });
+			} catch (e) {
+				return client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60_000)}: Disregarding permissionOverwrites.edit request from M:<${member.user.tag} (${member.id})>: \`No channel with ID "${x[0]}" found.\``);
+			};
 			await delay(1000); //to prevent getting rate limited/ip banned
 			try {
 				const deny = new Discord.Permissions(BigInt(Number(x[1]))).serialize(); //returns Record<Discord.PermissionString, boolean>
 				const allow = new Discord.Permissions(BigInt(Number(x[2]))).serialize();
 				member.guild.channels.cache.get(x[0]).permissionOverwrites.edit(member.id, Object.assign({}, deny, allow));
-				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`Successfully restored permissions for M:<${member.user.tag} (${member.id})> (d: ${x[1]}, a: ${x[2]})`);
+				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60_000)}: Successfully restored permissions for M:<${member.user.tag} (${member.id})>: ${x[0]} -> d: ${x[1]}, a: ${x[2]}`);
+				client.channels.cache.get(x[0]).send(`Successfully restored permissions for M:<${member.user.tag} (${member.id})>: d: ${x[1]}, a: ${x[2]}`);
 			} catch (e) {
-				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`Unable to restore permissions for M:<${member.user.tag} (${member.id})>: \`${e}\``);
+				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60_000)}: Unable to restore permissions for M:<${member.user.tag} (${member.id})>: data: ${x.join(";")}\nError: \`${e}\``);
 			};
 		});
-	};	
+	};
 	if (cst.includes("cl")) {
 		channel.send({ content: `♥️ Welcome back ${member}! Any nicknames, roles or channel-specific permissions you had when you left the server have been re-assigned.` })
 	} else {
@@ -262,8 +277,13 @@ client.on("guildMemberAdd", async member => {
 		await client.db.set("bal" + member.user.id, oldBal + 500);
 		cst.push("cl");
 		await client.db.set("bal" + member.user.id, cst.join(";"));
+		await client.db.set("cst" + member.id, cst.join(";"));
 	};
-	const owner = client.users.cache.get(client.config.owner).tag;
+	//refresh cst as something may have changed
+	cst = await client.db.get("cst" + member.id);
+	cst = cst ? cst.split(";") : [];
+	let owner = await client.config.fetchUser(client.config.owner);
+		owner = owner.tag;
 	const blacklisted = await client.db.get("blacklist" + member.user.id);
 	let mute = await client.db.get("mt" + member.id);
 	if (mute) {
@@ -530,6 +550,7 @@ client.on("messageCreate", async (message) => {
 			]})
 		};
 	};
+
 	let old = await client.db.get("cmds") || "0";
 	await client.db.set("cmds", Number(old) + 1);
 	let LOG = `${old + 1} ${Math.trunc(message.createdTimestamp / 60000)} ${message.guild.name} (${message.guild.id}) [${message.channel.name} (${message.channel.id})]: <${message.author.tag} (${message.author.id})>: "${message.content}"\n`;
@@ -537,7 +558,7 @@ client.on("messageCreate", async (message) => {
 		await command.run(client, message, args);
 	} catch (e) {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
-			content: `Exception at ${Math.trunc(Date.now() / 60_000)} (type: unhandledRejection, onCommand?: true; sent to console):\n\`${e}\``,
+			content: `Exception at ${Math.trunc(Date.now() / 60_000)} (type: caughtError, onCommand?: true; sent to console):\n\`${e}\``,
 			embeds: [
 				new Discord.MessageEmbed()
 				.setColor(client.config.statics.defaults.colors.invisible)
@@ -563,13 +584,14 @@ client.on("messageCreate", async (message) => {
 			if (!command.logs) command.logs = [];
 			if (["tmod", "moderator", "srmod"].includes(command.cst)) command.logs.push(client.config.statics.defaults.channels.modlog);
 			if (command.cst == "administrator132465798" || (command.name == "get")) command.logs.push(client.config.statics.defaults.channels.adminlog)
+			command.logs = [...new Set(command.logs)];
 			let pst = [];
 			for (id of command.logs) {
 				if (pst.includes(id)) continue;
 				pst.push(id);
-				id0 = !isNaN(id) ? id : eval(id);
-				client.channels.cache.get(id0).send(LOG, { allowedMentions: {}, split: { char: "" } })
-				id0 = null;
+				LOG.forEach(async(cntnt) => {
+					await client.channels.cache.get(id).send({ content: cntnt,  allowedMentions: {} })
+				});
 				await delay(3000);
 			};
 		};
@@ -587,11 +609,11 @@ client.on("messageCreate", async (message) => {
 	 const rn = Math.trunc(Date.now() / 60_000);
 	 console.error(e);
 	 client.channels.cache.get(client.config.statics.defaults.channels.error).send({
-			 content: `Exception at ${Math.trunc(Date.now() / 60_000)} (type: \`unhandledRejection\`, sent to console):\n\`${e}\``
+			 content: `Exception at ${Math.trunc(Date.now() / 60_000)} (type: unhandledRejection, sent to console):\n\`${e}\``
 			 //very unliekly that a normal exception will exceed 2,000 characters in length.
 		});	
 	if (!msgCont) {
-
+		// originally, I had forgotten the "!" in the if condition, thus resulting in a logic error.
 	} else {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
 			content: `Message content for exception at approx. ~${rn}: "${client.config.trim(msgCont, 1900)}"`
@@ -605,8 +627,8 @@ process
 	.on("unhandledRejection", e => client.Notify(e))
 
 client
-	.on("error", e => client.Notify(e))
-	.on("warn", e => client.Notify(e))
+	.on("error", client.Notify)
+	.on("warn", client.Notify)
 	.on("debug", async (dbg) => {
 		/**
 		 * Oirginally when I first tried using the client.Notify function here, it errored out saying: `TypeError: Cannot read properties of undefined (reading 'send')`. This error means that the client couldn't find the channel, which was awkward since it was getting the correct channel ID (hence the commented out console.log statement-that's me checking if the func is actually getting the right channel ID).

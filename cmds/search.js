@@ -92,14 +92,14 @@ module.exports = {
 		message.reply({
 			embed: new MessageEmbed()
 			.setColor(message.author.color)
-			.setDescription(`${message.author.tag}'s ${display} has found out that ${fish} ${client.noExponents(amtGained)} are dwelling in the lake`)
+			.setDescription(`${message.author.tag}'s ${display} has found out that ${fish} ${client.config.noExponents(amtGained)} are dwelling in the lake`)
 		});
 		await delay(1500)
 		await client.db.set("fsh" + message.author.id, f.join(";"))
 		message.reply({
 			embed: new MessageEmbed()
 			.setColor(message.author.color)
-			.setDescription(`${message.author.tag}'s ${display} instantaneously lets out a mighty roar, <a:ecn_fire:804378228336361476> searing ${fish} ${client.noExponents(amtGained)} and obtained ${emojis[2]} ${client.noExponents(xpGained) || "0"} in the process`)
+			.setDescription(`${message.author.tag}'s ${display} instantaneously lets out a mighty roar, <a:ecn_fire:804378228336361476> searing ${fish} ${client.config.noExponents(amtGained)} and obtained ${emojis[2]} ${client.config.noExponents(xpGained) || "0"} in the process`)
 		});
 		data[3] = xp + xpGained;
 		if (!message.author.cst.includes("maxdragon888")) {

@@ -16,7 +16,7 @@ module.exports = {
 			if (!terms.includes(key)) return message.reply(`The keys whose values you can get are: ${terms.map((x) => `\`${x}\``).join(", ")}`);
 			let get = key == "fish" ? "fsh" : key;
 			let value = await client.db.get(get + message.author.id) || "null";
-			message.reply(get == "fsh" ? value : client.noExponents(value))
+			message.reply(get == "fsh" ? value : client.config.noExponents(value))
 		} else {
 			if (args.length < 2) return message.reply("You must specify a user and a key")
 			let user = await client.config.fetchUser(args[0]);
