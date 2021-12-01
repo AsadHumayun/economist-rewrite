@@ -30,12 +30,12 @@ const client = new Discord.Client({
 		//(property) PresenceData.activities?: Discord.ActivitiesOptions[]
 		activities: [
 			{
-				name: `to you!`,
+				name: `you!`,
 				type: "LISTENING"
 			}
 		],
 		status: "dnd",
-		afk: false
+		afk: true
 	}
 });
 
@@ -97,10 +97,8 @@ client.on("channelUpdate", async (oldChannel, newChannel) => {
 	oldChannel = await oldChannel.fetch(true);
 	newChannel = await newChannel.fetch(true);
 	if (oldChannel.guild.id != client.config.statics.supportServer) return;
-	//console.log([...oldChannel.permissionOverwrites.cache.values()])
 	let oldPerms = [...oldChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
 	let newPerms = [...newChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
-	console.log("x2")
 	let rmv = [];
 	for (x in oldPerms) {
 		if (!newPerms.map(({ id }) => id).includes(oldPerms[x].id)) {
@@ -116,7 +114,7 @@ client.on("channelUpdate", async (oldChannel, newChannel) => {
 		let ignore = false;
 		if (indx >= 0) {
 			if ((chn[indx][1] == x.deny.bitfield && (chn[indx][2] == x.allow.bitfield)) && (indx >= 0)) {
-				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry received at ${Math.trunc(Date.now() / 60000)} in regard to M:<${usr.tag} (${usr.id})> was ignored.` });
+				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry acknowledged at ${Math.trunc(Date.now() / 60000)} in regard to M:<${usr.tag} (${usr.id})> was ignored.` });
 				ignore = true;
 			};
 			chn[indx][1] = x.deny.bitfield;
@@ -156,6 +154,13 @@ client.once("ready", async () => {
 	client.user.color = client.config.statics.defaults.clr;
 	console.log(`\u2705 Logged in as ${client.user.tag}`);
 	client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `${Math.trunc(Date.now() / 60000)}: instance created with ${client.guilds.cache.size} (${client.users.cache.size}) guilds cached` });
+	client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `${Math.trunc(Date.now() / 60000)}: Attempting to cache members of guild ${client.config.statics.supportServer}` });
+	try {
+		await client.guilds.cache.get(client.config.statics.supportServer).members.fetch();
+		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `${Math.trunc(Date.now() / 60000)}: Successfully cached ${client.guilds.cache.get(client.config.statics.supportServer).members.cache.size}/${client.guilds.cache.get(client.config.statics.supportServer).memberCount} members.` });
+	} catch (e) {
+		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `${Math.trunc(Date.now() / 60000)}: **Failed to cache members of guild ${client.config.statics.supportServer}**, e: \`${e}\`` });
+	};
 });
 
 client.on("guildCreate", async (g) => {
@@ -192,15 +197,15 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
 		cst.push("booster");
 	} else if (cst.includes("booster")) {
 		cst = cst.filter((x) => !["booster"].includes(x));
-	};	
+	};
 	if (!newMember.nickname) {
 		await client.db.delete('nick' + oldMember.user.id);
 	};
 	if (oldMember.nickname != newMember.nickname) {
 		 await client.db.set('nick' + oldMember.user.id, newMember.nickname);
 	};
-	let oldRoles = [...oldMember.roles.cache.keys()].filter((r) => r.id != newMember.guild.id)//.map(({ id }) => id);
-	let newRoles = [...newMember.roles.cache.keys()].filter((r) => r.id != newMember.guild.id)//.map(({ id }) => id);
+	let oldRoles = [...oldMember.roles.cache.keys()].filter((r) => r != newMember.guild.id)//.map(({ id }) => id);
+	let newRoles = [...newMember.roles.cache.keys()].filter((r) => r != newMember.guild.id)//.map(({ id }) => id);
 	client.config.statics.cstSpecials.forEach((s) => {
 		cst = cst.map((f) => f == s[0] ? s[1] : f);
 	});
@@ -253,7 +258,7 @@ client.on("guildMemberAdd", async member => {
 		chn.forEach(async(x) => {
 			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60000)}: Attempting to restore permissions for M:<${member.user.tag} (${member.user.id})>: ${x[0]} -> d: ${x[1]}, a: ${x[2]}...`)
 			try {
-				client.channels.cache.get(x[0]).send({ content: `${Math.trunc(Date.now() / 60_000)}: Attempting to restore channel permissions for M:(${member.id})> (data: ${x.join(";")})` });
+				client.channels.cache.get(x[0]).send({ content: `${Math.trunc(Date.now() / 60_000)}: Attempting to restore channel permissions for M(${member.id}) > data: ${x.join(";")}` });
 			} catch (e) {
 				return client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60_000)}: Disregarding permissionOverwrites.edit request from M:<${member.user.tag} (${member.id})>: \`No channel with ID "${x[0]}" found.\``);
 			};
@@ -642,7 +647,7 @@ client
 
 		send.forEach(async(message) => {
 			await webh.send({
-				content: message
+				content: "***" + Discord.Util.escapeMarkdown(message) + "***"
 			});
 		});
 	});
