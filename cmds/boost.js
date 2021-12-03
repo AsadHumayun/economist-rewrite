@@ -9,7 +9,7 @@ module.exports = {
     function ln() {
       return client.comma(Math.floor(Math.random()*1000000000000)) + " minutes";
     };
-    if (!args.length) return message.reply("You must mention a user to permstun!");
+    if (!args.length) return message.reply("You must mention a user to boost!");
     const user = await client.config.fetchUser(args[0]).catch((err) => {});
     if (!user) return message.reply("You have not mentioned a user!!");
     let cst = await client.db.get("cst" + user.id);
@@ -20,7 +20,7 @@ module.exports = {
    message.reply({
       embed: new MessageEmbed()
       .setColor(message.author.color)
-      .setDescription(`${message.author.tag} has kicked ${user.tag}'s ass and sent them flying high into the stratosphere`)
+      .setDescription(`${message.author.tag} has dropkicked ${user.tag} and sent them flying, high into the stratosphere`)
     });
     await delay(1500)
     message.reply({
@@ -44,7 +44,7 @@ module.exports = {
     message.reply({
       embed: new MessageEmbed()
       .setColor(message.author.color)
-      .setDescription(`${user.tag} has died for ∞ minutes due to the injuries sustained`)
+      .setDescription(`${user.tag} has fainted for ∞ minutes due to the injuries sustained`)
     });
   },
 };
