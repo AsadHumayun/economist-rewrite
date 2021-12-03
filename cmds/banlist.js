@@ -10,26 +10,32 @@ module.exports = {
 	category: "mod",
     cst: "moderator",
 	async run(client, message, args) {
-	 message.guild.bans.fetch({ cache: true })
+	 message.guild.bans.fetch()
 		.then(async(bans) => {
 			if (bans.size == 0) {
-				return message.reply(`${client.config.emojis.success} There are no users banned from **${message.guild.name}**!`)
+				return message.reply(`${client.config.statics.defaults.emoji.tick} There are no users banned from **${message.guild.name}**!`)
 			};
 			var counter = 1;
 			const string = bans.map((b) => `#${counter++} ${b.user.tag} (${b.user.id}) | ${b.reason || "<UNKNOWN REASON>"}`).join("\n");
 			let embeds = [];
-			const map = string.match(/[^]{1,2048}/g);
+			const map = string.match(/[^]{1,4069}/g);
 			for (const x in map) {
 				embeds.push(
 					new MessageEmbed()
 					.setAuthor(`Users banned form ${message.guild.name}`, message.guild.iconURL({ dynamic: true }))
-					.setDescription("```\n" + client.trim(map[x], 2030) + "\n```")
+					.setDescription("```\n" + client.config.trim(map[x], 4060) + "\n```")
 					.setColor(message.author.color)
 				);
 			};
-			return new menu(message.channel, message.author.id, embeds, ms('10m'))
+			return new menu({
+				userID: message.author.id,
+				channel: message.channel,
+				pages: embeds,
+				time: 600_000 //10 mins
+			})
+			//return new menu(message.channel, message.author.id, embeds, ms('10m'))
 			.catch((er) => {
-				message.reply(`${client.config.emojis.error} | I was unable to find your bans list; please make sure I have the \`BAN_MEMBERS\` permission`)
+				message.reply(`${client.config.emojis.error} | I was unable to find your bans list; please make sure I have the \`BAN_MEMBERS\` permission!`);
 			});
 		});
 	},
