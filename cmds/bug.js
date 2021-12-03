@@ -6,8 +6,8 @@ module.exports = {
 	category: 'utl',	
 	description: "Reports a bug in the support server. These will be reveiwed and taken seriously - spam or missuse of this command may result in a stun or blacklist from using this command.",
 	async run(client, message, args) {
-		let count = await client.db.get('bugcount') || 0;
-			count = parseInt(count);
+		let count = await client.db.get('bgc' + client.user.id) || 0;
+			count = Number(count);
 		let arr = message.content.slice(4).split(/\|+/);
 		let title = arr[0];
 		let desc = arr.slice(1).join(' ');
