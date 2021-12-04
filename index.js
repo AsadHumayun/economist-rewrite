@@ -42,7 +42,8 @@ const client = new Discord.Client({
 
 client.db = new keyv("sqlite://./db.sqlite");
 client.config = new ClientConfiguration(client);
-client.keys = ["bgc", "dialcount", "gcode", "upgr", "dose0", "dose1", "petname", "adren", "adrenc", "chillc", "mt", "cstmk", "stnb", "stn", "dns", "wl", "cgrl", "cfc", "bcmd", "nick", "chnl", "clr", "dlc", "fsh", "v", "sgstc", "crdt", "fdc", "hgs", "ofncs", "assigns", "curralias", "petbu", "cst", "cmds", "pet", "bal", "number", "chillpills", "sntc", "dialc", "strc", "spouse", "fishc", "deldatareqed", "bio", "replacers", "dpc", "robc", "srchc", "dgrc", "xpc"];
+// todo: shorten deldatareqed to just ddrq or something (actually, make it a CST).
+client.keys = ["drgs", "bgc", "dialcount", "gcode", "upgr", "dose0", "dose1", "petname", "adren", "adrenc", "chillc", "mt", "cstmk", "stnb", "stn", "dns", "wl", "cgrl", "cfc", "bcmd", "nick", "chnl", "clr", "dlc", "fsh", "v", "sgstc", "crdt", "fdc", "hgs", "ofncs", "assigns", "curralias", "petbu", "cst", "cmds", "pet", "bal", "number", "chillpills", "sntc", "dialc", "strc", "spouse", "fishc", "deldatareqed", "bio", "replacers", "dpc", "robc", "srchc", "dgrc", "xpc"];
 
 // This is used to cache all of the commands upon startup
 client.commands = new Discord.Collection();
