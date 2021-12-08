@@ -43,7 +43,7 @@ const client = new Discord.Client({
 client.db = new keyv("sqlite://./db.sqlite");
 client.config = new ClientConfiguration(client);
 // todo: shorten deldatareqed to just ddrq or something (actually, make it a CST).
-client.keys = ["drgs", "bgc", "dialcount", "gcode", "upgr", "dose0", "dose1", "petname", "adren", "adrenc", "chillc", "mt", "cstmk", "stnb", "stn", "dns", "wl", "cgrl", "cfc", "bcmd", "nick", "chnl", "clr", "dlc", "fsh", "v", "sgstc", "crdt", "fdc", "hgs", "ofncs", "assigns", "curralias", "petbu", "cst", "cmds", "pet", "bal", "number", "chillpills", "sntc", "dialc", "strc", "spouse", "fishc", "deldatareqed", "bio", "replacers", "dpc", "robc", "srchc", "dgrc", "xpc"];
+client.keys = ["spse", "drgs", "bgc", "dialcount", "gcode", "upgr", "dose0", "dose1", "petname", "adren", "adrenc", "chillc", "mt", "cstmk", "stnb", "stn", "dns", "wl", "cgrl", "cfc", "bcmd", "nick", "chnl", "clr", "dlc", "fsh", "v", "sgstc", "crdt", "fdc", "hgs", "ofncs", "assigns", "curralias", "petbu", "cst", "cmds", "pet", "bal", "number", "chillpills", "sntc", "dialc", "strc", "spouse", "fishc", "deldatareqed", "bio", "replacers", "dpc", "robc", "srchc", "dgrc", "xpc"];
 
 // This is used to cache all of the commands upon startup
 client.config.commands = new Discord.Collection();
@@ -556,17 +556,17 @@ client.on("messageCreate", async (message) => {
 	if (!message.content.startsWith(prefix)) return;
 	if (message.author.debug != false) {
 		message.reply({
-			embed: new Discord.MessageEmbed()
-				.setColor(message.author.color)
-				.setTitle("Message content parsed as:")
-				.setDescription("```\n" + message.content + "\n```"),
+			embeds: [
+				new Discord.MessageEmbed()
+					.setColor(message.author.color)
+					.setTitle("Message content parsed as:")
+					.setDescription("```\n" + message.content + "\n```"),
+			],
 		});
 	}
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 	const command = client.config.commands.get(commandName) || client.config.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
-	const blacklisted = cst.includes("blacklisted");
-	if (blacklisted && (!cst.includes("administrator132465798"))) return message.reply("You're not allowed to use any commands while you're blacklisted! (∞ minutes left)");
 	const stnb = await client.db.get("stnb" + message.author.id) || "stunned";
 	if (cst.includes("pstn") && (!cst.includes("antistun"))) {
 		return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
@@ -642,17 +642,16 @@ client.on("messageCreate", async (message) => {
 		});
 	}
 
-	if (command.cst && (!cst.includes(command.cst)) && (message.author.id != client.config.owner)) {
-		if (command.cst == "dragon") return message.reply({ content: `You need a dragon in order to use this command! You can tame one by using \`${message.guild.prefix}tame\`` });
-		return message.reply(command.cstMsg || "You're not allowed to use this command!");
+	if (command.cst && (!cst.includes(command.cst) && ((message.author.id != client.config.owner)))) {
+		return message.reply(command.cstMessage || "You're not allowed to use this command!");
 	}
 
 	if (command.ssOnly && (message.guild.id != client.config.statics.supportServer)) {
 		return message.reply({ content: "This command only works in our support server! Join by using `" + message.guild.prefix + "support`!" });
 	}
 
-	cst.includes("ncma") ? message.author.com = 1 : message.author.com = 0;
 	function err(e) {
+		console.error(e);
 		if (!message.author.debug) {
 			return message.reply(`Sorry, but an error occurred :/\n\`${e}\``);
 		}
@@ -698,9 +697,11 @@ client.on("messageCreate", async (message) => {
 		LOG.forEach(async (cntnt) => {
 			await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
 		});
-		fs
-			.createWriteStream("./logging/commands.txt", { flags: "a" })
-			.end(LOG.join(""));
+		if (command.logAsAdminCommand || (command.cst == "administrator132465798")) {
+			fs
+				.createWriteStream("./logging/administrator_logs.txt", { flags: "a" })
+				.end(LOG.join(""));
+		}
 		if (command.logs || (["administrator132465798", "tmod", "moderator", "srmod"].includes(command.cst)) || (command.name == "get")) {
 			if (!command.logs) command.logs = [];
 			if (["tmod", "moderator", "srmod"].includes(command.cst)) command.logs.push(client.config.statics.defaults.channels.modlog);
