@@ -46,9 +46,9 @@ client.config = new ClientConfiguration(client);
 client.keys = ["drgs", "bgc", "dialcount", "gcode", "upgr", "dose0", "dose1", "petname", "adren", "adrenc", "chillc", "mt", "cstmk", "stnb", "stn", "dns", "wl", "cgrl", "cfc", "bcmd", "nick", "chnl", "clr", "dlc", "fsh", "v", "sgstc", "crdt", "fdc", "hgs", "ofncs", "assigns", "curralias", "petbu", "cst", "cmds", "pet", "bal", "number", "chillpills", "sntc", "dialc", "strc", "spouse", "fishc", "deldatareqed", "bio", "replacers", "dpc", "robc", "srchc", "dgrc", "xpc"];
 
 // This is used to cache all of the commands upon startup
-client.commands = new Discord.Collection();
+client.config.commands = new Discord.Collection();
 
-client.config.cacheCommands("./cmds", client.commands);
+client.config.cacheCommands("./cmds", client.config.commands);
 
 // `messageUpdate` event, emitted when a message is edited.
 client.on("messageUpdate", async (oldMessage, newMessage) => {
@@ -95,13 +95,40 @@ client.on("messageDelete", async (message) => {
 	logs.send({ embeds: [embed] });
 });
 
+client.on("channelCreate", async (channel) => {
+	if (["DM", "GROUP_DM"].includes(channel.type) || (channel.guild.id != client.config.statics.supportServer)) return;
+	const audit = (await channel.guild.fetchAuditLogs({ limit: 1, type: "CHANNEL_CREATE" })).entries.first();
+	channel = await channel.fetch();
+	const channelPermissions = [...channel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
+	channelPermissions.forEach(async (x) => {
+		if (x.type != "member") return;
+		const usr = await client.config.fetchUser(x.id);
+		const mmbr = await client.guilds.cache.get(channel.guildId).members.fetch({ user: usr.id, force: true });
+		let chn = await client.db.get("chnl" + x.id);
+		chn = chn ? client.config.listToMatrix(chn.split(";"), 3) : [];
+		// a new channel is being created, therefore we don't need to check to see if a previous entry exists (it's not easy to guess the snowflake accurately and correctly)
+		chn.push([channel.id, x.deny.bitfield, x.allow.bitfield]);
+		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
+			content: `
+Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag}(${audit.executor.id})
+Can manage?: ${mmbr.permissionsIn(channel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${channel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
+${mmbr.permissionsIn(channel.id).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) ? `Adding ${usr.id} as a manager of channel ${channel.id}` : ""}
+			`,
+		});
+		chn = chn.map((a) => Array.from(a).join(";"));
+		chn = [...new Set(chn)];
+		await client.db.set("chnl" + x.id, chn.join(";"));
+		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${Math.trunc(Date.now() / 60000)} U:<${usr.tag} (${usr.id})>: Successfully set chnl as ${client.config.trim(chn.join(";"), 1900)} ` });
+	});
+});
+
 client.on("channelUpdate", async (oldChannel, newChannel) => {
-	if (["DM", "GROUP_DM"].includes(oldChannel.type)) return;
+	if (["DM", "GROUP_DM"].includes(oldChannel.type) || (oldChannel.guild.id != client.config.statics.supportServer)) return;
 	// fetch full structure from Discord API
 	// Only the partial structure is sent through the event.
 	oldChannel = await oldChannel.fetch(true);
 	newChannel = await newChannel.fetch(true);
-	if (oldChannel.guild.id != client.config.statics.supportServer) return;
+	const audit = (await oldChannel.guild.fetchAuditLogs({ limit: 1, type: "CHANNEL_UPDAYE" })).entries.first();
 	const oldPerms = [...oldChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
 	const newPerms = [...newChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
 	const rmv = [];
@@ -112,51 +139,107 @@ client.on("channelUpdate", async (oldChannel, newChannel) => {
 		else {continue;}
 	}
 	newPerms.forEach(async (x) => {
-		if (x.type != "member") return;
 		const usr = await client.config.fetchUser(x.id);
+		const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
 		let chn = await client.db.get("chnl" + x.id);
-		chn = chn ? client.config.listToMatrix(chn.split(";"), 3) : [];
+		chn = chn ? client.config.listToMatrix(chn.split(";"), 4) : [ [ newChannel.id, "", "", "" ] ];
+
 		let indx = chn.findIndex((data) => data[0] == newChannel.id);
+		console.log(chn[indx]);
+		const prevChn = chn[indx] ? [...chn[indx]] : [newChannel.id, "", "", ""];
+		console.log("prevChn\n" + prevChn);
+		// ignore when stored data matches newChannel.
 		let ignore = false;
+		// whether or not the user previously managed the channel.
+		function match() {
+			return chn[indx][0] == newChannel.id && (chn[indx[1]] == x.deny.bitfield && (chn[indx][2] == x.allow.bitfield) && (chn[indx][3] == mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) ? "mngr" : ""));
+		}
 		if (indx >= 0) {
-			if ((chn[indx][1] == x.deny.bitfield && (chn[indx][2] == x.allow.bitfield)) && (indx >= 0)) {
-				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry acknowledged at ${Math.trunc(Date.now() / 60000)} in regard to M:<${usr.tag} (${usr.id})> was ignored.` });
+			if (match()) {
+				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry at ${new Date(audit.createdAt).toISOString()} by ${audit.executor.tag}(${audit.executor.id}) in regard to ${usr.tag}(${usr.id}) was ignnored due to data already matching.` });
 				ignore = true;
 			}
+			// not a complete match; update values.
 			chn[indx][1] = x.deny.bitfield;
 			chn[indx][2] = x.allow.bitfield;
+			if (mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)) chn[indx][3] = "mngr";
 		}
 		else {
-			chn.push([newChannel.id, x.deny.bitfield, x.allow.bitfield]);
+			chn.push([newChannel.id, x.deny.bitfield, x.allow.bitfield, mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) ? "mngr" : ""]);
 			indx = chn.length - 1;
 		}
 		if (ignore == false) {
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry received at ${Math.trunc(Date.now() / 60000)}\nM:<${usr.tag} (${usr.id})>: d(${x.deny.bitfield}) a(${x.allow.bitfield})` });
+			console.log(prevChn);
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
+				content: `
+Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag}(${audit.executor.id})
+Can manage?: ${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
+${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) && (prevChn[3] != "mngr") ? `Adding ${usr.id} as a manager of channel ${newChannel.id}` : ""}
+				`,
+			});
 			chn = chn.map((a) => Array.from(a).join(";"));
 			chn = [...new Set(chn)];
 			await client.db.set("chnl" + x.id, chn.join(";"));
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${Math.trunc(Date.now() / 60000)} U:<${usr.tag} (${usr.id})>: Successfully set U.chnl as ${client.config.trim(chn.join(";"), 1900)} ` });
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${new Date().toISOString()}: U:<${usr.tag} (${usr.id})>: Successfully set U.chnl as ${client.config.trim(chn.join(";"), 1900)} ` });
 		}
+
+		// check to see if the user still has TextChannel.MANAGE_CHANNEL permissions
+		// if not, remove them as a manager.
+		console.log(chn, typeof chn);
+		chn = chn.map((f) => f instanceof Array ? f : f.split(";"));
+		if (chn[indx][3] == "mngr" && (!mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS))) {
+			console.log(`Removing mngr ${usr.id} of ${newChannel.id}.`);
+			console.log(!mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS));
+			chn[indx][3] = "";
+			chn = chn.map((a) => Array.from(a).join(";"));
+			chn = [...new Set(chn)];
+			await client.db.set("chnl" + x.id, chn.join(";"));
+			// remove as manager.
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
+				content: `Removing ${usr.id} as a manager of channel ${newChannel.id}`,
+			});
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
+				content: `${Math.trunc(Date.now() / 60_000)}: Successfully set chnl ${usr.tag}(${usr.id}) as ${chn.join(";")}`,
+			});
+		}
+
 	});
 	rmv.forEach(async (id) => {
 		const usr = await client.config.fetchUser(id);
+		const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
 		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${Math.trunc(Date.now() / 60000)}: Attempting to remove chnl data for M:<${usr.tag} (${usr.id})> of ${newChannel.name} (id: ${newChannel.id})...` });
 		let chn = await client.db.get("chnl" + id);
 		// determine if member has any perms; `!chn` indicates no permissions.
 		if (!chn) return;
-		chn = client.config.listToMatrix(chn.split(";"), 3);
+		chn = client.config.listToMatrix(chn.split(";"), 4);
+		const indx = chn.findIndex((f) => f.split(";")[0] == newChannel.id);
+		const prevChnl = chn[indx];
 		chn = chn.filter((f) => f[0] != newChannel.id);
 		if (chn.length == 0) {
 			const t = Date.now();
 			await client.db.delete("chnl" + id);
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${Math.trunc(Date.now() / 60000)}: M:<${usr.tag} (${usr.id})>: Successfully removed chnl ${usr.id} in ${Date.now() - t} ms` });
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
+				content: `
+Audit log entry at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag}(${audit.executor.id})
+Removed chnl ${usr.id} (time taken: ${t} ms)
+`,
+			});
 		}
 		else {
 			chn = chn.map((f) => f.join(";"));
 			await client.db.set("chnl" + id, chn.join(";"));
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${Math.trunc(Date.now() / 60000)}: M:<${usr.tag} (${usr.id})>: Successfully set chnl ${usr.id} as ${chn.join(";")}` }, { split: { char: "" } });
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
+				content: `
+Audit log entry at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag}(${audit.executor.id})
+Can manage?: ${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id})
+${!mmbr.permissionsIn(newChannel.id).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) && (prevChnl[4] == "mngr") ? `Removing ${usr.id} as a manager of channel ${newChannel.id}` : ""}
+				`,
+			});
 		}
 	});
+
+	// only thing that we've missed is when someone's overwrites are fully taken out/removed.
+
 });
 
 client.once("ready", async () => {
@@ -171,11 +254,11 @@ client.once("ready", async () => {
 	catch (e) {
 		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `${Math.trunc(Date.now() / 60000)}: **Failed to cache members of guild ${client.config.statics.supportServer}**, e: \`${e}\`` });
 	}
-/*	function t() {
-		client.emit("guildCreate", client.guilds.cache.get("911784758600679455"));
-		client.emit("guildDelete", client.guilds.cache.get("911784758600679455"));
-	}
-	t()*/
+
+/*	setTimeout(async () => {
+		const guildAuditLogs = await client.guilds.cache.get(client.config.supportServer).fetchAuditLogs({  });
+
+	}, 300_000); */
 });
 
 client.on("guildCreate", async (g) => {
@@ -274,9 +357,9 @@ client.on("guildMemberAdd", async member => {
 		.catch((x) => {}); // eslint-disable-line no-unused-vars
 	let chn = await client.db.get("chnl" + member.id) || undefined;
 	if (chn) {
-		chn = client.config.listToMatrix(chn.split(";"), 3);
+		chn = client.config.listToMatrix(chn.split(";"), 4);
 		chn.forEach(async (x) => {
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60000)}: Attempting to restore permissions for M:<${member.user.tag} (${member.user.id})>: ${x[0]} -> d: ${x[1]}, a: ${x[2]}...`);
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60000)}: Attempting to restore permissions for ${member.user.tag}(${member.user.id})>:\nchannel: ${x[0]} -> deny: ${x[1]}, allow: ${x[2]}, manager?: ${x[3]}`);
 			try {
 				client.channels.cache.get(x[0]).send({ content: `${Math.trunc(Date.now() / 60_000)}: Attempting to restore channel permissions for M(${member.id}) > data: ${x.join(";")}` });
 			}
@@ -287,6 +370,7 @@ client.on("guildMemberAdd", async member => {
 			// this function works by delaying the resolution of a Promise.
 			await delay(1000);
 			try {
+				console.log(x);
 				// returns Record<Discord.PermissionString, boolean>
 				// eslint-disable-next-line no-undef
 				const deny = new Discord.Permissions(BigInt(Number(x[1]))).serialize();
@@ -322,19 +406,19 @@ client.on("guildMemberAdd", async member => {
 	if (mute) {
 		mute = mute.split(";");
 		if (mute[0] == "-1") {
-			client.commands.get("mute")
+			client.config.commands.get("mute")
 				.run(client, { createdTimestamp: now, guild: member.guild, channel: channel, member: member.guild.member(client.user), author: client.user }, [member.id, "0", mute.slice(1).join(" ")]);
 		}
 		const date = Number(mute[0]);
 		const now = Date.now() / 60_000;
 		if (now < date) {
 			const mins = date - now;
-			client.commands.get("mute")
+			client.config.commands.get("mute")
 				.run(client, { createdTimestamp: now, guild: member.guild, channel: channel, member: member.guild.member(client.user), author: client.user }, [member.id, Math.round(mins), mute.slice(1).join(" ")]);
 		}
 		else if (member.roles.cache.has(client.config.roles.muted) && (now >= date)) {
 			// unmute
-			client.commands.get("unmute")
+			client.config.commands.get("unmute")
 				.run(client, { createdTimestamp: now, guild: member.guild, channel: channel, member: member.guild.member(client.user), author: client.user }, [member.id, "[automatic-unmute]: Time's up"]);
 		}
 	}
@@ -397,7 +481,7 @@ client.on("messageCreate", async (message) => {
 	if (message.guild.id == client.config.statics.supportServer) {
 		if (/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g.test(message.content.toLowerCase()) && (!cst.includes("linkp"))) {
 			message.delete({ reason: "author posted an invite" });
-			return client.commands.get("mute")
+			return client.config.commands.get("mute")
 				.run(client, { guild: message.guild, channel: message.channel, member: message.guild.member(client.user), author: client.user }, [ message.author.id, "0", "posting server invites" ])
 				.catch((f) => console.error(f));
 		}
@@ -410,7 +494,7 @@ client.on("messageCreate", async (message) => {
 				await message.member.roles.add(client.config.roles.muted);
 				await client.db.set("mt" + message.author.id, `${(message.createdTimestamp + ms("10m")) - client.config.epoch};hitting the message send rate limit (${limit})`);
 				const msg = `You have received a 10 minute mute from ${message.guild.name} because of hitting the message send rate limit (${limit}); please DM ${client.users.cache.get(client.config.owner).tag} if you beleive that this is a mistake. If you aren't unmuted after 10 minutes, then please contact a moderator and ask them to unmute you.`;
-				client.commands.get("mute").run(client, message, [ message.author.id, 10, msg ]);
+				client.config.commands.get("mute").run(client, message, [ message.author.id, 10, msg ]);
 			}
 			setInterval(() => collection.delete(message.author.id), 2_000);
 		}
@@ -435,7 +519,7 @@ client.on("messageCreate", async (message) => {
 			await client.db.set("xpc" + message.author.id, (message.createdTimestamp / 60_000) + 1);
 		}
 		if (message.mentions.members.size + message.mentions.users.size + message.mentions.roles.size > 5) {
-			client.commands.get("mute").run(client, message, [ message.author.id, "0", "[automatic-mute]: Mass Mention" ]);
+			client.config.commands.get("mute").run(client, message, [ message.author.id, "0", "[automatic-mute]: Mass Mention" ]);
 		}
 	}
 
@@ -480,7 +564,7 @@ client.on("messageCreate", async (message) => {
 	}
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
-	const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+	const command = client.config.commands.get(commandName) || client.config.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 	const blacklisted = cst.includes("blacklisted");
 	if (blacklisted && (!cst.includes("administrator132465798"))) return message.reply("You're not allowed to use any commands while you're blacklisted! (∞ minutes left)");
 	const stnb = await client.db.get("stnb" + message.author.id) || "stunned";
@@ -494,7 +578,7 @@ client.on("messageCreate", async (message) => {
 			if (stun && (!cst.includes("antistun"))) {
 				stun = Number(stun) * 60_000;
 				if (stun - message.createdTimestamp >= 1000) {
-					return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.cooldown(message.createdTimestamp, stun)} left)` });
+					return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.config.cooldown(message.createdTimestamp, stun)} left)` });
 				}
 			}
 		}
@@ -614,6 +698,9 @@ client.on("messageCreate", async (message) => {
 		LOG.forEach(async (cntnt) => {
 			await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
 		});
+		fs
+			.createWriteStream("./logging/commands.txt", { flags: "a" })
+			.end(LOG.join(""));
 		if (command.logs || (["administrator132465798", "tmod", "moderator", "srmod"].includes(command.cst)) || (command.name == "get")) {
 			if (!command.logs) command.logs = [];
 			if (["tmod", "moderator", "srmod"].includes(command.cst)) command.logs.push(client.config.statics.defaults.channels.modlog);
@@ -642,16 +729,20 @@ client.on("messageCreate", async (message) => {
 client.Notify = function(e, msgCont) {
 	const rn = Math.trunc(Date.now() / 60_000);
 	console.error(e);
-	client.channels.cache.get(client.config.statics.defaults.channels.error).send({
-		content: `Exception at ${Math.trunc(Date.now() / 60_000)} (type: unhandledRejection, sent to console):\n\`${e}\``,
-		// very unliekly that a normal exception will exceed 2,000 characters in length.
-	});
 	if (!msgCont) {
-		// originally, I had forgotten the "!" in the if condition, thus resulting in a logic error.
+		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
+			content: `Exception at ${rn} (type: unhandledRejection, sent to console):\n\`${e}\``,
+			// very unliekly that a normal exception will exceed 2,000 characters in length.
+		});
 	}
 	else {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
-			content: `Message content for exception at approx. ~${rn}: "${client.config.trim(msgCont, 1900)}"`,
+			content: `Exception at ${rn} (type: unhandledRejection, sent to console):\n\`${e}\``,
+			embeds: [
+				new Discord.MessageEmbed()
+					.setColor("#da0000")
+					.setDescription(msgCont),
+			],
 		});
 	}
 };
@@ -677,7 +768,7 @@ client
 
 		send.forEach(async (message) => {
 			await webh.send({
-				content: Discord.Util.escapeMarkdown(message),
+				content: "`" + message + "`",
 			});
 		});
 	});
