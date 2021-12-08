@@ -221,8 +221,8 @@ class Funcs {
 	}
 	/**
 	 * Converts a normal array to a 2d array of optional number of subvalues.
-	 * @param {Array} list Original 1d array
-	 * @param {Number} elementsPerSubArray No. of elements per subArray
+	 * @param {Any[]} list Original 1d array
+	 * @param {Number} elementsPerSubArray Number of elements per subArray
 	 * @returns {Any[]} matrix matrix (the new array)
 	 */
 	listToMatrix(list, elementsPerSubArray) {
@@ -276,7 +276,8 @@ class Funcs {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 	/**
-	 *
+	 * Parses a cooldown amount.
+	 * Preps cooldown value then sets it. Not complicated.
 	 * @param {Date} now Current MS timestamp
 	 * @param {Number} cd Cooldown to add (in MS)
 	 * @param {Boolean} includeDecimals Whether or not to include decimals into the date returned
@@ -284,10 +285,10 @@ class Funcs {
 	 */
 	parseCd(now, cd, includeDecimals = false) {
 		if (includeDecimals == true) {
-			return parseFloat(((now + cd) / this.defaults.exp)).toFixed(2);
+			return parseFloat(((now + cd) / 60_000)).toFixed(2);
 		}
 		else {
-			return Math.trunc(((now + cd) / this.defaults.exp));
+			return Math.trunc(((now + cd) / 60_000));
 		}
 	}
 	/**
@@ -297,7 +298,7 @@ class Funcs {
 	 * @param {Boolean} dots If exceeded, then this param allows for you to control whether or not you"d like 3 dots to replace the last 3 chars of the string.
 	 * @returns {String} str
 	 */
-	trim(str = "", max, dots = false) {
+	trim(str = "", max, dots = true) {
 		if (!max) return str;
 		if (str.length > max) {
 			return `${str.slice(0, max - 3)}${dots ? "..." : ""}`;
@@ -309,7 +310,7 @@ class Funcs {
 	/**
 	 * This function will cache all the commands in `dir`, therefore making them usable.
 	 * @param {String} dir Directory of which to load commands from
-	 * @param {Collection} clientCommands client.commands collection - loads commands into this collection
+	 * @param {Collection} clientCommands client.config.commands collection - loads commands into this collection
 	 * @returns {Array|Error}
 	 */
 	cacheCommands(dir, clientCommands) {
@@ -562,7 +563,18 @@ config.shop = {
 		price: 10,
 		// method: incremental of (chillpills)
 		// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
-		method: "++",
+		method: "drgs.0",
+		condt: null,
+	},
+	adren: {
+		displayName: "1x Adrenaline Syringe",
+		id: 101,
+		emoji: config.defaults.emoji.chill,
+		description: "clears **all** exisiting cooldowns, 6 hour cooldown for consuimg this item; consume with `~dose chill`",
+		price: 10,
+		// method: incremental of (chillpills)
+		// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
+		method: "drgs.0",
 		condt: null,
 	},
 	bvault: {
