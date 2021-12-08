@@ -334,18 +334,21 @@ class Funcs {
 	 * * Users are able to do `~dragonalias` to see a list of their aliases, indexed. They will then do `~dragonalias <index>`, replacing `<index>` with the index of their choice, which means that the bot will switch their alias to whatever they had chosen.
 	 * @param {String} uid The ID of a Discord user whose dragon alias is to be fetched
 	 * @param {Client} client Discord.Client
-	 * @returns {Array<string, string}
+	 * @returns {Array<string|string, string}
 	 */
+	// (method) Funcs.getDragonAlias(uid: string, client: Client): Array<string | string, string>
 	async getDragonAlias(uid, client) {
 		const currAlias = await client.db.get("curralias" + uid) || "default";
 		if (currAlias) {
-			const aliases = require("../petaliases.json");
+			const aliases = require("./petaliases.json");
+			const petname = await client.db.get("petname" + uid);
 			const names = Object.keys(aliases);
 			if (names.includes(currAlias)) {
-				return [aliases[currAlias].DISPLAY_NAME, aliases[currAlias].EMOJIS];
+				// petname takes priority over alias.DISPLAY_NAME, gives users more freedom.
+				return [petname || aliases[currAlias].DISPLAY_NAME, aliases[currAlias].EMOJIS];
 			}
 			else {
-				return ["dragon", ["<:heart:912982056802340877>", ":zap:", ":star2:", ":star:", ":bulb:", ":field_hockey:", ":fire:", ":sparkling_heart:", ":pizza:" ]];
+				return [petname || "dragon", ["<:heart:912982056802340877>", ":zap:", ":star2:", ":star:", ":bulb:", ":field_hockey:", ":fire:", ":sparkling_heart:", ":pizza:" ]];
 			}
 		}
 	}
@@ -366,6 +369,8 @@ const config = {
 		inf: "∞",
 		cds: ["adrenc;dose adrenaline", "cfc;coinflip", "dialc;dial", "dlc;daily", "dpc;deprive", "dgrc;downgrade", "fdc;feed", "fishc;fish", "robc;rob", "sntc;sentence", "sgstc;suggest", "srchc;search", "strc;stroke", "xpc;xp cooldown"],
 		channels: {
+			// disown logs
+			dsl: "918090868798423060",
 			pfx: "912615890036604939",
 			adminlog: "912615914330017802",
 			sflp: "913342404772372490",
