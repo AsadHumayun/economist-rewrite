@@ -511,6 +511,7 @@ const config = {
 		},
 	},
 	prefix: "~",
+	dailyReward: 5_000,
 	upgr: ["int;intellect;5", "end;endurance;6", "str;strength;7", "gl;glycogenesis;9"],
 	// following doubles each time, so it becomes harder for users to level up their dragon as their dragon becomes a higher level (and thus a higher requirement of XP to level up once more). These values were previously determined by an algorithm, however I deemed it faster in the ling run to just have them hard-coded. It saves processing time too, albeit not much, but it can help the bot catch up if there are loads of incompleted requests.
 	reqs: [400, 800, 1600, 3200, 6400, 12800, 25600, 51200, 102400, 204800, 409600, 819200, 1638400, 3276800, 6553600, 13107200, 26214400, 52428800, 104857600, 209715200, 419430400, 838860800, 1677721600, 3355443200, 6710886400, 13421772800, 26843545600, 53687091200, 107374182400, 214748364800, 429496729600, 858993459200, 1717986918400, 3435973836800, 6871947673600, 13743895347200, 27487790694400, 54975581388800, 109951162777600, 219902325555200, 439804651110400, 879609302220800, 1759218604441600, 3518437208883200, 7036874417766400, 14073748835532800, 28147497671065600, 56294995342131200, 112589990684262400, 225179981368524800],
