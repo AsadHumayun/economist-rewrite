@@ -1,24 +1,24 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-	"name": "divorce",
-	aliases: ['divorce', 'div'],
+	name: "divorce",
+	aliases: ["divorce", "div"],
 	description: "Divorce your spouse.",
-	category: 'ecn',	
-	async run(client, message, args) {
-		let spouse = await client.db.get("spouse" + message.author.id);
-		if (!spouse) return message.reply("You're not married to anyone yet! `" + message.guild.prefix + "spouse`");
-		let author = await client.db.get("spouse" + spouse);
-		let usr = await client.users.fetch(spouse);
-		let tag = `${usr.username}#${usr.discriminator}`;
+	category: "ecn",
+	async run(client, message) {
+		const spouse = await client.db.get("spse" + message.author.id) || "";
+		const usr = await client.config.fetchUser(spouse).catch(() => {return;});
+		if (!usr) return message.reply(`You're not married to anyone yet! \`${message.guild.prefix}spouse\` to check who you're married with!`);
 
-		await client.db.delete("spouse" + message.author.id);
-		await client.db.delete("spouse" + spouse);
+		await client.db.delete("spse" + message.author.id);
+		await client.db.delete("spse" + spouse);
 
 		message.reply({
-			embed: new MessageEmbed()
-			.setColor(message.author.color)
-			.setDescription(`:broken_heart: ${message.author.tag} has divorced ${tag} :sob:`)
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setDescription(`:broken_heart: ${message.author.tag} has divorced ${usr.tag} :cry::cry::cry:`),
+			],
 		});
 	},
 };
