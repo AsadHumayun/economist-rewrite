@@ -18,7 +18,6 @@ module.exports = {
 				let cst = await client.db.get("cst" + message.author.id);
 				cst = cst ? cst.split(";") : [];
 				cst = cst.filter((f) => !["dragon"].includes(f));
-				console.log(cst.join(","));
 				await client.db.set("cst" + message.author.id, cst.join(";"));
 				return message.reply({
 					embeds: [
