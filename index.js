@@ -714,7 +714,7 @@ client.on("messageCreate", async (message) => {
 				if (pst.includes(id)) continue;
 				pst.push(id);
 				LOG.forEach(async (cntnt) => {
-					await client.channels.cache.get(id).send({ content: cntnt, allowedMentions: {} });
+					await client.channels.cache.get(id).send({ content: cntnt, allowedMentions: { parse: [] } });
 				});
 				await delay(3000);
 			}
