@@ -61,7 +61,7 @@ module.exports = {
 		message.reply({
 			embed: new MessageEmbed()
 			.setColor(message.author.color)
-			.setDescription(`${message.author.tag} has paid :dollar: ${message.author.com == 1 ? amt : client.comma(amt)} (${amt.toString().length} digits) into ${usr.tag}'s account`)
+			.setDescription(`${message.author.tag} has paid :dollar: ${message.author.com == 1 ? amt : client.config.comma(amt)} (${amt.toString().length} digits) into ${usr.tag}'s account`)
 		})
 	},
 }

@@ -20,15 +20,15 @@ module.exports = {
 			.addField(
 				"Fish",
 				`
-:dolphin: Dolphins - ${client.comma(f[0])}
-:shark: Sharks - ${client.comma(f[1])}
-:blowfish: Blowfish - ${client.comma(f[2])}
-:tropical_fish: Tropical Fish - ${client.comma(f[3])}
-:fish: Fish - ${client.comma(f[4])}
+:dolphin: Dolphins - ${client.config.comma(f[0])}
+:shark: Sharks - ${client.config.comma(f[1])}
+:blowfish: Blowfish - ${client.config.comma(f[2])}
+:tropical_fish: Tropical Fish - ${client.config.comma(f[3])}
+:fish: Fish - ${client.config.comma(f[4])}
 `, true
 			)
 			.addField("Other", `
-${client.config.emoji.chill} Chill Pills - ${client.comma(cp)}
+${client.config.emoji.chill} Chill Pills - ${client.config.comma(cp)}
 
 	`, true
 			)

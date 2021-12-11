@@ -13,7 +13,7 @@ module.exports = {
       embed: new MessageEmbed()
       .setColor(message.author.color)
       .setTitle(`${message.author.tag}'s Assignable Upgrades`)
-      .setDescription("```\n" + client.inspect(keys) + "\n```")
+      .setDescription("```\n" + client.config.Inspect(keys) + "\n```")
     });
   }
 };

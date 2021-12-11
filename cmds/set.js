@@ -44,7 +44,7 @@ module.exports = {
 			message.reply({
 				embed: new Discord.MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`Successfully set ${key} ${user.id} as ${typeof val == "object" ? JSON.stringify(val) : client.inspect(val)} with type \`${typeof val}\``),
+					.setDescription(`Successfully set ${key} ${user.id} as ${typeof val == "object" ? JSON.stringify(val) : client.config.Inspect(val)} with type \`${typeof val}\``),
 			}).catch((x) => {
 				message.reply("Encountered error: `" + x + "`. Resending message...");
 				message.reply(`Successfully set ${key} ${user.id} (value too large to display) with type \`${typeof val}\``);

@@ -13,11 +13,11 @@ module.exports = {
 		if (!fish_rod) return message.reply(`You need a ${client.config.emoji.fishing_rod} in order to go fishing! \`${message.guild.prefix}shop\``);
 
 		let cd = await client.db.get("fishc" + message.author.id);
-		let scnd = client.cooldown(message.createdTimestamp, cd*client.config.exp);
+		let scnd = client.config.cooldown(message.createdTimestamp, cd*60_000);
 		if (scnd) {
 			return message.reply(`Please wait another ${scnd} before fishing lest your rod will break!`);
 		};
-		await client.db.set('fishc' + message.author.id, client.parseCd(message.createdTimestamp, 20_000, true));		
+		await client.db.set('fishc' + message.author.id, client.config.parseCd(message.createdTimestamp, 20_000, true));		
 		const fishes = [
 			':dolphin:',
 			':shark:',

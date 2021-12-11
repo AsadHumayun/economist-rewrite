@@ -77,7 +77,7 @@ module.exports = {
     message.reply({
       embed: new MessageEmbed()
       .setColor(message.author.color)
-      .setDescription(`${message.author.tag} has successfully sold ${identified.item[1]} ${client.comma(amt)} for :dollar: ${client.comma(amtGained)}`)
+      .setDescription(`${message.author.tag} has successfully sold ${identified.item[1]} ${client.config.comma(amt)} for :dollar: ${client.config.comma(amtGained)}`)
     });
   },
 };

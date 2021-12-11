@@ -6,7 +6,7 @@ module.exports = {
     description: "View a user's offences (mod only)",
     category: 'mod',
     async run(client, message, args) {
-        let user = await client.config.fetchUser(args[0]).catch((x) => {});
+        let user = await client.config.fetchUser(args[0]).catch(() => {return;});
         if (!user) user = message.author;
         let ofncs = await client.db.get("ofncs" + user.id) || "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0";
         ofncs = ofncs.split(";");
@@ -20,7 +20,7 @@ module.exports = {
             return message.reply(
                 "[" + ofncs.map(x => x).join(", ") + "]",
             { code: "" })
-           // return message.reply(client.inspect(ofncs).replace(/\n/g, " "), { code: "" })
+           // return message.reply(client.config.Inspect(ofncs).replace(/\n/g, " "), { code: "" })
         }
         message.reply({
             embed: new MessageEmbed()

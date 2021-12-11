@@ -11,7 +11,7 @@ module.exports = {
 	async run(client, message, args) {
 		let coold = await client.db.get(`sntc${message.author.id}`);
 		if (coold) {
-			let data = client.cooldown(message.createdTimestamp, coold*client.config.exp);
+			let data = client.config.cooldown(message.createdTimestamp, coold*60_000);
 			if (data) {
 				return message.reply(`You should wait ${data} before imprisoning another user! Otherwise everyone would be in jail lol`)
 			} else {
@@ -24,14 +24,14 @@ module.exports = {
 			.setDescription(txt)
 			await client.users.cache.get(user.id)
 				.send({ embed: new MessageEmbed(embed).setColor(userColor) })
-					.catch((x) => {});
+					.catch(() => {return;});
 			message.reply({ embed })
 			await delay(1000);
 		}
 		if (!args.length) return message.reply("You need to ping someone to sentence, dum dum")
-		let user = await client.config.fetchUser(args[0]).catch((x) => {});
+		let user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You need to ping someone to sentence, dum dum");
-		await client.db.set("sntc" + message.author.id, client.parseCd(message.createdTimestamp, ms("6h")));
+		await client.db.set("sntc" + message.author.id, client.config.parseCd(message.createdTimestamp, ms("6h")));
 		let usercolor = await client.db.get('clr' + user.id) || client.config.defaultHexColor;
 				usercolor = usercolor.split(";")[0];
 		let didntWork = Math.floor(Math.random() * 100);
@@ -56,7 +56,7 @@ module.exports = {
 		await client.stn(user.id, stunTime/ms("1m"), client);
 		await client.db.set('stnb' + user.id, "in jail");
 		await dm(user, usercolor, `After careful consideration, it is decided that ${user.tag} is punishable as a result of their insane ugliness; ${message.author.tag} has won the court case`)
-		await dm(user, usercolor, `:dollar: ${client.comma(amtLost) || "0"} have been moved to ${message.author.tag}'s account since ${user.tag} was unable to win the court case lol`)
+		await dm(user, usercolor, `:dollar: ${client.config.comma(amtLost) || "0"} have been moved to ${message.author.tag}'s account since ${user.tag} was unable to win the court case lol`)
 		await client.db.set("bal" + user.id, bal - amtLost)
 		let oldBal = await client.db.get("bal" + message.author.id) || 0;
 				oldBal = Number(oldBal);

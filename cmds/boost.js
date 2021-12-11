@@ -7,7 +7,7 @@ module.exports = {
   cst: "administrator132465798",
   async run(client, message, args) {
     function ln() {
-      return client.comma(Math.floor(Math.random()*1000000000000)) + " minutes";
+      return client.config.comma(Math.floor(Math.random()*1000000000000)) + " minutes";
     };
     if (!args.length) return message.reply("You must mention a user to boost!");
     const user = await client.config.fetchUser(args[0]).catch((err) => {});

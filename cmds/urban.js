@@ -26,7 +26,7 @@ module.exports = {
 		.setURL(answer.permalink)
 		.addField("Definition", client.trim(answer.definition, 1024))
 		.addField("Example", answer.example ? `\`\`\`css\n${client.trim(answer.example, 1000)}\n\`\`\`` : "\`\`\`\nNo example found\n\`\`\`")
-		.setFooter(`👍 ${client.comma(answer.thumbs_up)} | 👎 ${client.comma(answer.thumbs_down)}`);
+		.setFooter(`👍 ${client.config.comma(answer.thumbs_up)} | 👎 ${client.config.comma(answer.thumbs_down)}`);
 		return message.reply({ embed })
 	},
 };

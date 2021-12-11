@@ -31,7 +31,7 @@ module.exports = {
           levelups += 1;
         }
       };
-      if (levelups == 0) return message.reply(`Sorry mate, but you need at least :dollar: ${client.comma(v[0] * 500)} in order to upgrade your bnk vault!`);
+      if (levelups == 0) return message.reply(`Sorry mate, but you need at least :dollar: ${client.config.comma(v[0] * 500)} in order to upgrade your bnk vault!`);
       if (cbal < 0) levelups -= 1;
       
       v[0] += levelups;
@@ -40,11 +40,11 @@ module.exports = {
       return message.reply({
         embed: new MessageEmbed()
         .setColor(message.author.color)
-        .setDescription(`${message.author.tag} has upgraded their Bank Vault to level ${client.comma(v[0])}! It can now hold :dollar: ${client.comma(v[0] * 5000)}`)
+        .setDescription(`${message.author.tag} has upgraded their Bank Vault to level ${client.config.comma(v[0])}! It can now hold :dollar: ${client.config.comma(v[0] * 5000)}`)
       });  
     };
     let c = v[0] * 500;
-    if (bal - c < 0) return message.reply("You must have at least :dollar: " + client.comma(c) + " in order to upgrade your Bank Vault.");
+    if (bal - c < 0) return message.reply("You must have at least :dollar: " + client.config.comma(c) + " in order to upgrade your Bank Vault.");
     v[0] += 1;
 
     await client.db.set("bal" + message.author.id, bal - c)
@@ -52,7 +52,7 @@ module.exports = {
     message.reply({
       embed: new MessageEmbed()
       .setColor(message.author.color)
-      .setDescription(`${message.author.tag} has upgraded their Bank Vault to level ${client.comma(v[0])}! It can now hold :dollar: ${client.comma(v[0] * 5000)}`)
+      .setDescription(`${message.author.tag} has upgraded their Bank Vault to level ${client.config.comma(v[0])}! It can now hold :dollar: ${client.config.comma(v[0] * 5000)}`)
     });
   },
 };

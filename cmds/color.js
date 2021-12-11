@@ -15,7 +15,7 @@ module.exports = {
 					new MessageEmbed()
 						.setColor(message.author.color)
 						.setTitle(`${message.author.tag}'s Colour Preferences`)
-						.setDescription(`Every time you use a command, each colour is cycled through sequentially. The last value is where the bot is currently at in your cycle. \n\n\`\`\`js\n${client.inspect(clrs.split(";"))}\`\`\``),
+						.setDescription(`Every time you use a command, each colour is cycled through sequentially. The last value is where the bot is currently at in your cycle. \n\n\`\`\`js\n${client.config.Inspect(clrs.split(";"))}\`\`\``),
 				],
 			});
 		}
@@ -37,7 +37,7 @@ module.exports = {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has set their colour preferences to \`${client.inspect(colors)}\`. Use \`${message.guild.prefix}color\` to view a list of all your currently set colours.`),
+					.setDescription(`${message.author.tag} has set their colour preferences to \`${client.config.Inspect(colors)}\`. Use \`${message.guild.prefix}color\` to view a list of all your currently set colours.`),
 			],
 		});
 		colors.push("0");

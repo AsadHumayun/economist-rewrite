@@ -9,8 +9,8 @@ module.exports = {
 		const msg = await message.reply(`Validating input & performing actions...`);
 		if (!args.length) return msg.edit(`${client.config.statics.defaults.emoji.err} You must specify a command to reload!`);
 		const commandName = args[0].toLowerCase();
-		const command = message.client.commands.get(commandName)
-			|| message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+		const command = message.client.config.commands.get(commandName)
+			|| message.client.config.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
 		if (!command) {
 			return msg.edit(`${client.config.statics.defaults.emoji.err} Command not found :c`);
@@ -20,7 +20,7 @@ module.exports = {
 
 		try {
 			const newCommand = require(`./${command.name}.js`);
-			message.client.commands.set(newCommand.name, newCommand);
+			message.client.config.commands.set(newCommand.name, newCommand);
 		} catch (error) {
 			console.log(error);
 			return msg.edit(`${client.config.statics.defaults.emoji.err} There was an error whilst attempting to reload the **${command.name}** command; \`${error.message}\``);

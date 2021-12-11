@@ -17,11 +17,11 @@ async run(client, message, args) {
 				.setAuthor('NPM', 'https://i.imgur.com/ErKf5Y0.png', 'https://www.npmjs.com/')
 				.setTitle(`Database Information`)
 				.addField('❯ Name', data.db_name, true)
-				.addField('❯ Doc Count', client.comma(data.doc_count), true)
-				.addField('❯ Modification Count', client.comma(data.update_seq), true)
+				.addField('❯ Doc Count', client.config.comma(data.doc_count), true)
+				.addField('❯ Modification Count', client.config.comma(data.update_seq), true)
 				.addField('❯ Compact Running', data.compact_running || false, true)
-				.addField('❯ Deleted Documents', client.comma(data.doc_del_count), true)
-				.addField('❯ Disk Size', `${client.comma(Math.trunc(Number(data.data_size / 1024 / 1024)))} / ${client.comma(Math.trunc(Number(data.disk_size) / 1024 / 1024))} MB`, true)
+				.addField('❯ Deleted Documents', client.config.comma(data.doc_del_count), true)
+				.addField('❯ Disk Size', `${client.config.comma(Math.trunc(Number(data.data_size / 1024 / 1024)))} / ${client.config.comma(Math.trunc(Number(data.disk_size) / 1024 / 1024))} MB`, true)
 		//		.addField('❯ Disk Last Started At', moment(data.instance_start_time).format('YYYY/MM/DD hh:mm:ss'), true) keeps saying "invalid Date"
 			})
 		};

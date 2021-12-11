@@ -77,7 +77,7 @@ module.exports = {
 		.addField('❯ Uptime', getUptime(client.uptime), true)
 		.addField('❯ Memory Usage', `**~**${Math.trunc(mem)}/${Math.trunc(process.memoryUsage().rss / 1024 / 1024)} MB`, true)
 		.addField('❯ Discord.js', `v**${require('discord.js').version}**`, true)
-		.addField('❯ Total Commands', client.commands.size, true)
+		.addField('❯ Total Commands', client.config.commands.size, true)
 		.setTimestamp(client.readyTimestamp)
 		.setFooter(`Ready`)
 	});	

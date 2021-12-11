@@ -11,7 +11,7 @@ module.exports = {
 	cst: "src",
 	async run (client, message, args) {
 		if (message.author.id != client.config.owner) return message.reply('nooooo loool')
-			const command = client.commands.get(args[0].toLowerCase()) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(args[0].toLowerCase()));
+			const command = client.config.commands.get(args[0].toLowerCase()) || client.config.commands.find(cmd => cmd.aliases && cmd.aliases.includes(args[0].toLowerCase()));
 		if (!args.length) {
 			return message.reply(`${client.config.statics.defaults.emoji.err} You need to provide a command name!`);
 		};

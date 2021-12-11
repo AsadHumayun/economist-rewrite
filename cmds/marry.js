@@ -17,7 +17,7 @@ module.exports = {
 		try {
 			usr = await client.users.fetch(client.getID(args[0]))
 		} catch (err) {
-			usr = await client.users.fetch(args[0]).catch((x) => {});
+			usr = await client.users.fetch(args[0]).catch(() => {return;});
 		};
 		if(!usr) return message.reply("You must specify a user who you wish to marry!");
 		if (usr.id == message.author.id) return message.reply("You can't marry yourself! :-(")

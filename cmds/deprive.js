@@ -11,7 +11,7 @@ module.exports = {
 			"level;health;energy;exp;credits;intel;endur;str;affec"
 		let cd = await client.db.get("dpc" + message.author.id);
 		if (cd) {
-			let data = client.cooldown(message.createdTimestamp, cd*client.config.exp);
+			let data = client.config.cooldown(message.createdTimestamp, cd*60_000);
 			if (data) {
 				return message.reply("You must wait " + data + " before depriving another stat!");
 			} else {
@@ -33,7 +33,7 @@ module.exports = {
 			return message.reply("You must have at least 2 credits on a specified `<stat>` before depriving your dragon of this stat.");
 		};
 		if (!message.author.cst.includes("maxdragon888")) {
-			await client.db.set('dpc' + message.author.id, client.parseCd(message.createdTimestamp, ms("6h")));
+			await client.db.set('dpc' + message.author.id, client.config.parseCd(message.createdTimestamp, ms("6h")));
 			pet[Stat[2]] = Credits - amt;
 			pet[4] = Number(pet[4]) + amt;
 			await client.db.set('pet' + message.author.id, pet.join(';'));

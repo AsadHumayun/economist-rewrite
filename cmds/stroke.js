@@ -9,7 +9,7 @@ module.exports = {
 	cst: "pet",
 	async run(client, message, args) {
 		let cooldown = await client.db.get('strc' + message.author.id);
-		let cd = client.cooldown(message.createdTimestamp, cooldown*client.config.exp);
+		let cd = client.config.cooldown(message.createdTimestamp, cooldown*60_000);
 		let pet = await client.db.get("pet" + message.author.id);
 		if (!pet)	return message.reply("It looks like you don't own a dragon! Why not tame one by using `" + message.guild.prefix + "tame`")	
 			pet = pet.split(';');
@@ -38,6 +38,6 @@ module.exports = {
 			.setColor(message.author.color)
 			.setDescription(`${emojis[7]} ${message.author.tag} has stroked their ${display}`)
 		});
-		await client.db.set(`strc${message.author.id}`, client.parseCd(message.createdTimestamp, ms("3h")));
+		await client.db.set(`strc${message.author.id}`, client.config.parseCd(message.createdTimestamp, ms("3h")));
 	},
 };

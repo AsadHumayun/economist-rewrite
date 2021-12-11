@@ -7,13 +7,13 @@ module.exports = {
 	category: 'utl',
 	async run(client, message, args) {
 		let cd = await client.db.get("sgstc" + message.author.id);
-		let scnd = client.cooldown(message.createdTimestamp, cd*client.config.exp);
+		let scnd = client.config.cooldown(message.createdTimestamp, cd*60_000);
 		if (scnd) {
 			return message.reply(`You must wait another ${scnd} before suggesting again`);
 		};
 
 		if (!args.length) return message.reply(`You must provide a suggestion for me to uhh... suggest?`)
-		await client.db.set('sgstc' + message.author.id, client.parseCd(message.createdTimestamp, 20000, true));				
+		await client.db.set('sgstc' + message.author.id, client.config.parseCd(message.createdTimestamp, 20000, true));				
 		var suggest = args.join(' ');
 			message.reply({
 				embed: new MessageEmbed()

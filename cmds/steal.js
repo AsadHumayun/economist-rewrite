@@ -18,7 +18,7 @@ module.exports = {
 		message.reply({
 			embed: new MessageEmbed()
 			.setColor(message.author.color)
-			.setDescription(`${message.author.tag} has stolen ${client.users.cache.filter(x => x.id != message.author.id).random().tag}'s briefcase and found :dollar: ${client.comma(amt)}`)
+			.setDescription(`${message.author.tag} has stolen ${client.users.cache.filter(x => x.id != message.author.id).random().tag}'s briefcase and found :dollar: ${client.config.comma(amt)}`)
 		})
 	}
 };
