@@ -354,7 +354,7 @@ client.on("guildMemberAdd", async member => {
 	}
 	member.roles.add(rle)
 		// eslint-disable-next-line no-empty-function
-		.catch((x) => {}); // eslint-disable-line no-unused-vars
+		.catch(() => {return;}); // eslint-disable-line no-unused-vars
 	let chn = await client.db.get("chnl" + member.id) || undefined;
 	if (chn) {
 		chn = client.config.listToMatrix(chn.split(";"), 4);
@@ -537,8 +537,9 @@ client.on("messageCreate", async (message) => {
 		.replace(/allfish/g, fish[4])
 		.replace(/allchp/g, chp);
 	const replacers = await client.db.get("replacers" + message.author.id) || {};
-	if (replacers) {
+	if (replacers && (typeof replacers === "object")) {
 		for (const x in replacers) {
+			if (!replacers[x].content) continue;
 			message.content = message.content.replace(new RegExp(`{${x}}`, "gm"), replacers[x].content);
 		}
 	}
@@ -573,6 +574,7 @@ client.on("messageCreate", async (message) => {
 	}
 	if (!command || (command)) {
 		const k = command ? command.name : commandName || "";
+		// todo: make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>
 		if (!["punish", "unpunish", "offences", "ban", "mute", "unmute", "warn"].includes(k)) {
 			let stun = await client.db.get("stn" + message.author.id);
 			if (stun && (!cst.includes("antistun"))) {
@@ -733,8 +735,9 @@ client.Notify = function(e, msgCont) {
 	if (!msgCont) {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
 			content: `Exception at ${rn} (type: unhandledRejection, sent to console):\n\`${e}\``,
-			// very unliekly that a normal exception will exceed 2,000 characters in length.
-		});
+			// very unliekly that a normal exception/error will exceed 2,000 characters in length.
+		}).catch(() => {return;});
+		// to prevent messageSendFailure erros from throwing. They flood the console and often I can't do anything about it so it's better to just ignore those.
 	}
 	else {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
@@ -744,7 +747,8 @@ client.Notify = function(e, msgCont) {
 					.setColor("#da0000")
 					.setDescription(msgCont),
 			],
-		});
+		})
+			.catch(() => {return;});
 	}
 };
 
