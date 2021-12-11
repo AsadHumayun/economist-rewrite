@@ -10,8 +10,8 @@ module.exports = {
 	async run(client, message, args) {
 		"level;health;energy;exp;credits;intel;endur;str;affec";
 		let pet = await client.db.get("pet" + message.author.id);
-		if (!pet) pet = client.config.dpet;
-		if (message.author.cst.includes("maxdragon888")) pet = client.config.maxPet;
+		if (!pet) pet = client.config.statics.defaults.dragon;
+		if (message.author.cst.includes("maxdragon888")) pet = client.config.statics.defaults.naxDragon;
 		pet = pet.split(';');
 
 		let cooldown = await client.db.get('fdc' + message.author.id);

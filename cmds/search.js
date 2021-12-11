@@ -50,9 +50,9 @@ module.exports = {
 	let data = await client.db.get("pet" + message.author.id);
 			data = data.split(";");
 			console.log(message.author.cst)
-	if (message.author.cst.includes("maxdragon888")) data = client.config.maxPet.split(";");
+	if (message.author.cst.includes("maxdragon888")) data = client.config.statics.defaults.naxDragon.split(";");
 	if (!data && (!message.author.cst.includes("maxdragon888"))) return message.reply("You must own a dragon in order to use this command! See `" + message.guild.prefix + "shop` for more information")
-	if (!data) data = client.config.dpet;
+	if (!data) data = client.config.statics.defaults.dragon;
 		let en = Number(data[2]);
 		let endur = Number(data[6]);
 		let lvl = Number(data[0]);

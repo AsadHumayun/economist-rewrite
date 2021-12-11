@@ -8,12 +8,12 @@ module.exports = {
 	cst: "dragon",
 	async run(client, message, args) {
 		let data = await client.db.get("pet" + message.author.id);
-		if (!data) data = client.config.dpet;
-		if (message.author.cst.includes("maxdragon888")) data = client.config.maxPet;
+		if (!data) data = client.config.statics.defaults.dragon;
+		if (message.author.cst.includes("maxdragon888")) data = client.config.statics.defaults.naxDragon;
 		data = data.split(';');
 		let stat = (args[0] || "").toLowerCase();
-		let Stat = client.config.upgr.find((x) => stat.startsWith(x.split(";")[0]));
-		if (!Stat) return message.reply(`The different types of stats are: ${client.list(client.config.upgr.map((x) => x.split(";")[1]))}`);		
+		let Stat = client.config.statics.upgr.find((x) => stat.startsWith(x.split(";")[0]));
+		if (!Stat) return message.reply(`The different types of stats are: ${client.list(client.config.statics.upgr.map((x) => x.split(";")[1]))}`);		
 		Stat = Stat.split(";");
 		const currAlias = await client.db.get("curralias" + message.author.id) || "default";
 		let emojis;

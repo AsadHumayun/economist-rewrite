@@ -11,7 +11,7 @@ module.exports = {
 		if (cst.includes("dragon")) return message.reply("You already seem to own a dragon!");
 		cst.push("dragon");
 		await client.db.set("cst" + message.author.id, cst.join(";"));
-		await client.db.set('pet' + message.author.id, client.config.dpet);
+		await client.db.set('pet' + message.author.id, client.config.statics.defaults.dragon);
 		message.reply({
 			embed: new MessageEmbed()
 			.setColor(message.author.color)
