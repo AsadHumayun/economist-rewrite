@@ -9,7 +9,7 @@ module.exports = {
 		if (!args) args = [message.author.id];
 		let usr = await client.config.fetchUser(args[0])
 		// eslint-disable-next-line no-empty-function, no-unused-vars
-			.catch((x) => {});
+			.catch(() => {return;});
 		if (!usr) usr = message.author;
 		const clrs = await client.db.get("clr" + usr.id) || client.config.defaultHexColor;
 		return message.reply({

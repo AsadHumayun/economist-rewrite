@@ -10,7 +10,7 @@ module.exports = {
 		if (!args.length) return message.reply({ content: "You must provide a bug ID of the bug you wish to approve" });
 		const id = args[0];
 		const reason = args.slice(1).join(' ');
-		await message.delete().catch((x) => {});
+		await message.delete().catch(() => {return;});
 		const val = await client.db.get(`bugr${id}`);
 		if (!val) return message.reply({ content: `${client.config.statics.defaults.emoji.err} No bug report with ID "${id}" was found.` });
 		client.channels.cache.get(client.config.statics.defaults.channels.bug)
@@ -41,6 +41,6 @@ module.exports = {
 		await client.db.delete(`bugr${id}`);
 		client.users.cache.get(val.author)
 			.send(`Your bug (${id}) has been approved by ${message.author.tag}\n${reason ? `${message.author.tag}'s Comments: ${reason}` : ""}`)
-				.catch((x) => {});
+				.catch(() => {return;});
 	},
 };

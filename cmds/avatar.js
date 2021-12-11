@@ -7,7 +7,7 @@ module['exports'] = {
 	async run(client, message, args) {
 		if (!args.length) args = [message.author.id];
 		var user = await client.config.fetchUser(args[0])
-			.catch((x) => {});
+			.catch(() => {return;});
 		if (!user) user = message.author;
 		message.reply({
 			embeds: [new MessageEmbed()

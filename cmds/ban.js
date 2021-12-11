@@ -8,7 +8,7 @@ module.exports = {
 	cst: "moderator",
 	async run(client, message, args) {
 		if (args.length < 1) return message.reply("You must provide a `user` resolvable for your ban.")
-		let user = await client.config.fetchUser(args[0]).catch((x) => {});
+		let user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply(`${client.config.statics.defaults.emoji.err} You have provided an invalid user!`);
 		let cst = await client.db.get("cst" + user.id) || "";
 		if (cst.split(";").includes("moderator")) return message.reply("Moderators cannot ban each other. (`<User>` possesses `moderator` CST.)")
@@ -34,7 +34,7 @@ module.exports = {
 			if (GuildMember.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return message.reply("You're not allowed to ban a moderator!");
 			GuildMember
 				.send({ embeds: [Notification] })
-					.catch((x) => {});
+					.catch(() => {return;});
 			GuildMember.ban({ reason: `Banned by ${message.author.tag} (${message.author.id}); reason="${reason}"` });
 			message.reply({
 				embeds: [

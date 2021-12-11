@@ -8,7 +8,7 @@ module.exports = {
   ssOnly: true,
   async run(client, message, args) {
   if (!message.member.roles.cache.has(client.config.statics.defaults.roles.srmod)) return message.reply({ content: "You must be a **Senior Moderator** in order to accept/decline users' applications." });
-  let user = await client.config.fetchUser(args[0]).catch((x) => {});
+  let user = await client.config.fetchUser(args[0]).catch(() => {return;});
   if (!user) return message.reply({ content: "You must mention a user whose application you wish to accept!" });
   let cst = await client.db.get("cst" + user.id) || "";
       cst = cst.split(";");
