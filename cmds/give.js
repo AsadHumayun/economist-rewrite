@@ -10,7 +10,7 @@ module.exports = {
 		if (args.length < 2) {
 			return message.reply(`You must follow the following format: \`${message.guild.prefix}give <user> <...upgrade>\``);
 		};
-		const usr = await client.config.fetchUser(args[0]).catch((x) => {});
+		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply("Try running the command again, this time actually ping a user llolololololl");
 
 		if (!isNaN(args[1])) {
@@ -22,7 +22,7 @@ module.exports = {
 			return message.reply({
 				embed: new Discord.MessageEmbed()
 				.setColor(message.author.color)
-				.setDescription(`:dollar: ${client.comma(amt)} have been added to ${usr.tag}'s account`)					
+				.setDescription(`:dollar: ${client.config.comma(amt)} have been added to ${usr.tag}'s account`)					
 			});			
 		};
 
