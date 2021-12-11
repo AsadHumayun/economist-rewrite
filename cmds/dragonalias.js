@@ -7,14 +7,12 @@ module.exports = {
 	cst: "dragon",
 	description: "Choose a dragon alias to be displayed on your dragon!",
 	async run(client, message, args) {
-		let none, hasAliases = [];
+		let hasAliases = [];
 		let cst = await client.db.get("cst" + message.author.id) || "";
 		cst = cst ? cst.split(";") : [];
-		if (cst.length == 0) none = true;
 		const dragAliases = Object.keys(require("../petaliases.json")).map((k) => k.toLowerCase());
 		hasAliases = dragAliases.filter((alias) => cst.includes(alias));
 		hasAliases.push("default");
-		if (hasAliases.length == 0) none = true;
 		let currAlias = (await client.db.get("curralias" + message.author.id) || "_").toLowerCase();
 		if (!dragAliases.includes(currAlias)) {
 			currAlias = "default";
@@ -33,7 +31,7 @@ module.exports = {
 		}
 		else {
 			// user has given args; allow them to choose/select an alias.
-			if (isNaN(args[0])) return message.reply(`Invalid index "${args[0]}"; valid options are [${hasAliases.map((a) => hasAliases.indexOf(a)).join(", ")}]`)
+			if (isNaN(args[0])) return message.reply(`Invalid index "${args[0]}"; valid options are [${hasAliases.map((a) => hasAliases.indexOf(a)).join(", ")}]`);
 			const id = Number(args[0]);
 			const alias = hasAliases[id];
 			await client.db.set("curralias" + message.author.id, alias);
