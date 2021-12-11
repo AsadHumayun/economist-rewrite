@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const osu = require("node-os-utils");
 module.exports = {
 	name: "info",
-	aliases: ['info', 'stats'],
+	aliases: ['info', 'stats', 'uptime'],
 	description: "View some bot infomation",
 	category: 'utl',
 	async run(client, message, args) {
