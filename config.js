@@ -41,10 +41,10 @@ class Funcs {
 		return mention.match(/^<@!?(\d+)>$/)[1];
 	}
 	/**
-     * Fetches a Discord User
-     * @param {String} str The mention - either ID or raw <@(!)id>
-     * @returns {User} Discord.User
-     */
+		 * Fetches a Discord User
+		 * @param {String} str The mention - either ID or raw <@(!)id>
+		 * @returns {User} Discord.User
+		 */
 	async fetchUser(str) {
 		if (!str) return;
 		str = str.toString();
@@ -54,7 +54,7 @@ class Funcs {
 		}
 		catch (err) {
 			// eslint-disable-next-line no-unused-vars
-			usr = await this.client.users.fetch(str).catch((x) => {});
+			usr = await this.client.users.fetch(str).catch(() => {return;});
 		}
 		return usr;
 	}
@@ -171,10 +171,11 @@ class Funcs {
 	/**
 	 * Removes the exponent ("E") on numbers expressed in scientific notation
 	 * @param {Number} x Number that is to be expanded.
-	 * @returns Returns the number, expressed in its extended form
+	 * @returns {String}
 	 */
 	noExponents(x) {
-		const data = String(x).split(/[eE]/);
+		if (isNaN(x)) return "0";
+		const data = String(Number(x)).split(/[eE]/);
 		if (data.length == 1) return data[0];
 
 		const sign = x < 0 ? "-" : "";
@@ -199,11 +200,11 @@ class Funcs {
 	async stn(id, amt, client) {
 		const user = await this.fetchUser(id)
 		// eslint-disable-next-line no-unused-vars
-			.catch((x) => {});
+			.catch(() => {return;});
 		if (!user) return false;
 		let dns = await client.db.get("dns" + id);[];
 		dns = isNaN(dns) ? 0 : Number(dns);
-		dns = dns * client.config.exp;
+		dns = dns * 60_000;
 		if (dns && (Date.now() < dns)) return;
 		const ms = amt * 60 * 1000;
 		await client.db.set("stn" + id, Math.trunc((Date.now() + ms) / 60_000));
@@ -310,9 +311,10 @@ class Funcs {
 	/**
 	 * This function will cache all the commands in `dir`, therefore making them usable.
 	 * @param {String} dir Directory of which to load commands from
-	 * @param {Collection} clientCommands client.config.commands collection - loads commands into this collection
-	 * @returns {Array|Error}
+	 * @param {Collection<K, V>} clientCommands client.config.commands collection - loads commands into this collection
+	 * @returns {Array<Boolean, Collection<cmd.name, cmd>>|Error}
 	 */
+	// (method) Funcs.cacheCommands(dir: string, clientCommands: Collection<K, V>): Array<boolean, Collection<cmd.name, cmd>> | Error
 	cacheCommands(dir, clientCommands) {
 		let cmds = 0;
 		try {
@@ -334,15 +336,16 @@ class Funcs {
 	 * * Users are able to do `~dragonalias` to see a list of their aliases, indexed. They will then do `~dragonalias <index>`, replacing `<index>` with the index of their choice, which means that the bot will switch their alias to whatever they had chosen.
 	 * @param {String} uid The ID of a Discord user whose dragon alias is to be fetched
 	 * @param {Client} client Discord.Client
-	 * @returns {Array<string|string, string}
+	 * @returns {Array<string, string[]>}}
 	 */
 	// (method) Funcs.getDragonAlias(uid: string, client: Client): Array<string | string, string>
 	async getDragonAlias(uid, client) {
-		const currAlias = await client.db.get("curralias" + uid) || "default";
+		const currAlias = (await client.db.get("curralias" + uid) || "default").toLowerCase();
+		console.log(currAlias);
 		if (currAlias) {
 			const aliases = require("./petaliases.json");
 			const petname = await client.db.get("petname" + uid);
-			const names = Object.keys(aliases);
+			const names = Object.keys(aliases).map((key) => key.toLowerCase());
 			if (names.includes(currAlias)) {
 				// petname takes priority over alias.DISPLAY_NAME, gives users more freedom.
 				return [petname || aliases[currAlias].DISPLAY_NAME, aliases[currAlias].EMOJIS];
@@ -617,7 +620,7 @@ config.doses = [
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has consumed a ${message.client.config.emoji.chill} and cleared all of their cooldowns!`),
+					.setDescription(`${message.author.tag} has consumed a ${message.client.config.statics.defaults.emoji.chill} and cleared all of their cooldowns!`),
 			],
 		});
 	}),
@@ -644,7 +647,7 @@ class ClientConfiguration extends Funcs {
 	constructor(client) {
 		super(client);
 		this.client = client;
-		this.owner = "501710994293129216";
+		this.owner = "504619833007013899";
 		this.statics = config;
 	}
 }
