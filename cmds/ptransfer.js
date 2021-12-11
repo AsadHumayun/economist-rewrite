@@ -7,7 +7,7 @@ module.exports = {
 	category: 'utl',
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply(`Please use the following format: \`${message.guild.prefix}transferitm <user> <item>\``);
-		const user = await client.config.fetchUser(args[0]).catch((x) => {});
+		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You must mention a user!")
 		let cst = await client.db.get("cst" + message.author.id);
 		let userCst = await client.db.get("cst" + user.id);
@@ -20,7 +20,7 @@ module.exports = {
 		const name = client.config.ditems[res].split(";")[1];
 		const role = client.config.ditems[res].split(";")[2];
 		const ss = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(user.id).catch((x) => {})
-		const authorSS = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(message.author.id).catch((x) => {});		
+		const authorSS = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(message.author.id).catch(() => {return;});		
 
 		if (!cst.includes(name)) return message.reply(`You don't currently possess a ${name} on this account; you cannot transfer it to others.`);
 		if (userCst.includes(name)) return message.reply(`That user already has ${name}.`);

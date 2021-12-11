@@ -35,7 +35,7 @@ module.exports = {
 		.addField("Reason", reason);
 		message.reply(dm);
 		member.send(dm)
-			.catch((x) => {});
+			.catch(() => {return;});
 		if ((amt * ms("1m")) >= 0x7FFFFFFF) return;
 		if (amt != 0) {
 			setTimeout(async() => {

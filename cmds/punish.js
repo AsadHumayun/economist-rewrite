@@ -9,7 +9,7 @@ module.exports = {
     cst: "tmod",
     async run(client, message, args) {
         if (args.length < 2) return message.reply("Usage: `" + message.guild.prefix + "punish <user> <punishment index> <reason>`; requires moderator.")
-        let user = await client.config.fetchUser(args[0]).catch((x) => {});
+        let user = await client.config.fetchUser(args[0]).catch(() => {return;});
         if (!user) return message.reply(`Unrecognised user "${args[0]}"`);
         if (isNaN(args[1])) return message.reply("Your supplied index must be a valid number.")
         const index = Number(args[1]);
@@ -44,7 +44,7 @@ module.exports = {
                     .addField("Moderator", `${message.author.tag}`, true)
                     .addField("Reason", Object.values(client.config.ofncs)[index - 1][0])
                 })
-                    .catch((x) => {});
+                    .catch(() => {return;});
                 
             }
             function warn() {
@@ -55,7 +55,7 @@ module.exports = {
                 .addField("Reason", Object.values(client.config.ofncs)[index - 1][0])
                 message.reply(em)
                 client.users.cache.get(user.id).send(em)
-                    .catch((x) => {});
+                    .catch(() => {return;});
             }
             if (level == 1) {
                 //spam

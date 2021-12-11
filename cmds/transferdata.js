@@ -8,9 +8,9 @@ module.exports = {
   cst: "tdat",
   async run(client, message, args) {
     if (args.length < 2) return message.reply("You must provide a source user as your first argument and a destination user as your second argument under the format: `" + message.guild.prefix + "transferdata <source user> <destination user>`")
-    let src = await client.config.fetchUser(args[0]).catch((x) => {});
+    let src = await client.config.fetchUser(args[0]).catch(() => {return;});
     if (!src) return message.reply(`"${args[0]}" is not recognised as a valid user`);
-    let dest = await client.config.fetchUser(args[1]).catch((x) => {});
+    let dest = await client.config.fetchUser(args[1]).catch(() => {return;});
     if (!dest) return message.reply(`"${args[1]}" is not recognised as a valid user`);
     const msg = await message.reply(`${client.config.emoji.loading} Transferring data from **${src.tag}** to **${dest.tag}**...`);
     Promise.all(

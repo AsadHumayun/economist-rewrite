@@ -7,7 +7,7 @@ module.exports = {
 	description: 'shows a user\'s profile',
 	async run(client, message, args) {
 		if (!args) args = [message.author.id]
-		let usr = await client.config.fetchUser(args[0]).catch((x) => {});
+		let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) usr = message.author;
 		let cmds = await client.db.get("cmds" + usr.id) || 1;
 		let color = await client.db.get('color' + usr.id) || client.config.defaultHexColor;
@@ -41,7 +41,7 @@ module.exports = {
 		.setDescription(bio.toString().length ? bio : null)
 		.setThumbnail(usr.displayAvatarURL({ dynamic: true }))
 		.addField("Roles", client.trim(message.guild.member(usr.id).roles.cache.map(x => x.toString()).join(', ') || "`None`", 1024))
-		.addField("Commands Used", message.author.com == 1 ? cmds : client.comma(cmds), true)
+		.addField("Commands Used", message.author.com == 1 ? cmds : client.config.comma(cmds), true)
 		.addField("Colour Preferences", color.split(";") || client.config.defaultHexColor, true)
 		.addField("Flags", flags)
 		if (mem) {

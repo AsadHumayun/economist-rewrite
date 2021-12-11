@@ -38,6 +38,6 @@ module.exports = {
 			.setDescription(`${client.config.statics.defaults.emoji.tick} ${usr.tag} has been warned and was sent the following message:`)
 		});
 		message.reply(emb);
-		await client.users.cache.get(usr.id).send(emb).catch((x) => {});
+		await client.users.cache.get(usr.id).send(emb).catch(() => {return;});
 	},
 };

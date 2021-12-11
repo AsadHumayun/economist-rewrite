@@ -19,7 +19,7 @@ if (!args.length) {
 		.setDescription(doMagic8BallVoodoo())
 	});
 }
-		let mem = await client.config.fetchUser(args[0]).catch((x) => {});
+		let mem = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!mem && args.length) {
 			return message.reply(``, {
 				embed: new Discord.MessageEmbed()

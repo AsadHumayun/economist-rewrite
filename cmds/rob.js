@@ -10,7 +10,7 @@ module.exports = {
   async run(client, message, args) {
     const result = Math.floor(Math.random(1) * 10);
     let cooldown = await client.db.get('robc' + message.author.id);
-		const data = client.cooldown(message.createdTimestamp, cooldown*client.config.exp);
+		const data = client.config.cooldown(message.createdTimestamp, cooldown*60_000);
 		if (data) {
 			return message.reply(`You must wait another ${data} before robbing someone again!`);
 		} else {
@@ -21,7 +21,7 @@ module.exports = {
       return message.reply("They don't have enough :dollar: in balance for you to rob!")
     }
     if (!args.length) return message.reply("You must specify a user who yo wish to rob!")
-    let usr = await client.config.fetchUser(args[0]).catch((x) => {});
+    let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
     if (!usr) return message.reply("Whoops! I can't find that user");
     if (message.author.id == usr.id) return message.reply(`You can't rob yourself!`);
     let cst = await client.db.get("cst" + usr.id) || "";
@@ -44,12 +44,12 @@ module.exports = {
     message.reply({
       embed: new MessageEmbed()
         .setColor(message.author.color)
-        .setDescription(`${message.author.tag} has robbed :dollar: ${message.author.com == 1 ? amt : client.comma(amt)} (${amt.toString().length} digits) from ${usr.tag}'s account`)
+        .setDescription(`${message.author.tag} has robbed :dollar: ${message.author.com == 1 ? amt : client.config.comma(amt)} (${amt.toString().length} digits) from ${usr.tag}'s account`)
     })
     usr.send({
       embed: new MessageEmbed()
         .setColor(message.author.color)
-        .setDescription(`${message.author.tag} has robbed :dollar: ${message.author.com == 1 ? amt : client.comma(amt)} (${amt.toString().length} digits) from ${usr.tag}'s account`)
+        .setDescription(`${message.author.tag} has robbed :dollar: ${message.author.com == 1 ? amt : client.config.comma(amt)} (${amt.toString().length} digits) from ${usr.tag}'s account`)
     }).catch((x) => console.log(x));
   } else {
 				//		stn: function (id, amt, client) {
@@ -61,6 +61,6 @@ module.exports = {
     });
     await client.db.set("stnb" + message.author.id, "arrested");
     };
-    await client.db.set(`robc${message.author.id}`, client.parseCd(message.createdTimestamp, ms("3h")));
+    await client.db.set(`robc${message.author.id}`, client.config.parseCd(message.createdTimestamp, ms("3h")));
   },
 };

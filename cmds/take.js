@@ -11,7 +11,7 @@ module.exports = {
 			return message.reply(`You must follow the following format: \`${message.guild.prefix}take <user> <...upgrade>\``);
 		};
 		const permission = args.slice(1).join(' ');
-		const usr = await client.config.fetchUser(args[0]).catch((x) => {});
+		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply("Try running the command again, this time actually ping a user llolololololl");
 
 		if (!isNaN(args[1])) {
@@ -23,7 +23,7 @@ module.exports = {
 			return message.reply({
 				embed: new Discord.MessageEmbed()
 				.setColor(message.author.color)
-				.setDescription(`:dollar: ${client.comma(amt)} have been removed from ${usr.tag}'s account`)					
+				.setDescription(`:dollar: ${client.config.comma(amt)} have been removed from ${usr.tag}'s account`)					
 			});			
 		};
 

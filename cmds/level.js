@@ -7,7 +7,7 @@ module.exports = {
 	description: "View your or someone else's level & XP (only shows info from support server)",
 	async run(client, message, args) {
 		if (!args.length) args = [message.author.id];
-		let user = await client.config.fetchUser(args[0]).catch((x) => {});
+		let user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) user = message.author;
 		let data = await client.db.get("xp" + message.author.id) || "1;0";
 				data = data.split(";");

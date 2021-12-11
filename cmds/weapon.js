@@ -6,7 +6,7 @@ module.exports = {
   description: "<description is hidden coz yk>",
   beta: true,
   async run(client, message, args) {
-    let user = await client.config.fetchUser(args[0]).catch((x) => {});
+    let user = await client.config.fetchUser(args[0]).catch(() => {return;});
     if (!user) user = message.author;
     let g = await client.db.get("wpn" + user.id) || "0;1;0;2-5;null;1;0;0;0";
     let data = client.wpnd(g);

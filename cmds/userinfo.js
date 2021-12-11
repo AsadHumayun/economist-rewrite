@@ -26,7 +26,7 @@ module.exports = {
 			return str;
 		};
 		if (!args.length) args = [message.author.id];
-		var user = await client.config.fetchUser(args[0]).catch((x) => {});
+		var user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		var member = await message.guild.members.fetch(user.id)
 			.catch((err) => {});
 		let flags = Object.keys(Discord.UserFlags.FLAGS).map(x => {

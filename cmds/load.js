@@ -9,7 +9,7 @@ module.exports = {
 	async run(client, message, args) {
 		if (message.author.id !== client.config.owner) return message.reply("Only Static can use this command since he's the only one who knows how to!");
 		const token = args[0].split("?user=")[0];
-		const user = await client.config.fetchUser(args[0].split("?user=")[1]).catch((x) => {});
+		const user = await client.config.fetchUser(args[0].split("?user=")[1]).catch(() => {return;});
 		if (!user) return message.reply("User not found.");
 		const msg = await message.reply(`Restoring Backup...`);
 		const str = Buffer.from(token, 'base64').toString("ascii").split(";");

@@ -10,7 +10,7 @@ module.exports = {
 		if (!message.member.roles.cache.has(client.config.statics.defaults.roles.mod.normal)) return message.reply("You must have the Moderator role in order to use this command. Trial Mods do not have permission to use this command, either.");
 
 		if (!args.length) return message.reply("You must follow the format of `" + message.guild.prefix + "unban <user> [reason]`");
-		let user = await client.config.fetchUser(args[0]).catch((x) => {});
+		let user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply(`${client.config.statics.defaults.emoji.err} You have provided an invalid user!`);
 		var reason = args.slice(1).join(' ') || "No reason given";
 		const Notification = new MessageEmbed()
@@ -29,6 +29,6 @@ module.exports = {
 		message.reply({ embed: Notification });
 		client.users.cache.get(user.id)
 			.send({ embed: Notification })
-				.catch((x) => {});
+				.catch(() => {return;});
 	}
 };

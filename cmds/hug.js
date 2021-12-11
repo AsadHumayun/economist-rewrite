@@ -13,7 +13,7 @@ module.exports = {
     if (message.guild.id != client.config.statics.supportServer && (!cst.includes("hug"))) {
       return;
     } else if (message.guild.id == client.config.statics.supportServer || (cst.includes("hug"))) {
-      const user = await client.config.fetchUser(args[0]).catch((x) => {});
+      const user = await client.config.fetchUser(args[0]).catch(() => {return;});
       if (!user) return message.reply(m);
       let hgs = await client.db.get("hgs" + user.id) || "0";
           hgs = Number(hgs);

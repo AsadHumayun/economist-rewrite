@@ -8,7 +8,7 @@ module.exports = {
   cst: "tmod",
   async run(client, message, args) {
     if (args.length < 2) return message.reply("Correct usage: `" + message.guild.prefix + "unpunish <user> <offence index>`; requires mod")
-    let user = await client.config.fetchUser(args[0]).catch((x) => {});
+    let user = await client.config.fetchUser(args[0]).catch(() => {return;});
     if (!user) return message.reply(`"${args[0]}" isn't a valid user??`);
     let ofncs = await client.db.get("ofncs" + user.id) || "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0";
         ofncs = ofncs.split(";");
@@ -30,7 +30,7 @@ module.exports = {
     async function unmute() {
       if (!mem.roles.cache.has(client.config.roles.muted)) return;
       mem.roles.remove(client.config.roles.muted)
-        .catch((x) => {});
+        .catch(() => {return;});
       message.reply({
         embed: new MessageEmbed()
         .setColor(message.author.color)
@@ -44,7 +44,7 @@ module.exports = {
       message.reply(e)
       user.send({
         embed: e
-      }).catch((x) => {});
+      }).catch(() => {return;});
     }
     if (level == 1 && (ofncs[index - 1] < 2)) {
       await unmute();

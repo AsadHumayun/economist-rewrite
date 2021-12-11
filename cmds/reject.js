@@ -10,7 +10,7 @@ module.exports = {
 		if (!args.length) return message.reply("You must provide a bug ID of the bug you wish to reject")
 		const id = args[0];
 		const reason = args.slice(1).join(' ');
-		message.delete().catch((x) => {});
+		message.delete().catch(() => {return;});
 		const val = await client.db.get(`bugr${id}`);
 		if (!val) return message.reply(`${client.config.statics.defaults.emoji.err} No bug report with ID "${id}" was found.`);
 		client.channels.cache.get(client.config.channels.bug)
@@ -32,6 +32,6 @@ module.exports = {
 		await client.db.delete(`bugr${id}`);
 		client.users.cache.get(val.author)
 			.send(`Your bug (${id}) has been rejected by ${message.author.tag}\n${reason ? `${message.author.tag}'s Comments: ${reason}` : ""}`)
-				.catch((x) => {});
+				.catch(() => {return;});
 	},
 };
