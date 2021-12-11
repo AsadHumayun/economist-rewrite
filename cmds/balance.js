@@ -1,7 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-	
 	name: "balance",
 	category: "ecn",
 	aliases: ["balance", "bal", "money"],
