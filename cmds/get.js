@@ -16,15 +16,7 @@ module.exports = {
 		const key = args.slice(1).join(" ");
 		if (!key) return message.reply("You must provide a `<key>`; refer to <#726059916791644291> for further details");
 		let x = await client.db.get(key + user.id);
-		if (!x) {
-			return message.reply({
-				embeds: [
-					new Discord.MessageEmbed()
-						.setColor(client.config.colors.red)
-						.setDescription("That value does not exist"),
-				],
-			});
-		}
+		if (!x) return message.reply("null");
 		const ot = typeof x;
 		if (typeof x == "object") x = "```json\n" + JSON.stringify(x) + "\n```";
 		if (x.toString().length <= 4069 && (!cst.includes("tgt"))) {
