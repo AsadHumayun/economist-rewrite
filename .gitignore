@@ -1,6 +1,4 @@
 .VSCodeCounter/
-node_modules/
 .env
 db.sqlite
-.env
 economist.pem
