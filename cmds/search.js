@@ -43,7 +43,7 @@ module.exports = {
 		await client.db.set("pet" + message.author.id, data.join(';'))
 	};
 	let cd = await client.db.get("srchc" + message.author.id);
-	let scnd = client.cooldown(message.createdTimestamp, cd*client.config.exp);
+	let scnd = client.config.cooldown(message.createdTimestamp, cd*60_000);
 	if (scnd) {
 		return message.reply(`Please wait another ${scnd} before searching again!`);
 	};
@@ -63,8 +63,8 @@ module.exports = {
 		if (en - consumed < 0) {
 			return message.reply("🥱 I'm too tired to go searching right now! Why not feed me by using `" + message.guild.prefix + "feed`?")
 		};
-		//parseFloat(((message.createdTimestamp + ms("20s"))/client.config.exp)).toFixed(2)
-		await client.db.set("srchc" + message.author.id, client.parseCd(message.createdTimestamp, ms("20s"), true));		
+		//parseFloat(((message.createdTimestamp + ms("20s"))/60_000)).toFixed(2)
+		await client.db.set("srchc" + message.author.id, client.config.parseCd(message.createdTimestamp, ms("20s"), true));		
 		let f = await client.db.get("fsh" + message.author.id) || "0;0;0;0;0;0";
 				f = f.split(";");
 		const fishes = [':dolphin:',':shark:',':blowfish:',':tropical_fish:',':fish:'];		
