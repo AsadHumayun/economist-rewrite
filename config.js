@@ -341,7 +341,6 @@ class Funcs {
 	// (method) Funcs.getDragonAlias(uid: string, client: Client): Array<string | string, string>
 	async getDragonAlias(uid, client) {
 		const currAlias = (await client.db.get("curralias" + uid) || "default").toLowerCase();
-		console.log(currAlias);
 		if (currAlias) {
 			const aliases = require("./petaliases.json");
 			const petname = await client.db.get("petname" + uid);
