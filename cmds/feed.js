@@ -16,7 +16,7 @@ module.exports = {
 
 		let cooldown = await client.db.get('fdc' + message.author.id);
 		if (cooldown && (!message.author.cst.includes("maxdragon888"))) {
-			const data = client.cooldown(message.createdTimestamp, cooldown*client.config.exp);
+			const data = client.config.cooldown(message.createdTimestamp, cooldown*60_000);
 			if (data) {
 				return message.reply(`Your dragon is convulsing its wings in annoyance; you should try again in ${data}`);
 			};
@@ -78,7 +78,7 @@ module.exports = {
 			let cd = Math.floor(((30 / Number(pet[9])) * 0.75 + 5));
 			let time = cd;
 					time *= 60000	
-			if (!message.author.cst.includes("maxdragon888")) await client.db.set(`fdc${message.author.id}`, client.parseCd(message.createdTimestamp, time));
+			if (!message.author.cst.includes("maxdragon888")) await client.db.set(`fdc${message.author.id}`, client.config.parseCd(message.createdTimestamp, time));
 		};
 	},
 };
