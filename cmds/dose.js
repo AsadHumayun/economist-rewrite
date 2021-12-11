@@ -9,7 +9,7 @@ module.exports = {
 	async run(client, message, args) {
 		const dose = (args[0] || "").toLowerCase();
 		const res = client.config.doses.findIndex((d) => dose.startsWith(d[0].split(";")[0]));
-		if (res < 0) return message.reply(`The different types of consumables are: ${client.list(client.config.statics.doses.map((d) => d[0].split(";")[1]))}`);
+		if (res < 0) return message.reply(`The different types of consumables are: ${client.config.list(client.config.statics.doses.map((d) => d[0].split(";")[1]))}`);
 		const active = await client.db.get(`dose${res}${message.author.id}`);
 		if ((message.createdTimestamp / 60_000) < active) return message.reply(`Your ${client.config.doses[res][0].split(";")[5]} is active for another ${client.config.cooldown(message.createdTimestamp, active * 60_000)} after your last dose.`);
 		const lastUsed = await client.db.get(`${client.config.doses[res][0].split(";")[3]}${message.author.id}`);

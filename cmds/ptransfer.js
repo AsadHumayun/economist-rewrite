@@ -15,7 +15,7 @@ module.exports = {
 		userCst = userCst ? userCst.split(";") : [];
 		const item = args[1].toLowerCase();
 		let res = client.config.ditems.findIndex((i) => item.startsWith(i.split(";")[0]));
-		if (res < 0) return message.reply(`The different types of ditems which you can transfer are: ${client.list(client.config.ditems.map((i) => i.split(";")[1]))}`)		
+		if (res < 0) return message.reply(`The different types of ditems which you can transfer are: ${client.config.list(client.config.ditems.map((i) => i.split(";")[1]))}`)		
 
 		const name = client.config.ditems[res].split(";")[1];
 		const role = client.config.ditems[res].split(";")[2];

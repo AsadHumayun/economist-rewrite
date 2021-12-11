@@ -42,7 +42,7 @@ module.exports = {
 		let input = (args[0] || "").toLowerCase();
 		let foods = client.config.foods;
 		let type = foods[Object.keys(foods).find((x) => input.startsWith(x))];
-		if (!type || (!args.length)) return message.reply(`The different types of food are ${client.list(Object.values(foods).map((x) => x.name))}`)
+		if (!type || (!args.length)) return message.reply(`The different types of food are ${client.config.list(Object.values(foods).map((x) => x.name))}`)
 		if (!message.author.cst.includes("maxdragon888")) {
 			let health = Number(pet[1]);
 			let en = Number(pet[2]);

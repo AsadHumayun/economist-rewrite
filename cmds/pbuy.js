@@ -14,7 +14,7 @@ module.exports = {
 				cst = cst ? cst.split(";") : [];
 		const item = args[0].toLowerCase();
 		let res = client.config.ditems.findIndex((i) => item.startsWith(i.split(";")[0]));
-		if (res < 0) return message.reply(`The different types of ditems which you can purchase are: ${client.list(client.config.ditems.map((i) => i.split(";")[1]))}`);
+		if (res < 0) return message.reply(`The different types of ditems which you can purchase are: ${client.config.list(client.config.ditems.map((i) => i.split(";")[1]))}`);
 
 		const name = client.config.ditems[res].split(";")[1];
 		if (cst.includes(name)) return message.reply(`You already have a \`${name}\` on this account.`);		

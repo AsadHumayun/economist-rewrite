@@ -13,7 +13,7 @@ module.exports = {
 		data = data.split(';');
 		let stat = (args[0] || "").toLowerCase();
 		let Stat = client.config.statics.upgr.find((x) => stat.startsWith(x.split(";")[0]));
-		if (!Stat) return message.reply(`The different types of stats are: ${client.list(client.config.statics.upgr.map((x) => x.split(";")[1]))}`);		
+		if (!Stat) return message.reply(`The different types of stats are: ${client.config.list(client.config.statics.upgr.map((x) => x.split(";")[1]))}`);		
 		Stat = Stat.split(";");
 		const currAlias = await client.db.get("curralias" + message.author.id) || "default";
 		let emojis;

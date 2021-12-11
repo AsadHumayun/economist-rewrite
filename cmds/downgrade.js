@@ -21,7 +21,7 @@ module.exports = {
 		data = data.split(";");
 		const stat = (args[0] || "").toLowerCase();
 		let Stat = client.config.statics.upgr.find((x) => stat.startsWith(x.split(";")[0]));
-		if (!Stat) return message.reply(`The different types of stats are: ${client.list(client.config.statics.upgr.map((x) => x.split(";")[1]))}`);
+		if (!Stat) return message.reply(`The different types of stats are: ${client.config.list(client.config.statics.upgr.map((x) => x.split(";")[1]))}`);
 		Stat = Stat.split(";");
 		const alias = await client.config.getDragonAlias(message.author.id, client);
 		data[4] = Number(data[4]) + 1;
