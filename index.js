@@ -699,8 +699,8 @@ client.on("messageCreate", async (message) => {
 		LOG.forEach(async (cntnt) => {
 			await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
 		});
-    console.log(command.logAsAdminCommand || (command.cst == "administrator132465798"))
-		if (command.logAsAdminCommand || (command.cst == "administrator132465798")) {
+
+    if (command.logAsAdminCommand || (command.cst == "administrator132465798")) {
 			const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
 			if (!fs.existsSync(`./.adminlogs/${today}`)) {
 				const b = Date.now();
