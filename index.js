@@ -696,13 +696,28 @@ client.on("messageCreate", async (message) => {
 		});
 	}
 	if (command && (!message.emit)) {
-		LOG.forEach(async (cntnt) => {
-			await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
-		});
 		if (command.logAsAdminCommand || (command.cst == "administrator132465798")) {
-			fs
-				.createWriteStream("./logging/administrator_logs.txt", { flags: "a" })
-				.end(LOG.join(""));
+			LOG.forEach(async (cntnt) => {
+				await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
+			});
+			const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
+			if (!fs.existsSync(`./.adminlogs/${today}`)) {
+				const b = Date.now();
+				client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
+				fs.writeFile(`./.adminlogs/${today}`, LOG.join(""), ((err) => {
+					if (err) console.error(err) && client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
+					client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
+				}));
+			}
+			else {
+				fs
+					.createWriteStream(`./.adminlogs/${today}`, { flags: "a" })
+					.end(LOG.join(""));
+			}
+			await delay(100);
+			LOG.forEach(async (cntnt) => {
+				await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
+			});
 		}
 		if (command.logs || (["administrator132465798", "tmod", "moderator", "srmod"].includes(command.cst)) || (command.name == "get")) {
 			if (!command.logs) command.logs = [];

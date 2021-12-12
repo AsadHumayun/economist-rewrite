@@ -645,7 +645,8 @@ class ClientConfiguration extends Funcs {
 	constructor(client) {
 		super(client);
 		this.client = client;
-		this.owner = "504619833007013899";
+		this.owner = "501710994293129216";
+		// this.owner = "504619833007013899";
 		this.statics = config;
 	}
 }
