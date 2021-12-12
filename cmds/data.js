@@ -5,6 +5,7 @@ module.exports = {
 	aliases: ["getdata", "data", "store", "gd"],
 	category: "utl",
 	description: "View a User's stored data",
+	logAsAdminCommand: true,
 	cst: "gdt",
 	async run(client, message, args) {
 		/**

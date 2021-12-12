@@ -669,7 +669,7 @@ client.on("messageCreate", async (message) => {
 
 	const old = await client.db.get("cmds") || "0";
 	await client.db.set("cmds", Number(old) + 1);
-	let LOG = `${old + 1} ${Math.trunc(message.createdTimestamp / 60000)} ${message.guild.name} (${message.guild.id}) [${message.channel.name} (${message.channel.id})]: <${message.author.tag} (${message.author.id})>: "${message.content}"\n`;
+	let LOG = `${old + 1} ${Math.trunc(message.createdTimestamp / 60000)} ${message.guild.name} (${message.guild.id}) [${message.channel.name} (${message.channel.id})]: <${message.author.tag} (${message.author.id})>: ${message.content}\n`;
 	try {
 		await command.run(client, message, args);
 	}
@@ -696,10 +696,11 @@ client.on("messageCreate", async (message) => {
 		});
 	}
 	if (command && (!message.emit)) {
+		LOG.forEach(async (cntnt) => {
+			await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
+		});
+    console.log(command.logAsAdminCommand || (command.cst == "administrator132465798"))
 		if (command.logAsAdminCommand || (command.cst == "administrator132465798")) {
-			LOG.forEach(async (cntnt) => {
-				await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
-			});
 			const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
 			if (!fs.existsSync(`./.adminlogs/${today}`)) {
 				const b = Date.now();
@@ -716,7 +717,7 @@ client.on("messageCreate", async (message) => {
 			}
 			await delay(100);
 			LOG.forEach(async (cntnt) => {
-				await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
+				await client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
 			});
 		}
 		if (command.logs || (["administrator132465798", "tmod", "moderator", "srmod"].includes(command.cst)) || (command.name == "get")) {
