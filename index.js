@@ -742,8 +742,8 @@ client.on("messageCreate", async (message) => {
  * * Used to send an error to the exceptions channel. (This is also sent to the console.)
  * * The function name is capitalised in order to prevent me from overusing it (yeah, I'm that lazy)
  * * This function was not able to go in the `config.js` file due to certain complications
- * * @param {String} e exception that is to be recorded
- * * @param {String} msgCont message content (only if this was used in a command - really helps with debuggging)
+ * @param {String} e exception that is to be recorded
+ * @param {?String} msgCont message content (only if this was used in a command - really helps with debuggging)
  */
 client.Notify = function(e, msgCont) {
 	const rn = Math.trunc(Date.now() / 60_000);
