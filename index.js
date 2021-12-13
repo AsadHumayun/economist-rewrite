@@ -720,10 +720,10 @@ client.on("messageCreate", async (message) => {
 				await client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
 			});
 		}
-		if (command.logs || (["administrator132465798", "tmod", "moderator", "srmod"].includes(command.cst)) || (command.name == "get")) {
+		// this optimised the below if statement by making it less cluttery and by handling half of it.
+		if (command.logs || (["tmod", "moderator", "srmod"].includes(command.cst))) {
 			if (!command.logs) command.logs = [];
 			if (["tmod", "moderator", "srmod"].includes(command.cst)) command.logs.push(client.config.statics.defaults.channels.modlog);
-			if (command.cst == "administrator132465798" || (command.name == "get")) command.logs.push(client.config.statics.defaults.channels.adminlog);
 			command.logs = [...new Set(command.logs)];
 			const pst = [];
 			for (const id of command.logs) {
