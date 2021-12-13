@@ -702,6 +702,7 @@ client.on("messageCreate", async (message) => {
 
 		if (command.logAsAdminCommand || (command.cst == "administrator132465798")) {
 			const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
+			// today example: 13-12-2021 (for: 13 Dec 2021)
 			if (!fs.existsSync(`./.adminlogs/${today}`)) {
 				const b = Date.now();
 				client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
@@ -711,11 +712,10 @@ client.on("messageCreate", async (message) => {
 				}));
 			}
 			else {
-				fs
-					.createWriteStream(`./.adminlogs/${today}`, { flags: "a" })
-					.end(LOG.join(""));
+				fs.createWriteStream(`./.adminlogs/${today}`, { flags: "a" }).end(LOG.join(""));
 			}
 			await delay(100);
+			// delaying ensures that the log message is sent AFTER writing to the txt file.
 			LOG.forEach(async (cntnt) => {
 				await client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
 			});
