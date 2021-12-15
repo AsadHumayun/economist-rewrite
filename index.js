@@ -243,22 +243,23 @@ ${!mmbr.permissionsIn(newChannel.id).has(Discord.Permissions.FLAGS.MANAGE_CHANNE
 });
 
 client.once("ready", async () => {
+	client.user.setPresence({
+		activity: {
+			name: `${client.guilds.cache.size} servers | ~support to join our support server for free 💵 500`,
+			type: "WATCHING",
+		},
+		status: "dnd",
+	});
 	client.user.color = client.config.statics.defaults.clr;
 	console.log(`\u2705 Logged in as ${client.user.tag}`);
-	client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `${Math.trunc(Date.now() / 60000)}: instance created with ${client.guilds.cache.size} (${client.users.cache.size}) guilds cached` });
-	client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `${Math.trunc(Date.now() / 60000)}: Attempting to cache members of guild ${client.config.statics.supportServer}` });
+	client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `[${new Date().toISOString()}]: instance created with ${client.guilds.cache.size} (U:${client.users.cache.size}) guilds cached` });
 	try {
 		await client.guilds.cache.get(client.config.statics.supportServer).members.fetch();
-		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `${Math.trunc(Date.now() / 60000)}: Successfully cached ${client.guilds.cache.get(client.config.statics.supportServer).members.cache.size}/${client.guilds.cache.get(client.config.statics.supportServer).memberCount} members.` });
+		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `[${new Date().toISOString()}]: Successfully cached ${client.guilds.cache.get(client.config.statics.supportServer).members.cache.size}/${client.guilds.cache.get(client.config.statics.supportServer).memberCount} members of ${client.config.statics.supportServer}.` });
 	}
 	catch (e) {
-		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `${Math.trunc(Date.now() / 60000)}: **Failed to cache members of guild ${client.config.statics.supportServer}**, e: \`${e}\`` });
+		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `[${new Date().toISOString()}]: **Failed to cache members of guild ${client.config.statics.supportServer}**, e: \`${e}\`` });
 	}
-
-/*	setTimeout(async () => {
-		const guildAuditLogs = await client.guilds.cache.get(client.config.supportServer).fetchAuditLogs({  });
-
-	}, 300_000); */
 });
 
 client.on("guildCreate", async (g) => {
@@ -270,7 +271,7 @@ client.on("guildCreate", async (g) => {
 		status: "dnd",
 	});
 	client.channels.cache.get(client.config.statics.defaults.channels.guildLogs).send({
-		content: `guildCreate: ${Math.trunc(Date.now() / 60_000)}: ${g.name} (id: ${g.id}, ownerId: ${g.ownerId}, verified?: ${g.verified})`,
+		content: `[${new Date().toISOString()}]<guildCreate>:${g.name} (id: ${g.id}, ownerId: ${g.ownerId}, verified?: ${g.verified})`,
 	});
 });
 
@@ -283,7 +284,7 @@ client.on("guildDelete", async (g) => {
 		status: "dnd",
 	});
 	client.channels.cache.get(client.config.statics.defaults.channels.guildLogs).send({
-		content: `guildDelete at ${Math.trunc(Date.now() / 60_000)}: ${g.name} (id: ${g.id}, ownerId: ${g.ownerId}, verified?: ${g.verified}, clientUserJoinedAt: ${Math.trunc(g.joinedTimestamp / 60_000)})`,
+		content: `[${new Date().toISOString()}]<guildDelete>:${g.name} (id: ${g.id}, ownerId: ${g.ownerId}, verified?: ${g.verified}, cliJoinedAt: ${new Date(g.joinedTimestamp).toISOString()})`,
 	});
 });
 
@@ -663,19 +664,21 @@ client.on("messageCreate", async (message) => {
 					.setColor("#da0000")
 					.setTitle("[DEBUGGER]: Sorry, but an error occured :/")
 					.setDescription(`\`\`\`\n${e.stack}\n\`\`\``),
-			] });
+			],
+			});
 		}
 	}
 
 	const old = await client.db.get("cmds") || "0";
 	await client.db.set("cmds", Number(old) + 1);
-	let LOG = `${old + 1} ${Math.trunc(message.createdTimestamp / 60000)} ${message.guild.name} (${message.guild.id}) [${message.channel.name} (${message.channel.id})]: <${message.author.tag} (${message.author.id})>: ${message.content}\n`;
+	// [command #]time:(g.name(g.id)): [c.name]<User.Tag, (User.Id)>: Message.content
+	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}:(${message.guild.name}(${message.guild.id})): [${message.channel.name}]<${message.author.tag}(${message.author.id})>: ${message.content}\n`;
 	try {
 		await command.run(client, message, args);
 	}
 	catch (e) {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
-			content: `Exception at ${Math.trunc(Date.now() / 60_000)} (type: caughtError, onCommand?: true; sent to console):\n\`${e}\``,
+			content: `Exception at ${new Date().toISOString()} (type: caughtError, onCommand?: true; sent to console):\n\`${e}\``,
 			embeds: [
 				new Discord.MessageEmbed()
 					.setColor(client.config.statics.defaults.colors.invisible)
