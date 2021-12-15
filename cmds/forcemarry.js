@@ -1,25 +1,26 @@
-const { MessageEmbed, escapeMarkdown } = require('discord.js');
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-	name: 'forcemarry',
+	name: "forcemarry",
 	aliases: ["forcemarry", "forcem", "fm"],
-	description: 'force-marry 2 users.',
-	category: 'own',
+	description: "force-marry 2 users.",
+	category: "own",
 	cst: "fm",
+	logAsAdminCommand: true,
 	async run(client, message, args) {
-		if (!args.length || (args.length < 2)) {
-			return message.reply('You must mention 2 users in order for this command to function correctly!');
-		};
-		const user1 = await client.config.fetchUser(args[0]);
-		if (!user1) return message.reply("Try running the command again but this time actually ping user1")
-		const user2 = await client.config.fetchUser(args[1]);
-		if (!user2) return message.reply("Try running the command again but this time actually ping user2");
-		await client.db.set("spouse" + user1.id, user2.id);
-		await client.db.set("spouse" + user2.id, user1.id);
+		if (args.length < 2) return message.reply("You must mention two users in order for this command to work!");
+		const u1 = await client.config.fetchUser(args[0]);
+		if (!u1) return message.reply({ content: `Invalid identifier for user1: "${args[0]}"`, allowedMentions: { parse: [] } });
+		const u2 = await client.config.fetchUser(args[1]);
+		if (!u2) return message.reply({ content: `Invalid identifier for user2: "${args[1]}"`, allowedMentions: { parse: [] } });
+		await client.db.set("spse" + u1.id, u2.id);
+		await client.db.set("spse" + u2.id, u1.id);
 		message.reply({
-			embed: new MessageEmbed()
-			.setColor(message.author.color)
-			.setDescription(`${client.config.statics.defaults.emoji.tick} ${user1.tag} is now married to ${user2.tag}`)
-		})		
-	}
-}
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setDescription(`:two_hearts: ${u1.tag} is now married to ${u2.tag}!`),
+			],
+		});
+	},
+};
