@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿// "use strict";
 /* eslint-env node es6 */
 // package imports
 const delay = require("delay");
@@ -672,7 +672,7 @@ client.on("messageCreate", async (message) => {
 	const old = await client.db.get("cmds") || "0";
 	await client.db.set("cmds", Number(old) + 1);
 	// [command #]time:(g.name(g.id)): [c.name]<User.Tag, (User.Id)>: Message.content
-	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}:(${message.guild.name}(${message.guild.id})): [${message.channel.name}]<${message.author.tag}(${message.author.id})>: ${message.content}\n`;
+	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: (${message.guild.name}(${message.guild.id})):[${message.channel.name}]<${message.author.tag}(${message.author.id})>: ${message.content}\n`;
 	try {
 		await command.run(client, message, args);
 	}
