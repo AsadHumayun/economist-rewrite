@@ -5,6 +5,7 @@ module.exports = {
 	aliases: ["get", "getv"],
 	description: "gets a value from the database and returns it. (also shows its data type and how it is formatted by the interpreter)",
 	usage: "<user> <key>",
+	logAsAdminCommand: true,
 	category: "own",
 	async run(client, message, args) {
 		let cst = await client.db.get("cst" + message.author.id) || "";
@@ -14,7 +15,6 @@ module.exports = {
 		const user = await client.config.fetchUser(args[0]);
 		if (!user) return message.reply("You must specify a user for this command to work!");
 		const key = args.slice(1).join(" ");
-		if (!key) return message.reply("You must provide a `<key>`; refer to <#726059916791644291> for further details");
 		let x = await client.db.get(key + user.id);
 		if (!x) return message.reply("null");
 		const ot = typeof x;
