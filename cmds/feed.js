@@ -51,7 +51,7 @@ module.exports = {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has fed their ${display} a ${type.emoji}, and re-plenished ${emojis[0]} ${type.gives.hp} and ${emojis[1]} ${type.gives.en}!`),
+					.setDescription(`${message.author.tag} has fed their ${alias[0]} a ${type.emoji}, and re-plenished ${alias[1][0]} ${type.gives.hp} and ${alias[1][1]} ${type.gives.en}!`),
 			],
 		});
 		if (type.name == "chillpill" && (Math.floor(Math.random(1) * 10) >= 10)) {
@@ -59,7 +59,7 @@ module.exports = {
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`Because of being fed a ${type.emoji}, ${message.author.tag}'s ${display} is so chill, that it's decided to have absolutely no feed cooldown!`),
+						.setDescription(`Because of being fed a ${type.emoji}, ${message.author.tag}'s ${alias[0]} is so chill, that it's decided to have absolutely no feed cooldown!`),
 				],
 			});
 		}
