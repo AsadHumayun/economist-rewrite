@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { inspect } = require("util");
 
 module.exports = {
 	name: "eval",
@@ -42,7 +43,8 @@ module.exports = {
 			if (code.includes("client[")) return msg.edit("client[ cannot be evaled!");
 			if (code.includes("client [")) return msg.edit("client [ cannot be evaled!");
 			const ev = eval(args.join(" "));
-			const cleaned = await clean(ev);
+			let cleaned = await clean(ev);
+			cleaned = inspect(cleaned, { depth: 0 });
 			msg.edit({
 				content: null,
 				embeds: [
