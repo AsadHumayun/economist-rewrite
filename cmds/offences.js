@@ -18,9 +18,7 @@ module.exports = {
 			ofncs = [ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ];
 		}
 		if (message.content.toLowerCase().endsWith("-r")) {
-			return message.reply(
-				"```\n[" + ofncs.map(x => x).join(", ") + "]\n```");
-			// return message.reply(client.config.Inspect(ofncs).replace(/\n/g, " "), { code: "" })
+			return message.reply("```\n[" + ofncs.map(x => x).join(", ") + "]\n```");
 		}
 		message.reply({
 			embeds: [
@@ -31,6 +29,7 @@ module.exports = {
 						`
 									\`${message.guild.prefix}punish <user> <offence>\` to punish a user for an offence;
 									\`${message.guild.prefix}unpunish <user> <offence>\` to unpunish a user for an offence.
+									
 									${Object.entries(client.config.statics.defaults.ofncs).map((ofnc, index) => `[${ofnc[0]}]: ${ofnc[1][0]} - ${ofncs[index]}`).join("\n")}
 						`,
 					),
