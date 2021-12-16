@@ -1,29 +1,17 @@
-const { MessageEmbed } = require('discord.js');
-
 module.exports = {
-	name: 'unstun',
-	aliases: ['unstun', 'un-stun'],
+	name: "unstun",
+	aliases: ["unstun", "un-stun"],
 	cst: "administrator132465798",
-	category: 'own',
-	description: 'unstuns a user, allowing them to use commands',
+	category: "own",
+	description: "unstuns a user, allowing them to use commands",
 	async run(client, message, args) {
-		if(!args.length) return message.reply("You must specify the user to unstun!");
-		let usr;
-		try {
-			usr = await client.users.fetch(client.getID(args[0]))
-		} catch (err) {
-			usr = await client.users.fetch(args[0]).catch((x) => message.reply('invalid user '))
-		};
-		if(!usr) return;
-		let Data = await client.db.get('stn' + usr.id);
-		if (!Data) return message.reply(`${usr.tag} is not stunned`)
-		await client.db.delete('stn' + usr.id);
+		if (!args.length) return message.reply("You must specify the user to unstun!");
+		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
+		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
+		const s = await client.db.get("stn" + usr.id);
+		if (!s) return message.reply(`${usr.tag} is not stunned (stn=${s})`);
+		await client.db.delete("stn" + usr.id);
 		await client.db.delete("dns" + usr.id);
-		await client.db.delete("stnb" + usr.id);
-		message.reply({
-			embed: new MessageEmbed()
-			.setColor(message.author.color)
-			.setDescription(`Successfully unstunned ${usr.tag}`)
-		})
-	} 
-}
+		message.reply(`Successfully removed [stn, dns] ${usr.tag}`);
+	},
+};
