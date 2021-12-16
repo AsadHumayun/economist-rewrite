@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const Discord = require("discord.js");
 const { inspect } = require("util");
 
 module.exports = {
@@ -48,7 +48,7 @@ module.exports = {
 			msg.edit({
 				content: null,
 				embeds: [
-					new MessageEmbed()
+					new Discord.MessageEmbed()
 						.setColor(client.config.statics.defaults.colors.green)
 						.setTitle("Successfully evaluated in " + (Date.now() - s) + " ms")
 						.setFooter(new Date(message.createdTimestamp).toISOString())
@@ -60,7 +60,7 @@ module.exports = {
 			msg.edit({
 				content: null,
 				embeds: [
-					new MessageEmbed()
+					new Discord.MessageEmbed()
 						.setTitle("Error")
 						.setDescription(`\`\`\`\n${err}\n\`\`\``)
 						.setColor([255, 0, 0])
