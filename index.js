@@ -27,7 +27,7 @@ const client = new Discord.Client({
 	}),
 	allowedMentions: { parse: ["users", "roles"], repliedUser: false },
 	intents: new Discord.Intents().add([Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_MEMBERS]),
-	presence: {
+/*	presence: {
 		// (property) PresenceData.activities?: Discord.ActivitiesOptions[]
 		activities: [
 			{
@@ -37,7 +37,7 @@ const client = new Discord.Client({
 		],
 		status: "dnd",
 		afk: true,
-	},
+	},*/
 });
 
 client.db = new keyv("sqlite://./db.sqlite");
@@ -278,7 +278,7 @@ client.on("guildCreate", async (g) => {
 client.on("guildDelete", async (g) => {
 	client.user.setPresence({
 		activity: {
-			name: `${client.guilds.cache["size"]} servers | ~support to join our support server for free 💵 500`,
+			name: `${client.guilds.cache.size} guilds | ~support to join our support server for free 💵 500`,
 			type: "WATCHING",
 		},
 		status: "dnd",
@@ -354,8 +354,7 @@ client.on("guildMemberAdd", async member => {
 		if (member.guild.roles.cache.get(f)) rle.push(f);
 	}
 	member.roles.add(rle)
-		// eslint-disable-next-line no-empty-function
-		.catch(() => {return;}); // eslint-disable-line no-unused-vars
+		.catch(() => {return;});
 	let chn = await client.db.get("chnl" + member.id) || undefined;
 	if (chn) {
 		chn = client.config.listToMatrix(chn.split(";"), 4);
@@ -669,10 +668,10 @@ client.on("messageCreate", async (message) => {
 		}
 	}
 
-	const old = await client.db.get("cmds") || "0";
-	await client.db.set("cmds", Number(old) + 1);
+	const old = await client.db.get("cmds" + client.user.id) || "0";
+	await client.db.set("cmds" + client.user.id, Number(old) + 1);
 	// [command #]time:(g.name(g.id)): [c.name]<User.Tag, (User.Id)>: Message.content
-	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: (${message.guild.name}(${message.guild.id})):[${message.channel.name}]<${message.author.tag}(${message.author.id})>: ${message.content}\n`;
+	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: (${message.guild.name}(${message.guild.id}))[${message.channel.name}]<${message.author.tag}(${message.author.id})>: ${message.content}\n`;
 	try {
 		await command.run(client, message, args);
 	}
@@ -699,6 +698,7 @@ client.on("messageCreate", async (message) => {
 		});
 	}
 	if (command && (!message.emit)) {
+		// prevents commands executed by another using from being logged. Helps cut down on spam and unnecessary logging.
 		LOG.forEach(async (cntnt) => {
 			await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
 		});
