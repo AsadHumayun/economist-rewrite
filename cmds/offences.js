@@ -14,12 +14,8 @@ module.exports = {
 		for (const x in ofncs) {
 			ofncs[x] = Number(ofncs[x]);
 		}
-		if (user.bot) {
-			ofncs = [ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ];
-		}
-		if (message.content.toLowerCase().endsWith("-r")) {
-			return message.reply("```\n[" + ofncs.map(x => x).join(", ") + "]\n```");
-		}
+		if (user.bot) ofncs = ofncs.map(() => -1);
+		if (message.content.toLowerCase().endsWith("-r")) return message.reply("```\n[" + ofncs.join(", ") + "]\n```");
 		message.reply({
 			embeds: [
 				new MessageEmbed()
@@ -27,10 +23,10 @@ module.exports = {
 					.setTitle(`${user.tag}'s Offences [${ofncs.reduce((a, b) => a + b, 0)}]`)
 					.setDescription(
 						`
-									\`${message.guild.prefix}punish <user> <offence>\` to punish a user for an offence;
-									\`${message.guild.prefix}unpunish <user> <offence>\` to unpunish a user for an offence.
-									
-									${Object.entries(client.config.statics.defaults.ofncs).map((ofnc, index) => `[${ofnc[0]}]: ${ofnc[1][0]} - ${ofncs[index]}`).join("\n")}
+\`${message.guild.prefix}punish <user> <offence>\` to punish a user for an offence;
+\`${message.guild.prefix}unpunish <user> <offence>\` to unpunish a user for an offence.
+
+${Object.entries(client.config.statics.defaults.ofncs).map((ofnc, index) => `[${ofnc[0]}]: ${ofnc[1][0]} - ${ofncs[index]}`).join("\n")}
 						`,
 					),
 			],
