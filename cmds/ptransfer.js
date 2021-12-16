@@ -19,7 +19,7 @@ module.exports = {
 
 		const name = client.config.ditems[res].split(";")[1];
 		const role = client.config.ditems[res].split(";")[2];
-		const ss = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(user.id).catch((x) => {})
+		const ss = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(user.id).catch(() => {return;})
 		const authorSS = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(message.author.id).catch(() => {return;});		
 
 		if (!cst.includes(name)) return message.reply(`You don't currently possess a ${name} on this account; you cannot transfer it to others.`);
@@ -29,10 +29,10 @@ module.exports = {
 		await client.db.set("cst" + message.author.id, cst.join(";"));
 		await client.db.set("cst" + user.id, userCst.join(";"));
 		authorSS.roles.remove(role)
-			.catch((x) => {})
+			.catch(() => {return;})
 		if (ss) {
 			ss.roles.add(role)
-				.catch((x) => {})
+				.catch(() => {return;})
 		};
 		message.reply({
 			embed: new MessageEmbed()

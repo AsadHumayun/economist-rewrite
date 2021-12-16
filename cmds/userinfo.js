@@ -8,7 +8,7 @@ module.exports = {
 	category: "utl",
 	description: 'See some basic user information',
 	async run(client, message, args) {
-		await client.guilds.cache.forEach(async(x) => await x.members.fetch(message.author.id).catch((x) => {}))
+		await client.guilds.cache.forEach(async(x) => await x.members.fetch(message.author.id).catch(() => {return;}))
 		function format(str) {
 			let newStr = str.replace(/_+/g, " ").toLowerCase();
 			newStr = newStr.split(/ +/).map(x => `${x[0].toUpperCase()}${x.slice(1)}`).join(' ');
@@ -28,7 +28,7 @@ module.exports = {
 		if (!args.length) args = [message.author.id];
 		var user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		var member = await message.guild.members.fetch(user.id)
-			.catch((err) => {});
+			.catch(() => {return;});
 		let flags = Object.keys(Discord.UserFlags.FLAGS).map(x => {
         if (user.flags.has(x)) {
             return format(x);

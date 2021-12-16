@@ -29,7 +29,7 @@ module.exports = {
 
 		let cst = await client.db.get("cst" + usr.id);
 			cst = cst ? cst.split(";") : [];
-		const mem = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(usr.id).catch((err) => {});
+		const mem = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(usr.id).catch(() => {return;});
 		let role = client.guilds.cache.get(client.config.statics.supportServer).roles.cache.find((r) => r.name.toLowerCase() == permission.toLowerCase());
 		if (mem && (role)) {
 			mem.roles.remove(role.id);

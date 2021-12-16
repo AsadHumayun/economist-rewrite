@@ -20,7 +20,7 @@ module.exports = {
 
 		let role = roles.find((x) => x[0] == key);
 			role = message.guild.roles.cache.get(role[1]);
-		let usr = await client.config.fetchUser(args[1]).catch((x) => {})
+		let usr = await client.config.fetchUser(args[1]).catch(() => {return;})
 		if (!usr) return message.reply("You didn't specify a user??!!")
 
 		let guildMember = message.guild.members.cache.get(usr.id);

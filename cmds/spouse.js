@@ -6,7 +6,7 @@ module.exports = {
 	category: 'ecn',
 	description: "See who someone is married to",
 	async run(client, message, args) {
-		let usr = await client.config.fetchUser(args[0]).catch((err) => {});
+		let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) {
 			usr = message.author;
 		};		

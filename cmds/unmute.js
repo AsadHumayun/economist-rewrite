@@ -7,7 +7,7 @@ module.exports = {
 	category: 'mod',
 	cst: "tmod",
 	async run (client, message, args) {
-		let usr = await client.config.fetchUser(args[0]).catch((err) => {});
+		let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if(!usr) return message.reply(`${client.config.statics.defaults.emoji.err} I can't seem to find that user...`);
 		let member = message.guild.member(usr.id);
 		if (!member) return message.reply(`${client.config.statics.defaults.emoji.err} The specified user is not a member of this server`);

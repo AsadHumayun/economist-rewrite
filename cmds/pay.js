@@ -19,7 +19,7 @@ module.exports = {
 			try {
 				usr = await client.users.fetch(client.getID(str))
 			} catch (err) {
-				usr = await client.users.fetch(str).catch((x) => {})
+				usr = await client.users.fetch(str).catch(() => {return;})
 			};	
 			return usr;
 		}
