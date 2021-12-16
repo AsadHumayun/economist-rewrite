@@ -640,7 +640,7 @@ client.on("messageCreate", async (message) => {
 
 	if (command.disabled) {
 		return message.reply({
-			content: "🤧 This command has been disabled by an administrator. Apologies for any inconvenience!",
+			content: "🤧 This command has been disabled by an administrator. Sorreh.",
 		});
 	}
 
@@ -670,7 +670,6 @@ client.on("messageCreate", async (message) => {
 
 	const old = await client.db.get("cmds" + client.user.id) || "0";
 	await client.db.set("cmds" + client.user.id, Number(old) + 1);
-	// [command #]time:(g.name(g.id)): [c.name]<User.Tag, (User.Id)>: Message.content
 	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: (${message.guild.name}(${message.guild.id}))[${message.channel.name}]<${message.author.tag}(${message.author.id})>: ${message.content}\n`;
 	try {
 		await command.run(client, message, args);
@@ -749,7 +748,7 @@ client.on("messageCreate", async (message) => {
  * @param {?String} msgCont message content (only if this was used in a command - really helps with debuggging)
  */
 client.Notify = function(e, msgCont) {
-	const rn = Math.trunc(Date.now() / 60_000);
+	const rn = new Date().toISOString();
 	console.error(e);
 	if (!msgCont) {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
