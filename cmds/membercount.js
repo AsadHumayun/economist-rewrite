@@ -8,13 +8,15 @@ module.exports = {
 	usage: "membercount",
 	async run(client, message) {
 		message.reply({
-			embed: new MessageEmbed()
-				.setColor(message.author.color)
-				.setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true }))
-				// the numbers are converted to strings because that is a requirement. An error is thrown otherwise. Probably to enforce consistensy
-				.addField("Humans", message.guild.members.cache.filter((e) => !e.user.bot).size.toString(), true)
-				.addField("Bots", message.guild.members.cache.filter((e) => e.user.bot).size.toString(), true)
-				.addField("Total", message.guild.memberCount.toString(), true),
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true }))
+					// the numbers are converted to strings because that is a requirement. An error is thrown otherwise. Probably to enforce consistensy
+					.addField("Humans", message.guild.members.cache.filter((e) => !e.user.bot).size.toString(), true)
+					.addField("Bots", message.guild.members.cache.filter((e) => e.user.bot).size.toString(), true)
+					.addField("Total", message.guild.memberCount.toString(), true),
+			],
 		});
 	},
 };
