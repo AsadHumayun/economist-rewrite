@@ -1,85 +1,89 @@
 const { MessageEmbed } = require("discord.js");
 const osu = require("node-os-utils");
+
 module.exports = {
 	name: "info",
-	aliases: ['info', 'stats', 'uptime'],
+	aliases: ["info", "stats", "uptime"],
 	description: "View some bot infomation",
-	category: 'utl',
-	async run(client, message, args) {
-		let cmdCount = await client.db.get("cmds") || 0;
-		let cm = await client.db.get('cmds' + message.author.id) || 0;
-		let msg = await message.reply(`Getting information...`)
-		let mem = process.memoryUsage().heapUsed / 1024 / 1024;
-		let cpu = await osu.cpu.usage();
-	var getUptime = function(millis) {
-    var dur = {};
-    var units = [{
-            label: "ms",
-            mod: 1000
-        },
-        {
-            label: "s",
-            mod: 60,
-        },
-        {
-            label: "m",
-            mod: 60,
-        },
-        {
-            label: "hrs",
-            mod: 24
-        },
-        {
-            label: "d",
-            mod: 31
-        }
-    ];
+	category: "utl",
+	async run(client, message) {
+		const cmdCount = (await client.db.get("cmds" + client.user.id) || 0).toString();
+		const cm = (await client.db.get("cmds" + message.author.id) || 0).toString();
+		const msg = await message.reply("Getting information... (this may take a second!)");
+		const mem = process.memoryUsage().heapUsed / 1024 / 1024;
+		const cpu = await osu.cpu.usage();
+		const getUptime = function(millis) {
+			const dur = {};
+			const units = [{
+				label: "ms",
+				mod: 1000,
+			},
+			{
+				label: "s",
+				mod: 60,
+			},
+			{
+				label: "m",
+				mod: 60,
+			},
+			{
+				label: "hrs",
+				mod: 24,
+			},
+			{
+				label: "d",
+				mod: 31,
+			},
+			];
 
-    units.forEach(function(u) {
-        millis = (millis - (dur[u.label] = (millis % u.mod))) / u.mod;
-    });
+			units.forEach(function(u) {
+				millis = (millis - (dur[u.label] = (millis % u.mod))) / u.mod;
+			});
 
-    var nonZero = function (u) {
-        return dur[u.label];
-    };
-    dur.toString = function () {
-        return units
-						.reverse()
-            .filter(nonZero)
-            .map(function (u) {
-                return dur[u.label] + "" + (dur[u.label] == 1 ? u.label.slice(0, -1) : u.label);
-            })
-            .join('');
-    };
-    return (dur);
+			const nonZero = function(u) {
+				return dur[u.label];
+			};
+			dur.toString = function() {
+				return units
+					.reverse()
+					.filter(nonZero)
+					.map(function(u) {
+						return dur[u.label] + "" + (dur[u.label] == 1 ? u.label.slice(0, -1) : u.label);
+					})
+					.join("");
+			};
+			return (dur);
+		};
+
+		msg.edit({
+			content: null,
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setTitle("Bot Stats")
+					.setDescription("\"Users Cached\" is not entirely accurate as the same user can be counted multiple times on different guilds")
+					.setAuthor(client.user.tag, client.user.avatarURL({ dynamic: true }), client.config.statics.ssInvite)
+					.addField("❯ Name", client.user.tag, true)
+					.addField("❯ Commands Used", cmdCount, true)
+					.addField("❯ Commands You've Used", cm, true)
+					.addField("❯ CPU Usage", `\`${cpu}%\``, true)
+					.addField("❯ Servers", client.guilds.cache.size.toString(), true)
+					// discord.js docs ref: https://discord.js.org/#/docs/main/stable/class/ClientVoiceManager?scrollTo=adapters (for below field)
+					.addField("❯ Voice Connections", client.voice.adapters.size.toString(), true)
+					.addField("❯ Created On", client.user.createdAt.toDateString(), true)
+					.addField("❯ Users Cached", client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0).toString(), true)
+					.addField("❯ Roles Cached", client.guilds.cache.reduce((a, b) => a + b.roles.cache.size, 0).toString(), true)
+					.addField("❯ Channels Cached", client.channels.cache.size.toString(), true)
+					.addField("❯ Emoji Cached", client.emojis.cache.size.toString(), true)
+					.addField("❯ Total Cached Files", Object.values(require.cache).length.toString(), true)
+					.addField("❯ Total Cached Items", Number(client.guilds.cache.size + client.channels.cache.size + client.users.cache.size).toString(), true)
+					.addField("❯ WS Status", String(client.ws.status), true)
+					.addField("❯ Uptime", getUptime(client.uptime).toString() || "Unknown", true)
+					.addField("❯ Memory Usage", `**~**${Math.trunc(mem)}/${Math.trunc(process.memoryUsage().rss / 1024 / 1024)} MB`, true)
+					.addField("❯ Discord.js", `v**${require("discord.js").version}**`, true)
+					.addField("❯ Total Commands", client.config.commands.size.toString(), true)
+					.setFooter(`Ready: ${new Date(client.readyTimestamp).toISOString()}`),
+			],
+		});
+	},
 };
-
-	msg.edit("", {
-		embed: new MessageEmbed()
-		.setColor(message.author.color)
-		.setTitle('Bot Stats')
-		.setDescription('`Users Cached` is not entirely accurate as the same user can be counted multiple times on different guilds.')
-		.setAuthor(client.user.tag, client.user.avatarURL())
-		.addField('❯ Name', client.user.tag, true)
-		.addField('❯ Commands Used', cmdCount, true)
-		.addField("❯ Commands You've Used", cm, true)
-		.addField('❯ CPU Usage', `\`${cpu}%\``, true)
-		.addField("❯ Servers", client.guilds.cache.size, true)
-		.addField('❯ Voice Connections', client.voice.connections.size, true)
-		.addField('❯ Created On', client.user.createdAt.toDateString(), true)
-		.addField('❯ Users Cached', client.users.cache.size, true)
-		.addField("❯ Roles Cached", client.guilds.cache.reduce((a, b) => a + b.roles.cache.size, 0), true)
-		.addField("❯ Channels Cached", client.channels.cache.size, true)
-		.addField("❯ Emoji Cached", client.emojis.cache.size, true)
-		.addField('❯ Total Cached Files', Object.values(require.cache).length, true)
-		.addField("❯ Total Cached Items", Number(client.guilds.cache.size + client.channels.cache.size + client.users.cache.size), true)
-		.addField('❯ WS Status', client.ws.status, true)
-		.addField('❯ Uptime', getUptime(client.uptime), true)
-		.addField('❯ Memory Usage', `**~**${Math.trunc(mem)}/${Math.trunc(process.memoryUsage().rss / 1024 / 1024)} MB`, true)
-		.addField('❯ Discord.js', `v**${require('discord.js').version}**`, true)
-		.addField('❯ Total Commands', client.config.commands.size, true)
-		.setTimestamp(client.readyTimestamp)
-		.setFooter(`Ready`)
-	});	
-	}
-}
