@@ -1,5 +1,5 @@
 const { Message } = require("discord.js");
-const cloneDeep = require("lodash.clonedeep");
+const {cloneDeep} = require("lodash");
 // Object.assign only did what we call a SHALLOW clone and didnt copy the methods and functions off the message.
 // this led to commands throwing errors when executed.
 // hence I have had to use lodash's cloneDeep in conjunction with Object.assign to achieve this result.
