@@ -22,7 +22,7 @@ module.exports = {
 		const ss = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(user.id).catch(() => {return;});
 		const authorSS = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(message.author.id).catch(() => {return;});
 
-		if (!cst.includes(name)) return message.reply(`You don't currently possess a ${name} on this account therefore you cannot transfer it to others.`);
+		if (!cst.includes(name)) return message.reply(`You don't currently possess a ${name.toUpperCase()} on this account therefore you cannot transfer it to others.`);
 		if (userCst.includes(name)) return message.reply(`U:${user.tag}(${user.id}) already has ${name.toUpperCase()}.`);
 		cst = cst.filter((e) => ![name].includes(e));
 		userCst.push(name);
@@ -38,7 +38,7 @@ module.exports = {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has successfully transferred "${name}" to U: ${user.tag} (${user.id})`),
+					.setDescription(`${message.author.tag} has successfully transferred "${name.toUpperCase()}" to U: ${user.tag} (${user.id})`),
 			],
 		});
 	},
