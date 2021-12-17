@@ -461,8 +461,8 @@ const config = {
 			"9": [ "Joking about Mental Illnesses (or any other disability)", 3 ],
 			"10": [ "Disrespecting Privacy", 3 ],
 			"11": [ "Exploiting Glitches", 3 ],
-			"12": [ "Bypassing Punishments via the means of alts", 3 ],
-			"13": [ "Leaving server to evade punishments (before punished; not after)", 3 ],
+			"12": [ "Bypassing Punishments via the means of alts", 4 ],
+			"13": [ "Leaving server to evade punishments (before punished; not after)", 4 ],
 			"14": [ "Excessively Rude", 1 ],
 		},
 		foods: {
