@@ -261,3 +261,9 @@ arr.map(Number)
 [939] 27329567: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~get 757958112992034918 ofncs
 [941] 27329568: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~get 757958112992034918 ofncs
 [944] 27329580: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~give 757958112992034918 muted
+[950] 27329590: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval client.config.statics.defaults.msglogs
+[951] 27329590: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval client.config.statics.defaults.msglog
+[952] 27329590: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval client.config.statics.defaults.channels.msglogs
+[953] 27329590: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval client.config.statics.defaults.channels.msglog
+[954] 27329591: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval client.config.statics.defaults.channels
+[955] 27329591: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval client.config.statics.defaults.channels.msgLogs
