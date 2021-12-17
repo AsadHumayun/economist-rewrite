@@ -27,7 +27,7 @@ module.exports = {
 		// source: https://github.com/AnIdiotsGuide/discordjs-bot-guide/blob/master/examples/making-an-eval-command.md
 		const clean = async (text) => {
 			if (text && text.constructor.name == "Promise") {text = await text;}
-			if (typeof text !== "string") {text = require("util").inspect(text, { depth: 1 });}
+			if (typeof text !== "string") {text = inspect(text, { depth: 0 });}
 			text = text
 				.replace(/`/g, "`" + String.fromCharCode(8203))
 				.replace(/@/g, "@" + String.fromCharCode(8203));
@@ -44,7 +44,7 @@ module.exports = {
 			if (code.includes("client [")) return msg.edit("client [ cannot be evaled!");
 			const ev = eval(args.join(" "));
 			let cleaned = await clean(ev);
-			cleaned = inspect(cleaned, { depth: 0 });
+			cleaned = cleaned.toString();
 			msg.edit({
 				content: null,
 				embeds: [
