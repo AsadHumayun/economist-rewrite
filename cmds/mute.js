@@ -13,7 +13,7 @@ module.exports = {
 		const member = message.guild.member(usr.id);
 		if (!member) return message.reply(`${client.config.statics.defaults.emoji.err} The specified user is not a member of this server`);
 		if (member.roles.cache.has(client.config.statics.defaults.roles.mod.trial)) return message.reply(`${client.config.statics.defaults.emoji.err} You're not allowed to mute a moderator!`);
-		await member.roles.add(client.config.roles.muted);
+		await member.roles.add(client.config.statics.defaults.roles.muted);
 		const amt = Number(args[1]);
 		if (isNaN(amt) || (!args[1])) return message.reply(`${client.config.statics.defaults.emoji.err} You must provide a valid length (in minutes). For permanent mutes, use 0 as the length.`);
 		let reason = args.slice(2).join(" ");
@@ -39,7 +39,7 @@ module.exports = {
 			setTimeout(async () => {
 				const m = await client.db.get("mt" + member.id);
 				if (!m) return;
-				member.roles.remove(client.config.roles.muted);
+				member.roles.remove(client.config.statics.defaults.roles.muted);
 				member.send({
 					embed: new MessageEmbed()
 						.setDescription(`Your mute has been removed in ${message.guild.name}`)
