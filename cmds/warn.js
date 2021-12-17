@@ -28,7 +28,7 @@ module.exports = {
 
 		let emb = new MessageEmbed()
 		.setDescription(`You have received a warning in ${message.guild.name}. If you think this is a mistake or you were wrognly punished, please contact ${client.users.cache.get(client.config.owner).tag}\n[[Log Message](${logsMessage.url})]`)
-		.setColor(client.config.colors.red)
+		.setColor(client.config.statics.defaults.channels.colors.red)
 		.addField(`Moderator`, message.author.tag)
 		.addField("Reason", reason);
 

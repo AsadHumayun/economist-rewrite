@@ -28,7 +28,7 @@ module.exports = {
 		});
 		const dm = new MessageEmbed()
 			.setDescription(`You have received a ${amt == 0 ? "permanent" : `${amt} minute`} mute from ${message.guild.name}. Please contact ${client.users.cache.get(client.config.owner).tag} if you believe that this is an unjust mute. You may leave and rejoin the server after the time specified has passed in order to have your mute removed.`)
-			.setColor(client.config.colors.red)
+			.setColor(client.config.statics.defaults.channels.colors.red)
 			.addField("Moderator", message.author.tag)
 			.addField("Reason", reason);
 		message.reply({ embeds: [dm] });

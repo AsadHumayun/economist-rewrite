@@ -30,7 +30,7 @@ module.exports = {
 				client.channels.cache.get(client.config.statics.defaults.channels.bugLog)
 					.send(`Bug reported by ${client.users.cache.get(val.author).tag || "UNKNOWN_USER#0000"} was approved by ${message.author.tag} (${message.author.id})`, {
 						embeds: [ new MessageEmbed()
-							.setColor(client.config.colors.red)
+							.setColor(client.config.statics.defaults.channels.colors.red)
 							.setTitle(val.title)
 							.setDescription(col.first().embeds[0].description)
 							.setTimestamp(val.at),

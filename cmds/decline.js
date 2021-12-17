@@ -18,7 +18,7 @@ module.exports = {
 		client.channels.cache.get(client.config.channels.appNotifs)
 			.send(`Application ${ch} submitted by ${user.tag} (${user.id}) has been **declined** by ${message.author.tag} (${message.author.id})`);
 		const em = new MessageEmbed()
-			.setColor(client.config.colors.red)
+			.setColor(client.config.statics.defaults.channels.colors.red)
 			.setDescription("Sorry, but your Staff Application has been declined.")
 			.addField("Senior Moderator", message.author.tag)
 			.addField("Reason", args.slice(1).join(" ") || "Please contact me for your reason.");
