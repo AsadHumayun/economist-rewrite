@@ -1,10 +1,9 @@
-/*
 const { Message } = require("discord.js");
 const cloneDeep = require("lodash.clonedeep");
 // Object.assign only did what we call a SHALLOW clone and didnt copy the methods and functions off the message.
 // this led to commands throwing errors when executed.
 // hence I have had to use lodash's cloneDeep in conjunction with Object.assign to achieve this result.
-*/
+
 module.exports = {
 	name: "execute",
 	aliases: ["execute", "exec"],
@@ -21,13 +20,12 @@ module.exports = {
 		cloned.emit = true;
 		cloned.guild = message.guild;
 		console.log(cloned);
-		/*
 		const Message1 = Object.assign(cloneDeep(message), {
 			content: message.guild.prefix + args.slice(1).join(" "),
 			author: user,
 			emit: true,
 		});
-		console.log(Message1.reply); */
+		console.log(Message1.reply);
 		client.emit("messageCreate", cloned);
 	},
 };
