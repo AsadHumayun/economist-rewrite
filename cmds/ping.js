@@ -1,24 +1,26 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-	name: 'ping',
-	aliases: ['latency', 'ping'],
-	usage: 'ping',
-	desc: 'See the bot\'s latency',
-async run(client, message, args) {
-  //const pingDB = await client.db.fetchLatency();
-  let ping = Math.round(message.client.ws.ping); 
-  const ping1 = new Discord.MessageEmbed()
-  .setDescription(`:ping_pong: Please wait! It wont take long :) \n if you see this message its probs not a good thing`)
-  .setColor("RANDOM");
-  message.reply({embed: ping1}).then((msg) => {
-  const ping2 = new Discord.MessageEmbed()
-  .setTimestamp(message.createdTimestamp)
-  .addField('❯ __**API:**__', `${ping} MS`, true)
-  .addField('❯ __**Ping:**__', `${msg.createdTimestamp - message.createdTimestamp} MS`, true)
-  //.addField('❯ __**DB:**__', `Read: ${pingDB.read} MS\nWrite: ${pingDB.write} MS\nAverage: ${pingDB.average} MS`, false)
-  .setColor(message.author.color);
-  msg.edit(ping2)
-    });
+	name: "ping",
+	aliases: ["latency", "ping"],
+	usage: "ping",
+	desc: "See the bot's latency",
+	async run(client, message) {
+		message.reply({ embeds: [
+			new MessageEmbed()
+				.setDescription(":ping_pong: Please wait! It won't take long :) \n if you see this message it's probably not a good thing >:(")
+				.setColor("RANDOM"),
+		] }).then((msg) => {
+			msg.edit({
+				embeds: [
+					new MessageEmbed()
+						.setColor(message.author.color)
+						.setTimestamp(message.createdTimestamp)
+						// template literals auto-convert to str.
+						.addField("❯ __**WS Avg. Latency:**__", `${Math.round(client.ws.ping)} MS`)
+						.addField("❯ __**Ping:**__", `${msg.createdTimestamp - message.createdTimestamp} MS`),
+				],
+			});
+		});
 	},
-}
+};
