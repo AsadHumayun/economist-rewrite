@@ -416,7 +416,7 @@ client.on("guildMemberAdd", async member => {
 			client.config.commands.get("mute")
 				.run(client, { createdTimestamp: now, guild: member.guild, channel: channel, member: member.guild.member(client.user), author: client.user }, [member.id, Math.round(mins), mute.slice(1).join(" ")]);
 		}
-		else if (member.roles.cache.has(client.config.roles.muted) && (now >= date)) {
+		else if (member.roles.cache.has(client.config.statics.defaults.roles.muted) && (now >= date)) {
 			// unmute
 			client.config.commands.get("unmute")
 				.run(client, { createdTimestamp: now, guild: member.guild, channel: channel, member: member.guild.member(client.user), author: client.user }, [member.id, "[automatic-unmute]: Time's up"]);
@@ -490,7 +490,7 @@ client.on("messageCreate", async (message) => {
 			collection.set(message.author.id, rateLimit + 1);
 			if (rateLimit >= 5 && (!cst.includes("tmod"))) {
 				const limit = "5/2s";
-				await message.member.roles.add(client.config.roles.muted);
+				await message.member.roles.add(client.config.statics.defaults.roles.muted);
 				await client.db.set("mt" + message.author.id, `${(message.createdTimestamp + ms("10m")) - client.config.epoch};hitting the message send rate limit (${limit})`);
 				const msg = `You have received a 10 minute mute from ${message.guild.name} because of hitting the message send rate limit (${limit}); please DM ${client.users.cache.get(client.config.owner).tag} if you beleive that this is a mistake. If you aren't unmuted after 10 minutes, then please contact a moderator and ask them to unmute you.`;
 				client.config.commands.get("mute").run(client, message, [ message.author.id, 10, msg ]);
