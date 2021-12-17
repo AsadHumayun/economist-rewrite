@@ -13,14 +13,16 @@ module.exports = {
 		}
 		const user = await client.config.fetchUser(args[0] || message.author.id);
 		const mem = message.guild.members.cache.get(user.id);
-		if (!mem) return message.reply("The supplied user is not a member of this server.");
-		const map = Object.keys(Permissions.FLAGS).map(x => mem.hasPermission(x) ? `**${format(x)}**: ${client.config.statics.defaults.emoji.tick}` : `**${format(x)}**: ${client.config.statics.defaults.emoji.err}`).join("\n");
+		if (!mem) return message.reply(`U: ${user.username}(${user.id}) is not a member of this server`);
+		const map = Object.keys(Permissions.FLAGS).map((x) => mem.permissions.has(Permissions.FLAGS[x]) ? `**${format(x)}**: ${client.config.statics.defaults.emoji.tick}` : `**${format(x)}**: ${client.config.statics.defaults.emoji.err}`).join("\n");
 		message.reply({
-			embed: new MessageEmbed()
-				.setThumbnail(message.guild.iconURL({ dynamic: true }))
-				.setColor(message.author.color)
-				.setTitle(`${user.tag}'s Server Permissions`)
-				.setDescription(map),
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setTitle(`${user.tag}'s Server Permissions`)
+					.setThumbnail(message.guild.iconURL({ dynamic: true }))
+					.setDescription(map),
+			],
 		});
 	},
 };
