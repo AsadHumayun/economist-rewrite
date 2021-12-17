@@ -445,8 +445,7 @@ client.on("guildMemberAdd", async member => {
 				.addField("Moderator", client.user.tag)
 				.addField("Reason", `Your account was flagged as a potential threat to our server. If you believe that you were muted erroneously, please contact \`${owner}\`.`),
 		] })
-			// eslint-disable-next-line no-unused-vars
-			.catch((_e) => {}); // eslint-disable-line no-empty-function
+			.catch(() => {return;});
 	}
 	client.channels.cache.get(client.config.statics.defaults.channels.memberLog).send({ embeds: [
 		new Discord.MessageEmbed()
