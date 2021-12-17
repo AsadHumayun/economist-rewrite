@@ -7,8 +7,9 @@ module.exports = {
 	usage: "",
 	category: "own",
 	cst: "pull",
-	async run(client, message, args) {
-		if (![client.config.owner, "523579776749928449", "208948873433972737"].includes(message.author.id)) {
+	async run(client, message) {
+		// this command basically runs the script defined in package.json - also it basically pulls the latest commits from the github repo.
+		if (![client.config.owner].includes(message.author.id)) {
 			return message.reply("Wha? Why would you ever want to use this command?");
 		}
 		message.react("👌");
