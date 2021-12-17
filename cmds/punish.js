@@ -81,6 +81,7 @@ module.exports = {
 				message.channel.send(`Unable to send messages to this user: ${user.tag} (${user.id})`);
 			}
 		}
+
 		if (level == 1) {
 			// level 1 offences:
 			// 2 warnings; then 1h mutes
@@ -107,25 +108,20 @@ module.exports = {
 			if (ofncs[index - 1] <= 3) {
 				muted("6");
 			}
-			else if (level == 4) {
-				// level 4 offences:
-				// users are allowed to appeal for permanent mutes. They have 3 perm mutes, and then it's a permanent ban from the guild.
-				if (ofncs[index - 1] >= 3) {
-					// ban
-					ban();
-				}
-				else {
-					muted("10000000000000000");
-					// permanent mute
-				}
-			}
 			else {
 				muted("10000000000000000");
 			}
 		}
 		else if (level == 4) {
-			//  level 4 offences - instant permanent ban
-			ban();
+			// level 4 offences:
+			// users are allowed to appeal for permanent mutes. They have 3 perm mutes, and then it's a permanent ban from the guild.
+			if (ofncs[index - 1] >= 3) {
+				// ban
+				ban();
+			}
+			else {
+				muted("10000000000000000");
+			}
 		}
 		ofncs[index - 1] = Number(ofncs[index - 1]) + 1;
 		while (ofncs[ofncs.length - 1] == 0) {
