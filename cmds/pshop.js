@@ -12,7 +12,7 @@ module.exports = {
             .setDescription(`
     Here's a list of permissions which you can purchase via \`${message.guild.prefix}pbuy <item>\`.
     
-    ${client.config.ditems.map((x) => `**${client.capital(x.split(";")[1])}**: \`${x.split(";")[3]}\` XP`).join("\n")}        
+    ${client.config.statics.ditems.map((x) => `**${client.capital(x.split(";")[1])}**: \`${x.split(";")[3]}\` XP`).join("\n")}        
             `)
         })
     }
