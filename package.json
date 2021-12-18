@@ -1,6 +1,6 @@
 {
   "name": "Economist",
-  "version": "1.0.0",
+  "version": "3.9.9",
   "description": "--------\r **__Database Managers__**\r > Users with the @🛠️ Database Manager role will have access to the commands listed below.\r If you do not have this permission, then all of the information disclosed here will be of no use to you.",
   "main": "index.js",
   "scripts": {
@@ -29,12 +29,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NyxrDev/Economist.git"
+    "url": "git+https://github.com/almostStatic/economist-rewrite.git"
   },
   "bugs": {
-    "url": "https://github.com/NyxrDev/Economist/issues"
+    "url": "https://github.com/almostStatic/economist-rewrite/issues"
   },
-  "homepage": "https://github.com/NyxrDev/Economist#readme",
+  "homepage": "https://github.com/almostStatic/economist-rewrite#readme",
   "devDependencies": {
     "eslint": "^8.4.1"
   }
