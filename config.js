@@ -665,7 +665,6 @@ config.doses = [
 	],
 ];
 
-
 class ClientConfiguration extends Funcs {
 	constructor(client) {
 		super(client);
