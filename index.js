@@ -263,8 +263,8 @@ ${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) 
 		const usr = await client.config.fetchUser(id);
 		const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
 		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${Math.trunc(Date.now() / 60000)}: Attempting to remove chnl data for M:<${usr.tag} (${usr.id})> of ${newChannel.name} (id: ${newChannel.id})...` });
-		let user = await Users.findOne({ where: { id: id } });
-		if (!user) user = await Users.create({ id: id });
+		let user = await Users.findOne({ where: { id } });
+		if (!user) user = await Users.create({ id });
 		let chn = user.get("chnl");
 		// determine if member has any perms; `!chn` indicates no permissions.
 		if (!chn) return;
@@ -312,7 +312,7 @@ ${!mmbr.permissionsIn(newChannel.id).has(Discord.Permissions.FLAGS.MANAGE_CHANNE
 });
 
 client.once("ready", async () => {
-	client.user.setPresence({
+	client.user.presence.set({
 		activity: {
 			name: `${client.guilds.cache.size} servers | ~support to join our support server for free 💵 500`,
 			type: "WATCHING",
