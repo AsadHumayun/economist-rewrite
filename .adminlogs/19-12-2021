@@ -1,0 +1,81 @@
+[3] 27331299: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[4] 27331300: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[5] 27331301: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[6] 27331306: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[7] 27331306: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[8] 27331307: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[9] 27331314: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[1] 27331323: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[2] 27331327: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[3] 27331334: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set
+[5] 27331335: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 bal 999
+[7] 27331336: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 bal 999
+[8] 27331336: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 cst tst
+[9] 27331336: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 bal 999999
+[11] 27331337: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 test test
+[12] 27331337: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~get 501710994293129216 test
+[13] 27331337: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~gd
+[14] 27331338: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 a b
+[15] 27331338: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[16] 27331338: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval
+[17] 27331338: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval console.log(message.author.data.get("test"))
+[18] 27331338: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 test test
+[19] 27331338: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval console.log(message.author.data.get("test"))
+[20] 27331339: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval client.db.USERS.update({t:"t"},{where:{id:message.author.id}})
+[21] 27331341: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval const data = await client.db.USERS.update({ test: "abc" }, {  where: { id: message.author.id } })
+data;
+[22] 27331341: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval client.db.USERS.update({ test: "abc" }, {  where: { id: message.author.id } })
+[23] 27331341: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval client.db.USERS.update({ bal: "abc" }, {  where: { id: message.author.id } })
+[25] 27331344: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~Set 501710994293129216 bal 4545
+[27] 27331344: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 egjkrewgng wegwer
+[28] 27331345: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 bal e
+[29] 27331346: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 d d
+[30] 27331346: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 501710994293129216 a b
+[31] 27331367: (economist rewrite(911784758600679455))[sql-logs]<Paradox#1234(501710994293129216)>: ~set 504619833007013899 bal 5
+[32] 27331388: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 504619833007013899 f e
+[33] 27331388: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~set 504619833007013899 bal 10
+[34] 27331388: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata 504619833007013899
+[2] 27331411: (economist rewrite(911784758600679455))[econ-priv]<Paradox#1234(501710994293129216)>: ~eval         const serverlvls = message.guild.members.cache.array().map(({ id }) => id);
+        const obj = {};
+        serverlvls.forEach(async (id) => {
+            let user = await client.db.get("exp" + id);
+            user = user ? user.split(`;f;`) : [ message.guild.id, 0, 1, 1, 1 ];
+            let indx = user.findIndex((f) => f.split(";")[0] == message.guild.id);
+            let level = user[indx].split(`;`)[2]
+            let xp = user[indx].split(`;`)[3]
+             obj.defineProperty(id, { LEVEL: level, XP: xp });
+        });
+message.channel.send(Object.entries(obj).join("\n"))
+[3] 27331430: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[2] 27331445: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[1] 27332480: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval         await client.db.USERS.update({
+            stnb: "dying inside"
+        }, {
+            where: {
+                id,
+            },
+        });
+[2] 27332480: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval         client.db.USERS.update({
+            stnb: "dying inside"
+        }, {
+            where: {
+                id,
+            },
+        });
+[3] 27332480: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval         const id = message.author.id;
+await client.db.USERS.update({
+            stnb: "dying inside"
+        }, {
+            where: {
+                id,
+            },
+        });
+[4] 27332481: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval         const id = message.author.id;
+client.db.USERS.update({
+            stnb: "dying inside"
+        }, {
+            where: {
+                id,
+            },
+        });
+[5] 27332481: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
