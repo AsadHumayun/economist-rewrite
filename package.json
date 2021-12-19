@@ -1,7 +1,7 @@
 {
-  "name": "Economist",
+  "name": "economist-rewrite",
   "version": "3.9.9",
-  "description": "--------\r **__Database Managers__**\r > Users with the @🛠️ Database Manager role will have access to the commands listed below.\r If you do not have this permission, then all of the information disclosed here will be of no use to you.",
+  "description": "A Discord economy bot.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -11,6 +11,10 @@
   "keywords": [],
   "author": "almostStatic",
   "license": "ISC",
+	"engines": {
+		"node": ">= 16.10.0"
+	},
+	"engineStrict": true,
   "dependencies": {
     "babel-plugin-syntax-class-properties": "^6.13.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
