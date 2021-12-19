@@ -15,14 +15,23 @@ module.exports = {
 		const id = message.guild.roles.cache.find((x) => x.id == args[1]);
 		if (!id) return message.reply({ content: "That role was not found >:(" });
 		const kw = args[2].toLowerCase();
-		let roles = await client.db.get("cgrl" + user.id);
+		const data = await client.db.getUserData(user.id);
+		let roles = data.get("cgrl");
 		roles = roles ? roles.split(";") : [];
 		roles.push(`${kw};${id.id}`);
-		await client.db.set("cgrl" + user.id, roles.join(";"));
+		await client.db.USERS.update({
+			cgrl: roles.join(";"),
+		}, {
+			where: {
+				id: user.id,
+			},
+		});
 		message.reply({
-			embeds: [new MessageEmbed()
-				.setColor(message.author.color)
-				.setDescription(`Successfully given cgrl for [${id.name}] to ${user.tag}`),
-			] });
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setDescription(`Successfully given cgrl for [${id.name}] to ${user.tag}`),
+			],
+		});
 	},
 };

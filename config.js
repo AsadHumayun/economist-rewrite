@@ -1,23 +1,29 @@
-/* eslint-disable no-empty-function */
 // eslint-disable-next-line no-unused-vars
 const { Client, User, Collection, MessageEmbed, DiscordAPIError } = require("discord.js");
 const { readdirSync } = require("fs");
 
 /**
- * These are some default functions. They have been globalised in such manner by purpose, as these functions are **__constantly__** in use by the programme, thus I deemed it more effecient to have one globalised class to manage and export functions.
+ * @classdesc These are some default functions. They have been globalised in such manner by purpose, as these functions are **__constantly__** in use by the programme, thus I deemed it more effecient to have one globalised class to manage and export functions.
+ * @class @public
  */
 class Funcs {
 	/**
-	 * * Constructor function
+	 * Constructor function
+	 * @constructor
 	 * @param {Client} client Discord.Client
 	 */
 	constructor(client) {
+		/**
+		 * The currently instantiated client.
+		 * @property
+		 */
 		this.client = client;
 	}
 	/**
 	 * Capitalises the first letter of the given string and returns the new string. Only the first letter is capitalised.
 	 * @param {String} str string to be capitalised
 	 * @returns {String} capitalised string
+	 * @function @public
 	 */
 	capital(str) {
 		return str[0].toUpperCase() + str.slice(1);
@@ -44,6 +50,7 @@ class Funcs {
 		 * Fetches a Discord User
 		 * @param {String} str The mention - either ID or raw <@(!)id>
 		 * @returns {User} Discord.User
+		 * @async
 		 */
 	async fetchUser(str) {
 		if (!str) return;
@@ -196,18 +203,23 @@ class Funcs {
 	 * Stuns a user whilst performing required validatory actions beforehand
 	 * @param {String} id Snowflake ID of the user who must be stunned
 	 * @param {Number} amt amount of minutes which the user must be stunned
+	 * @async
 	 */
 	async stn(id, amt, client) {
 		const user = await this.fetchUser(id)
 		// eslint-disable-next-line no-unused-vars
 			.catch(() => {return;});
 		if (!user) return false;
-		let dns = await client.db.get("dns" + id);[];
-		dns = isNaN(dns) ? 0 : Number(dns);
-		dns = dns * 60_000;
+		const data = await client.db.getUserData(id);
+		const dns = (isNaN(data.get("dns")) ? 0 : Number(data.get("dns"))) * 60_000;
 		if (dns && (Date.now() < dns)) return;
-		const ms = amt * 60 * 1000;
-		await client.db.set("stn" + id, Math.trunc((Date.now() + ms) / 60_000));
+		await client.db.USERS.update({
+			stn: Math.trunc((Date.now() / 60_000) + amt),
+		}, {
+			where: {
+				id,
+			},
+		});
 		return true;
 	}
 	/**
@@ -336,14 +348,16 @@ class Funcs {
 	 * * Users are able to do `~dragonalias` to see a list of their aliases, indexed. They will then do `~dragonalias <index>`, replacing `<index>` with the index of their choice, which means that the bot will switch their alias to whatever they had chosen.
 	 * @param {String} uid The ID of a Discord user whose dragon alias is to be fetched
 	 * @param {Client} client Discord.Client
-	 * @returns {Array<string, string[]>}}
+	 * @returns {Array<string, string[]>}
+	 * @async @function
 	 */
 	// (method) Funcs.getDragonAlias(uid: string, client: Client): Array<string | string, string>
 	async getDragonAlias(uid, client) {
-		const currAlias = (await client.db.get("curralias" + uid) || "default").toLowerCase();
+		const data = await client.db.getUserData(uid);
+		const currAlias = data.get("crls") || "default";
 		if (currAlias) {
 			const aliases = require("./petaliases.json");
-			const petname = await client.db.get("petname" + uid);
+			const petname = data.get("petname") || "dragon";
 			const names = Object.keys(aliases).map((key) => key.toLowerCase());
 			if (names.includes(currAlias)) {
 				// petname takes priority over alias.DISPLAY_NAME, gives users more freedom.
@@ -448,6 +462,7 @@ const config = {
 		},
 		webhooks: {
 			debugger: "https://discord.com/api/webhooks/914286031325507584/rp7BIeS5RaZegZI3YzSfUlpyxASeA0dJfWC48O38fcaEe6EyH7LEAUxWY6mimmq0Ucyj",
+			sql: "https://discord.com/api/webhooks/921955242071969832/D5QSAWzjpKn7m9suH-LcDT2bjWudqPv2VP8WiDni6ZxPlkhI1SQKaaEcO71r_ywCnvbM",
 		},
 		ofncs: {
 			"1": [ "Spam", 1 ],
@@ -598,7 +613,17 @@ config.shop = {
 		emoji: config.defaults.emoji.rc,
 		description: "Set a random colour preference whilst using commands",
 		price: 2_500,
-		execute: (async (uid, client) => await client.db.set("clr" + uid, "RANDOM;0")),
+		execute: (async (id, client) => {
+			await client.db.getUserData(id);
+			// I'm aware this can be written as one line, but I've decided to write it like this so it's easier to read.
+			await client.db.USERS.udpate({
+				clr: "RANDOM;0",
+			}, {
+				where: {
+					id,
+				},
+			});
+		}),
 		condt: "message.author.color == \"RANDOM;0\"",
 	},
 };

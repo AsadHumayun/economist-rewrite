@@ -9,7 +9,7 @@ module.exports = {
 	cst: "colorist",
 	async run(client, message, args) {
 		if (!args.length) {
-			const clrs = await client.db.get("clr" + message.author.id) || `${client.config.defaultHexColor};0`;
+			const clrs = message.author.data.get("clr");
 			return message.reply({
 				embeds: [
 					new MessageEmbed()
@@ -41,6 +41,12 @@ module.exports = {
 			],
 		});
 		colors.push("0");
-		await client.db.set("clr" + message.author.id, colors.join(";"));
+		await client.db.USERS.update({
+			clr: colors.join(";"),
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
 	},
 };

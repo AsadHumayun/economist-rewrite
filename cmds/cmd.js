@@ -9,17 +9,15 @@ module.exports = {
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a user and a command name/alias in order for this command to work!");
 		const usr = await client.config.fetchUser(args[0])
-			// eslint-disable-next-line no-empty-function, no-unused-vars
-			.catch((_x) => {});
+			.catch(() => {return;});
 		if (!usr) return message.reply("You must mention someone for this command to work!");
-		if (usr.id == client.owner) return message.reply(`${usr.tag} will keep all permissions regardless. You may not use this command on them!`);
+		if (usr.id == client.owner) return message.reply("just dont.");
 		const command = client.config.commands.get(args[1].toLowerCase()) || client.config.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(args[1].toLowerCase()));
-		if (!command) return message.reply(`A command with that name or alias was not found. Please look in \`${message.guild.prefix}commands\` for a list of existing commands.`);
-		let bcmd = await client.db.get("bcmd" + usr.id);
-		bcmd = bcmd ? bcmd.split(";") : [];
+		if (!command) return message.reply(`A command by that name or alias was not found. Take a look in \`${message.guild.prefix}commands\` for a list of existing commands.`);
+		const data = await client.db.getUserData(usr.id);
+		let bcmd = data.get("bcmd") ? data.get("bcmd").split(";") : [];
 		if (!bcmd.includes(command.name)) {
 			bcmd.push(command.name);
-			await client.db.set("bcmd" + usr.id, bcmd.join(";"));
 			message.reply({
 				embeds: [
 					new MessageEmbed()
@@ -30,7 +28,6 @@ module.exports = {
 		}
 		else {
 			bcmd = bcmd.filter((x) => ![command.name].includes(x));
-			await client.db.set("bcmd" + usr.id, bcmd.join(";"));
 			message.reply({
 				embeds:[
 					new MessageEmbed()
@@ -39,5 +36,12 @@ module.exports = {
 				],
 			});
 		}
+		await client.db.USERS.update({
+			bcmd: bcmd.join(";"),
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
 	},
 };

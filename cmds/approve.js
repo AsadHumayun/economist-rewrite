@@ -11,35 +11,35 @@ module.exports = {
 		const id = args[0];
 		const reason = args.slice(1).join(" ");
 		await message.delete().catch(() => {return;});
-		const val = await client.db.get(`bugr${id}`);
-		if (!val) return message.reply({ content: `${client.config.statics.defaults.emoji.err} No bug report with ID "${id}" was found.` });
+		const bug = await client.db.BUGS.findOne({ where: { id: id } });
+		if (!bug) return message.reply({ content: `${client.config.statics.defaults.emoji.err} No bug report with ID "${id}" was found.` });
 		client.channels.cache.get(client.config.statics.defaults.channels.bug)
 			.messages.fetch({
 				limit: 1,
-				around: val.msg,
+				around: bug.msg,
 			})
 			.then(async (col) => {
 				const rec = new MessageEmbed()
 					.setColor("#6ae691")
-					.setTitle(val.title)
-					.setDescription(`${client.config.statics.defaults.emoji.tick} **Bug Report #${val.number} was approved by ${escapeMarkdown(message.author.tag)}**`);
+					.setTitle(bug.title)
+					.setDescription(`${client.config.statics.defaults.emoji.tick} **Bug Report #${bug.number} was approved by ${escapeMarkdown(message.author.tag)}**`);
 				col.first().edit({
 					content: "",
-					embeds: [rec],
+					embeds: [ rec ],
 				});
 				client.channels.cache.get(client.config.statics.defaults.channels.bugLog)
-					.send(`Bug reported by ${client.users.cache.get(val.author).tag || "UNKNOWN_USER#0000"} was approved by ${message.author.tag} (${message.author.id})`, {
+					.send(`Bug reported by ${client.users.cache.get(bug.author).tag || "UNKNOWN_USER#0000"} was approved by ${message.author.tag} (${message.author.id})`, {
 						embeds: [ new MessageEmbed()
 							.setColor(client.config.statics.defaults.channels.colors.red)
-							.setTitle(val.title)
+							.setTitle(bug.title)
 							.setDescription(col.first().embeds[0].description)
-							.setTimestamp(val.at),
+							.setTimestamp(bug.at),
 						] });
 			})
 			.catch((x) => message.reply({ content: "There was an error: `" + x + "`" }));
 		message.reply(`${client.config.statics.defaults.emoji.tick} You've approved bug with ID **${id}**`);
-		await client.db.delete(`bugr${id}`);
-		client.users.cache.get(val.author)
+		await client.db.BUGS.destroy({ where: { id: id } });
+		client.users.cache.get(bug.author)
 			.send(`Your bug (${id}) has been approved by ${message.author.tag}\n${reason ? `${message.author.tag}'s Comments: ${reason}` : ""}`)
 			.catch(() => {return;});
 	},

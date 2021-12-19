@@ -19,11 +19,9 @@ module.exports = {
 		// <LogicError <IfStatement>>: if statement not running
 		// <NOW FIXED>: `id` was not of data type `Number`.
 		if (!ids.includes(id)) return message.channel.send({ content: `Invalid ID "${args[0]}"`, allowedMentions: { parse: [] } });
-		let bal = await client.db.get("bal" + message.author.id) || 0;
-		bal = isNaN(bal) ? 0 : Number(bal);
+		let bal = message.author.data.get("bal");
 		const item = items.find((f) => f[1].id == id);
-		let cst = await client.db.get("cst" + message.author.id);
-		cst = cst ? cst.split(";") : [];
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (item[1].method == "cst" && (cst.includes(item[0]))) return alreadyOwned();
 		if (eval(item[1].condt)) return alreadyOwned();
 		if (bal - item[1].price < 0) return message.reply(`You do not have enough money to purchase "${item[1].displayName}"; you need an additional :dollar: ${item[1].price - bal} on top of your current balance in order to purchase this item!`);
@@ -35,7 +33,7 @@ module.exports = {
 			const key = item[1].method.split(".")[0];
 			const indx = item[1].method.split(".")[1];
 
-			let values = await client.db.get(key + message.author.id);
+			let values = message.author.data.get(key);
 			values = values ? values.split(";") : Array(indx + 1).fill(0);
 			// prevent an out of bounds type error from occurring by extending the array in a manner such that
 			// arr[indx] is 0 and can thus be incremented without error. (arr[anything in between 0 and indx] is also therefore registered as "")
@@ -45,7 +43,13 @@ module.exports = {
 			// prevents spam, makes the bot look and feel more complete.
 			values[indx] += isNaN(args[1]) ? 1 : Number(args[1]);
 
-			await client.db.set(key + message.author.id, values.join(";"));
+			await client.db.USERS.uddate({
+				[key]: values.join(";"),
+			}, {
+				where: {
+					id: message.author.id,
+				},
+			});
 		}
 		else {
 			await item[1].execute(message.author.id);
@@ -57,7 +61,13 @@ module.exports = {
 					.setDescription(`${message.author.tag} has successfully purchased a ${item[1].emoji} ${item[1].displayName}!`),
 			],
 		});
-		await client.db.set("bal" + message.author.id, bal);
-		await client.db.set("cst" + message.author.id, cst.join(";"));
+		await client.db.USERS.update({
+			bal: bal,
+			cst: cst.join(";"),
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
 	},
 };

@@ -10,9 +10,8 @@ module.exports = {
 	async run(client, message, args) {
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You must mention a user whose application you wish to decline!");
-		let cst = await client.db.get("cst" + user.id) || "";
-		cst = cst.split(";");
-		if (!cst.includes("sbmt")) return message.reply("That user hasn't submitted their staff application yet!");
+		const data = await client.db.getUserData(user.od);
+		if (!data.get("cst").split(";").includes("sbmt")) return message.reply(`That user hasn't submitted their staff application yet! They can do so by using \`${message.guild.prefix}submit\``);
 		const ch = message.guild.channels.cache.find((x) => (x.topic || "").toLowerCase().split(";").includes(user.id));
 		if (!ch) return message.reply("That user has not applied for staff.");
 		client.channels.cache.get(client.config.channels.appNotifs)

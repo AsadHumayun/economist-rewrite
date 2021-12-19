@@ -10,8 +10,7 @@ module.exports = {
 		const cds = [];
 		for (let cd of client.config.statics.defaults.cds) {
 			cd = cd.split(";");
-			const cdd = (await client.db.get(cd[0] + message.author.id) || 0);
-			const cdm = client.config.cooldown(message.createdTimestamp, cdd * 60_000, true);
+			const cdm = client.config.cooldown(message.createdTimestamp, message.author.data.get(cd[0]) * 60_000, true);
 			if (cdm) {
 				cds.push(`${cd[1]}: ${cdm}`);
 			}

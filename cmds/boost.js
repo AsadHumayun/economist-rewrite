@@ -12,11 +12,17 @@ module.exports = {
 		if (!args.length) return message.reply("You must mention a user to boost!");
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You have not mentioned a user!!");
-		let cst = await client.db.get("cst" + user.id);
-		cst = cst ? cst.split(";") : [];
+		const data = await client.db.getUserData(user.id);
+		const cst = data.get("cst") ? data.get("cst").split(";") : [];
 		cst.push("pstn");
-		await client.db.set("cst" + user.id, cst.join(";"));
-		await client.db.set("stnb" + user.id, "dead");
+		await client.db.USERS.update({
+			cst: cst.join(";"),
+			stnb: "dead",
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
 		message.reply({
 			embeds: [
 				new MessageEmbed()

@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const math = require("mathjs");
+const { evaluate } = require("mathjs");
 
 module.exports = {
 	name: "calculate",
@@ -8,7 +8,7 @@ module.exports = {
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must specify a calculation!");
 		const calc = args.join(" ");
-		const number = math.evaluate(calc);
+		const number = evaluate(calc);
 		message.reply({
 			embeds: [
 				new MessageEmbed()

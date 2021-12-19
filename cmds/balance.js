@@ -9,12 +9,12 @@ module.exports = {
 	async run(client, message, args) {
 		let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) usr = message.author;
-		const bal = await client.db.get("bal" + usr.id) || "0";
+		const data = await client.db.getUserData(usr.id);
 		message.reply({
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${usr.tag}'s account contains :dollar: ${client.config.digits(bal)}`),
+					.setDescription(`${usr.tag}'s account contains :dollar: ${client.config.digits(data.bal)}`),
 			],
 		});
 	},

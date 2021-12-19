@@ -7,8 +7,7 @@ module.exports = {
 	category: null,
 	ssOnly: true,
 	async run(client, message) {
-		let cst = await client.db.get("cst" + message.author.id) || "";
-		cst = cst.split(";");
+		const cst = message.author.data.get("cst").split(";");
 		if (!cst.includes("canapply")) {
 			// make sure account is > 6 months old
 			if (Number(message.author.createdTimestamp) > Date.now() - 15778463000) {
@@ -21,9 +20,9 @@ module.exports = {
 		}
 		const ch = message.guild.channels.cache.find((x) => (x.topic || "").toLowerCase().split(";").includes(message.author.id));
 		if (ch) return message.reply({ content: "You've already applied for staff!" });
-		let apps = await client.db.get("apps" + client.config.owner) || 0;
-		apps = Number(apps);
-		const appChannel = await message.guild.channels.create(`app-${apps + 1}`, {
+		// docs ref: https://discord.js.org/#/docs/main/stable/class/GuildChannelManager?scrollTo=create
+		const appChannel = await message.guild.channels.create(`app-${message.author.id}`, {
+			// GuildChannelManager.create docs ref: https://discord.js.org/#/docs/main/stable/typedef/CategoryCreateChannelOptions
 			parent: client.config.statics.defaults.channels.appCat,
 			type: "TEXT",
 			topic: message.author.id,
@@ -47,7 +46,6 @@ module.exports = {
 				message.reply({ content: `Unable to create TextBasedChannel, exception: \`${e}\`` });
 				client.Notify(e, message.content);
 			});
-		await client.db.set("apps" + client.config.owner, apps + 1);
 		message.member.roles.add(client.config.statics.defaults.roles.applicant);
 		message.reply({ embeds: [
 			new MessageEmbed()

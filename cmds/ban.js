@@ -10,8 +10,8 @@ module.exports = {
 		if (args.length < 1) return message.reply("You must provide a `user` resolvable for your ban.");
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply(`${client.config.statics.defaults.emoji.err} You have provided an invalid user!`);
-		const cst = await client.db.get("cst" + user.id) || "";
-		if (cst.split(";").includes("moderator")) return message.reply("Moderators cannot ban each other. (`<User>` possesses `moderator` CST.)");
+		const data = await client.db.getUserData(user.id);
+		if (data.get("cst").split(";").includes("moderator")) return message.reply("You can't ban a moderator!");
 		let reason = args.slice(1).join(" ");
 		if (!reason) reason = "<UNKNOWN REASON>";
 		const Notification = new MessageEmbed()

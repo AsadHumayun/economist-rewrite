@@ -1,11 +1,11 @@
-const { MessageEmbed } = require("discord.js");
+// const { MessageEmbed } = require("discord.js");
 
 module.exports = {
 	name: "addreplacer",
 	category: "utl",
 	aliases: ["addreplacer", "replaceradd", "newreplacer"],
 	description: "Adds a replacer; use `<replace key> <replacer content>`",
-	async run(client, message, args) {
+/*	async run(client, message, args) {
 		if (args.length < 2) return message.reply({ content: `You must specify a replacer keyword and its content under the format of \`${message.guild.prefix}addreplacer <name> <content>\`; for example \`${message.guild.prefix}addreplacer firstname Alan\`.` });
 		const keyword = args[0].toLowerCase();
 		const content = args.slice(1).join(" ");
@@ -19,5 +19,5 @@ module.exports = {
 				.setColor(message.author.color)
 				.setDescription(`Successfully added replacer "${keyword}"`),
 		] });
-	},
+	},*/
 };

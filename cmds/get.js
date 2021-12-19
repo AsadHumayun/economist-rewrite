@@ -8,18 +8,15 @@ module.exports = {
 	logAsAdminCommand: true,
 	category: "own",
 	async run(client, message, args) {
-		let cst = await client.db.get("cst" + message.author.id) || "";
-		cst = cst.split(";");
-
 		if (args.length < 2) return message.reply("You must specify a user and a key");
 		const user = await client.config.fetchUser(args[0]);
-		if (!user) return message.reply("You must specify a user for this command to work!");
+		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		const key = args.slice(1).join(" ");
 		let x = await client.db.get(key + user.id);
 		if (!x) return message.reply("null");
 		const ot = typeof x;
 		if (typeof x == "object") x = "```json\n" + JSON.stringify(x) + "\n```";
-		if (x.toString().length <= 4069 && (!cst.includes("tgt"))) {
+		if (x.toString().length <= 4069 && (!message.author.data.get("cst").split(";").includes("tgt"))) {
 			message.reply({
 				embeds: [
 					new Discord.MessageEmbed()

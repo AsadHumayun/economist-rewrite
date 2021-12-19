@@ -6,10 +6,16 @@ module.exports = {
 	category: "utl",
 	description: "Edits your `bio` (Shwon in the `profile` command)",
 	async run(client, message, args) {
-		let str = args.join(" ");
-		str = str.slice(0, 1200);
-
-		await client.db.set("bal" + message.author.id, str);
+		let str = args.join(" ") || "";
+		// bio is of type Sequelize.STRING
+		await client.db.USERS.update({
+			bio: str,
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
+		str = str.slice(0, 255);
 		if (str.length >= 1) {
 			message.reply({
 				embeds: [

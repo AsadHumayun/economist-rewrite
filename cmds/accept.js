@@ -10,8 +10,8 @@ module.exports = {
 		if (!message.member.roles.cache.has(client.config.statics.defaults.roles.srmod)) return message.reply({ content: "You must be a **Senior Moderator** in order to accept/decline users' applications." });
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply({ content: "You must mention a user whose application you wish to accept!" });
-		let cst = await client.db.get("cst" + user.id) || "";
-		cst = cst.split(";");
+		const data = await client.db.getUserData(user.id);
+		const cst = data.get("cst").split(";");
 		if (!cst.includes("sbmt")) return message.reply({ content: "That user hasn't submitted their staff application yet!" });
 		const ch = message.guild.channels.cache.find((x) => (x.topic || "").toLowerCase().split(";").includes(user.id));
 		if (!ch) return message.reply({ content: "That user has not applied for staff." });
