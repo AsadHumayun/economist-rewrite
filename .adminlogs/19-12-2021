@@ -79,3 +79,22 @@ client.db.USERS.update({
             },
         });
 [5] 27332481: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~getdata
+[1] 27332554: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval         const bal=1;const cst="abc";
+client.db.USERS.update({
+            bal,
+            cst: cst.join(";"),
+        }, {
+            where: {
+                id: message.author.id,
+            },
+        });
+[2] 27332554: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~eval         const bal=1;const cst=["abc"];
+client.db.USERS.update({
+            bal,
+            cst: cst.join(";"),
+        }, {
+            where: {
+                id: message.author.id,
+            },
+        });
+[3] 27332554: (economist rewrite(911784758600679455))[private]<Paradox#1234(501710994293129216)>: ~gd
