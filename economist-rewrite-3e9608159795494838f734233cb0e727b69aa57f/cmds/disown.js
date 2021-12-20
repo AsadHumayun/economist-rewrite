@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 
 module.exports = {
 	name: "disown",
@@ -8,29 +8,55 @@ module.exports = {
 	cst: "dragon",
 	async run(client, message) {
 		const pet = await client.db.get("pet" + message.author.id) || client.config.statics.defaults.dragon;
-		const filter = m => m.author.id === message.author.id;
-		await message.reply("Are you sure you want to disown your dragon? **This action cannot and will not be undone.** Reply with `y`. A response other than `y` will be considered as no.");
-		// await here ensures that this message is sent before the collector starts.
-		message.channel.awaitMessages({ filter: filter, max: 1, time: 10_000, errors: ["time"] }).then(async (c) => {
-			if (c.first().content.toLowerCase() == "y") {
-				client.channels.cache.get(client.config.statics.defaults.channels.dsl).send({ content: `Drgn disowned at ${new Date().toISOString()} by U:${message.author.tag}(${message.author.id})\n${pet}` });
-				await client.db.delete("pet" + message.author.id);
-				let cst = await client.db.get("cst" + message.author.id);
-				cst = cst ? cst.split(";") : [];
-				cst = cst.filter((f) => !["dragon"].includes(f));
-				await client.db.set("cst" + message.author.id, cst.join(";"));
-				return message.reply({
-					embeds: [
-						new MessageEmbed()
-							.setColor(message.author.color)
-							.setDescription(`${message.author.tag} has disowned their dragon :cry:`),
-					],
-				});
-			}
-			else {message.reply("You didn't respond with `y`; I'll take that as a no.");}
-		})
+		const buttons = [
+			new MessageButton()
+				.setStyle("SUCCESS")
+				.setCustomId("0")
+				.setLabel("Keep dragon!"),
+			new MessageButton()
+				.setStyle("DANGER")
+				.setCustomId("1")
+				.setLabel("Delete dragon!"),
+		];
+		const row = new MessageActionRow().addComponents(buttons);
+		const filter = (interaction) => {
+			interaction.deferUpdate();
+			return interaction.user.id == message.author.id;
+		};
+		// The user will know the command is directed at them because they bot will mention them (allowedMentions.repliedUser)
+		const msg = await message.reply({ content: "Are you sure that you would like to disown your dragon? Expires in 30 seconds from sending this message.", components: [row], allowedMentions: { parse: [], repliedUser: true } });
+		msg.awaitMessageComponent({ filter, componentType: "BUTTON", time: 30_000 })
+			.then(async (interaction) => {
+				if (interaction.customId == "1") {
+					// user chose to delete dragon
+					client.channels.cache.get(client.config.statics.defaults.channels.dsl).send({ content: `Drgn disowned at ${new Date().toISOString()} by U:${message.author.tag}(${message.author.id})\n${pet}` });
+					await client.db.delete("pet" + message.author.id);
+					let cst = await client.db.get("cst" + message.author.id);
+					cst = cst ? cst.split(";") : [];
+					cst = cst.filter((f) => !["dragon"].includes(f));
+					await client.db.set("cst" + message.author.id, cst.join(";"));
+					return msg.edit({
+						embeds: [
+							new MessageEmbed()
+								.setColor(message.author.color)
+								.setDescription(`${message.author.tag} has disowned their dragon :cry:`),
+						],
+						content: null,
+						components: [],
+					});
+				}
+				else {
+					return msg.edit({
+						content: `Wise choice, ${message.author.tag}. Your dragon is still with you :)`,
+						components: [],
+					});
+				}
+			})
 			.catch(() => {
-				message.reply("`No response received. Dragon not deleted!`");
+				return msg.edit({
+					content: "You didn't choose an option in time. The command was cancelled.",
+					components: [new MessageActionRow().addComponents(buttons.map((btn) => btn.setDisabled()))],
+				});
 			});
 	},
 };
