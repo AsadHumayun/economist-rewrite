@@ -852,10 +852,10 @@ client.on("messageCreate", async (message) => {
 			// today example: 13-12-2021 (for: 13 Dec 2021)
 			if (!fs.existsSync(`./.adminlogs/${today}`)) {
 				const b = Date.now();
-				client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: "Attempting to create new logs file..." });
+				client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
 				fs.writeFile(`./.adminlogs/${today}`, LOG.join(""), ((err) => {
 					if (err) console.error(err) && client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
-					client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Created new logs file in ${Date.now() - b} ms` });
+					client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
 				}));
 			}
 			else {

@@ -33,12 +33,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/almostStatic/economist-rewrite.git"
+    "url": "git+https://github.com/NyxrDev/Economist.git"
   },
   "bugs": {
-    "url": "https://github.com/almostStatic/economist-rewrite/issues"
+    "url": "https://github.com/NyxrDev/Economist/issues"
   },
-  "homepage": "https://github.com/almostStatic/economist-rewrite#readme",
+  "homepage": "https://github.com/NyxrDev/Economist#readme",
   "devDependencies": {
     "eslint": "^8.4.1"
   }
