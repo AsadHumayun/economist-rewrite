@@ -53,6 +53,7 @@ const Users = require("./models/User.js")(sequelize, Sequelize.DataTypes);
 const Channels = require("./models/Channel.js")(sequelize, Sequelize.DataTypes);
 const Guilds = require("./models/Guild.js")(sequelize, Sequelize.DataTypes);
 const Bugs = require("./models/Bug.js")(sequelize, Sequelize.DataTypes);
+
 /*
 (async () => {
 	// have to use an asynchronous wrapper for sync method
@@ -60,8 +61,8 @@ const Bugs = require("./models/Bug.js")(sequelize, Sequelize.DataTypes);
 	const now = Date.now();
 	await sequelize.sync({ force: true });
 	console.log(`Successfully synced database in ${Date.now() - now} ms`);
-})();
-*/
+})(); */
+
 client.config = new ClientConfiguration(client);
 client.db = {
 	USERS: Users,
@@ -583,7 +584,7 @@ client.on("messageCreate", async (message) => {
 	if (!channel) channel = await Channels.create({ id: message.channel.id });
 	let guild = await Guilds.findOne({ where: { id: message.guild.id } });
 	if (!guild) guild = await Guilds.create({ id: message.guild.id });
-	const cst = data.get("cst").split(";");
+	const cst = data.get("cst") ? data.get("cst").split(";") : [];
 	if (!message.guild || (message.author.bot && (!cst.includes("wl"))) || (message.system) || (message.webhookId)) return;
 	if (message.partial) message = await message.fetch();
 	message.guild.prefix = guild.get("prefix");
@@ -644,7 +645,7 @@ client.on("messageCreate", async (message) => {
 
 	const bal = data.get("bal");
 	const chp = data.get("chillpills");
-	const fish = data.get("fsh").split(";");
+	const fish = data.get("fsh") ? data.get("fsh").split(";") : [0, 0, 0, 0, 0, 0, 0];
 	message.content = message.content
 		.replace(/myid/g, message.author.id)
 		.replace(/allmoney/g, bal)
@@ -744,7 +745,7 @@ client.on("messageCreate", async (message) => {
 		message.author.color = message.author.color.split(";")[Number(m[m.length - 1])];
 	}
 	if (!command) return;
-	const bcmd = data.get("bcmd").split(";");
+	const bcmd = data.get("bcmd") ? data.get("bcmd").split(";") : [];
 	if (bcmd.includes(command.name) && (!cst.includes("administrator132465798"))) {
 		// this allows for blacklisting of specific commands. Practically speaking, it is very useful as it allows me (or any other admin) to prevent users who are spamming a command from doing so.
 		return message.reply("You do not have permissions to use that command!");
