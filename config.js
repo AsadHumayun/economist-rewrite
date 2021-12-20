@@ -31,11 +31,12 @@ class Funcs {
 	/**
 	 * Shows element in inspcted format
 	 * @param {Any} element Element to be inspected
-	 * @param {Number} pen How deep to penetrate through element
+	 * @param {Number} pen Specifies the number of times to recurse while formatting object. This is useful for inspecting large objects. To recurse up to the maximum call stack size pass Infinity or null. Default: 2. (source: https://nodejs.org/api/util.html#utilinspectobject-showhidden-depth-colors)
 	 * @returns {String}
 	 */
-	Inspect(element, pen) {
-		return require("util").inspect(element, { depth: isNaN(pen) ? 100000000 : Number(pen) });
+	Inspect(element, pen = 2) {
+		// null 
+		return require("util").inspect(element, { depth: isNaN(pen) ? 2 : Number(pen) });
 	}
 	/**
 	 * Extracts the ID of a mentioned user from its raw content
