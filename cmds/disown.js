@@ -24,7 +24,7 @@ module.exports = {
 			return interaction.user.id == message.author.id;
 		};
 		// The user will know the command is directed at them because they bot will mention them (allowedMentions.repliedUser)
-		const msg = await message.reply({ content: "Are you sure that you would like to disown your dragon? Expres in 30 seconds from sending.", components: [row], allowedMentions: { parse: [], repliedUser: true } });
+		const msg = await message.reply({ content: "Are you sure that you would like to disown your dragon? Expires in 30 seconds from sending this message.", components: [row], allowedMentions: { parse: [], repliedUser: true } });
 		msg.awaitMessageComponent({ filter, componentType: "BUTTON", time: 30_000 })
 			.then(async (interaction) => {
 				if (interaction.customId == "1") {
