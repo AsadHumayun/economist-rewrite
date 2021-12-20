@@ -39,6 +39,7 @@ const client = new Discord.Client({
 		afk: true,
 	},*/
 });
+console.log("Creating Sequelize instance...");
 const sequelize = new Sequelize("database", "user", "password", {
 	host: "localhost",
 	dialect: "sqlite",
@@ -47,11 +48,12 @@ const sequelize = new Sequelize("database", "user", "password", {
 });
 // note: Sequelize.STRING limits values to 255 chars in length, whereas Sequelize.TEXT does not.
 // Using Sequelize.STRING wherever char length is limited.
+console.log("Creating models...");
 const Users = require("./models/User.js")(sequelize, Sequelize.DataTypes);
 const Channels = require("./models/Channel.js")(sequelize, Sequelize.DataTypes);
 const Guilds = require("./models/Guild.js")(sequelize, Sequelize.DataTypes);
 const Bugs = require("./models/Bug.js")(sequelize, Sequelize.DataTypes);
-
+/*
 (async () => {
 	// have to use an asynchronous wrapper for sync method
 	console.log("Attempting to sync database...");
@@ -59,7 +61,7 @@ const Bugs = require("./models/Bug.js")(sequelize, Sequelize.DataTypes);
 	await sequelize.sync({ force: true });
 	console.log(`Successfully synced database in ${Date.now() - now} ms`);
 })();
-
+*/
 client.config = new ClientConfiguration(client);
 client.db = {
 	USERS: Users,
@@ -73,11 +75,13 @@ client.db = {
 		return await Users.findOne({ where: { id: uid } });
 	}),
 };
+console.log("Creating commands cache...");
 // This is used to cache all of the commands upon startup
 client.config.commands = new Discord.Collection();
 
+console.log("Caching commands...");
 client.config.cacheCommands("./cmds", client.config.commands);
-
+console.log(`Successfully cached ${client.config.commands.size} commands`);
 // `messageUpdate` event, emitted when a message is edited.
 client.on("messageUpdate", async (oldMessage, newMessage) => {
 	if (oldMessage.channel.type == "dm") return;
