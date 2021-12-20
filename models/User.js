@@ -9,23 +9,18 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		adren: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		adrenc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		bal: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		bcmd: {
 			type: DataTypes.TEXT,
-			defaultValue: "",
 		},
 		bgc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		bio: {
 			type: DataTypes.STRING,
@@ -33,22 +28,18 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		cfc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		cgrl: {
 			type: DataTypes.TEXT,
 		},
 		chillc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		chillpills: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		chnl: {
 			type: DataTypes.TEXT,
-			defaultValue: "",
 		},
 		clr: {
 			type: DataTypes.STRING,
@@ -56,15 +47,12 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		cmds: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		cst: {
 			type: DataTypes.TEXT,
-			defaultValue: "",
 		},
 		cstmk: {
 			type: DataTypes.STRING,
-			defaultValue: "",
 		},
 		crls: {
 			type: DataTypes.STRING,
@@ -72,47 +60,36 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		dgrc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		dlc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		dns: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		dose0: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		dose1: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		dpc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		drgs: {
 			type: DataTypes.TEXT,
-			defaultValue: "",
 		},
 		fdc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		fishc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		fsh: {
 			type: DataTypes.STRING,
-			defaultValue: "0;0;0;0;0",
 		},
 		hgs: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		mt: {
 			type: DataTypes.STRING,
@@ -122,11 +99,6 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		ofncs: {
 			type: DataTypes.STRING,
-			defaultValue: "",
-		},
-		prefix: {
-			type: DataTypes.STRING,
-			defaultValue: "~",
 		},
 		pet: {
 			type: DataTypes.STRING,
@@ -136,20 +108,17 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 		},
 		petname: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(128),
 			defaultValue: "dragon",
 		},
 		replacers: {
 			type: DataTypes.TEXT,
-			defaultValue: "",
 		},
 		robc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		sgstc: {
-			type: DataTypes.NUMBER,
-			defaultValue: 0,
+			type: DataTypes.DECIMAL,
 		},
 		spse: {
 			type: DataTypes.STRING,
@@ -157,27 +126,22 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		sntc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		srchc: {
-			type: DataTypes.NUMBER,
-			defaultValue: 0,
+			type: DataTypes.DECIMAL,
 		},
 		stn: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		stnb: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(128),
 			defaultValue: "stunned",
 		},
 		strc: {
 			type: DataTypes.NUMBER,
-			defaultValue: 0,
 		},
 		upgr: {
 			type: DataTypes.TEXT,
-			defaultValue: "",
 		},
 		v: {
 			type: DataTypes.STRING,
@@ -185,15 +149,13 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		wl: {
 			type: DataTypes.STRING,
-			defaultValue: "",
 		},
 		xp: {
 			type: DataTypes.STRING,
 			defaultValue: "1;0",
 		},
 		xpc: {
-			type: DataTypes.NUMBER,
-			defaultValue: 0,
+			type: DataTypes.DECIMAL,
 		},
 	});
 };
