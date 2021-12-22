@@ -64,6 +64,9 @@ module.exports = (sequelize, DataTypes) => {
 		dlc: {
 			type: DataTypes.NUMBER,
 		},
+		dlstr: {
+			type: DataTypes.STRING,
+		},
 		dns: {
 			type: DataTypes.NUMBER,
 		},
@@ -103,6 +106,7 @@ module.exports = (sequelize, DataTypes) => {
 		pet: {
 			type: DataTypes.STRING,
 			defaultValue: "1;10000;100;0;1;1;1;1;0;1",
+			allowNull: false,
 		},
 		petbu: {
 			type: DataTypes.STRING,
