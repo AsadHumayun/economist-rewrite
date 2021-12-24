@@ -6,6 +6,7 @@ module.exports = {
 	description: "This **deletes** your dragon. **THIS ACTION CAN NOT AND WILL NOT BE UNDONE.**",
 	category: "pet",
 	cst: "dragon",
+	cstMessage: "You do not own a pet dragon. Use `{prefix}tame` to purchase one!",
 	async run(client, message) {
 		const pet = message.author.data.get("pet");
 		const buttons = [
@@ -33,7 +34,6 @@ module.exports = {
 					const cst = message.author.data.get("cst").split(";").filter((f) => !["dragon"].includes(f)).join(";");
 					await client.db.USERS.update({
 						cst,
-						pet: null,
 					}, {
 						where: {
 							id: message.author.id,

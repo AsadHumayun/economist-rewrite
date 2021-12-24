@@ -5,6 +5,7 @@ module.exports = {
 	aliases: ["i", "inventory", "stuff", "items"],
 	category: "ecn",
 	description: "See what items another user has",
+	disabled: true,
 	async run(client, message, args) {
 		let user = await client.config.fetchUser(args[0] || message.author.id);
 		if (!user) user = message.author;
