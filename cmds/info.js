@@ -7,53 +7,11 @@ module.exports = {
 	description: "View some bot infomation",
 	category: "utl",
 	async run(client, message) {
-		const cmdCount = (await client.db.get("cmds" + client.user.id) || 0).toString();
-		const cm = (await client.db.get("cmds" + message.author.id) || 0).toString();
 		const msg = await message.reply("Getting information... (this may take a second!)");
+		const cmdCount = (client.user.data.get("cmds") || 0).toString();
+		const cm = (message.author.data.get("cmds") || 0).toString();
 		const mem = process.memoryUsage().heapUsed / 1024 / 1024;
 		const cpu = await osu.cpu.usage();
-		const getUptime = function(millis) {
-			const dur = {};
-			const units = [{
-				label: "ms",
-				mod: 1000,
-			},
-			{
-				label: "s",
-				mod: 60,
-			},
-			{
-				label: "m",
-				mod: 60,
-			},
-			{
-				label: "hrs",
-				mod: 24,
-			},
-			{
-				label: "d",
-				mod: 31,
-			},
-			];
-
-			units.forEach(function(u) {
-				millis = (millis - (dur[u.label] = (millis % u.mod))) / u.mod;
-			});
-
-			const nonZero = function(u) {
-				return dur[u.label];
-			};
-			dur.toString = function() {
-				return units
-					.reverse()
-					.filter(nonZero)
-					.map(function(u) {
-						return dur[u.label] + "" + (dur[u.label] == 1 ? u.label.slice(0, -1) : u.label);
-					})
-					.join("");
-			};
-			return (dur);
-		};
 
 		msg.edit({
 			content: null,
@@ -62,7 +20,7 @@ module.exports = {
 					.setColor(message.author.color)
 					.setTitle("Bot Stats")
 					.setDescription("\"Users Cached\" is not entirely accurate as the same user can be counted multiple times on different guilds")
-					.setAuthor(client.user.tag, client.user.avatarURL({ dynamic: true }), client.config.statics.ssInvite)
+					.setAuthor({ name: client.user.tag, icon: client.user.avatarURL({ dynamic: true }), url: client.config.statics.ssInvite })
 					.addField("❯ Name", client.user.tag, true)
 					.addField("❯ Commands Used", cmdCount, true)
 					.addField("❯ Commands You've Used", cm, true)
@@ -78,7 +36,7 @@ module.exports = {
 					.addField("❯ Total Cached Files", Object.values(require.cache).length.toString(), true)
 					.addField("❯ Total Cached Items", Number(client.guilds.cache.size + client.channels.cache.size + client.users.cache.size).toString(), true)
 					.addField("❯ WS Status", String(client.ws.status), true)
-					.addField("❯ Uptime", getUptime(client.uptime).toString() || "Unknown", true)
+					.addField("❯ Uptime", client.config.cooldown(message.createdTimestamp, message.createdTimestamp + client.uptime).toString() || "< 1s", true)
 					.addField("❯ Memory Usage", `**~**${Math.trunc(mem)}/${Math.trunc(process.memoryUsage().rss / 1024 / 1024)} MB`, true)
 					.addField("❯ Discord.js", `v**${require("discord.js").version}**`, true)
 					.addField("❯ Total Commands", client.config.commands.size.toString(), true)
