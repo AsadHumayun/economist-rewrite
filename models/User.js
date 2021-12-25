@@ -29,9 +29,6 @@ module.exports = (sequelize, DataTypes) => {
 		cfc: {
 			type: DataTypes.NUMBER,
 		},
-		cgrl: {
-			type: DataTypes.TEXT,
-		},
 		chillc: {
 			type: DataTypes.NUMBER,
 		},
@@ -51,8 +48,8 @@ module.exports = (sequelize, DataTypes) => {
 		cst: {
 			type: DataTypes.TEXT,
 		},
-		cstmk: {
-			type: DataTypes.STRING,
+		cstmrl: {
+			type: DataTypes.TEXT,
 		},
 		crls: {
 			type: DataTypes.STRING,
