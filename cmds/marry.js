@@ -6,6 +6,7 @@ module.exports = {
 	description: "Get yourself a wifey!",
 	category: "ecn",
 	async run(client, message, args) {
+		if (!args.length) return message.reply("You msut mention somebody that you'd like to marry in order for this command to work!");
 		const spouse = message.author.data.get("spse");
 		if (spouse) {
 			const spse = await client.config.fetchUser(spouse);
@@ -31,30 +32,30 @@ module.exports = {
 				.setLabel("Reject"),
 		];
 		const row = new MessageActionRow().addComponents(buttons);
-		const msg = await message.reply({ content: `${spse0.toString()}, **${Util.escapeMarkdown(message.author.tag)}** has proposed to you! You have 60 seconds to either Accept his proposal, or publicly reject them!`, components: [row], allowedMentions: { parse: ["user"] } });
+		const msg = await message.reply({ content: `${usr}, **${Util.escapeMarkdown(message.author.tag)}** has proposed to you! You have 60 seconds to either accept their proposal, or publicly reject them!`, components: [row], allowedMentions: { parse: ["users"] } });
 
 		const filter = (interaction) => {
 			interaction.deferUpdate();
-			return interaction.user.id == message.author.id;
+			return interaction.user.id == usr.id;
 		};
 
 		msg.awaitMessageComponent({ filter, componentType: "BUTTON", time: 60_000 })
 			.then(async (interaction) => {
 				if (interaction.customId == "1") {
 					await client.db.USERS.update({
-						spse: spse0.id,
+						spse: usr.id,
 					}, {
 						where: {
 							id: message.author.id,
-						}
-					})
+						},
+					});
 					await client.db.USERS.update({
 						spse: message.author.id,
 					}, {
 						where: {
-							id: spse0.id
-						}
-					})
+							id: usr.id,
+						},
+					});
 					msg.edit({
 						content: null,
 						components: [],
@@ -67,13 +68,13 @@ module.exports = {
 				}
 				else {
 					msg.edit({
-						content: `${message.author.tag}'s proposal to ${spse0.tag} was an act of courage. ${message.author.tag}'s love for ${spse0.tag} was not reciprocated :cry:\n${spse0.tag} has **rejected** ${message.author.tag}...`,
+						content: `${message.author.tag}'s proposal to ${usr.tag} was an act of courage. ${message.author.tag}'s love for ${usr.tag} was not reciprocated :cry:\n${usr.tag} has **rejected** ${message.author.tag}...`,
 						components: [],
 						allowedMentions: {
 							parse: [],
 							repliedUser: true,
-						}
-					})
+						},
+					});
 				}
 			})
 			.catch((err) => {
@@ -82,31 +83,6 @@ module.exports = {
 					content: "You didn't choose an option in time. The command was cancelled.",
 					components: [new MessageActionRow().addComponents(buttons.map((btn) => btn.setDisabled()))],
 				});
-			});
-		message.reply({
-			embeds: [
-				new MessageEmbed()
-					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has proposed to ${usr.tag}!\n${usr.tag} has 60 seconds to accept. Type \`accept\` to accept!`),
-			],
-		});
-		message.channel.awaitMessages({
-			filter: (m) => m.author.id === usr.id,
-			max: 1,
-			time: 60 * 1000,
-			errors: ["time"],
-		})
-			.then(async (col) => {
-				if (col.first().content.toLowerCase() == "accept") {
-					await client.db.set("spse" + message.author.id, usr.id);
-					await client.db.set("spse" + usr.id, message.author.id);
-				}
-				else {
-					message.reply(`It looks like ${usr.tag} didn't want to marry you, ${message.author}. Better luck next time!`);
-				}
-			})
-			.catch(() => {
-				return message.reply(`Welp, ${usr.tag} didn't respond in time.`);
 			});
 	},
 };
