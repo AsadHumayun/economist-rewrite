@@ -27,17 +27,6 @@ const client = new Discord.Client({
 	}),
 	allowedMentions: { parse: ["users", "roles"], repliedUser: false },
 	intents: new Discord.Intents().add([Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_MEMBERS]),
-/*	presence: {
-		// (property) PresenceData.activities?: Discord.ActivitiesOptions[]
-		activities: [
-			{
-				name: "you!",
-				type: "LISTENING",
-			},
-		],
-		status: "dnd",
-		afk: true,
-	},*/
 });
 console.log("Creating Sequelize instance...");
 const sequelize = new Sequelize("database", "user", "password", {
@@ -48,20 +37,22 @@ const sequelize = new Sequelize("database", "user", "password", {
 });
 // note: Sequelize.STRING limits values to 255 chars in length, whereas Sequelize.TEXT does not.
 // Using Sequelize.STRING wherever char length is limited.
-console.log("Creating models...");
+console.log("Defining models...");
 const Users = require("./models/User.js")(sequelize, Sequelize.DataTypes);
 const Channels = require("./models/Channel.js")(sequelize, Sequelize.DataTypes);
 const Guilds = require("./models/Guild.js")(sequelize, Sequelize.DataTypes);
 const Bugs = require("./models/Bug.js")(sequelize, Sequelize.DataTypes);
 
-/*
-(async () => {
-	// have to use an asynchronous wrapper for sync method
-	console.log("Attempting to sync database...");
-	const now = Date.now();
-	await sequelize.sync({ force: true });
-	console.log(`Successfully synced database in ${Date.now() - now} ms`);
-})(); */
+const syncTables = false;
+if (syncTables == true) {
+	(async () => {
+		// have to use an asynchronous wrapper for sync method
+		console.log("Attempting to sync database...");
+		const now = Date.now();
+		await sequelize.sync({ force: true });
+		console.log(`Successfully synced database in ${Date.now() - now} ms`);
+	})();
+}
 
 client.config = new ClientConfiguration(client);
 client.db = {
@@ -318,15 +309,15 @@ ${!mmbr.permissionsIn(newChannel.id).has(Discord.Permissions.FLAGS.MANAGE_CHANNE
 
 client.once("ready", async () => {
 	client.user.presence.set({
-		activity: {
+		activities: [{
 			name: `${client.guilds.cache.size} servers | ~support to join our support server for free 💵 500`,
 			type: "WATCHING",
-		},
+		}],
 		status: "dnd",
 	});
-	client.user.color = client.config.statics.defaults.clr;
 	console.log(`\u2705 Logged in as ${client.user.tag}`);
 	client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `[${new Date().toISOString()}]: instance created with ${client.guilds.cache.size} (U:${client.users.cache.size}) guilds cached` });
+	// cache support server guild members.
 	try {
 		await client.guilds.cache.get(client.config.statics.supportServer).members.fetch();
 		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `[${new Date().toISOString()}]: Successfully cached ${client.guilds.cache.get(client.config.statics.supportServer).members.cache.size}/${client.guilds.cache.get(client.config.statics.supportServer).memberCount} members of ${client.config.statics.supportServer}.` });
@@ -334,6 +325,8 @@ client.once("ready", async () => {
 	catch (e) {
 		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `[${new Date().toISOString()}]: **Failed to cache members of guild ${client.config.statics.supportServer}**, e: \`${e}\`` });
 	}
+	client.user.color = client.config.statics.defaults.clr;
+	client.user.data = await client.db.getUserData(client.user.id);
 });
 
 client.on("guildCreate", async (g) => {
