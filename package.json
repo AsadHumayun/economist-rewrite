@@ -11,15 +11,15 @@
   "keywords": [],
   "author": "almostStatic",
   "license": "ISC",
-	"engines": {
-		"node": ">= 16.10.0"
-	},
-	"engineStrict": true,
+  "engines": {
+    "node": ">= 16.10.0"
+  },
+  "engineStrict": true,
   "dependencies": {
     "babel-plugin-syntax-class-properties": "^6.13.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "delay": "^4.4.1",
-    "discord.js": "^13.0.0",
+    "discord.js": "13.4.0",
     "discord.js-reaction-menu": "^1.0.2",
     "dotenv": "^8.2.0",
     "lodash": "^4.17.21",
@@ -29,7 +29,8 @@
     "node-fetch": "^2.6.0",
     "node-os-utils": "^1.2.2",
     "sequelize": "^6.12.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "tar": "6.1.11"
   },
   "repository": {
     "type": "git",
