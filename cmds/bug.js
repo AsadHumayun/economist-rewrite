@@ -22,9 +22,10 @@ module.exports = {
 			return message.reply("You must include a title and a description for your bug separated by `|`, for example: `" + message.guild.prefix + "bug title for bug | description`");
 		}
 		let id = Math.floor(Math.random() * 100000);
-		const val = await client.db.BUGS.findOne({ where: { id } });
+		let val = await client.db.BUGS.findOne({ where: { id } });
 		while (val.get("id") == id) {
 			id = Math.floor(Math.random() * 100000);
+			val = await client.db.BUGS.findOne({ where: { id } });
 		}
 		const embed = new MessageEmbed()
 			.setColor(message.author.color)

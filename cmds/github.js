@@ -10,7 +10,8 @@ module.exports = {
 	category: "utl",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must specify a query in order for this command to work!");
-		let res = await fetch(`https://api.github.com/users/${args[0].toLowerCase()}`);
+		args[0] = encodeURIComponent(args[0]);
+		let res = await fetch(`https://api.github.com/users/${args[0]}`);
 		if (!res) return message.reply("Your search has yielded no results!");
 		res = await res.json();
 		if (message.content.toLowerCase().endsWith("-r")) {
@@ -18,7 +19,7 @@ module.exports = {
 		}
 		const emb = new MessageEmbed()
 			.setColor(message.author.color)
-			.setAuthor("GitHub User Search", "https://cdn.asad.codes/static/github.png", "https://api.github.com")
+			.setAuthor("GitHub User Search", "https://cdn.asad.codes/static/github.png", `https://github.com/${args[0]}`)
 			.setTitle(`${res.login}'s GitHub Profile`)
 			.setThumbnail(res.avatar_url)
 			.setDescription(res.bio ? `**Bio:** ${res.bio}` : "None")

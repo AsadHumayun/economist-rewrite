@@ -16,11 +16,11 @@ module.exports = {
 		if (!id) return message.reply({ content: "That role was not found >:(" });
 		const kw = args[2].toLowerCase();
 		const data = await client.db.getUserData(user.id);
-		let roles = data.get("cgrl");
+		let roles = data.get("cstmrl");
 		roles = roles ? roles.split(";") : [];
 		roles.push(`${kw};${id.id}`);
 		await client.db.USERS.update({
-			cgrl: roles.join(";"),
+			cstmrl: roles.join(";"),
 		}, {
 			where: {
 				id: user.id,
@@ -30,7 +30,7 @@ module.exports = {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`Successfully given cgrl for [${id.name}] to ${user.tag}`),
+					.setDescription(`Successfully given cstmrl for [${id.name}] to ${user.tag}`),
 			],
 		});
 	},

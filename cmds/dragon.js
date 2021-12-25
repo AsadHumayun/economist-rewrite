@@ -6,19 +6,17 @@ module.exports = {
 	category: "pet",
 	description: "View your dragon's stats",
 	cst: "dragon",
+	cstMessage: "You do not own a pet dragon. You may purchase one with `{prefix}tame`!",
 	async run(client, message, args) {
 		async function Embed(u) {
-			let data = await client.db.get("pet" + u.id);
-			const cst = await client.db.get("cst" + u.id) || "";
-			if (!data) {
-				await client.db.set("pet" + u.id, client.config.statics.defaults.dragon);
-				data = client.config.statics.defaults.dragon;
-			}
-			if (!cst.includes("dragon") || (!data)) {
+			const userData = await client.db.getUserData(u.id);
+			let data = userData.get("pet");
+			const cst = (userData.get("cst") || "").split(";");
+			if (!cst.includes("dragon")) {
 				return message.reply(`${message.author.id == u.id ? "You don't own a dragon!" : `${u.tag} does not own a dragon!`} Why not tame one by using \`${message.guild.prefix}tame\``);
 			}
-			if (u.bot == true || (cst.includes("maxdragon888"))) {
-				data = client.config.statics.defaults.maxPet;
+			if (u.bot == true || cst.includes("maxdragon888")) {
+				data = client.config.statics.defaults.maxDragon;
 			}
 			const alias = await client.config.getDragonAlias(message.author.id, client);
 			data = data.split(";");

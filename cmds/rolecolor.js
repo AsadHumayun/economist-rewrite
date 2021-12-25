@@ -14,7 +14,7 @@ module.exports = {
 		let col = args[1];
 		if (!col) return message.reply(`${client.config.statics.defaults.emoji.err} You need to provide a valid hex colour code. Make sure you use the correct format: \`${message.guild.prefix}rolecolor <role keyword> <hex color>\``)
 
-		let roles = await client.db.get("cgrl" + message.author.id);
+		let roles = await client.db.get("cstmrl" + message.author.id);
 		if (!roles) return message.reply(`${client.config.statics.defaults.emoji.err} You do not own any custom roles. `);
 
 		roles = client.config.listToMatrix(roles.split(";"), 2);

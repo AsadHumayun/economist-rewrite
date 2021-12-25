@@ -11,11 +11,10 @@ module.exports = {
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply(`${client.config.statics.defaults.emoji.err} You have provided an invalid user!`);
 		const data = await client.db.getUserData(user.id);
-		if (data.get("cst").split(";").includes("moderator")) return message.reply("You can't ban a moderator!");
-		let reason = args.slice(1).join(" ");
-		if (!reason) reason = "<UNKNOWN REASON>";
+		if ((data.get("cst") || "").split(";").includes("moderator")) return message.reply("You can't ban a moderator!");
+		const reason = args.slice(1).join(" ") || "<UNKNOWN REASON>";
 		const Notification = new MessageEmbed()
-			.setColor(client.config.statics.defaults.colors["red"])
+			.setColor(client.config.statics.defaults.colors.red)
 			.setDescription(`You have received a permanent ban from ${message.guild.name}. Note that your ban might be lifted soon—to appeal for an unban (or check your remaining ban length), please PM ${client.users.cache.get(client.config.owner).tag}. Additionally, if you think this is a mistake or you were wrognly punished, please contact ${client.users.cache.get(client.config.owner).tag}`)
 			.addField("Moderator", message.author.tag)
 			.addField("Reason", reason);

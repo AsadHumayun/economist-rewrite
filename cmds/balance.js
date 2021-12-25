@@ -14,7 +14,7 @@ module.exports = {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${usr.tag}'s account contains :dollar: ${client.config.digits(data.bal)}`),
+					.setDescription(`${usr.tag}'s account contains :dollar: ${client.config.digits(data.get("bal") || "0")}`),
 			],
 		});
 	},

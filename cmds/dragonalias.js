@@ -8,12 +8,11 @@ module.exports = {
 	description: "Choose a dragon alias to be displayed on your dragon!",
 	async run(client, message, args) {
 		let hasAliases = [];
-		let cst = await client.db.get("cst" + message.author.id) || "";
-		cst = cst ? cst.split(";") : [];
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		const dragAliases = Object.keys(require("../petaliases.json")).map((k) => k.toLowerCase());
 		hasAliases = dragAliases.filter((alias) => cst.includes(alias));
 		hasAliases.push("default");
-		let currAlias = (await client.db.get("curralias" + message.author.id) || "_").toLowerCase();
+		let currAlias = message.author.data.get("crls" + message.author.id).toLowerCase();
 		if (!dragAliases.includes(currAlias)) {
 			currAlias = "default";
 		}
@@ -34,7 +33,13 @@ module.exports = {
 			if (isNaN(args[0])) return message.reply(`Invalid index "${args[0]}"; valid options are [${hasAliases.map((a) => hasAliases.indexOf(a)).join(", ")}]`);
 			const id = Number(args[0]);
 			const alias = hasAliases[id];
-			await client.db.set("curralias" + message.author.id, alias);
+			await client.db.USERS.update({
+				crls: alias,
+			}, {
+				where: {
+					id: message.author.id,
+				},
+			});
 			message.reply({
 				embeds: [
 					new MessageEmbed()

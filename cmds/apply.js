@@ -7,7 +7,7 @@ module.exports = {
 	category: null,
 	ssOnly: true,
 	async run(client, message) {
-		const cst = message.author.data.get("cst").split(";");
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (!cst.includes("canapply")) {
 			// make sure account is > 6 months old
 			if (Number(message.author.createdTimestamp) > Date.now() - 15778463000) {
@@ -27,7 +27,7 @@ module.exports = {
 			type: "TEXT",
 			topic: message.author.id,
 			nsfw: false,
-			reason: `${message.createdTimestamp / 60_000}: U:<${message.author.tag} (${message.author.id})> applied for staff`,
+			reason: `[${new Date(message.createdTimestamp).toISOString()}]: U:<${message.author.tag} (${message.author.id})> applied for staff`,
 			permissionOverwrites: [{
 				id: message.guild.id,
 				allow: [],

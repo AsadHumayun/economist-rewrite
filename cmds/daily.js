@@ -50,7 +50,7 @@ module.exports = {
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setFooter(`Streak: ${streak[0] || "0"}`)
+						.setFooter(`Streak: ${streak[0] || "0"} days`)
 						.setDescription(`${message.author.tag} has collected their daily reward and received :dollar: ${client.config.comma(amountAdded)} in cash`),
 				],
 			});

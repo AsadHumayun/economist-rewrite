@@ -12,7 +12,7 @@ module.exports = {
 		if (!user) return message.reply("Unknown user");
 		const credits = isNaN(args[1]) ? 1 : Number(args[1]);
 		const data = await client.db.getUserData(user.id);
-		const ucst = data.get("cst").split(";").includes("dragon");
+		const ucst = (data.get("cst") || "").split(";").includes("dragon");
 		if (!ucst) return message.reply("That person doesn't have a dragon!");
 		const pet = data.get("pet").split(";");
 		if (pet.length < client.config.statics.intendedPetLength) return message.reply("Malformed pet - does not have at least " + client.config.statocs.intendedPetLength + " elements.");

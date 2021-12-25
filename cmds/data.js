@@ -2,7 +2,7 @@ const { Util } = require("discord.js");
 
 module.exports = {
 	name: "data",
-	aliases: ["getdata", "data", "store", "gd"],
+	aliases: ["getdata", "data", "gd", "userdata"],
 	category: "utl",
 	description: "View a User's stored data",
 	logAsAdminCommand: true,
@@ -49,6 +49,9 @@ module.exports = {
 			break;
 		case "guild":
 			await client.db.GUILDS.findOne({ where: { id: args[0] } }).then((data) => dissect(data));
+			break;
+		default:
+			message.reply({ content: `Invalid ID "${args[0]}"`, allowedMentions: { parse: [] } });
 			break;
 		}
 	},

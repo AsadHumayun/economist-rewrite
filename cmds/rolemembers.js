@@ -7,7 +7,7 @@ module.exports = {
 	category: 'ecn',
 	async run(client, message, args) {
 		if(!args.length) return message.reply("You need to like provide a role name/id")
-		let roles = await client.db.get("cgrl" + message.author.id) || "";
+		let roles = await client.db.get("cstmrl" + message.author.id) || "";
 				roles = client.config.listToMatrix(roles.split(";"), 2);
 		let spch = args.join(" ");
 		let key = args[0].toLowerCase();

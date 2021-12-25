@@ -9,8 +9,8 @@ module.exports = {
 		if (!args.length) args = [message.author.id];
 		let user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) user = message.author;
-		let cst = await client.db.get("cst" + user.id) || "";
-		cst = cst.split(";");
+		const data = await client.db.getUserData(user.id);
+		const cst = data.get("cst") ? data.get("cst").split(";") : [];
 
 		message.reply({
 			embeds: [

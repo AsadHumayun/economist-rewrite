@@ -8,18 +8,16 @@ module.exports = {
 	cst: "supreme",
 	category: "pet",
 	async run(client, message, args) {
-		const cd = await client.db.get("dpc" + message.author.id);
+		const cd = message.author.data.get("dpc") || 0;
 		if (cd) {
 			const data = client.config.cooldown(message.createdTimestamp, cd * 60_000);
 			if (data) {
 				return message.reply(`You must wait ${data} before depriving another stat!`);
 			}
 		}
-		let cst = await client.db.get("cst" + message.author.id) || "";
-		cst = cst ? cst.split(";") : [];
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (!cst.includes("dragon")) return message.reply("You do not have a pet dragon!");
-		let pet = await client.db.get("pet" + message.author.id);
-		if (!pet) pet = client.config.statics.defaults.dragon;
+		let pet = message.author.data.get("pet");
 		if (cst.includes("maxdragon888")) pet = client.config.statics.defaults.naxDragon;
 		const alias = await client.config.getDragonAlias(message.author.id, client);
 		pet = pet.split(";");
@@ -32,12 +30,18 @@ module.exports = {
 		if (amt < 0) {
 			return message.reply("You must have at least 2 credits on a specified `<stat>` before depriving your dragon of said stat.");
 		}
+		pet[Stat[2]] = Credits - amt;
+		pet[4] = Number(pet[4]) + amt;
 		// shouldn't affect users with the maxdragon -- the maxdragon is intended to be a "ghost" type thing; it doesn't change no matter what the user does.
 		if (!cst.includes("maxdragon888")) {
-			await client.db.set("dpc" + message.author.id, client.config.parseCd(message.createdTimestamp, ms("6h")));
-			pet[Stat[2]] = Credits - amt;
-			pet[4] = Number(pet[4]) + amt;
-			await client.db.set("pet" + message.author.id, pet.join(";"));
+			await client.db.USERS.update({
+				dpc: client.config.parseCd(message.createdTimestamp, ms("6h")),
+				pet: pet.join(";"),
+			}, {
+				where: {
+					id: message.author.id,
+				},
+			});
 		}
 		message.reply({
 			embeds: [

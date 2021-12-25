@@ -13,8 +13,23 @@ module.exports = {
 		if (!u1) return message.reply({ content: `Invalid identifier for user1: "${args[0]}"`, allowedMentions: { parse: [] } });
 		const u2 = await client.config.fetchUser(args[1]);
 		if (!u2) return message.reply({ content: `Invalid identifier for user2: "${args[1]}"`, allowedMentions: { parse: [] } });
-		await client.db.set("spse" + u1.id, u2.id);
-		await client.db.set("spse" + u2.id, u1.id);
+		await client.db.getUserData(u1.id);
+		await client.db.getUserData(u2.id);
+		await client.db.USERS.update({
+			spse: u2.id,
+		}, {
+			where: {
+				id: u1.id,
+			},
+		});
+		await client.db.USERS.update({
+			spse: u1.id,
+		}, {
+			where: {
+				id: u2.id,
+			},
+		});
+
 		message.reply({
 			embeds: [
 				new MessageEmbed()

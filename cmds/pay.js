@@ -30,7 +30,7 @@ module.exports = {
 		const amountLeft = authorBal - amt;
 		if (amountLeft < 0) return notEnough();
 		await client.db.set("bal" + message.author.id, amountLeft);
-		let oldBal = await client.db.get("bal" + usr.id) || 0;
+		let oldBal = message.author.data.get("bal") || 0;
 		oldBal = Number(oldBal);
 		const newBal = Number(oldBal + amt);
 		await client.db.set("bal" + usr.id, newBal);

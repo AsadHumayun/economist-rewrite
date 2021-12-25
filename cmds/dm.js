@@ -14,13 +14,11 @@ module.exports = {
 
 		const msg = args.slice(1).join(" ");
 		if (!msg) return message.reply("You must include a message.");
-		let uclr = await client.db.get("clr" + user.id) || "#00aaaa;0";
-		uclr = uclr.split(";");
+		const uclr = (message.author.data.get("clr") || "#00aaaa;0").split(";");
 		// uclr[uclr.length - 1]: the last number tells you where the bot is in its colour cycle. This is updated b4 each command use in index.js.
-		const clr = uclr[uclr.length - 1];
 		const emb = new MessageEmbed()
-			.setColor(clr)
-			.setDescription(msg)
+			.setColor(uclr[uclr.length - 1])
+			.setDescription(msg.toString())
 			.setFooter(`Sent by: ${message.author.tag}(${message.author.id})`, message.author.displayAvatarURL({ dynamic: true }));
 		message.reply({
 			embeds: [

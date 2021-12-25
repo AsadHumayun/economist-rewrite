@@ -15,7 +15,7 @@ module.exports = {
 		if (!usr) return message.reply("Try running the command again, this time actually ping a user llolololololl");
 
 		if (!isNaN(args[1])) {
-			let bal = await client.db.get("bal" + usr.id) || "0";
+			let bal = message.author.data.get("bal") || "0";
 				bal = Number(bal);
 			let amt = Number(args[1]);
 				bal -= amt;

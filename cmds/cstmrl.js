@@ -7,7 +7,7 @@ module.exports = {
 	aliases: ["cstmrl", "cstmrls", "roles", "cgrl"],
 	description: "Lists all of your assignable roles along with their keywords and names",
 	async run(client, message) {
-		let roles = message.author.data.get("cgrl");
+		let roles = message.author.data.get("cstmrl");
 		if (!roles) return message.reply(`${client.config.statics.defaults.emoji.err} You do not own any custom roles.`);
 		roles = client.config.listToMatrix(roles.split(";"), 2);
 		const resp = roles.map((x) => `    "${x[0]}": "${message.guild.roles.cache.get(x[1]) ? message.guild.roles.cache.get(x[1]).name : "<UNKNOWN ROLE>"}"`).join(",\n");

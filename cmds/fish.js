@@ -6,17 +6,24 @@ module.exports = {
 	aliases: ["cast", "fish"],
 	description: "Allows you to go fishing!\nCosts :dollar: 50",
 	category: "ecn",
+	cst: "fishrod",
+	cstMessage: "You need a {client.config.statics.defaults.emoji.fishing_rod} in order to go fishing! `{message.guild.prefix}shop`",
 	async run(client, message) {
-		let cst = await client.db.get("cst" + message.author.id);
-		cst = cst ? cst.split(";") : [];
-		if (!cst.includes("fishrod")) return message.reply(`You need a ${client.config.statics.defaults.emoji.fishing_rod} in order to go fishing! \`${message.guild.prefix}shop\``);
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
+		if (!cst.includes("fishrod")) return message.reply();
 
-		const cd = await client.db.get("fishc" + message.author.id);
+		const cd = message.author.data.get("fishc") || 0;
 		const scnd = client.config.cooldown(message.createdTimestamp, cd * 60_000);
 		if (scnd) {
 			return message.reply(`Please wait another ${scnd} before fishing, otherwise your rod will break!`);
 		}
-		await client.db.set("fishc" + message.author.id, client.config.parseCd(message.createdTimestamp, 20_000, true));
+		await client.db.USERS.update({
+			fishc: client.config.parseCd(message.createdTimestamp, 20_000, true),
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
 		const fishes = [
 			":dolphin:",
 			":shark:",
@@ -24,18 +31,24 @@ module.exports = {
 			":tropical_fish:",
 			":fish:",
 		];
-		const bal = await client.db.get("bal" + message.author.id) || 0;
-		message.channel.send({ embeds: [ new MessageEmbed().setDescription(`${message.author.tag} locates their ${client.config.statics.defaults.emoji.fishing_rod} and goes fishing...`).setColor(message.author.color) ] });
+		const bal = message.author.data.get("bal") || 0;
+		message.reply({ embeds: [ new MessageEmbed().setDescription(`${message.author.tag} locates their ${client.config.statics.defaults.emoji.fishing_rod} and goes fishing...`).setColor(message.author.color) ] });
 		await delay(2000);
 		const Fish = Math.floor(Math.random() * fishes.length);
 		const fish = fishes[Fish];
 		const amtGained = Math.floor(Math.random() * 250 / 5);
 		let dollarsEarned = Math.round(amtGained / 5) * 10;
 		// todo: merge fsh into an itms key or something similar.
-		let f = await client.db.get(`fsh${message.author.id}`) || "0;0;0;0;0;0";
-		f = f.split(";");
+		const f = (message.author.data.get("fsh") || "0;0;0;0;0;0;0;0").split(";").map(Number);
 		f[Fish] = Number(f[Fish]) + amtGained;
-		await client.db.set(`fsh${message.author.id}`, f.join(";"));
+		await client.db.USERS.update({
+			bal: bal + dollarsEarned,
+			fsh: f.join(";"),
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
 		if (fishes[fish] == ":dolphin:") dollarsEarned = (dollarsEarned * 2) * amtGained;
 		if (fishes[fish] == ":shark:") dollarsEarned = (dollarsEarned / 2) * amtGained;
 		if (fishes[fish] == ":blowfish:") dollarsEarned = 0;
@@ -59,7 +72,6 @@ module.exports = {
 						.setDescription(`${message.author.tag} has caught ${fish} ${amtGained} and earnt :dollar: ${dollarsEarned}`),
 				],
 			});
-			await client.db.set(`bal${message.author.id}`, Number(bal + dollarsEarned));
 		}
 		else {
 			message.channel.send({

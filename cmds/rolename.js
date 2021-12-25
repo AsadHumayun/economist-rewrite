@@ -10,7 +10,7 @@ module.exports = {
 		if (args.length < 2) {
 			return message.reply("You must specify a valid role keyword and a new role name under the format of `" + message.guild.prefix + "rolename <keyword> <new name>`");		
 		};
-		let roles = await client.db.get("cgrl" + message.author.id);
+		let roles = await client.db.get("cstmrl" + message.author.id);
 		if (!roles) return message.reply(`${client.config.statics.defaults.emoji.err} You do not own any custom roles. `);
 
 		roles = client.config.listToMatrix(roles.split(";"), 2);

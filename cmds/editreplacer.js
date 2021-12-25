@@ -5,6 +5,7 @@ module.exports = {
 	aliases: ["editreplacer", "changereplacer", "erepl"],
 	description: "Edits a replacer's content; format `editreplacer <replacer keyword> <new content>`",
 	category: "utl",
+	disabled: true,
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must use the following format in order for this command to work: `" + message.guild.prefix + "editreplacer <replacer keyword> <new content>`");
 		const kw = args[0].toLowerCase();

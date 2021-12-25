@@ -7,15 +7,13 @@ module.exports = {
 	category: "pet",
 	cst: "dragon",
 	async run(client, message, args) {
-		let cst = await client.db.get("cst" + message.author.id);
-		cst = cst ? cst.split(";") : [];
-		let pet = await client.db.get("pet" + message.author.id);
-		if (!pet) pet = client.config.statics.defaults.dragon;
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
+		let pet = message.author.data.get("pet");
 		if (cst.includes("maxdragon888")) pet = client.config.statics.defaults.naxDragon;
 		pet = pet.split(";");
 
-		const cooldown = await client.db.get("fdc" + message.author.id);
-		if (cooldown && (!message.author.cst.includes("maxdragon888"))) {
+		const cooldown = message.author.data.get("fdc");
+		if (cooldown && (!cst.includes("maxdragon888"))) {
 			const data = client.config.cooldown(message.createdTimestamp, cooldown * 60_000);
 			if (data) {
 				return message.reply(`Your dragon is convulsing its wings in annoyance; you should try again in ${data}`);
@@ -32,20 +30,30 @@ module.exports = {
 			pet[1] = health + type.gives.hp > 100 ? 100 : health + type.gives.hp;
 			pet[2] = en + type.gives.en > 100 ? 100 : en + type.gives.en;
 			if (type.key.split(";").length > 1 && (!cst.includes("allfood"))) {
-				let fsh = await client.db.get("fsh" + message.author.id) || "0;0;0;0;0";
-				fsh = fsh.split(";");
+				const fsh = (message.author.data.get("fsh") ? message.author.data.get("fsh").split(";") : []).map((v) => v ? Number(v) : 0);
 				if (fsh[type.key.split(";")[1]] - 1 < 0) return message.reply("You don't have that type of food!");
 				fsh[type.key.split(";")[1]] -= 1;
-				await client.db.set("fsh" + message.author.id, fsh.join(";"));
+				await client.db.USERS.update({
+					fsh: fsh.join(";"),
+				}, {
+					where: {
+						id: message.author.id,
+					},
+				});
 			}
 			else if (!cst.includes("allfood")) {
-				let amt = await client.db.get(`${type.key}${message.author.id}`) || "0";
-				amt = Number(amt);
+				let amt = message.author.data.get(type.key);
 				if (amt - 1 < 0) return message.reply("You don't have that type of food!");
 				amt -= 1;
-				await client.db.set(`${type.key}${message.author.id}`, amt);
+				await client.db.USERS.update({
+					[type.key]: amt,
+					pet: pet.join(";"),
+				}, {
+					where: {
+						id: message.author.id,
+					},
+				});
 			}
-			await client.db.set("pet" + message.author.id, pet.join(";"));
 		}
 		message.reply({
 			embeds: [
@@ -67,7 +75,15 @@ module.exports = {
 			const cd = Math.floor(((30 / Number(pet[9])) * 0.75 + 5));
 			let time = cd;
 			time *= 60000;
-			if (!cst.includes("maxdragon888")) await client.db.set(`fdc${message.author.id}`, client.config.parseCd(message.createdTimestamp, time));
+			if (!cst.includes("maxdragon888")) {
+				await client.db.USERS.update({
+					fdc: client.config.parseCd(message.createdTimestamp, time),
+				}, {
+					where: {
+						id: message.author.id,
+					},
+				});
+			}
 		}
 	},
 };

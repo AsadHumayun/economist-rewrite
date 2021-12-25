@@ -19,7 +19,7 @@ module.exports = {
 		// <LogicError <IfStatement>>: if statement not running
 		// <NOW FIXED>: `id` was not of data type `Number`.
 		if (!ids.includes(id)) return message.channel.send({ content: `Invalid ID "${args[0]}"`, allowedMentions: { parse: [] } });
-		let bal = message.author.data.get("bal");
+		let bal = message.author.data.get("bal") || 0;
 		const item = items.find((f) => f[1].id == id);
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (item[1].method == "cst" && (cst.includes(item[0]))) return alreadyOwned();
@@ -33,8 +33,8 @@ module.exports = {
 			const key = item[1].method.split(".")[0];
 			const indx = item[1].method.split(".")[1];
 
-			let values = message.author.data.get(key);
-			values = values ? values.split(";") : Array(indx + 1).fill(0);
+			let values = message.author.data.get(key) || "0;0;0;0;0;0;0;0;0;0;0;0";
+			values = values ? values.split(";") : [];
 			// prevent an out of bounds type error from occurring by extending the array in a manner such that
 			// arr[indx] is 0 and can thus be incremented without error. (arr[anything in between 0 and indx] is also therefore registered as "")
 			if (!values[indx]) values[indx] = "0";

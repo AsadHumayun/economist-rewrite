@@ -12,9 +12,8 @@ module.exports = {
 			role = message.guild.roles.cache.get(args[0]) || message.guild.roles.cache.get(message.mentions.roles.first().id);
 		}
 		catch (e) {
-			return message.reply(`Unkown role "${args[0]}"`);
+			return message.reply({ content: `Unkown role "${args[0]}"`, allowedMentions: { parse: [] } });
 		}
-		// if (!role)
 		const rn = role.name;
 		const id = role.id;
 		await message.guild.roles.cache.get(role.id).delete()

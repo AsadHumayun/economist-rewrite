@@ -8,7 +8,7 @@ module.exports = {
 	async run(client, message, args) {
 		if (message.guild.id != client.config.statics.supportServer) return message.reply("This command only works in the support server as a result of how role information is manipulated.");
 		if (args.length < 2) return message.reply("You must provide a valid role keyword followed by the target user!")
-		let roles = await client.db.get('cgrl' + message.author.id);
+		let roles = await client.db.get('cstmrl' + message.author.id);
 		if (!roles) return message.reply(`${client.config.statics.defaults.emoji.err} You do not own any custom roles.`);
 
 		roles = client.config.listToMatrix(roles.split(";"), 2);

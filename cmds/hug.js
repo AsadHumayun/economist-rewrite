@@ -7,22 +7,25 @@ module.exports = {
 	category: "fun",
 	async run(client, message, args) {
 		const m = "You must mention somebody to hug!";
-		//   if (!args.length) return message.reply(m);
-		let cst = await client.db.get("cst" + message.author.id) || "";
-		cst = cst.split(";");
-		if (message.guild.id != client.config.statics.supportServer && (!cst.includes("hug"))) {return;}
-		else if (message.guild.id == client.config.statics.supportServer || (cst.includes("hug"))) {
-			const user = await client.config.fetchUser(args[0]).catch(() => {return;});
-			if (!user) return message.reply(m);
-			let hgs = await client.db.get("hgs" + user.id) || "0";
-			hgs = Number(hgs);
-			hgs += 1;
-			await client.db.set("hgs" + user.id, hgs);
-			message.reply({
-				embed: new MessageEmbed()
+		if (!args.length) return message.reply(m);
+		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		if (!user) return message.reply(m);
+		const data = await client.db.getUserData(user.id);
+		let hgs = data.get("hgs") || 0;
+		hgs++;
+		await client.db.USERS.update({
+			hgs,
+		}, {
+			where: {
+				id: user.id,
+			},
+		});
+		message.reply({
+			embeds: [
+				new MessageEmbed()
 					.setColor(message.author.color)
 					.setDescription(`:people_hugging: ${message.author.tag} has hugged ${user.tag}`),
-			});
-		}
+			],
+		});
 	},
 };

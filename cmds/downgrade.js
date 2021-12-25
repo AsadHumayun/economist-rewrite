@@ -8,16 +8,14 @@ module.exports = {
 	category: "pet",
 	cst: "dragon",
 	async run(client, message, args) {
-		const cd = await client.db.get("dgrc" + message.author.id) || 0;
+		const cd = message.author.data.get("dgrc") || 0;
 		let data = client.config.cooldown(message.createdTimestamp, cd * 60_000);
 		if (data) {
 			return message.reply(`You must wait another ${data} before downgrading another one of your dragon's stat!`);
 		}
-		data = await client.db.get("pet" + message.author.id);
-		if (!data) data = client.config.statics.defaults.dragon;
-		let cst = await client.db.get("cst" + message.author.id);
-		cst = cst ? cst.split(";") : [];
-		if (cst.includes("maxdragon888")) data = client.config.statics.defaults.maxPet;
+		data = message.author.data.get("pet");
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
+		if (cst.includes("maxdragon888")) data = client.config.statics.defaults.maxDragon;
 		data = data.split(";");
 		const stat = (args[0] || "").toLowerCase();
 		let Stat = client.config.statics.upgr.find((x) => stat.startsWith(x.split(";")[0]));
@@ -28,8 +26,14 @@ module.exports = {
 		data[Stat[2]] = Number(data[Stat[2]]) - 1;
 		if (data[Stat[2]] <= 1) return message.reply(`Each of your ${alias[0]}'s stats must have at least 1 point.`);
 		if (!cst.includes("maxdragon888")) {
-			await client.db.set("dgrc" + message.author.id, client.config.parseCd(message.createdTimestamp, ms("30m")));
-			await client.db.set("pet" + message.author.id, data.join(";"));
+			await client.db.USERS.update({
+				dgrc: client.config.parseCd(message.createdTimestamp, ms("30m")),
+				pet: data.join(";"),
+			}, {
+				where: {
+					id: message.author.id,
+				},
+			});
 		}
 		message.reply({
 			embeds: [

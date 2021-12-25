@@ -11,17 +11,17 @@ module.exports = {
 		if (args.length < 2) return message.reply("You must specify a user and a key");
 		const user = await client.config.fetchUser(args[0]);
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
+		const data = await client.db.getUserData(user.id);
 		const key = args.slice(1).join(" ");
-		let x = await client.db.get(key + user.id);
-		if (!x) return message.reply("null");
+		let x = data.get(key);
 		const ot = typeof x;
 		if (typeof x == "object") x = "```json\n" + JSON.stringify(x) + "\n```";
-		if (x.toString().length <= 4069 && (!message.author.data.get("cst").split(";").includes("tgt"))) {
+		if (x.toString().length <= 4069 && (!(message.author.data.get("cst") || "").split(";").includes("tgt"))) {
 			message.reply({
 				embeds: [
 					new Discord.MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(x)
+						.setDescription(x.toString())
 						.setFooter(ot)
 						.setTimestamp(),
 				],
