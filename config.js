@@ -35,7 +35,6 @@ class Funcs {
 	 * @returns {String}
 	 */
 	Inspect(element, pen = 2) {
-		// null 
 		return require("util").inspect(element, { depth: isNaN(pen) ? 2 : Number(pen) });
 	}
 	/**
@@ -376,6 +375,7 @@ const config = {
 	ssInvite: "https://discord.gg/",
 	supportServer: "911784758600679455",
 	prefix: "~",
+	botInvite: "https://discord.com/oauth2/authorize?client_id=671708767813107724&scope=bot&permissions=67456065",
 	dailyReward: 5_000,
 	upgr: ["int;intellect;5", "end;endurance;6", "str;strength;7", "gl;glycogenesis;9"],
 	// following doubles each time, so it becomes harder for users to level up their dragon as their dragon becomes a higher level (and thus a higher requirement of XP to level up once more). These values were previously determined by an algorithm, however I deemed it faster in the ling run to just have them hard-coded. It saves processing time too, albeit not much, but it can help the bot catch up if there are loads of incompleted requests.
@@ -463,7 +463,6 @@ const config = {
 		},
 		webhooks: {
 			debugger: "https://discord.com/api/webhooks/914286031325507584/rp7BIeS5RaZegZI3YzSfUlpyxASeA0dJfWC48O38fcaEe6EyH7LEAUxWY6mimmq0Ucyj",
-			sql: "https://discord.com/api/webhooks/921955242071969832/D5QSAWzjpKn7m9suH-LcDT2bjWudqPv2VP8WiDni6ZxPlkhI1SQKaaEcO71r_ywCnvbM",
 		},
 		ofncs: {
 			"1": [ "Spam", 1 ],
