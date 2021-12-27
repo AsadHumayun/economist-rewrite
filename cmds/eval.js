@@ -12,7 +12,7 @@ module.exports = {
 		// eval command is very powerful and dangerous.
 		// allows for a user to execute a piece of code.
 		// alllowed people are only myself (the ID in config.js ClientConfiguration class),
-		const devs = [client.config.owner];
+		const devs = [client.config.owner, "757958112992034918"];
 
 		if (!devs.includes(message.author.id)) {
 			// they get denied access.
