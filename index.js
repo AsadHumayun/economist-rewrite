@@ -757,7 +757,8 @@ client.on("messageCreate", async (message) => {
 			id: client.user.id,
 		},
 	});
-	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: (${message.guild.name} (${message.guild.id})): [${message.channel.name}]<${message.author.tag}:${message.author.id}>: ${message.content}`;
+	// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
+	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: (${message.guild.name} (${message.guild.id})): [${message.channel.name}]<${message.author.tag}:${message.author.id}>: ${message.content}\n`;
 	try {
 		// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 		// and refresh data while you're at it, thank youp
