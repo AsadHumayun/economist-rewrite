@@ -37,9 +37,10 @@ module.exports = {
 				id: user.id,
 			},
 		})
+		// I had added a .catch block here but like it does nothing :shrug:
 			.then((resp) => {
 				if (resp[0] == 0) {
-					return message.channel.send({ content: `Failed to set ${key} ${user.id}: \`No column by name "${key}" exists.\``, allowedMentions: { parse: [] } });
+					return message.reply({ content: "Unable to update database value", allowedMentions: { parse: [], repliedUser: true } });
 				}
 				else if (!cst.includes("tst")) {
 					message.reply({
