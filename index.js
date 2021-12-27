@@ -128,12 +128,9 @@ client.on("messageDelete", async (message) => {
 client.on("channelCreate", async (channel) => {
 	if (["DM", "GROUP_DM"].includes(channel.type) || (channel.guild.id != client.config.statics.supportServer)) return;
 	const audit = (await channel.guild.fetchAuditLogs({ limit: 1, type: "CHANNEL_CREATE" })).entries.first();
-	channel = await channel.fetch();
 	const channelPermissions = [...channel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
 	channelPermissions.forEach(async (x) => {
-		if (x.type != "member") return;
 		const usr = await client.config.fetchUser(x.id);
-		const mmbr = await client.guilds.cache.get(channel.guildId).members.fetch({ user: usr.id, force: true });
 		let user = await Users.findOne({ where: { id: x.id } });
 		if (!user) user = await Users.create({ id: x.id });
 		let chn = user.get("chnl");
@@ -141,10 +138,10 @@ client.on("channelCreate", async (channel) => {
 		// a new channel is being created, therefore we don't need to check to see if a previous entry exists (it's not easy to guess the snowflake accurately and correctly)
 		chn.push([channel.id, x.deny.bitfield, x.allow.bitfield]);
 		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
+			// "[false]" because false is implied (as users cannot edit specific perms on channelCreate -- only thing that they can edit is ability to view, not manage).
 			content: `
 Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag}(${audit.executor.id})
-Can manage?: ${mmbr.permissionsIn(channel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${channel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
-${mmbr.permissionsIn(channel.id).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) ? `Adding ${usr.id} as a manager of channel ${channel.id}` : ""}
+Can manage: [false] (member: ${usr.id}, channel: ${channel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
 			`,
 		});
 		chn = chn.map((a) => Array.from(a).join(";"));
@@ -164,8 +161,6 @@ client.on("channelUpdate", async (oldChannel, newChannel) => {
 	if (["DM", "GROUP_DM"].includes(oldChannel.type) || (oldChannel.guild.id != client.config.statics.supportServer)) return;
 	// fetch full structure from Discord API
 	// Only the partial structure is sent through the event.
-	oldChannel = await oldChannel.fetch(true);
-	newChannel = await newChannel.fetch(true);
 	const audit = (await oldChannel.guild.fetchAuditLogs({ limit: 1, type: "CHANNEL_UPDAYE" })).entries.first();
 	const oldPerms = [...oldChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
 	const newPerms = [...newChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
@@ -179,109 +174,80 @@ client.on("channelUpdate", async (oldChannel, newChannel) => {
 	newPerms.forEach(async (x) => {
 		const usr = await client.config.fetchUser(x.id);
 		const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
+
+		const wasManager = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id) ? oldChannel.permissionOverwrites.cache.find(({ id }) => id == x.id).allow.has(Discord.Permissions.FLAGS.MANAGE_CHANNELS, false) || false : false;
+		const isManager = mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS, false);
+		let addingManager = false;
+		let removingManager = false;
+		if (!wasManager && (isManager)) addingManager = true;
+		if (wasManager && (!isManager)) removingManager = true;
+		console.log("!wasManager", !wasManager);
+		console.log("wasManager", wasManager);
+		console.log("isManager", isManager);
+		console.log("addingManager?: " + addingManager);
 		let user = await Users.findOne({ where: { id: x.id } });
 		if (!user) user = await Users.create({ id: x.id });
 		let chn = user.get("chnl");
-		chn = chn ? client.config.listToMatrix(chn.split(";"), 4) : [ [ newChannel.id, "", "", "" ] ];
+		chn = chn ? client.config.listToMatrix(chn.split(";"), 3) : [];
 		let indx = chn.findIndex((data) => data[0] == newChannel.id);
-		console.log(chn[indx]);
-		const prevChn = chn[indx] ? [...chn[indx]] : [newChannel.id, "", "", ""];
-		console.log("prevChn\n" + prevChn);
-		// ignore when stored data matches newChannel.
-		let ignore = false;
-		// whether or not the user previously managed the channel.
-		function match() {
-			return chn[indx][0] == newChannel.id && (chn[indx[1]] == x.deny.bitfield && (chn[indx][2] == x.allow.bitfield) && (chn[indx][3] == mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) ? "mngr" : ""));
+		if (indx < 0) {
+			// add new data.
+			chn.push([newChannel.id, x.deny.bitfield, x.allow.bitfield]);
+			indx = chn.length - 1;
 		}
-		if (indx >= 0) {
-			if (match()) {
-				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry at ${new Date(audit.createdAt).toISOString()} by ${audit.executor.tag}(${audit.executor.id}) in regard to ${usr.tag}(${usr.id}) was ignnored due to data already matching.` });
-				ignore = true;
-			}
+		else if (chn[indx].join(";") == `${newChannel.id};${x.deny.bitfield};${x.allow.bitfield}`) {
+			// ignore
+			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `Audit log entry at ${new Date(audit.createdAt).toISOString()} by ${audit.executor.tag}(${audit.executor.id}) in regard to ${usr.tag}(${usr.id}) was ignnored due to data already matching.\nEntry: ${newChannel.id};${x.deny.bitfield};${x.allow.bitfield}` });
+			return;
+		}
+		else {
 			// not a complete match; update values.
 			chn[indx][1] = x.deny.bitfield;
 			chn[indx][2] = x.allow.bitfield;
-			if (mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)) chn[indx][3] = "mngr";
 		}
-		else {
-			chn.push([newChannel.id, x.deny.bitfield, x.allow.bitfield, mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) ? "mngr" : ""]);
-			indx = chn.length - 1;
-		}
-		if (ignore == false) {
-			console.log(prevChn);
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
-				content: `
-Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag}(${audit.executor.id})
-Can manage?: ${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
-${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) && (prevChn[3] != "mngr") ? `Adding ${usr.id} as a manager of channel ${newChannel.id}` : ""}
-				`,
-			});
-			chn = chn.map((a) => Array.from(a).join(";"));
-			chn = [...new Set(chn)];
-			await Users.update({
-				chnl: chn.join(";"),
-			}, {
-				where: {
-					id: x.id,
-				},
-			});
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${new Date().toISOString()}: U:<${usr.tag} (${usr.id})>: Successfully set U.chnl as ${client.config.trim(chn.join(";"), 1900)} ` });
-		}
-
-		// check to see if the user still has TextChannel.MANAGE_CHANNEL permissions
-		// if not, remove them as a manager.
-		console.log(chn, typeof chn);
-		chn = chn.map((f) => f instanceof Array ? f : f.split(";"));
-		if (chn[indx][3] == "mngr" && (!mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS))) {
-			console.log(`Removing mngr ${usr.id} of ${newChannel.id}.`);
-			console.log(!mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS));
-			chn[indx][3] = "";
-			chn = chn.map((a) => Array.from(a).join(";"));
-			chn = [...new Set(chn)];
-			await Users.update({
-				chnl: chn.join(";"),
-			}, {
-				where: {
-					id: x.id,
-				},
-			});
-			// remove as manager.
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
-				content: `Removing ${usr.id} as a manager of channel ${newChannel.id}`,
-			});
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
-				content: `${Math.trunc(Date.now() / 60_000)}: Successfully set chnl ${usr.tag}(${usr.id}) as ${chn.join(";")}`,
-			});
-		}
-
+		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
+			content: `
+Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag} (${audit.executor.id})
+Can manage: ${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
+${addingManager ? `Adding ${usr.id} as a manager of ${newChannel.id}` : ""}${removingManager ? `Removing ${x.id} as a manager of ${newChannel.id}` : ""}
+			`,
+		});
+		console.log([...new Set(chn.map((e) => Array.from(e).join(";")))].join(";"));
+		await Users.update({
+			chnl: [...new Set(chn.map((e) => Array.from(e).join(";")))].join(";"),
+		}, {
+			where: {
+				id: x.id,
+			},
+		});
 	});
+
 	rmv.forEach(async (id) => {
 		const usr = await client.config.fetchUser(id);
 		const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
-		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({ content: `${Math.trunc(Date.now() / 60000)}: Attempting to remove chnl data for M:<${usr.tag} (${usr.id})> of ${newChannel.name} (id: ${newChannel.id})...` });
+		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
+			content: `
+Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag} (${audit.executor.id})
+Can manage: ${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id})
+Removing permissions for ${id} in ${newChannel.id} (k: chnl)
+			`,
+		});
 		let user = await Users.findOne({ where: { id } });
 		if (!user) user = await Users.create({ id });
 		let chn = user.get("chnl");
 		// determine if member has any perms; `!chn` indicates no permissions.
 		if (!chn) return;
-		chn = client.config.listToMatrix(chn.split(";"), 4);
-		const indx = chn.findIndex((f) => f.split(";")[0] == newChannel.id);
-		const prevChnl = chn[indx];
+		chn = client.config.listToMatrix(chn.split(";"), 3);
+		const indx = chn.findIndex((f) => f[0] == newChannel.id);
+		if (!indx) return;
 		chn = chn.filter((f) => f[0] != newChannel.id);
 		if (chn.length == 0) {
-			const t = Date.now();
 			await Users.update({
 				chnl: null,
 			}, {
 				where: {
 					id: usr.id,
 				},
-			});
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
-				content: `
-Audit log entry at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag}(${audit.executor.id})
-Removed chnl ${usr.id} (time taken: ${t} ms)
-`,
 			});
 		}
 		else {
@@ -293,18 +259,8 @@ Removed chnl ${usr.id} (time taken: ${t} ms)
 					id: usr.id,
 				},
 			});
-			client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
-				content: `
-Audit log entry at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag}(${audit.executor.id})
-Can manage?: ${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id})
-${!mmbr.permissionsIn(newChannel.id).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS) && (prevChnl[4] == "mngr") ? `Removing ${usr.id} as a manager of channel ${newChannel.id}` : ""}
-				`,
-			});
 		}
 	});
-
-	// only thing that we've missed is when someone's overwrites are fully taken out/removed.
-
 });
 
 client.once("ready", async () => {
@@ -320,10 +276,10 @@ client.once("ready", async () => {
 	// cache support server guild members.
 	try {
 		await client.guilds.cache.get(client.config.statics.supportServer).members.fetch();
-		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `[${new Date().toISOString()}]: Successfully cached ${client.guilds.cache.get(client.config.statics.supportServer).members.cache.size}/${client.guilds.cache.get(client.config.statics.supportServer).memberCount} members of ${client.config.statics.supportServer}.` });
+		client.emit("debug", `[CLIENT => Cache] [GuildMember] ${client.guilds.cache.get(client.config.statics.supportServer).members.cache.size}/${client.guilds.cache.get(client.config.statics.supportServer).memberCount} members of ${client.config.statics.supportServer} cached`);
 	}
 	catch (e) {
-		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `[${new Date().toISOString()}]: **Failed to cache members of guild ${client.config.statics.supportServer}**, e: \`${e}\`` });
+		client.emit("debug", `[CLIENT => Cache] [GuildMember [Fail]] Failed to cache members of guild ${client.config.statics.supportServer}. Error: ${e}`);
 	}
 	client.user.color = client.config.statics.defaults.clr;
 	client.user.data = await client.db.getUserData(client.user.id);
@@ -671,9 +627,8 @@ client.on("messageCreate", async (message) => {
 		}
 	}
 
-	message.author.debug = cst.includes("debugger");
 	if (!message.content.startsWith(message.guild.prefix)) return;
-	if (message.author.debug != false) {
+	if (cst.includes("debugger")) {
 		message.reply({
 			embeds: [
 				new Discord.MessageEmbed()
@@ -755,7 +710,9 @@ client.on("messageCreate", async (message) => {
 		const expirationTime = timestamps.get(message.author.id) + 5000;
 		if (message.createdTimestamp < expirationTime) {
 			const timeLeft = (expirationTime - message.createdTimestamp) / 1000;
-			return message.reply(`You must wait another ${timeLeft.toFixed(1)} seconds before using another command!`);
+			if (timeLeft > 0.0) {
+				return message.reply(`You must wait another ${timeLeft.toFixed(1)} seconds before using another command!`);
+			}
 		}
 	}
 	timestamps.set(message.author.id, message.createdTimestamp);
@@ -800,7 +757,7 @@ client.on("messageCreate", async (message) => {
 			id: client.user.id,
 		},
 	});
-	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: (${message.guild.name}(${message.guild.id}))[${message.channel.name}]<${message.author.tag}(${message.author.id})>: ${message.content}\n`;
+	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: (${message.guild.name} (${message.guild.id})): [${message.channel.name}]<${message.author.tag}:${message.author.id}>: ${message.content}`;
 	try {
 		// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 		// and refresh data while you're at it, thank youp
