@@ -1,5 +1,4 @@
 const { MessageEmbed, escapeMarkdown } = require("discord.js");
-const ms = require('ms');
 const delay = require('delay')
 
 module.exports = {
@@ -51,9 +50,9 @@ module.exports = {
 		} else {
 		let stunTime = Math.floor(Math.random() * 10) + 1;
 		if (stunTime < 4) stunTime = 4;
-		stunTime *= ms('1m');
+		stunTime *= 60_000;
 				//		stn: function (id, amt, client) {
-		await client.stn(user.id, stunTime/ms("1m"), client);
+		await client.stn(user.id, stunTime/60_000, client);
 		await client.db.set('stnb' + user.id, "in jail");
 		await dm(user, usercolor, `After careful consideration, it is decided that ${user.tag} is punishable as a result of their insane ugliness; ${message.author.tag} has won the court case`)
 		await dm(user, usercolor, `:dollar: ${client.config.comma(amtLost) || "0"} have been moved to ${message.author.tag}'s account since ${user.tag} was unable to win the court case lol`)
@@ -62,7 +61,7 @@ module.exports = {
 				oldBal = Number(oldBal);
 		let newBal = (oldBal + amtLost);
 		await client.db.set('bal' + message.author.id, newBal);
-		await dm(user, usercolor, `${user.tag} has been put into jail for ${stunTime / ms('1m')} minutes`);
+		await dm(user, usercolor, `${user.tag} has been put into jail for ${stunTime / 60_000} minutes`);
 		};
 	}
 }
