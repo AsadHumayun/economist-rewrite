@@ -6,7 +6,6 @@ module.exports = {
 	description: "Divorce your spouse.",
 	category: "ecn",
 	async run(client, message) {
-		// todo: add message components here too - Are you sure that you would like to divorce {user}? [Yes] [No]
 		const spouse = message.author.data.get("spse");
 		const usr = await client.config.fetchUser(spouse).catch(() => {return;});
 		if (!usr) return message.reply(`You're not married to anyone yet!\nUse \`${message.guild.prefix}marry <user>\` to marry someone.`);
