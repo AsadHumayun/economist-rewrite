@@ -847,7 +847,7 @@ client.on("messageCreate", async (message) => {
 client.Notify = function(e, msgCont) {
 	const rn = new Date().toISOString();
 	console.error(e);
-	if (!msgCont) {
+	if (!msgCont || msgCont.toString().length == 0) {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
 			content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
 			// very unliekly that a normal exception/error will exceed 2,000 characters in length.
@@ -860,7 +860,7 @@ client.Notify = function(e, msgCont) {
 			embeds: [
 				new Discord.MessageEmbed()
 					.setColor("#da0000")
-					.setDescription(msgCont),
+					.setDescription(msgCont instanceof Promise ? "Promse { <rejected> }" : msgCont.toString() || "Message content unavailable."),
 			],
 		})
 			.catch(() => {return;});
