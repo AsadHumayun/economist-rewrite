@@ -580,7 +580,7 @@ client.on("messageCreate", async (message) => {
 			}
 			await Users.update({
 				xp: xp.join(";"),
-				xpc: (message.createdTimestamp / 60_000) + 1,
+				xpc: Math.trunc(message.createdTimestamp / 60_000) + 1,
 			}, {
 				where: {
 					id: message.author.id,
