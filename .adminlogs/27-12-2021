@@ -4,3 +4,4 @@ a.join`;`[101] 27342771: (economist rewrite (911784758600679455)): [rgvfgv]<Impo
 [186] 27342926: (economist rewrite (911784758600679455)): [testing-channelupdate]<Impostor#1234:501710994293129216>: ~get 501710994293129216 e
 [187] 27342926: (economist rewrite (911784758600679455)): [testing-channelupdate]<Impostor#1234:501710994293129216>: ~set 501710994293129216 e f
 [188] 27342927: (economist rewrite (911784758600679455)): [testing-channelupdate]<Impostor#1234:501710994293129216>: ~set 501710994293129216 a b
+[189] 27342929: (economist rewrite (911784758600679455)): [testing-channelupdate]<Impostor#1234:501710994293129216>: ~eval message.channel.setParent("924826638842228767")
