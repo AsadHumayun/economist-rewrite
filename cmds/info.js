@@ -8,9 +8,9 @@ module.exports = {
 	category: "utl",
 	async run(client, message) {
 		const msg = await message.reply("Getting information... (this may take a second!)");
+		const rgu = await client.db.USERS.count();
 		const cmdCount = (client.user.data.get("cmds") || 0).toString();
-		const cm = (message.author.data.get("cmds") || 0).toString();
-		const mem = process.memoryUsage().heapUsed / 1024 / 1024;
+		const cmd = (message.author.data.get("cmds") || 0).toString();
 		const cpu = await osu.cpu.usage();
 
 		msg.edit({
@@ -21,24 +21,13 @@ module.exports = {
 					.setTitle("Bot Stats")
 					.setDescription("\"Users Cached\" is not entirely accurate as the same user can be counted multiple times on different guilds")
 					.setAuthor({ name: client.user.tag, icon: client.user.avatarURL({ dynamic: true }), url: client.config.statics.ssInvite })
-					.addField("❯ Name", client.user.tag, true)
-					.addField("❯ Commands Used", cmdCount, true)
-					.addField("❯ Commands You've Used", cm, true)
+					.addField("❯ Registered Users", rgu.toString(), true)
+					.addField("❯ Commands Used", `${client.config.comma(cmd)}/${client.config.comma(cmdCount)}`, true)
 					.addField("❯ CPU Usage", `\`${cpu}%\``, true)
-					.addField("❯ Servers", client.guilds.cache.size.toString(), true)
-					// discord.js docs ref: https://discord.js.org/#/docs/main/stable/class/ClientVoiceManager?scrollTo=adapters (for below field)
-					.addField("❯ Voice Connections", client.voice.adapters.size.toString(), true)
 					.addField("❯ Created On", client.user.createdAt.toDateString(), true)
 					.addField("❯ Users Cached", client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0).toString(), true)
-					.addField("❯ Roles Cached", client.guilds.cache.reduce((a, b) => a + b.roles.cache.size, 0).toString(), true)
-					.addField("❯ Channels Cached", client.channels.cache.size.toString(), true)
-					.addField("❯ Emoji Cached", client.emojis.cache.size.toString(), true)
-					.addField("❯ Total Cached Files", Object.values(require.cache).length.toString(), true)
-					.addField("❯ Total Cached Items", Number(client.guilds.cache.size + client.channels.cache.size + client.users.cache.size).toString(), true)
-					.addField("❯ WS Status", String(client.ws.status), true)
 					.addField("❯ Uptime", client.config.cooldown(message.createdTimestamp, message.createdTimestamp + client.uptime).toString() || "< 1s", true)
-					.addField("❯ Memory Usage", `**~**${Math.trunc(mem)}/${Math.trunc(process.memoryUsage().rss / 1024 / 1024)} MB`, true)
-					.addField("❯ Discord.js", `v**${require("discord.js").version}**`, true)
+					.addField("❯ Memory Usage", `**~**${Math.trunc(process.memoryUsage().heapUsed / 1024 / 1024)}/${Math.trunc(process.memoryUsage().rss / 1024 / 1024)} MB`, true)
 					.addField("❯ Total Commands", client.config.commands.size.toString(), true)
 					.setFooter(`Ready: ${new Date(client.readyTimestamp).toISOString()}`),
 			],
