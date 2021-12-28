@@ -17,6 +17,8 @@ module.exports = {
 					.setDescription(`Purging ${arg}...`),
 			],
 		});
+		// source: https://sequelize.org/master/manual/model-querying-basics.html
+		// above link used to figure out how I'm supposed to use this (not very experienced with Sequelize, don't judge). The actual code is written by myself.
 		client.db.USERS.findAndCountAll({ attributes: ["id", "cst"], where: { cst: { [Op.like]: `%${arg}%` } } }).then((data) => {
 			let updated = 0;
 			for (const value of data.rows) {
