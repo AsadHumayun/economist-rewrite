@@ -333,12 +333,12 @@ class Funcs {
 			for (const file of readdirSync(dir).filter((f) => f.endsWith(".js"))) {
 				const cmd = require(`${dir}/${file}`);
 				clientCommands.set(cmd.name, cmd);
-				cmds += 1;
+				cmds++;
 			}
 			return [true, cmds];
 		}
 		catch (err) {
-			throw new Error(`Error while attempting to cache commands: ${err.stack}`);
+			throw new Error(`[CLIENT => Process] [CommandCacheError]:\n${err.stack}`);
 		}
 	}
 	/**
