@@ -9,11 +9,8 @@ module.exports = {
 	async run(client, message, args) {
 		let user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) user = message.author;
-		let ofncs = await client.db.get("ofncs" + user.id) || "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0";
-		ofncs = ofncs.split(";");
-		for (const x in ofncs) {
-			ofncs[x] = Number(ofncs[x]);
-		}
+		const userData = await client.db.getUserData(user.id);
+		let ofncs = userData.get("ofncs") ? userData.get("ofncs").split(";").map(Number) : new Array(Object.keys(client.config.statics.defaults.ofncs).length).fill(0);
 		if (user.bot) ofncs = ofncs.map(() => -1);
 		if (message.content.toLowerCase().endsWith("-r")) return message.reply("```\n[" + ofncs.join(", ") + "]\n```");
 		message.reply({
