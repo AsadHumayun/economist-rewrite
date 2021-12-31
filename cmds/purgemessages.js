@@ -8,9 +8,6 @@ module.exports = {
 	category: "mod",
 	cst: "moderator",
 	async run(client, message, args) {
-		let cst = await client.db.get("cst" + message.author.id) || "";
-		cst = cst.split(";");
-		if (message.guild.id != client.config.statics.supportServer && (!cst.includes("purge"))) return;
 		function date(_date = Date.now()) {
 			return moment(_date).format("MMMM Do YYYY, h:mm:ss A");
 		}
@@ -23,8 +20,8 @@ module.exports = {
 
 			const coll = await source.messages.fetch({ limit: n }),
 				arr = [...coll.values()],
-				collected = [],
-				embeds = [];
+				collected = [];
+			let embeds = [];
 
 			let index = 0;
 			for (let i = 0; i < arr.length; i += 25) {
@@ -49,10 +46,10 @@ module.exports = {
 				}
 				embeds.push(embed);
 			}
-
+			embeds = client.config.listToMatrix(embeds, 10);
 			source.bulkDelete(coll, true).then(async () => {
 				if (message.guild.id == client.config.statics.supportServer) {
-					for (const embed of embeds) await logs.send({ embeds: [embed] });
+					for (const embedArray of embeds) await logs.send({ embeds: [embedArray] });
 				}
 				// can't message.reply, since the original command message will have been deleted.
 				message.channel.send({
