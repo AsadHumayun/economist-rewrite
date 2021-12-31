@@ -1,30 +1,30 @@
 module.exports = {
-	name: 'reload',
-	aliases: ['r', 'reload'],
-	description: 'Reloads a command',
-	category: 'own',
+	name: "reload",
+	aliases: ["r", "reload"],
+	description: "Reloads a command",
+	category: "own",
 	cst: "administrator132465798",
-	usage: 'reload <command name or alias>',
+	usage: "reload <command name or alias>",
 	async run(client, message, args) {
-		const msg = await message.reply(`Validating input & performing actions...`);
-		if (!args.length) return msg.edit(`${client.config.statics.defaults.emoji.err} You must specify a command to reload!`);
+		if (!args.length) return message.reply("You must specify a valid command name/alias in order for this command to work!");
 		const commandName = args[0].toLowerCase();
-		const command = message.client.config.commands.get(commandName)
-			|| message.client.config.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
-		if (!command) {
-			return msg.edit(`${client.config.statics.defaults.emoji.err} Command not found :c`);
-		}
-
+		const command = client.config.commands.get(commandName)
+			|| client.config.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+		if (!command) return message.reply(`A command by that name/alias was not found. Look in \`${message.guild.prefix}help\` for a list of existing commands`);
 		delete require.cache[require.resolve(`./${command.name}.js`)];
-
+		client.emit("debug", `[CLIENT => CommandsCache] [Remove] ${command.name}.js`);
+		// delaying ensures that the remove debug message is sent BEFORE the add debug message.
+		await require("delay")(100);
 		try {
 			const newCommand = require(`./${command.name}.js`);
-			message.client.config.commands.set(newCommand.name, newCommand);
-		} catch (error) {
-			console.log(error);
-			return msg.edit(`${client.config.statics.defaults.emoji.err} There was an error whilst attempting to reload the **${command.name}** command; \`${error.message}\``);
+			client.config.commands.set(newCommand.name, newCommand);
+			client.emit("debug", `[CLIENT => CommandsCache] [Add] ${command.name}.js`);
 		}
-		msg.edit(`${client.config.statics.defaults.emoji.tick} Command **${command.name}** was reloaded (in ${Date.now() - message.createdAt} MS)`)
+		catch (error) {
+			console.error(error);
+			client.emit("debug", `[CLIENT => CommandsCache] [Error] ADD: ${command.name}.js\n${error}`);
+			return message.reply(`${client.config.statics.defaults.emoji.err} There was an error whilst attempting to reload the **${command.name}** command; \`${error.message}\``);
+		}
+		message.reply(`${client.config.statics.defaults.emoji.tick} Command **${command.name}** was reloaded in ${Date.now() - 100 - message.createdTimestamp} ms`);
 	},
 };
