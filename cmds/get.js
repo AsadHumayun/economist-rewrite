@@ -16,6 +16,7 @@ module.exports = {
 		let x = data.get(key);
 		const ot = typeof x;
 		if (typeof x == "object") x = "```json\n" + JSON.stringify(x) + "\n```";
+		if (!x) x = "null";
 		if (x.toString().length <= 4069 && (!(message.author.data.get("cst") || "").split(";").includes("tgt"))) {
 			message.reply({
 				embeds: [
