@@ -14,14 +14,14 @@ module.exports = {
 		// answers[~~(Math.random() * answers.length)]
 		let rand = Math.floor(Math.random() * qts.length);
 		if (rand == pq) {
-			console.log("Pq and rand are the same.")
+			console.log("Pq and rand are the same.");
 			do {
 				rand = Math.floor(Math.random() * qts.length);
 				console.log(`Changed qIndex to ${rand}.\nquote: ${qts[rand]}`);
 			} while (rand == pq);
 		}
 		qIndex = rand;
-		//if (qts.length == 1) qIndex = 1;*/
+		if (qts.length == 1) qIndex = 1;
 		await client.db.USERS.update({
 			pq: qIndex,
 		}, {
