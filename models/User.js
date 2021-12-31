@@ -112,6 +112,12 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING(128),
 			defaultValue: "dragon",
 		},
+		pq: {
+			type: DataTypes.NUMBER,
+		},
+		qts: {
+			type: DataTypes.TEXT,
+		},
 		replacers: {
 			type: DataTypes.TEXT,
 		},
