@@ -1,0 +1,20 @@
+[330] 27345759: (economist rewrite (911784758600679455)): [private]<Impostor#1234:501710994293129216>: ~set <@!911799544017199124> cmds 1579
+[1582] 27345760: (economist rewrite (911784758600679455)): [private]<Impostor#1234:501710994293129216>: ~set <@!911799544017199124> cmds 1911
+[1912] 27345761: (economist rewrite (911784758600679455)): [private]<Impostor#1234:501710994293129216>: ~get 501710994293129216 cst
+[1913] 27345764: (economist rewrite (911784758600679455)): [private]<Impostor#1234:501710994293129216>: ~give 501710994293129216 rebel;supreme;judge;businessman;colorist;tmod;moderator;mod;srmod;muted;administrator;administrator132465798;covid;handsanitizer;gmar0;ggr
+[1918] 27345774: (economist rewrite (911784758600679455)): [private]<Impostor#1234:501710994293129216>: ~eval client.config
+[1919] 27345775: (economist rewrite (911784758600679455)): [private]<Impostor#1234:501710994293129216>: ~eval client.config.trim
+[1929] 27345797: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~get 501710994293129216 cst
+[1930] 27345797: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~purge test
+[1931] 27345798: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~purge one
+[1935] 27346914: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~getdata
+[1936] 27346915: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~userdata
+[1937] 27346916: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~purge aaaa
+[1938] 27346917: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~purge test test
+[1939] 27346918: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~purge aaaaaaaaaaaa
+[1940] 27346936: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~purge e
+[1942] 27346964: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~gd
+[1943] 27346965: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~get 501710994293129216 createdAt
+[1944] 27346965: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~set 501710994293129216 createdAt lol
+[1946] 27346965: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~gd
+[1947] 27346966: [economist rewrite (911784758600679455)] [private]<Impostor#1234 (501710994293129216)>: ~remove 501710994293129216 updatedAt
