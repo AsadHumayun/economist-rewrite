@@ -43,8 +43,7 @@ const Channels = require("./models/Channel.js")(sequelize, Sequelize.DataTypes);
 const Guilds = require("./models/Guild.js")(sequelize, Sequelize.DataTypes);
 const Bugs = require("./models/Bug.js")(sequelize, Sequelize.DataTypes);
 
-const syncTables = false;
-if (syncTables == true) {
+if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
 	(async () => {
 		// have to use an asynchronous wrapper for sync method
 		console.log("Attempting to sync database...");
@@ -92,6 +91,7 @@ client.on("messageUpdate", async (oldMessage, newMessage) => {
 
 client.on("messageDelete", async (message) => {
 	if (message.guild.id !== client.config.statics.supportServer) return;
+	if (!message.content) return;
 	if (message.content && (!message.author.bot)) {
 		const channel = Channels.findOne({ where: { id: message.channel.id } });
 		if (channel) {
@@ -122,7 +122,7 @@ client.on("messageDelete", async (message) => {
 		embed
 			.setDescription(message["content"]);
 	}
-	logs.send({ embeds: [embed] });
+	logs.send({ embeds: [embed] }).catch(() => {return;});
 });
 
 client.on("channelCreate", async (channel) => {
@@ -279,7 +279,7 @@ client.once("ready", async () => {
 		client.emit("debug", `[CLIENT => Cache] [GuildMember] ${client.guilds.cache.get(client.config.statics.supportServer).members.cache.size}/${client.guilds.cache.get(client.config.statics.supportServer).memberCount} members of ${client.config.statics.supportServer} cached`);
 	}
 	catch (e) {
-		client.emit("debug", `[CLIENT => Cache] [GuildMember [Fail]] Failed to cache members of guild ${client.config.statics.supportServer}. Error: ${e}`);
+		client.emit("debug", `[CLIENT => Cache] [GuildMember] [CacheFailure] Failed to cache members of guild ${client.config.statics.supportServer}. Error: ${e}`);
 	}
 	client.user.color = client.config.statics.defaults.clr;
 	client.user.data = await client.db.getUserData(client.user.id);
@@ -575,7 +575,7 @@ client.on("messageCreate", async (message) => {
 			const xp = data.get("xp").split(";").map(Number);
 			xp[1] += client.config.getRandomInt(14, 35);
 			if ((xp[1] / 200) > xp[0]) {
-				message.reply({ content: `Congratulations, you've levelled up! You're now level **${xp[0] + 1}**! View your XP and level by typing \`${message.guild.prefix}level\``, allowedMentions: { repliedUser: false } });
+				message.channel.send({ content: `Congratulations, you've levelled up! You're now level **${xp[0] + 1}**! View your XP and level by typing \`${message.guild.prefix}level\``, allowedMentions: { repliedUser: false } });
 				xp[0]++;
 			}
 			await Users.update({
