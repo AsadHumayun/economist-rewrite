@@ -112,7 +112,7 @@ client.on("messageDelete", async (message) => {
 		.addField("Message Sent At", require("moment")(message.createdTimestamp))
 		.setFooter("Deleted: ")
 		.setTimestamp()
-		.setAuthor(message.author.tag, message.author.displayAvatarURL(), message.author.displayAvatarURL());
+		.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL(), url: message.url });
 	if (!message.content && (message.attachments.size)) {
 		embed
 			.setDescription(`Attachments Detected: ${message.attachments.map(x => `[Attachment](${x.url})`).join(" ")}`)
@@ -758,7 +758,7 @@ client.on("messageCreate", async (message) => {
 		},
 	});
 	// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
-	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: (${message.guild.name} (${message.guild.id})): [${message.channel.name}]<${message.author.tag}:${message.author.id}>: ${message.content}\n`;
+	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name} (${message.guild.id})][${message.channel.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`;
 	try {
 		// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 		// and refresh data while you're at it, thank youp
