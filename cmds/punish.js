@@ -13,13 +13,9 @@ module.exports = {
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
 		if (isNaN(args[1])) return message.reply(`Invalid index "${args[1]}"`, { allowedMentions: { parse: [] } });
+		const data = await client.db.getUserData(user.id);
 		const index = Number(args[1]);
-		let ofncs = await client.db.get("ofncs" + user.id);
-		ofncs = ofncs ? ofncs.split(";") : [];
-		for (const x in ofncs) {
-			if (ofncs[x] == "") continue;
-			ofncs[x] = Number(ofncs[x]);
-		}
+		const ofncs = data.get("ofncs") ? data.get("ofncs").split(";").map(Number) : [];
 		if (!Object.values(client.config.statics.defaults.ofncs)[index - 1]) {
 			return message.reply(`Index ${index} out of bounds for length ${Object.keys(client.config.statics.defaults.ofncs).length}`);
 		}
@@ -48,12 +44,18 @@ module.exports = {
 				});
 			}
 			catch (e) {
-				message.reply(`Failed to ban U: <${message.author.tag} (${message.author.id})>: \`${e}\``);
+				message.reply(`Failed to ban U: <${mem.user.tag} (${mem.id})>: \`${e}\``);
 			}
 		}
 		async function muted(hrs) {
 			await mem.roles.add(client.config.statics.defaults.roles.muted).catch(() => {return;});
-			await client.db.set("mt" + user.id, `${Math.trunc((message.createdTimestamp + ms(`${hrs}h`)) / 60_000)};${Object.values(client.config.statics.defaults.ofncs)[index - 1][0]}`);
+			await client.db.USERS.update({
+				mt: `${Math.trunc((message.createdTimestamp + ms(`${hrs}h`)) / 60_000)};${Object.values(client.config.statics.defaults.ofncs)[index - 1][0]}`,
+			}, {
+				where: {
+					id: user.id,
+				},
+			});
 			const membed = new MessageEmbed()
 				.setColor(client.config.statics.defaults.colors.red)
 				.setDescription(`You have received a ${hrs} hour mute from ${message.guild.name}. You may leave and re-join the server after said time has passed to have your mute auto-removed. If you believe that this was an unjust punishment, please PM ${client.users.cache.get(client.config.owner).tag} (don't spam though, otherwise I'll just ignore you).`)
@@ -127,6 +129,12 @@ module.exports = {
 		while (ofncs[ofncs.length - 1] == 0) {
 			ofncs.pop();
 		}
-		await client.db.set("ofncs" + user.id, ofncs.join(";"));
+		await client.db.USERS.update({
+			ofncs: ofncs.join(";"),
+		}, {
+			where: {
+				id: user.id,
+			},
+		});
 	},
 };

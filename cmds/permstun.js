@@ -8,13 +8,19 @@ module.exports = {
 		if (!args.length) return message.reply(`You must supply a user argument alongside a reason under the format \`${message.guild.prefix}permstun <user> [reason]\``);
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
-		const stnb = args.slice(1).join(" ");
-		let cst = await client.db.get("cst" + user.id);
-		cst = cst ? cst.split(";") : [];
+		await client.db.getUserData(user.id);
+		const stnb = args.slice(1).join(" ") || "stunned";
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		// pstn just perm stuns the user - this acts as a blacklist and blocks the user from using the bot.
 		cst.push("pstn");
-		await client.db.set("cst" + user.id, cst.join(";"));
-		await client.db.set("stnb" + user.id, stnb);
-		message.reply(`Successfully perm stunned ${user.tag} (${user.id}) with stnb "${stnb || "stunned"}"`);
+		await client.db.USERS.update({
+			cst: cst.join(";"),
+			stnb,
+		}, {
+			where: {
+				id: user.id,
+			},
+		});
+		message.reply(`:ok_hand: perm stunned ${user.tag} with stnb ${stnb || "stunned"}`);
 	},
 };

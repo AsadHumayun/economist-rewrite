@@ -7,14 +7,13 @@ module.exports = {
 	category: "util",
 	async run(client, message, args) {
 		if (!args.length) return message.reply(`You must follow the format of \`${message.guild.prefix}pbuy <item>\` in order for this command to work!`);
-		let xp = await client.db.get("xp" + message.author.id) || "1;0";
-		const lvl = xp.split(";")[0];
-		xp = Number(xp.split(";")[1]);
-		let cst = await client.db.get("cst" + message.author.id);
-		cst = cst ? cst.split(";") : [];
+		let xp = message.author.data.get("xp") ? message.author.data.get("xp").split(";").map(Number) : [1, 0];
+		const lvl = xp[0];
+		xp = xp[1];
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		const item = args[0].toLowerCase();
 		const res = client.config.statics.ditems.findIndex((i) => item.startsWith(i.split(";")[0]));
-		if (res < 0) return message.reply(`The different types of ditems which you can purchase are: ${client.config.list(client.config.statics.ditems.map((i) => i.split(";")[1]))}`);
+		if (res < 0) return message.reply(`The different types of ditems that you can purchase are ${client.config.list(client.config.statics.ditems.map((i) => i.split(";")[1]))}`);
 
 		const name = client.config.statics.ditems[res].split(";")[1];
 		if (cst.includes(name)) return message.reply(`You already have a \`${name}\` on this account.`);
@@ -31,7 +30,13 @@ module.exports = {
 					.setDescription(`${message.author.tag} has successfully bought the ${name.toUpperCase()} permission!`),
 			],
 		});
-		await client.db.set("xp" + message.author.id, `${lvl};${xp - price}`);
-		await client.db.set("bal" + message.author.id, cst.join(";"));
+		await client.db.USERS.update({
+			xp: `${lvl};${xp - price}`,
+			cst: cst.join(";"),
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
 	},
 };

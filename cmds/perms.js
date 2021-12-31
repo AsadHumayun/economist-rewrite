@@ -19,7 +19,7 @@ module.exports = {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setTitle(`${user.tag}'s Server Permissions`)
+					.setAuthor({ name: `${user.tag}'s Server Permissions`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
 					.setThumbnail(message.guild.iconURL({ dynamic: true }))
 					.setDescription(map),
 			],
