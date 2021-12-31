@@ -391,6 +391,10 @@ const config = {
 		exp: 60000,
 		inf: "∞",
 		cds: ["adrenc;dose adrenaline", "cfc;coinflip", "dialc;dial", "dlc;daily", "dpc;deprive", "dgrc;downgrade", "fdc;feed", "fishc;fish", "robc;rob", "sntc;sentence", "sgstc;suggest", "srchc;search", "strc;stroke", "xpc;xp cooldown"],
+		badges: {
+			administrator132465798: "<:admin:926431897695973436>",
+			owners: "<:owners:926433334140235786>",
+		},
 		channels: {
 			dsl: "918090868798423060",
 			pfx: "912615890036604939",
