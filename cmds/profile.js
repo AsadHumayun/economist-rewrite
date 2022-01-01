@@ -26,7 +26,9 @@ module.exports = {
 		const emb = new MessageEmbed()
 			.setColor(message.author.color)
 			.setTitle(`${usr.tag}'s Profile`)
-			.setDescription(bio.toString())
+			// use regex to remove "[" and "]" chars, thereby preventing people from embedding links
+			// embedding links = bad because they could use it maliciously and trick users.
+			.setDescription(bio.replace(/\[+|\]+/gm, "").toString())
 			.setThumbnail(usr.displayAvatarURL({ dynamic: true }))
 			.addField("Commands Used", client.config.comma(cmds), true)
 			.addField("Colour Preferences", color, true)
