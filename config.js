@@ -201,26 +201,29 @@ class Funcs {
 	}
 	/**
 	 * Stuns a user whilst performing required validatory actions beforehand
-	 * @param {String} id Snowflake ID of the user who must be stunned
-	 * @param {Number} amt amount of minutes which the user must be stunned
-	 * @async
+	 * @param {Object} opts Options for the stun
+	 * @param {Client} [opts.client] Current client instance
+	 * @param {String} [opts.userId] Snowflake ID of the user who must be stunned
+	 * @param {Number} [opts.minutes] Amount of minutes for which the user is stunned
+	 * @param {String} [opts.stnb] Stnb value (You can't do anything while you're {stnb}!)
+	 * @returns {void} void
+	 * @async @method
 	 */
-	async stn(id, amt, client) {
-		const user = await this.fetchUser(id)
-		// eslint-disable-next-line no-unused-vars
-			.catch(() => {return;});
-		if (!user) return false;
-		const data = await client.db.getUserData(id);
+	async stn(opts) {
+		const user = await this.fetchUser(opts.userId).catch(() => {return;});
+		if (!user) return;
+		const data = await opts.client.db.getUserData(opts.userId);
 		const dns = (isNaN(data.get("dns")) ? 0 : Number(data.get("dns"))) * 60_000;
 		if (dns && (Date.now() < dns)) return;
-		await client.db.USERS.update({
-			stn: Math.trunc((Date.now() / 60_000) + amt),
+		await opts.client.db.USERS.update({
+			stn: Math.trunc((Date.now() / 60_000) + opts.minutes),
+			stnb: opts.stnb,
 		}, {
 			where: {
-				id,
+				id: opts.userId,
 			},
 		});
-		return true;
+		return undefined;
 	}
 	/**
 	 * Converts normal string text into binary text.
