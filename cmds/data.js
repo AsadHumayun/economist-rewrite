@@ -35,6 +35,7 @@ module.exports = {
 		 * @param {JSON} data
 		 */
 		async function dissect(data) {
+			if (!data) return message.reply("null");
 			const entries = Object.entries(data.toJSON()).map((e) => `${e[0]}=${e[1]}`).join("\n");
 			Util.splitMessage(entries, { maxLength: 1992, char: "" }).forEach((msg) => message.channel.send(`\`\`\`\n${msg}\n\`\`\``));
 		}
