@@ -25,7 +25,7 @@ module.exports = {
 		role[0] = newkw;
 		roles = roles.filter((x) => x[1] != oldRole.split(";")[1]);
 		roles.push(role);
-		roles = client.arrayMove(roles, roles.length - 1, indx);
+		roles = client.config.arrayMove(roles, roles.length - 1, indx);
 		roles = roles.map((x) => Array.from(x).join(";"));
 		await client.db.USERS.update({
 			cstmrl: roles.join(";"),
