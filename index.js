@@ -32,8 +32,8 @@ console.log("Creating Sequelize instance...");
 const sequelize = new Sequelize("database", "user", "password", {
 	host: "localhost",
 	dialect: "sqlite",
-	logging: false,
 	storage: "database.sqlite",
+	logging: false,
 });
 // note: Sequelize.STRING limits values to 255 chars in length, whereas Sequelize.TEXT does not.
 // Using Sequelize.STRING wherever char length is limited.
