@@ -8,8 +8,9 @@ module.exports = {
 	category: "utl",
 	async run(client, message) {
 		const msg = await message.reply("Getting information... (this may take a second!)");
+		const data = await client.db.getUserData(client.user.id);
 		const rgu = await client.db.USERS.count();
-		const cmdCount = (client.user.data.get("cmds") || 0).toString();
+		const cmdCount = (data.get("cmds") || 0).toString();
 		const cmd = (message.author.data.get("cmds") || 0).toString();
 		const cpu = await osu.cpu.usage();
 
