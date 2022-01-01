@@ -24,8 +24,8 @@ module.exports = {
 		.setColor(message.author.color)
 		.setTitle(answer.word)
 		.setURL(answer.permalink)
-		.addField("Definition", client.trim(answer.definition, 1024))
-		.addField("Example", answer.example ? `\`\`\`css\n${client.trim(answer.example, 1000)}\n\`\`\`` : "\`\`\`\nNo example found\n\`\`\`")
+		.addField("Definition", client.config.trim(answer.definition, 1024))
+		.addField("Example", answer.example ? `\`\`\`css\n${client.config.trim(answer.example, 1000)}\n\`\`\`` : "\`\`\`\nNo example found\n\`\`\`")
 		.setFooter(`👍 ${client.config.comma(answer.thumbs_up)} | 👎 ${client.config.comma(answer.thumbs_down)}`);
 		return message.reply({ embed })
 	},
