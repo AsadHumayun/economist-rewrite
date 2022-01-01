@@ -1,66 +1,96 @@
-const { MessageEmbed } = require('discord.js');
-const ms = require('ms');
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-  name: 'rob',
-  aliases: ['rob', 'ripoff'],
-  category: 'ecn',
-  description: 'Rob a user, stealing X amount of the User\'s balance',
-  usage: 'rob <user>',
-  async run(client, message, args) {
-    const result = Math.floor(Math.random(1) * 10);
-    let cooldown = await client.db.get('robc' + message.author.id);
-		const data = client.config.cooldown(message.createdTimestamp, cooldown*60_000);
-		if (data) {
-			return message.reply(`You must wait another ${data} before robbing someone again!`);
-		} else {
-
-    };
-
-    function notEnough() {
-      return message.reply("They don't have enough :dollar: in balance for you to rob!")
-    }
-    if (!args.length) return message.reply("You must specify a user who yo wish to rob!")
-    let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
-    if (!usr) return message.reply("Whoops! I can't find that user");
-    if (message.author.id == usr.id) return message.reply(`You can't rob yourself!`);
-    let cst = await client.db.get("cst" + usr.id) || "";
-        cst = cst.split(";");
-    if (cst.includes("dnr")) {
-      return message.reply("You can't rob that guy, sorreh");
-    }
-    if (result > 8) {
-    let authorBal = await client.db.get('bal' + usr.id) || 0;
-    authorBal = Number(authorBal)
-    let amt = authorBal - Math.floor(Math.random() * authorBal);
-    amt = Number(Math.trunc(amt / 5))
-    const amountLeft = Number(Number(authorBal) - Number(amt));
-    if (amountLeft < 0) return notEnough();
-    await client.db.set('bal' + usr.id, amountLeft);
-    let oldBal = await client.db.get('bal' + message.author.id) || 0;
-    oldBal = Number(oldBal)
-    const newBal = Number(oldBal + amt);
-    await client.db.set('bal' + message.author.id, newBal)
-    message.reply({
-      embed: new MessageEmbed()
-        .setColor(message.author.color)
-        .setDescription(`${message.author.tag} has robbed :dollar: ${message.author.com == 1 ? amt : client.config.comma(amt)} (${amt.toString().length} digits) from ${usr.tag}'s account`)
-    })
-    usr.send({
-      embed: new MessageEmbed()
-        .setColor(message.author.color)
-        .setDescription(`${message.author.tag} has robbed :dollar: ${message.author.com == 1 ? amt : client.config.comma(amt)} (${amt.toString().length} digits) from ${usr.tag}'s account`)
-    }).catch((x) => console.log(x));
-  } else {
-				//		stn: function (id, amt, client) {
-    await client.stn(message.author.id, 5, client);
-    message.reply({
-      embed: new MessageEmbed()
-      .setColor(message.author.color)
-      .setDescription(`${message.author.tag} tried to rob ${usr.tag} but got caught and has been arrested for 5 minutes!`)
-    });
-    await client.db.set("stnb" + message.author.id, "arrested");
-    };
-    await client.db.set(`robc${message.author.id}`, client.config.parseCd(message.createdTimestamp, ms("3h")));
-  },
+	name: "rob",
+	aliases: ["rob", "ripoff"],
+	category: "ecn",
+	description: "Rob a user, stealing X amount of the User's balance",
+	usage: "rob <user>",
+	async run(client, message, args) {
+		const result = Math.floor(Math.random(1) * 10);
+		const cooldown = message.author.data.get("robc");
+		const cd = client.config.cooldown(message.createdTimestamp, cooldown * 60_000);
+		if (cd) {
+			return message.reply(`You must wait another ${cd} before robbing someone again!`);
+		}
+		if (!args.length) return message.reply("You must mention a user in order for this command to work!");
+		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
+		if (!usr) return message.reply("You must mention a user in order for this command to work!");
+		if (message.author.id == usr.id) return message.reply("You can't rob yourself!");
+		const data = await client.db.getUserData(usr.id);
+		let bal = data.get("bal");
+		if (bal < 1000) return message.reply("That user is too poor to be robbed! Have some humanity. Rob someone richer!");
+		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split("") : [];
+		if (cst.includes("dnr")) {
+			return message.reply("You can't rob them :c");
+		}
+		let authorBal = message.author.data.get("bal");
+		if (authorBal < 1000) return message.reply("You must have at least :dollar: 1,000 in your account before robbing from someone!");
+		await client.db.USERS.update({
+			// 3 hour cooldown (10800000ms = 3h)
+			robc: client.config.parseCd(message.createdTimestamp, 10800000),
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
+		// 25% chance the robber gets caught by the police :cry:
+		if (result <= 7.5) {
+			const stolen = Math.floor((bal * Math.random()) * 0.5);
+			authorBal += stolen;
+			bal -= stolen;
+			await client.db.USERS.update({
+				bal: authorBal,
+			}, {
+				where: {
+					id: message.author.id,
+				},
+			});
+			await client.db.USERS.update({
+				bal,
+			}, {
+				where: {
+					id: usr.id,
+				},
+			});
+			message.reply({
+				embeds: [
+					new MessageEmbed()
+						.setColor(message.author.color)
+						.setDescription(`${message.author.tag} has stolen :dollar: ${client.config.comma(client.config.noExponents(stolen))} from ${usr.tag}!`),
+				],
+			});
+			usr.send({
+				embeds: [
+					new MessageEmbed()
+						.setColor(client.config.statics.defaults.colors.red)
+						.setTitle("Uh Oh!")
+						.setDescription(`${message.author.tag} has stolen :dollar: ${client.config.comma(client.config.noExponents(stolen))} from you!`),
+				],
+			}).catch(() => {return;});
+		}
+		else {
+			// user got caught by the police!
+			await client.config.stn({
+				client,
+				userId: message.author.id,
+				minutes: 5,
+				stnb: "arrested",
+			});
+			await client.db.USERS.update({
+				bal: authorBal - 1000,
+			}, {
+				where: {
+					id: message.author.id,
+				},
+			});
+			message.reply({
+				embeds: [
+					new MessageEmbed()
+						.setColor(message.author.color)
+						.setDescription(`${message.author.tag} tried to rob ${usr.tag} but got caught and has been arrested for 5 minutes! They bribed the cops with :dollar: 1,000 to get out of jail.`),
+				],
+			});
+		}
+	},
 };
