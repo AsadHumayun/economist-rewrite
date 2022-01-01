@@ -147,3 +147,21 @@ stolen*0.5;
 [468] 27350897: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~get 501710994293129216 cstmrl
 [469] 27350897: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~getdata
 [472] 27350900: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~r say
+[477] 27350974: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~give 501710994293129216 owners;administrator132465798
+[479] 27350982: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval Discord.Formatters
+[480] 27350982: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval Discord.Formatters.hyperlink("[a](b)")
+[481] 27350984: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval Discord.Formatters.hyperlink("a", "b", "c")
+[483] 27350987: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~reload profile
+[485] 27350988: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval "[b](a)".replace(/\[+\]+/gm, "")
+[486] 27350988: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval "[b](a)".replace(/\[\]/gm, "")
+[487] 27350988: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval "[b](a)".match(/\[+\]+/gm, "")
+[488] 27350988: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval "[b](a)".replace(/[+]+/gm, "")
+[489] 27350989: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval "[b](a)".replace(/\[+/gm, "")
+[490] 27350990: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~r prof
+[493] 27350991: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~get 501710994293129216 cmds
+[494] 27350991: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~get <@!911799544017199124> cmds
+[495] 27350991: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval client.user.data
+[496] 27350999: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~eval client.user.data.get("cmds")
+[497] 27350999: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~get <@!911799544017199124> cmds
+[498] 27351000: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~r info
+[500] 27351001: [economist rewrite (911784758600679455)][private]<Yukikaze#7777 (501710994293129216)>: ~r stats
