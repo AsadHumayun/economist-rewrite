@@ -5,6 +5,7 @@ module.exports = {
 	aliases: ['replacer.removeone', 'removereplacer', 'repl.rem', 'delreplacer'],
 	category: 'utl',
 	description: 'Removes a replacer/supplanter.',
+	disabled: true,
 	async run(client, message, args) {
 		const data = await client.db.get(`replacers${message.author['id']}`) || {};
 		if (typeof data != 'object') return message.reply("There was an error whilst parsing your role data: `TypeError: User#Supplanters must be of type Object or null`\nContact an admin asking them to remove your role data!");
