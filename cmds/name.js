@@ -21,9 +21,8 @@ module.exports = {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has successfully updated their pet's name to ${newName || "null"}`),
+					.setDescription(`${message.author.tag} has successfully updated their pet's name to "${newName || "dragon"}"`),
 			],
 		});
-		message.reply({ content: `Successfully set petname ${message.author.id} as ${newName}`, allowedMentions: { parse: [] } });
 	},
 };
