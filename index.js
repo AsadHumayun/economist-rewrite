@@ -641,7 +641,7 @@ client.on("messageCreate", async (message) => {
 	const args = message.content.slice(message.guild.prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 	const command = client.config.commands.get(commandName) || client.config.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
-	const stnb = data.get("stnb");
+	const stnb = data.get("stnb") || "stunned";
 	if (cst.includes("pstn") && (!cst.includes("antistun"))) {
 		return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
 	}
