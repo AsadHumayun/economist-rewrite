@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-const { Client, User, Collection, MessageEmbed, DiscordAPIError } = require("discord.js");
+const { Client, User, Collection, MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
 
 /**
@@ -8,9 +8,8 @@ const { readdirSync } = require("fs");
  */
 class Funcs {
 	/**
-	 * Constructor function
 	 * @constructor
-	 * @param {Client} client Discord.Client
+	 * @param {Client} client The currently instantiated Discord client.
 	 */
 	constructor(client) {
 		/**
@@ -202,7 +201,6 @@ class Funcs {
 	/**
 	 * Stuns a user whilst performing required validatory actions beforehand
 	 * @param {Object} opts Options for the stun
-	 * @param {Client} [opts.client] Current client instance
 	 * @param {String} [opts.userId] Snowflake ID of the user who must be stunned
 	 * @param {Number} [opts.minutes] Amount of minutes for which the user is stunned
 	 * @param {String} [opts.stnb] Stnb value (You can't do anything while you're {stnb}!)
@@ -210,9 +208,9 @@ class Funcs {
 	 * @async @method
 	 */
 	async stn(opts) {
-		const user = await this.fetchUser(opts.userId).catch(() => {return;});
+		const user = await this.client.users.fetch(opts.userId).catch(() => {return;});
 		if (!user) return;
-		const data = await opts.client.db.getUserData(opts.userId);
+		const data = await this.client.db.getUserData(opts.userId);
 		const dns = (isNaN(data.get("dns")) ? 0 : Number(data.get("dns"))) * 60_000;
 		if (dns && (Date.now() < dns)) return;
 		await opts.client.db.USERS.update({
@@ -254,10 +252,10 @@ class Funcs {
 		return matrix;
 	}
 	/**
-	 *
+	 * Used for moving elements around in arrays.
 	 * @param {Array<Any} arr Original list
-	 * @param {Number} old_index index of old item
-	 * @param {Number} new_index new index of item
+	 * @param {number} old_index index of old item
+	 * @param {number} new_index new index of item
 	 * @returns {Array<Any>}
 	 */
 	arrayMove(arr, old_index, new_index) {
@@ -275,16 +273,16 @@ class Funcs {
 	 * Maps the array into a list, in the form of a sentence.
 	 * @example ["a", "b", "c"] gives "a, b, and c" (which is also grammatically correct)
 	 * @param {Array<String>} arr array to be listed
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	list(arr) {
 		return arr.map((x) => arr.length > 1 ? (arr.indexOf(x) == arr.length - 1 ? `and \`${x}\`` : `\`${x}\``) : `\`${x}\``).join(", ");
 	}
 	/**
 	 * Returns a random number between the two endpoints, r.
-	 * @param {Number} min minimum value of r
-	 * @param {Number} max maximum value of r
-	 * @returns {Number}
+	 * @param {number} min minimum value of r
+	 * @param {number} max maximum value of r
+	 * @returns {number}
 	 */
 	getRandomInt(min, max) {
 		min = Math.ceil(min);
@@ -295,8 +293,8 @@ class Funcs {
 	 * Parses a cooldown amount.
 	 * Preps cooldown value then sets it. Not complicated.
 	 * @param {Date} now Current MS timestamp
-	 * @param {Number} cd Cooldown to add (in MS)
-	 * @param {Boolean} includeDecimals Whether or not to include decimals into the date returned
+	 * @param {number} cd Cooldown to add (in MS)
+	 * @param {boolean} includeDecimals Whether or not to include decimals into the date returned
 	 * @returns {Date} Date at which the cooldown will end --- in MS
 	 */
 	parseCd(now, cd, includeDecimals = false) {
@@ -309,10 +307,10 @@ class Funcs {
 	}
 	/**
 	 * This function will allow you to trim a string such that it does not exceed the provided `max` length.
-	 * @param {String} str The string which is to be trimmed.
-	 * @param {Number} max The maximum amount of chars that the string passed into this function cannot exceed.
-	 * @param {Boolean} dots If exceeded, then this param allows for you to control whether or not you"d like 3 dots to replace the last 3 chars of the string.
-	 * @returns {String} str
+	 * @param {string} str The string which is to be trimmed.
+	 * @param {number} max The maximum amount of chars that the string passed into this function cannot exceed.
+	 * @param {boolean} dots If exceeded, then this param allows for you to control whether or not you"d like 3 dots to replace the last 3 chars of the string.
+	 * @returns {str} Trimmed string (if trimmed, then string is returned with '...' appended)
 	 */
 	trim(str = "", max, dots = true) {
 		if (!max) return str;
@@ -325,9 +323,9 @@ class Funcs {
 	}
 	/**
 	 * This function will cache all the commands in `dir`, therefore making them usable.
-	 * @param {String} dir Directory of which to load commands from
+	 * @param {string} dir Directory of which to load commands from
 	 * @param {Collection<K, V>} clientCommands client.config.commands collection - loads commands into this collection
-	 * @returns {Array<Boolean, Collection<cmd.name, cmd>>|Error}
+	 * @returns {Array<Boolean, Collection<cmd.name, cmd>> | Error}
 	 */
 	// (method) Funcs.cacheCommands(dir: string, clientCommands: Collection<K, V>): Array<boolean, Collection<cmd.name, cmd>> | Error
 	cacheCommands(dir, clientCommands) {
@@ -349,14 +347,13 @@ class Funcs {
 	 * * Each user can have their own dragon alias (of course, I would have to add it to `petaliases.json` for it to be registered as such).
 	 * * An "alias" allows a user to replace the "dragon" for anything else, as well as allowing them to choose custom emojis for their stats on their dragon. In the latter parts of the bot, there is a system that will allow users to give/take access of the alias from people.
 	 * * Users are able to do `~dragonalias` to see a list of their aliases, indexed. They will then do `~dragonalias <index>`, replacing `<index>` with the index of their choice, which means that the bot will switch their alias to whatever they had chosen.
-	 * @param {String} uid The ID of a Discord user whose dragon alias is to be fetched
-	 * @param {Client} client Discord.Client
+	 * @param {string} uid The ID of a Discord user whose dragon alias is to be fetched
 	 * @returns {Array<string, string[]>}
 	 * @async @function
 	 */
-	// (method) Funcs.getDragonAlias(uid: string, client: Client): Array<string | string, string>
 	async getDragonAlias(uid, client) {
-		const data = await client.db.getUserData(uid);
+		if (client) console.warn("DeprecationWarning: client passed into getDragonAlias function when not necessary.");
+		const data = await this.client.db.getUserData(uid);
 		const currAlias = data.get("crls") || "default";
 		if (currAlias) {
 			const aliases = require("./petaliases.json");
@@ -370,6 +367,20 @@ class Funcs {
 				return [petname || "dragon", ["<:heart:912982056802340877>", ":zap:", ":star2:", ":star:", ":bulb:", ":field_hockey:", ":fire:", ":sparkling_heart:", ":pizza:" ]];
 			}
 		}
+	}
+	/**
+	 * The function will DM a user in context of a (gameplay) command.
+	 * @param {string} id ID of the user to DM
+	 * @param {object} message Object that should be passed into `<TextBasedChannel>.send()`method.
+	 * @returns {void} void
+	 * @async @method
+	 */
+	async dm(id, message) {
+		const user = await this.client.users.fetch(id).catch(() => {return;});
+		if (!user) return;
+		const data = await this.client.db.getUserData(id);
+		if (data.get("cst")?.includes("dnd")) return;
+		user.send(message).catch(() => {return;});
 	}
 }
 
@@ -393,7 +404,7 @@ const config = {
 		boostPay: 5000,
 		exp: 60000,
 		inf: "∞",
-		cds: ["adrenc;dose adrenaline", "cfc;coinflip", "dialc;dial", "dlc;daily", "dpc;deprive", "dgrc;downgrade", "fdc;feed", "fishc;fish", "robc;rob", "sntc;sentence", "sgstc;suggest", "srchc;search", "strc;stroke", "xpc;xp cooldown"],
+		cds: ["adrenc;dose adrenaline", "cfc;coinflip", "dialc;dial", "dlc;daily", "dpc;deprive", "dgrc;downgrade", "fdc;feed", "fishc;fish", "rbc;rob", "sntc;sentence", "sgstc;suggest", "srchc;search", "strc;stroke", "xpc;xp cooldown"],
 		badges: {
 			administrator132465798: "<:admin:926431897695973436>",
 			owners: "<:owners:926433334140235786>",
