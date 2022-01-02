@@ -8,7 +8,7 @@ module.exports = {
 	usage: "rob <user>",
 	async run(client, message, args) {
 		const result = Math.floor(Math.random(1) * 10);
-		const cooldown = message.author.data.get("robc");
+		const cooldown = message.author.data.get("rbc");
 		const cd = client.config.cooldown(message.createdTimestamp, cooldown * 60_000);
 		if (cd) {
 			return message.reply(`You must wait another ${cd} before robbing someone again!`);
@@ -28,7 +28,7 @@ module.exports = {
 		if (authorBal < 1000) return message.reply("You must have at least :dollar: 1,000 in your account before robbing from someone!");
 		await client.db.USERS.update({
 			// 3 hour cooldown (10800000ms = 3h)
-			robc: client.config.parseCd(message.createdTimestamp, 10800000),
+			rbc: client.config.parseCd(message.createdTimestamp, 10800000),
 		}, {
 			where: {
 				id: message.author.id,
@@ -60,19 +60,18 @@ module.exports = {
 						.setDescription(`${message.author.tag} has stolen :dollar: ${client.config.comma(client.config.noExponents(stolen))} from ${usr.tag}!`),
 				],
 			});
-			usr.send({
+			client.config.dm(usr.id, {
 				embeds: [
 					new MessageEmbed()
 						.setColor(client.config.statics.defaults.colors.red)
 						.setTitle("Uh Oh!")
 						.setDescription(`${message.author.tag} has stolen :dollar: ${client.config.comma(client.config.noExponents(stolen))} from you!`),
 				],
-			}).catch(() => {return;});
+			});
 		}
 		else {
 			// user got caught by the police!
 			await client.config.stn({
-				client,
 				userId: message.author.id,
 				minutes: 5,
 				stnb: "arrested",
