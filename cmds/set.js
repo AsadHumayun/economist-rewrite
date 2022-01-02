@@ -30,17 +30,16 @@ module.exports = {
 				// eslint-disable-line no-empty
 			}
 		}
-		await client.db.USERS.update({
-			[key]: val,
-		}, {
-			where: {
-				id: user.id,
-			},
-		})
-		// I had added a .catch block here but like it does nothing :shrug:
-			.then((resp) => {
-				if (resp[0] == 0) {
-					return message.reply({ content: "Unable to update database value", allowedMentions: { parse: [], repliedUser: true } });
+		try {
+			await client.db.USERS.update({
+				[key]: val,
+			}, {
+				where: {
+					id: user.id,
+				},
+			}).then((res) => {
+				if (res[0] == 0) {
+					return message.reply({ content: "Database value was not updated (most likely, no column by that name exists)", allowedMentions: { parse: [], repliedUser: true } });
 				}
 				else if (!cst.includes("tst")) {
 					message.reply({
@@ -58,5 +57,9 @@ module.exports = {
 					message.reply(`Successfully set ${key} ${user.id} as ${client.config.trim(typeof val == "object" ? JSON.stringify(val) : client.config.Inspect(val), 1900)} with type \`${typeof val}\``);
 				}
 			});
+		}
+		catch (e) {
+			message.reply(`:slight_frown: An error occurred!\n\`${e}\``);
+		}
 	},
 };
