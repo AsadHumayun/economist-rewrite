@@ -11,8 +11,8 @@ module.exports = {
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply(`You must specify a User and an offence under the format \`${message.guild.prefix}punish <user> <punishment index>\` in order for this command to work!`);
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
-		if (!user) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
-		if (isNaN(args[1])) return message.reply(`Invalid index "${args[1]}"`, { allowedMentions: { parse: [] } });
+		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
+		if (isNaN(args[1])) return message.reply({ content: `Invalid index "${args[1]}"`, allowedMentions: { parse: [] } });
 		const data = await client.db.getUserData(user.id);
 		const index = Number(args[1]);
 		const ofncs = data.get("ofncs") ? data.get("ofncs").split(";").map(Number) : [];
