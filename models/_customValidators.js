@@ -1,3 +1,4 @@
+"use strict";
 module.exports = {
 	allNumbers: function(data) {
 		data = data.toString().split(";").map(Number);

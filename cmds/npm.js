@@ -1,3 +1,4 @@
+"use strict";
 const { MessageEmbed } = require("discord.js");
 const moment = require("moment");
 const fetch = require("node-fetch");

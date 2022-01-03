@@ -1,3 +1,4 @@
+"use strict";
 const { Util } = require("discord.js");
 const delay = require("delay");
 

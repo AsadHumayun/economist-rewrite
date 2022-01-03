@@ -1,3 +1,4 @@
+"use strict";
 const { MessageEmbed, Util } = require("discord.js");
 
 module.exports = {

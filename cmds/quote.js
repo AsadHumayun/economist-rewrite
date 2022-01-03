@@ -1,3 +1,4 @@
+"use strict";
 /* eslint-disable prefer-const */
 const { MessageEmbed } = require("discord.js");
 

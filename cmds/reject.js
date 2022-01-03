@@ -1,3 +1,4 @@
+"use strict";
 const { MessageEmbed, escapeMarkdown } = require("discord.js");
 
 module.exports = {

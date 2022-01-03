@@ -1,3 +1,4 @@
+"use strict";
 const { Permissions } = require("discord.js");
 
 module.exports = {

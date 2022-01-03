@@ -1,3 +1,4 @@
+"use strict";
 const { MessageActionRow, MessageButton, MessageEmbed, Util } = require("discord.js");
 
 module.exports = {

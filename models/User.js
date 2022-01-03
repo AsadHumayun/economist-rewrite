@@ -1,3 +1,4 @@
+"use strict";
 const customValidators = require("./_customValidators");
 
 module.exports = (sequelize, DataTypes) => {

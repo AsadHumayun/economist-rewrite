@@ -1,3 +1,4 @@
+"use strict";
 const { MessageEmbed } = require("discord.js");
 const delay = require("delay");
 const ms = require("ms");

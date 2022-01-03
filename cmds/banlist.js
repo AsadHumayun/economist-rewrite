@@ -1,3 +1,4 @@
+"use strict";
 const { MessageEmbed } = require("discord.js");
 const { menu } = require("discord.js-reaction-menu");
 

@@ -1,3 +1,4 @@
+"use strict";
 const Discord = require("discord.js");
 const { inspect } = require("util");
 

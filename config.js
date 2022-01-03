@@ -1,3 +1,4 @@
+"use strict";
 // eslint-disable-next-line no-unused-vars
 const { Client, Channel, ChannelManager, User, Collection, MessageEmbed, DiscordAPIError, MessagePayload, Message } = require("discord.js");
 const { readdirSync } = require("fs");
