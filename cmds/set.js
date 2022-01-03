@@ -15,7 +15,6 @@ module.exports = {
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		const key = args[1];
 		let val = args.slice(2).join(" ");
-		if (!key || (!val)) return message.reply("You must provide a `<key>` and `<value>` in order for this command to work!");
 		if (val.startsWith("\"") && (val.endsWith("\""))) {
 			val = String(val).slice(1, -1);
 		}
@@ -46,15 +45,15 @@ module.exports = {
 						embeds: [
 							new MessageEmbed()
 								.setColor(message.author.color)
-								.setDescription(`Successfully set ${key} ${user.id} as ${typeof val == "object" ? JSON.stringify(val) : client.config.Inspect(val)} with type \`${typeof val}\``),
+								.setDescription(`Successfully set ${key} ${user.id} as ${val}`),
 						],
 					}).catch((x) => {
 						message.reply("Encountered error: `" + x + "`. Resending message...");
-						message.reply(`Successfully set ${key} ${user.id} (value too large to display) with type \`${typeof val}\``);
+						message.reply(`Successfully set ${key} ${user.id} <value too large to display>`);
 					});
 				}
 				else {
-					message.reply(`Successfully set ${key} ${user.id} as ${client.config.trim(typeof val == "object" ? JSON.stringify(val) : client.config.Inspect(val), 1900)} with type \`${typeof val}\``);
+					message.reply(`Successfully set ${key} ${user.id} as ${client.config.trim(val, 1900)}`);
 				}
 			});
 		}
