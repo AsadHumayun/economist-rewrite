@@ -34,6 +34,7 @@ module.exports = {
 					const cst = message.author.data.get("cst").split(";").filter((f) => !["dragon"].includes(f)).join(";");
 					await client.db.USERS.update({
 						cst,
+						pet: client.config.statics.defaults.dragon,
 					}, {
 						where: {
 							id: message.author.id,
