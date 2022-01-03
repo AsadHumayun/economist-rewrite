@@ -1,8 +1,14 @@
 const customValidators = {
 	allNumbers: function(data) {
-		data = data.toString().split(";");
-		data = data.map(Number);
-		if (data.includes(NaN)) throw new Error("[NumberArray]: All values must be numeric.");
+		data = data.toString().split(";").map(Number);
+		if (data.includes(NaN)) throw new Error("\n[CustomValidator => allNumbers] [Fail] All values must be numeric.");
+	},
+	isNumericString: function(data) {
+		if (typeof data !== "string" || isNaN(data)) throw new Error(`\n[CustomValidator => isNumericString] [Fail] ID must be a numeric string. Received type: ${typeof data} (NaN?: ${isNaN(data)})`);
+	},
+	// had to be introduced because Sequelize didn't recognise standard form numbers as numbers :shrug:
+	isNumber: function(data) {
+		if (isNaN(Number(data))) throw new Error(`\n[CustomValidator => isNumber] [Fail] Value must be a valid JavaScript number. Received type: ${typeof data}`);
 	},
 };
 
@@ -15,25 +21,25 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			unique: true,
 			validate: {
-				isNumeric: true,
+				isNumericString: customValidators.isNumericString,
 			},
 		},
 		adren: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		adrenc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		bal: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		bcmd: {
@@ -42,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
 		bgc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		bio: {
@@ -55,19 +61,19 @@ module.exports = (sequelize, DataTypes) => {
 		cfc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		chillc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		chillpills: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		chnl: {
@@ -83,7 +89,7 @@ module.exports = (sequelize, DataTypes) => {
 		cmds: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		cst: {
@@ -102,43 +108,43 @@ module.exports = (sequelize, DataTypes) => {
 		dgrc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		dlc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		dlstr: {
 			type: DataTypes.STRING,
 			validate: {
-				isAlphanumeric: true,
+				isAllNumbers: customValidators.allNumbers,
 			},
 		},
 		dns: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		dose0: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		dose1: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		dpc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		drgs: {
@@ -150,13 +156,13 @@ module.exports = (sequelize, DataTypes) => {
 		fdc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		fishc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		fsh: {
@@ -168,7 +174,7 @@ module.exports = (sequelize, DataTypes) => {
 		hgs: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		mt: {
@@ -204,7 +210,7 @@ module.exports = (sequelize, DataTypes) => {
 		pq: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		qts: {
@@ -216,38 +222,38 @@ module.exports = (sequelize, DataTypes) => {
 		rbc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		sgstc: {
 			type: DataTypes.DECIMAL,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		spse: {
 			type: DataTypes.STRING,
 			unique: true,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		sntc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		srchc: {
 			type: DataTypes.DECIMAL,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		stn: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		stnb: {
@@ -256,7 +262,7 @@ module.exports = (sequelize, DataTypes) => {
 		strc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 		upgr: {
@@ -282,7 +288,7 @@ module.exports = (sequelize, DataTypes) => {
 		xpc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumeric: true,
+				isNumber: customValidators.isNumber,
 			},
 		},
 	});
