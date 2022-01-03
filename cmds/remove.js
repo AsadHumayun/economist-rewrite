@@ -12,6 +12,16 @@ module.exports = {
 		const key = args.slice(1).join(" ");
 		if (!key) return message.reply`You must provide something to remove under the format of \`${message.guild.prefix}remove <user> <key>\``;
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
+		if (key == "pet") {
+			await client.db.USERS.update({
+				pet: client.config.statics.defaults.dragon,
+			}, {
+				where: {
+					id: user.id,
+				},
+			});
+			return message.reply(`Successfully removed pet ${user.id}`);
+		}
 		try {
 			const now = Date.now();
 			await client.db.USERS.update({
@@ -25,7 +35,7 @@ module.exports = {
 			message.reply(`Successfully removed ${key} ${user.id} ${cst.includes("tmr") ? `in ${diff} miliseconds` : ""}`);
 		}
 		catch (err) {
-			message.reply(`Error while remoivng Users [${user.id}]:${key}\n\`${err.message}\``);
+			message.reply(`Error while remoivng ${user.id}.${key}\n\`${err.message}\``);
 		}
 	},
 };
