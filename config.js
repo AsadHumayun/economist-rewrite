@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-const { Client, User, Collection, MessageEmbed } = require("discord.js");
+const { Client, Channel, ChannelManager, User, Collection, MessageEmbed, DiscordAPIError, MessagePayload, Message } = require("discord.js");
 const { readdirSync } = require("fs");
 
 /**
@@ -14,7 +14,7 @@ class Funcs {
 	constructor(client) {
 		/**
 		 * The currently instantiated client.
-		 * @property
+		 * @static @readonly
 		 */
 		this.client = client;
 	}
@@ -22,16 +22,16 @@ class Funcs {
 	 * Capitalises the first letter of the given string and returns the new string. Only the first letter is capitalised.
 	 * @param {String} str string to be capitalised
 	 * @returns {String} capitalised string
-	 * @function @public
+	 * @method
 	 */
 	capital(str) {
 		return str[0].toUpperCase() + str.slice(1);
 	}
 	/**
 	 * Shows element in inspcted format
-	 * @param {Any} element Element to be inspected
-	 * @param {Number} pen Specifies the number of times to recurse while formatting object. This is useful for inspecting large objects. To recurse up to the maximum call stack size pass Infinity or null. Default: 2. (source: https://nodejs.org/api/util.html#utilinspectobject-showhidden-depth-colors)
-	 * @returns {String}
+	 * @param {any} element Element to be inspected
+	 * @param {number} pen Specifies the number of times to recurse while formatting object. This is useful for inspecting large objects. To recurse up to the maximum call stack size pass Infinity or null. Default: 2. (source: https://nodejs.org/api/util.html#utilinspectobject-showhidden-depth-colors)
+	 * @returns {string}
 	 */
 	Inspect(element, pen = 2) {
 		return require("util").inspect(element, { depth: isNaN(pen) ? 2 : Number(pen) });
@@ -73,8 +73,8 @@ class Funcs {
 	}
 	/**
 	 * Applies digit trimming to a `str` instance
-	 * @param {Number} bal String to show digits; may be str instance but not NaN
-	 * @returns {String}
+	 * @param {number} bal String to show digits; may be str instance but not NaN
+	 * @returns {string}
 	 */
 	digits(bal = 0) {
 		bal = bal.toString();
@@ -97,30 +97,20 @@ class Funcs {
 	}
 	/**
 	 * This function will add hyphens to a string every X characters; view [the article type thingy](https://repl.it/talk/share/Insert-Hyphens-in-JavaScript-String/50244) for additional information.
-	 * @param {String} str The string to hyphenify
-	 * @param {Number} interval The interval of which to add hyphens to the string
-	 * @param {Object} options Options to be applied.
-	 * @param {Boolean} options.removeWhiteSpaces Whether or not to remove whitespaces in the string
-	 * @param {Boolean} options.includeNewLine Whether or not to include & register the newline character (`\n`) as a part of the string.
-	 * @returns {String} String<hyphenified> Hyphenified String
+	 * @param {string} str The string to hyphenify
+	 * @param {number} interval The interval of which to add hyphens to the string
+	 * @param {object} options Options to be applied.
+	 * @param {boolean} [options.removeWhiteSpaces] Whether or not to remove whitespaces in the string
+	 * @param {boolean} [options.includeNewLine] Whether or not to include & register the newline character (`\n`) as a part of the string.
+	 * @returns {string} String<hyphenified> Hyphenified String
 	 */
-	hyphen(str, interval, options) {
-		if (!options) {
-			options = {
-				// Whether or not to reomve whitespaces from the string
-				removeWhiteSpaces: true,
-				// Whether or not to inc new line
-				includeNewLine: false,
-			};
-		}
+	hyphen(str, interval = 1, options = { removeWhiteSpaces: true, includeNewLine: false }) {
 		if (typeof options !== "object") {
 			throw new TypeError("options must be of type object");
 		}
 		if (!str) return null;
-		if (!interval) {
-			interval = 1;
-		}
 		interval = Number(interval);
+		if (isNaN(interval)) throw new TypeError(`Interval msut be of type Number. Received type : ${typeof interval}`);
 		str = str.toString();
 		if (options.removeWhiteSpaces) {
 			// remove whitespaces:
@@ -133,8 +123,7 @@ class Funcs {
 		else {
 			matches = str.match(new RegExp(".{1," + interval + "}", "g"));
 		}
-		if (!matches) return null;
-		return matches.join("-");
+		if (!matches) return null; else return matches.join("-");
 	}
 	/**
 	 * Calculates the cooldown and returns a mesage.
@@ -213,7 +202,7 @@ class Funcs {
 		const data = await this.client.db.getUserData(opts.userId);
 		const dns = (isNaN(data.get("dns")) ? 0 : Number(data.get("dns"))) * 60_000;
 		if (dns && (Date.now() < dns)) return;
-		await opts.client.db.USERS.update({
+		await this.client.db.USERS.update({
 			stn: Math.trunc((Date.now() / 60_000) + opts.minutes),
 			stnb: opts.stnb,
 		}, {
@@ -370,17 +359,21 @@ class Funcs {
 	}
 	/**
 	 * The function will DM a user in context of a (gameplay) command.
-	 * @param {string} id ID of the user to DM
-	 * @param {object} message Object that should be passed into `<TextBasedChannel>.send()`method.
+	 * @param {object} opts Options
+	 * @param {string} [opts.userId] ID of the user to DM. It is named userId for consistency
+	 * @param {Message} [opts.message] Object that should be passed into `<TextBasedChannel>.send()`method.
+	 * @param {?Channel} [opts.channel] Optional channel to also send the message in
 	 * @returns {void} void
 	 * @async @method
 	 */
-	async dm(id, message) {
-		const user = await this.client.users.fetch(id).catch(() => {return;});
+	async dm(opts) {
+		if (!opts.message || !opts.userId) throw new TypeError("opts.message or opts.userId are null/missing.");
+		const user = await this.client.users.fetch(opts.userId).catch(() => {return;});
 		if (!user) return;
-		const data = await this.client.db.getUserData(id);
-		if (data.get("cst")?.includes("dnd")) return;
-		user.send(message).catch(() => {return;});
+		const data = await this.client.db.getUserData(opts.userId);
+		if (opts.channel) opts.channel.send(opts.message);
+		if (data.get("cst")?.split(";").includes("dnd")) return;
+		user.send(opts.message).catch(() => {return;});
 	}
 }
 
@@ -408,6 +401,10 @@ const config = {
 		badges: {
 			administrator132465798: "<:admin:926431897695973436>",
 			owners: "<:owners:926433334140235786>",
+			bughunter: "<:bughunter:927443784738942976>",
+			dev: "<:verified_developer:927445077415039036>",
+			booster: "<:booster:927445472661098546>",
+			pstn: "<:permstunned:927446547547951135>",
 		},
 		channels: {
 			dsl: "918090868798423060",
