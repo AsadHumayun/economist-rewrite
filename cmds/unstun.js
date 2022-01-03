@@ -5,13 +5,20 @@ module.exports = {
 	category: "own",
 	description: "unstuns a user, allowing them to use commands",
 	async run(client, message, args) {
-		if (!args.length) return message.reply("You must specify the user to unstun!");
+		if (!args.length) return message.reply("You must specify the user to unstun in order for this command to work!");
 		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
-		const s = await client.db.get("stn" + usr.id);
-		if (!s) return message.reply(`${usr.tag} is not stunned (stn=${s})`);
-		await client.db.delete("stn" + usr.id);
-		await client.db.delete("dns" + usr.id);
-		message.reply(`Successfully removed [stn, dns] ${usr.tag}`);
+		const data = await client.db.getUserData(usr.id);
+		const stn = data.get("stn");
+		if (!stn) return message.reply(`${usr.tag} is not stunned (stn=\`${stn}\`)`);
+		await client.db.USERS.update({
+			stn: null,
+			dns: null,
+		}, {
+			where: {
+				id: usr.id,
+			},
+		});
+		message.reply(`:ok_hand: Unstunned ${usr.tag}. They were stunned for another ${stn - Math.trunc(message.createdTimestamp / 60_000)} minutes.`);
 	},
 };
