@@ -60,13 +60,16 @@ module.exports = {
 						.setDescription(`${message.author.tag} has stolen :dollar: ${client.config.comma(client.config.noExponents(stolen))} from ${usr.tag}!`),
 				],
 			});
-			client.config.dm(usr.id, {
-				embeds: [
-					new MessageEmbed()
-						.setColor(client.config.statics.defaults.colors.red)
-						.setTitle("Uh Oh!")
-						.setDescription(`${message.author.tag} has stolen :dollar: ${client.config.comma(client.config.noExponents(stolen))} from you!`),
-				],
+			client.config.dm({
+				userId: usr.id,
+				message: {
+					embeds: [
+						new MessageEmbed()
+							.setColor(client.config.statics.defaults.colors.red)
+							.setTitle("Uh Oh!")
+							.setDescription(`${message.author.tag} has stolen :dollar: ${client.config.comma(client.config.noExponents(stolen))} from you!`),
+					],
+				},
 			});
 		}
 		else {
