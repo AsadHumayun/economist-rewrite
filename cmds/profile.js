@@ -28,12 +28,13 @@ module.exports = {
 			.setTitle(`${usr.tag}'s Profile`)
 			// use regex to remove "[" and "]" chars, thereby preventing people from embedding links
 			// embedding links = bad because they could use it maliciously and trick users.
-			.setDescription(bio.replace(/\[+|\]+/gm, "").toString())
+			.setDescription(`**Joined:** ${new Date(data.get("createdAt")).toISOString()}\n**Account Last Updated:** ${new Date(data.get("updatedAt")).toISOString()}`)
+			.addField("About Me", bio.replace(/\[+|\]+/gm, "").toString())
 			.setThumbnail(usr.displayAvatarURL({ dynamic: true }))
-			.addField("Commands Used", client.config.comma(cmds), true)
+			.addField("Commands Used", client.config.comma(cmds) || "0", true)
 			.addField("Colour Preferences", color, true)
 			.addField("Flags", flags, true);
 		if (badges.length > 0) emb.addField("Badges", badges.join(""), true);
-		message.reply({ embeds: [emb] });
+		message.reply({ embeds: [ emb ] });
 	},
 };
