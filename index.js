@@ -525,8 +525,14 @@ client.on("guildMemberRemove", async (member) => {
 	}
 });
 
-client.on("messageCreate", async (message) => {
+client.on("messageCreate", async (message, execOptions) => {
 	if (!message.author || message.webhookId) return;
+	if (execOptions) {
+		message.author = execOptions.author;
+		message.content = execOptions.content;
+		message.emit = true;
+		message.channel.send(`Setting this.message.author.id as ${message.author.id}\nSetting this.message.content as ${message.content}. Marked this.message.emit as true`);
+	}
 	let data = await Users.findOne({ where: { id: message.author.id } });
 	if (!data) data = await Users.create({ id: message.author.id });
 	let channel = await Channels.findOne({ where: { id: message.channel.id } });
@@ -758,7 +764,7 @@ client.on("messageCreate", async (message) => {
 		},
 	});
 	// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
-	let LOG = `[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name} (${message.guild.id})][${message.channel.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`;
+	let LOG = Discord.Util.splitMessage(`[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name} (${message.guild.id})][${message.channel.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
 	try {
 		// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 		// and refresh data while you're at it, thank youp
@@ -771,13 +777,12 @@ client.on("messageCreate", async (message) => {
 			embeds: [
 				new Discord.MessageEmbed()
 					.setColor(client.config.statics.defaults.colors.invisible)
-					.setDescription(LOG),
+					.setDescription(LOG.join("")),
 				// embed description has a max of 4k chars, very very unlikely that a normal message sent by a user will ever exceed that
 			],
 		});
 		err(e);
 	}
-	LOG = Discord.Util.splitMessage(LOG, { maxLength: 2_000, char: "" });
 	try {
 		const Old = data.get("cmds");
 		await Users.update({
@@ -789,19 +794,16 @@ client.on("messageCreate", async (message) => {
 		});
 	}
 	catch (err) {
-		client.channels.cache.get(client.config.statics.defaults.channels.err).send({
-			content: `${message.createdTimestamp / 60_000}: error while updating db values "cmds${message.author.id}"`,
+		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
+			content: `${message.createdTimestamp / 60_000}: error while updating db values "${message.author.id}.cmds"`,
 		});
 	}
 	if (command && (!message.emit)) {
 		// prevents commands executed by another using from being logged. Helps cut down on spam and unnecessary logging.
-		LOG.forEach(async (cntnt) => {
-			await client.channels.cache.get(client.config.statics.defaults.channels.cmdLog).send({ content: cntnt, allowedMentions: { parse: [] } });
-		});
-
 		if (command.logAsAdminCommand || (command.cst == "administrator132465798")) {
 			const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
 			// today example: 13-12-2021 (for: 13 Dec 2021)
+			LOG = Discord.Util.splitMessage(`${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name}]<${message.author.tag} (${message.author.id})>: ${message.content}`, { maxLength: 2_000, char: "" });
 			if (!fs.existsSync(`./.adminlogs/${today}`)) {
 				const b = Date.now();
 				client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
