@@ -803,7 +803,7 @@ client.on("messageCreate", async (message, execOptions) => {
 		if (command.logAsAdminCommand || (command.cst == "administrator132465798")) {
 			const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
 			// today example: 13-12-2021 (for: 13 Dec 2021)
-			LOG = Discord.Util.splitMessage(`${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name}]<${message.author.tag} (${message.author.id})>: ${message.content}`, { maxLength: 2_000, char: "" });
+			LOG = Discord.Util.splitMessage(`${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
 			if (!fs.existsSync(`./.adminlogs/${today}`)) {
 				const b = Date.now();
 				client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
