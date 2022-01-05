@@ -1,6 +1,7 @@
 {
   "name": "economist-rewrite",
   "version": "3.9.9",
+	"type": "module",
   "description": "A Discord economy bot.",
   "main": "index.js",
   "scripts": {

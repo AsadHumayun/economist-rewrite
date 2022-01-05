@@ -1,23 +1,25 @@
 ﻿"use strict";
 /* eslint-env node es6 */
-// package imports
-const delay = require("delay");
-const Discord = require("discord.js");
-require("dotenv").config();
-const fs = require("fs"); // eslint-disable-line no-unused-vars
-const ms = require("ms");
-const Sequelize = require("sequelize");
+import delay from "delay";
+import moment from "moment";
+import { Collection, Client, Options, Intents, MessageEmbed, Permissions, Util, WebhookClient } from "discord.js";
+import { config } from "dotenv";
+import { existsSync, writeFile, createWriteStream } from "fs"; // eslint-disable-line no-unused-vars
+import ms from "ms";
+import Sequelize, { DataTypes } from "sequelize";
+
+config();
 
 /** Client config values (defaults, functions, IDs, etc) */
-const ClientConfiguration = require("./config.js");
+import ClientConfiguration from "./config.js";
 
 /** Used for storing user command cooldowns and rate limits - there used to be 2 separate collections to store each, but that used more memory*/
-const collection = new Discord.Collection();
+const collection = new Collection();
 
 /** The currently instantiated Discord.Client*/
-const client = new Discord.Client({
+const client = new Client({
 	// Overriding the cache used in GuildManager, ChannelManager, GuildChannelManager, RoleManager, and PermissionOverwriteManager is unsupported and will break functionality
-	makeCache: Discord.Options.cacheWithLimits({
+	makeCache: Options.cacheWithLimits({
 		MessageManager: 100,
 		GuildMemberManager: 100,
 		PresenceManager: 0,
@@ -26,7 +28,7 @@ const client = new Discord.Client({
 		GuildBanManager: 0,
 	}),
 	allowedMentions: { parse: ["users", "roles"], repliedUser: false },
-	intents: new Discord.Intents().add([Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_MEMBERS]),
+	intents: new Intents().add([Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]),
 });
 console.log("Creating Sequelize instance...");
 const sequelize = new Sequelize("database", "user", "password", {
@@ -38,10 +40,16 @@ const sequelize = new Sequelize("database", "user", "password", {
 // note: Sequelize.STRING limits values to 255 chars in length, whereas Sequelize.TEXT does not.
 // Using Sequelize.STRING wherever char length is limited.
 console.log("Defining models...");
-const Users = require("./models/User.js")(sequelize, Sequelize.DataTypes);
-const Channels = require("./models/Channel.js")(sequelize, Sequelize.DataTypes);
-const Guilds = require("./models/Guild.js")(sequelize, Sequelize.DataTypes);
-const Bugs = require("./models/Bug.js")(sequelize, Sequelize.DataTypes);
+
+import User from "./models/User.js";
+import Guild from "./models/Guild.js";
+import Channel from "./models/Channel.js";
+import Bug from "./models/Bug.js";
+
+const Users = User(sequelize, DataTypes);
+const Guilds = Guild(sequelize, DataTypes);
+const Channels = Channel(sequelize, DataTypes);
+const Bugs = Bug(sequelize, DataTypes);
 
 if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
 	(async () => {
@@ -68,7 +76,7 @@ client.db = {
 };
 console.log("Creating commands cache...");
 // This is used to cache all of the commands upon startup
-client.config.commands = new Discord.Collection();
+client.config.commands = new Collection();
 
 console.log("Caching commands...");
 client.config.cacheCommands("./cmds", client.config.commands);
@@ -78,7 +86,7 @@ client.on("messageUpdate", async (oldMessage, newMessage) => {
 	if (oldMessage.channel.type == "dm") return;
 	if ((oldMessage.guild.id != client.config.statics.supportServer || (oldMessage.author.bot) || (oldMessage.content === newMessage.content))) return;
 	client.channels.cache.get(client.config.statics.defaults.channels.msgLogs).send({ embeds: [
-		new Discord.MessageEmbed()
+		new MessageEmbed()
 			.setTitle("Message Edited in #" + oldMessage.channel.name)
 			.setThumbnail(oldMessage.author.displayAvatarURL())
 			.setColor("RANDOM")
@@ -95,21 +103,21 @@ client.on("messageDelete", async (message) => {
 	if (message.content && (!message.author.bot)) {
 		const channel = Channels.findOne({ where: { id: message.channel.id } });
 		if (channel) {
-			await Channels.update({ snipe: `${message.author.id};${Buffer.from(message.content).toString("base64")}`, where: { id: message.channel.id } });
+			await Channels.update({ snipe: `${message.author.id};${Buffer.from(message.content).toString("base64")}` }, { where: { id: message.channel.id } });
 		}
 		else {
 			await Channels.create({
 				id: message.channel.id,
-				// encoded to base64 so if the user has a ; in the message, it gets encoded into something else.
+				// encoded to base64 so if the user has a ; in the message, it gets encoded into its base64 equivalent. Prevents ~snipe from functioning unexpectedly.
 				snipe: `${message.author.id};${Buffer.from(message.content).toString("base64")}`,
 			});
 		}
 	}
 	const logs = client.channels.cache.get(client.config.statics.defaults.channels.msgLogs);
-	const embed = new Discord.MessageEmbed()
+	const embed = new MessageEmbed()
 		.setColor(client.config.statics.defaults.colors.red)
 		.setTitle("Message Deleted in #" + message.channel.name)
-		.addField("Message Sent At", require("moment")(message.createdTimestamp))
+		.addField("Message Sent At", moment(message.createdTimestamp))
 		.setFooter("Deleted: ")
 		.setTimestamp()
 		.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL(), url: message.url });
@@ -175,8 +183,8 @@ client.on("channelUpdate", async (oldChannel, newChannel) => {
 		const usr = await client.config.fetchUser(x.id);
 		const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
 
-		const wasManager = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id) ? oldChannel.permissionOverwrites.cache.find(({ id }) => id == x.id).allow.has(Discord.Permissions.FLAGS.MANAGE_CHANNELS, false) || false : false;
-		const isManager = mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS, false);
+		const wasManager = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id) ? oldChannel.permissionOverwrites.cache.find(({ id }) => id == x.id).allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false) || false : false;
+		const isManager = mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS, false);
 		let addingManager = false;
 		let removingManager = false;
 		if (!wasManager && (isManager)) addingManager = true;
@@ -208,7 +216,7 @@ client.on("channelUpdate", async (oldChannel, newChannel) => {
 		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
 			content: `
 Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag} (${audit.executor.id})
-Can manage: ${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
+Can manage: ${mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
 ${addingManager ? `Adding ${usr.id} as a manager of ${newChannel.id}` : ""}${removingManager ? `Removing ${x.id} as a manager of ${newChannel.id}` : ""}
 			`,
 		});
@@ -228,7 +236,7 @@ ${addingManager ? `Adding ${usr.id} as a manager of ${newChannel.id}` : ""}${rem
 		client.channels.cache.get(client.config.statics.defaults.channels.sflp).send({
 			content: `
 Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag} (${audit.executor.id})
-Can manage: ${mmbr.permissionsIn(newChannel).has(Discord.Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id})
+Can manage: ${mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id})
 Removing permissions for ${id} in ${newChannel.id} (k: chnl)
 			`,
 		});
@@ -313,8 +321,6 @@ client.on("guildDelete", async (g) => {
 
 client.on("guildMemberUpdate", async (oldMember, newMember) => {
 	if (oldMember.guild.id != client.config.statics.supportServer) return;
-	oldMember = await oldMember.fetch(true);
-	newMember = await newMember.fetch(true);
 	// doesn't matter which one we use, oldMember.id and newMember.id will always remain the same.
 	// I'm using oldMember.id, for consistensy.
 	let user = await Users.findOne({ where: { id: oldMember.id } });
@@ -421,9 +427,9 @@ client.on("guildMemberAdd", async (member) => {
 				console.log(x);
 				// returns Record<Discord.PermissionString, boolean>
 				// eslint-disable-next-line no-undef
-				const deny = new Discord.Permissions(BigInt(Number(x[1]))).serialize();
+				const deny = new Permissions(BigInt(Number(x[1]))).serialize();
 				// eslint-disable-next-line no-undef
-				const allow = new Discord.Permissions(BigInt(Number(x[2]))).serialize();
+				const allow = new Permissions(BigInt(Number(x[2]))).serialize();
 				member.guild.channels.cache.get(x[0]).permissionOverwrites.edit(member.id, Object.assign({}, deny, allow));
 				client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60_000)}: Successfully restored permissions for M:<${member.user.tag} (${member.id})>: ${x[0]} -> d: ${x[1]}, a: ${x[2]}`);
 				client.channels.cache.get(x[0]).send(`Successfully restored permissions for M:<${member.user.tag} (${member.id})>: d: ${x[1]}, a: ${x[2]}`);
@@ -434,7 +440,7 @@ client.on("guildMemberAdd", async (member) => {
 		});
 	}
 	if (cst.includes("cl")) {
-		channel.send({ content: `♥️ Welcome back ${member}!` });
+		channel.send({ content: `♥️ Welcome back ${member}! Can't believe u left me :c` });
 	}
 	else {
 		channel.send({ content: `Welcome ${member} to ${member.guild.name}! :dollar: 500 have been added to your balance! I do hope you enjoy your stay ♥️` });
@@ -483,19 +489,19 @@ client.on("guildMemberAdd", async (member) => {
 			},
 		});
 		channel.send({ embeds: [
-			new Discord.MessageEmbed()
+			new MessageEmbed()
 				.setColor(client.config.defaults.clr)
 				.setDescription(`${member.user.tag} was given a 100000000 minute mute for "anti raid" and sent the following message:`),
 		] });
 		channel.send({ embeds: [
-			new Discord.MessageEmbed()
+			new MessageEmbed()
 				.setColor("#da0000")
 				.setDescription(`You have received a 100000000 minute mute from ${member.guild.name} because of "[automatic-mute]: Anti-raid"`)
 				.addField("Moderator", client.user.tag)
 				.addField("Reason", `Your account was flagged as a potential threat to our server. If you believe that you were muted erroneously, please contact \`${owner}\`.`),
 		] });
 		member.send({ embeds: [
-			new Discord.MessageEmbed()
+			new MessageEmbed()
 				.setColor("#da0000")
 				.setDescription(`You have received a 100000000 minute mute from ${member.guild.name} because of "[automatic-mute]: Anti-raid"`)
 				.addField("Moderator", client.user.tag)
@@ -504,7 +510,7 @@ client.on("guildMemberAdd", async (member) => {
 			.catch(() => {return;});
 	}
 	client.channels.cache.get(client.config.statics.defaults.channels.memberLog).send({ embeds: [
-		new Discord.MessageEmbed()
+		new MessageEmbed()
 			.setTimestamp()
 			.setColor("#00FF0C")
 			.setAuthor(member.user.tag, member.user.avatarURL())
@@ -515,7 +521,7 @@ client.on("guildMemberAdd", async (member) => {
 client.on("guildMemberRemove", async (member) => {
 	if (member.guild.id == client.config.statics.supportServer) {
 		client.channels.cache.get(client.config.statics.defaults.channels.memberLog).send({ embeds: [
-			new Discord.MessageEmbed()
+			new MessageEmbed()
 				.setTimestamp()
 				.setColor("#da0000")
 				.setAuthor(member.user.tag, member.user.avatarURL())
@@ -637,7 +643,7 @@ client.on("messageCreate", async (message, execOptions) => {
 	if (cst.includes("debugger")) {
 		message.reply({
 			embeds: [
-				new Discord.MessageEmbed()
+				new MessageEmbed()
 					.setColor(message.author.color)
 					.setTitle("Message content parsed as:")
 					.setDescription("```\n" + message.content + "\n```"),
@@ -706,7 +712,7 @@ client.on("messageCreate", async (message, execOptions) => {
 	}
 
 	if (!collection.has(command.name)) {
-		collection.set(command.name, new Discord.Collection());
+		collection.set(command.name, new Collection());
 	}
 
 	// 5s command cooldown for each user, can be bypassed if they have a specific permission.
@@ -745,7 +751,7 @@ client.on("messageCreate", async (message, execOptions) => {
 		}
 		else {
 			message.reply({ embeds: [
-				new Discord.MessageEmbed()
+				new MessageEmbed()
 					.setColor("#da0000")
 					.setTitle("[DEBUGGER]: Sorry, but an error occured :/")
 					.setDescription(`\`\`\`\n${e.stack}\n\`\`\``),
@@ -764,7 +770,7 @@ client.on("messageCreate", async (message, execOptions) => {
 		},
 	});
 	// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
-	let LOG = Discord.Util.splitMessage(`[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name} (${message.guild.id})][${message.channel.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+	const LOG = Util.splitMessage(`[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name} (${message.guild.id})][${message.channel.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
 	try {
 		// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 		// and refresh data while you're at it, thank youp
@@ -775,7 +781,7 @@ client.on("messageCreate", async (message, execOptions) => {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
 			content: `[${new Date().toISOString()}]: Exception< (type: caughtError, onCommand?: true;) >:\n\`${e}\``,
 			embeds: [
-				new Discord.MessageEmbed()
+				new MessageEmbed()
 					.setColor(client.config.statics.defaults.colors.invisible)
 					.setDescription(LOG.join("")),
 				// embed description has a max of 4k chars, very very unlikely that a normal message sent by a user will ever exceed that
@@ -800,24 +806,24 @@ client.on("messageCreate", async (message, execOptions) => {
 	}
 	if (command && (!message.emit)) {
 		// prevents commands executed by another using from being logged. Helps cut down on spam and unnecessary logging.
-		if (command.logAsAdminCommand || (command.cst == "administrator132465798")) {
+		if (command.logAsAdminCommand || command.cst == "administrator132465798") {
 			const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
 			// today example: 13-12-2021 (for: 13 Dec 2021)
-			LOG = Discord.Util.splitMessage(`${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
-			if (!fs.existsSync(`./.adminlogs/${today}`)) {
+			const fLog = Util.splitMessage(`[${client.uptime}]: ${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name} (${message.guild.id})][${message.channel.name} (${message.channelId})]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+			if (!existsSync(`./.adminlogs/${today}.txt`)) {
 				const b = Date.now();
 				client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
-				fs.writeFile(`./.adminlogs/${today}`, LOG.join(""), ((err) => {
+				writeFile(`./.adminlogs/${today}.txt`, fLog.join(""), ((err) => {
 					if (err) console.error(err) && client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
 					client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
 				}));
 			}
 			else {
-				fs.createWriteStream(`./.adminlogs/${today}`, { flags: "a" }).end(LOG.join(""));
+				createWriteStream(`./.adminlogs/${today}.txt`, { flags: "a" }).end(fLog.join(""));
 			}
 			await delay(100);
 			// delaying ensures that the log message is sent AFTER writing to the txt file.
-			LOG.forEach(async (cntnt) => {
+			Util.splitMessage(`${client.uptime}: [${message.guild.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" }).forEach(async (cntnt) => {
 				await client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
 			});
 		}
@@ -860,7 +866,7 @@ client.Notify = function(e, msgCont) {
 		client.channels.cache.get(client.config.statics.defaults.channels.error).send({
 			content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
 			embeds: [
-				new Discord.MessageEmbed()
+				new MessageEmbed()
 					.setColor("#da0000")
 					.setDescription(msgCont instanceof Promise ? "Promse { <rejected> }" : msgCont.toString() || "Message content unavailable."),
 			],
@@ -885,8 +891,8 @@ client
 		 * Thus, a webhook is used instead. A webhook has, in essence, is only used to send a message via a single HTTP POST request, and is independent to the client itself. This isn't really much of an issue, and is only really apparent here.
 		 * -I've added it to the config.js file anyway, simply because I would like to keep such conf values in one place, where I can easily manage them.
 		 */
-		const webh = new Discord.WebhookClient({ url: client.config.statics.defaults.webhooks.debugger });
-		const send = Discord.Util.splitMessage(dbg, { maxLength: 2_000, char: "" });
+		const webh = new WebhookClient({ url: client.config.statics.defaults.webhooks.debugger });
+		const send = Util.splitMessage(dbg, { maxLength: 2_000, char: "" });
 
 		send.forEach(async (message) => {
 			await webh.send({

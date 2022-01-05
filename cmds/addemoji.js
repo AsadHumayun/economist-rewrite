@@ -1,7 +1,7 @@
 "use strict";
-const { Permissions } = require("discord.js");
+import { Permissions } from "discord.js";
 
-module.exports = {
+export default {
 	name: "addemoji",
 	aliases: ["addemoji", "add-emoji"],
 	description: "Adds an emoji in the current guild",

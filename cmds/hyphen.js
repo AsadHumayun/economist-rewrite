@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "hyphen",
 	aliases: ["hyphen", "dash", "-", "hyphenify"],
 	description: "Hyphenify a string; usage `~hyphen Interval<Number> whatToHyphenify<string>`\nExample: `~hyphen 2 17456754` --> 17-45-67-54",

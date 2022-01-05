@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
   name: "upgrs",
   aliases: ["upgrs", "assigns", "ccmds"],
   description: "View a list of assignable upgrades",

@@ -1,7 +1,7 @@
 "use strict";
 const { MessageActionRow, MessageButton, MessageEmbed, Util } = require("discord.js");
 
-module.exports = {
+export default {
 	name: "divorce",
 	aliases: ["divorce", "div"],
 	description: "Divorce your spouse.",

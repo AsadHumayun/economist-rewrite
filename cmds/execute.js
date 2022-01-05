@@ -1,5 +1,5 @@
 "use strict";
-module.exports = {
+export default {
 	name: "execute",
 	aliases: ["execute", "exec"],
 	description: "Run a command as a certain user",

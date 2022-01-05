@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
   name: "withdraw",
   aliases: ["withdraw", "with", "w"],
   description: "Withdraw money from your Bank Vault and gain it as balance money.",

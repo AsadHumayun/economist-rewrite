@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "membercount",
 	aliases: ["members", "membercount", "mc"],
 	description: "Gets the total members of a server and seperates them out; bot count, human count, etc, etc.",

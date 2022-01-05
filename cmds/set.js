@@ -1,7 +1,7 @@
 "use strict";
-﻿const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "set",
 	aliases: ["set", "s"],
 	description: "sets a value with key `<key>` and value `<value>` in the database",
@@ -17,7 +17,7 @@ module.exports = {
 		const key = args[1];
 		let val = args.slice(2).join(" ");
 		if (val.startsWith("\"") && (val.endsWith("\""))) {
-			val = String(val).slice(1, -1);
+			val = String(val).slice(1, -1).replace(/\n+/g, "");
 		}
 		else {
 			if (!isNaN(val)) val = Number(val);

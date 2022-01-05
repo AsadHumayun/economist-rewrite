@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "keywords",
 	aliases: ["keywords", "shortcuts"],
 	description: "Shows you a list of the bot's keywords. These are enabled by default and cannot be disabled.",

@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const ms = require("ms");
+import { MessageEmbed } from "discord.js";
+import ms from "ms";
 
-module.exports = {
+export default {
 	name: "deprive",
 	aliases: ["deprive"],
 	description: "Completely deprive your pet's credits on a stat, reducing it to 1 and receive the appropriate amount of credits in return; 2h cooldown",

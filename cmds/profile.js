@@ -1,7 +1,7 @@
 "use strict";
 const { MessageEmbed, UserFlags } = require("discord.js");
 
-module.exports = {
+export default {
 	name: "profile",
 	aliases: ["profile", "prof"],
 	category: "utl",

@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "removequote",
 	aliases: ["removequote", "rq"],
 	description: "Removes a quotation from your collection of quotes.",

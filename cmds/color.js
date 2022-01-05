@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "color",
 	category: "utl",
 	aliases: ["color", "colour", "setcolor", "setcolour", "set-color", "set-colour"],

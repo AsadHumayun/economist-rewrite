@@ -1,7 +1,7 @@
 "use strict";
-const Discord = require('discord.js');
+import Discord from "discord.js";
 
-module.exports = {
+export default {
 	name: "slowmode",
 	aliases: ["slow", 'slowmode'],
 	category: 'btsf',

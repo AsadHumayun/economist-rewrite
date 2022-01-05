@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "giverole",
 	aliases: ["giverole", "gr"],
 	description: "Assigns an assignable role to the mentioned user, only useable by the bot owner.",

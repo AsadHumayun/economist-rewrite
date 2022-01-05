@@ -1,5 +1,7 @@
 "use strict";
-module.exports = {
+import delay from "delay";
+
+export default {
 	name: "reload",
 	aliases: ["r", "reload"],
 	description: "Reloads a command",
@@ -15,9 +17,9 @@ module.exports = {
 		delete require.cache[require.resolve(`./${command.name}.js`)];
 		client.emit("debug", `[CLIENT => CommandsCache] [Remove] ${command.name}.js`);
 		// delaying ensures that the remove debug message is sent BEFORE the add debug message.
-		await require("delay")(100);
+		await delay(100);
 		try {
-			const newCommand = require(`./${command.name}.js`);
+			const newCommand = await import(`./${command.name}.js`);
 			client.config.commands.set(newCommand.name, newCommand);
 			client.emit("debug", `[CLIENT => CommandsCache] [Add] ${command.name}.js`);
 		}

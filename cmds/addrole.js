@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "addrole",
 	aliases: ["addrole", "addarole"],
 	description: "Give a user an assignable role; you must supply its ID since it will add a set role to them as-is... kinda hard to explain",

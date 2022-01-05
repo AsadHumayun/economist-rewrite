@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (Sequelize, DataTypes) => {
+export default (Sequelize, DataTypes) => {
 	return Sequelize.define("channel", {
 		id: {
 			primaryKey: true,

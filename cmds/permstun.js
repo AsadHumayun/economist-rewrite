@@ -1,5 +1,5 @@
 "use strict";
-module.exports = {
+export default {
 	name: "permstun",
 	aliases: ["permstun", "perm"],
 	description: "Permanently stuns a user",

@@ -1,7 +1,8 @@
 "use strict";
 // eslint-disable-next-line no-unused-vars
-const { Client, Channel, ChannelManager, User, Collection, MessageEmbed, DiscordAPIError, MessagePayload, Message } = require("discord.js");
-const { readdirSync } = require("fs");
+import { Client, Channel, ChannelManager, User, Collection, MessageEmbed, DiscordAPIError, MessagePayload, Message } from "discord.js";
+import { readdirSync } from "fs";
+import { inspect } from "util";
 
 /**
  * @classdesc These are some default functions. They have been globalised in such manner by purpose, as these functions are **__constantly__** in use by the programme, thus I deemed it more effecient to have one globalised class to manage and export functions.
@@ -35,7 +36,7 @@ class Funcs {
 	 * @returns {string}
 	 */
 	Inspect(element, pen = 2) {
-		return require("util").inspect(element, { depth: isNaN(pen) ? 2 : Number(pen) });
+		return inspect(element, { depth: isNaN(pen) ? 2 : Number(pen) });
 	}
 	/**
 	 * Extracts the ID of a mentioned user from its raw content
@@ -318,12 +319,13 @@ class Funcs {
 	 * @returns {Array<Boolean, Collection<cmd.name, cmd>> | Error}
 	 */
 	// (method) Funcs.cacheCommands(dir: string, clientCommands: Collection<K, V>): Array<boolean, Collection<cmd.name, cmd>> | Error
-	cacheCommands(dir, clientCommands) {
+	async cacheCommands(dir, clientCommands) {
 		let cmds = 0;
 		try {
 			for (const file of readdirSync(dir).filter((f) => f.endsWith(".js"))) {
-				const cmd = require(`${dir}/${file}`);
-				clientCommands.set(cmd.name, cmd);
+				const command = await import(`${dir}/${file}`);
+				console.log(command);
+				clientCommands.set(command.name, command);
 				cmds++;
 			}
 			return [true, cmds];
@@ -346,7 +348,7 @@ class Funcs {
 		const data = await this.client.db.getUserData(uid);
 		const currAlias = data.get("crls") || "default";
 		if (currAlias) {
-			const aliases = require("./petaliases.json");
+			const aliases = import("./petaliases.json");
 			const petname = data.get("petname") || "dragon";
 			const names = Object.keys(aliases).map((key) => key.toLowerCase());
 			if (names.includes(currAlias)) {
@@ -691,4 +693,4 @@ class ClientConfiguration extends Funcs {
 	}
 }
 
-module.exports = ClientConfiguration;
+export default ClientConfiguration;

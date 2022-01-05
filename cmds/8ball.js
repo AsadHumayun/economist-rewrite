@@ -1,7 +1,7 @@
 "use strict";
-const Discord = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "8ball",
 	aliases: ["8ball", "b"],
 	description: "Ask the bot a question and get its reponse/idea about it. I'm sure you know what 8ball really is.\nWhy not try it out?",
@@ -35,7 +35,7 @@ module.exports = {
 			"Yes - Definitely",
 		];
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new MessageEmbed()
 			.setColor(message.author.color)
 			.setTitle("The 8Ball has spoken.")
 			.addField("Info", `**Your Question:** ${question}\n**My Prediction:** ${answers[~~(Math.random() * answers.length)]}`);

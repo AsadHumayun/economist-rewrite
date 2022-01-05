@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	"name": "support",
 	aliases: ['support', 'helpme', 'bothelp', 'hub'],
 	description: "View an invite to the bot's support server",

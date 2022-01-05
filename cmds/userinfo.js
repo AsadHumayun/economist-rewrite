@@ -2,7 +2,7 @@
 const Discord = require("discord.js");
 const moment = require("moment");
 
-module.exports = {
+export default {
 	name: "userinfo",
 	aliases: ["user", "who", "whois", 'userinfo', "ui"],
 	usage: 'userinfo <user>',

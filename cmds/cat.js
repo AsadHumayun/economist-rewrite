@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed, Permissions } = require("discord.js");
-const fetch = require("node-fetch");
+import { MessageEmbed, Permissions } from "discord.js";
+import fetch from "node-fetch";
 
-module.exports = {
+export default {
 	name: "cat",
 	aliases: ["cat"],
 	category: "fun",

@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "avatar",
 	aliases: ["avatar", "av", "pfp"],
 	description: "View someone's avatar - works for people who are not in the current server too",

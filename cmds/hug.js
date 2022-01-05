@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "hug",
 	aliases: [ "hug" ],
 	description: "Hug someone (only works in the support server)",

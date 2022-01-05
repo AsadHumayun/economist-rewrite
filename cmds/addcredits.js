@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "addcredits",
 	aliases: [ "addcredits", "addcred" ],
 	description: "Adds pet credits to a certain user",

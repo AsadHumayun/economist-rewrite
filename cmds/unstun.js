@@ -1,5 +1,5 @@
 "use strict";
-module.exports = {
+export default {
 	name: "unstun",
 	aliases: ["unstun", "un-stun"],
 	cst: "administrator132465798",

@@ -1,7 +1,7 @@
 "use strict";
 const { MessageEmbed, escapeMarkdown } = require("discord.js");
 
-module.exports = {
+export default {
 	name: "reject",
 	aliases: ["reject", "rej"],
 	description: "Reject a bug, completely disregarding it.",

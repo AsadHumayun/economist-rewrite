@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "offences",
 	aliases: [ "offences", "offenses", "ofncs" ],
 	description: "View a user's offences (mod only)",

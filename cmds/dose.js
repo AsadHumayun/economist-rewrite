@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const ms = require("ms");
+import { MessageEmbed } from "discord.js";
+import ms from "ms";
 
-module.exports = {
+export default {
 	name: "dose",
 	aliases: ["dose", "consume"],
 	description: "dose on something",

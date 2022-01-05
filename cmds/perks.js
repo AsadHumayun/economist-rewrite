@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "perks",
 	aliases: ["perks", "perk", "donateinfo"],
 	description: "View bot's purchasable permissions with their according prices.",

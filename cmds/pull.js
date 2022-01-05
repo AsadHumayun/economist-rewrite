@@ -1,7 +1,7 @@
 "use strict";
 const { exec } = require("child_process");
 
-module.exports = {
+export default {
 	name: "pull",
 	aliases: [],
 	description: "",

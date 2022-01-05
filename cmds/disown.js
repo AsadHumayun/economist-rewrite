@@ -1,7 +1,7 @@
 "use strict";
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 
-module.exports = {
+export default {
 	name: "disown",
 	aliases: ["disown"],
 	description: "This **deletes** your dragon. **THIS ACTION CAN NOT AND WILL NOT BE UNDONE.**",

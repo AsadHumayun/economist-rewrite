@@ -1,8 +1,8 @@
 "use strict";
 /* eslint-disable no-inner-declarations */
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "decode",
 	aliases: ["decode", "dnc"],
 	description: "decodes any supplied text",

@@ -1,5 +1,6 @@
 "use strict";
-module.exports = {
+
+export default {
 	name: "say",
 	aliases: ["say", "echo"],
 	description: "Gets the bot to say your message",

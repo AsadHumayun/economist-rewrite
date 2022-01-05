@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-
-module.exports = {
+import Discord from "discord.js";
+const MessageEmbed = Discord.MessageEmbed;
+export default {
 	name: "accept",
 	aliases: ["accept"],
 	description: "Accept someone's staff app",

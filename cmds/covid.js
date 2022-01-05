@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "covid",
 	aliases: ["covid", "corona"],
 	description: "Infect someone with COVID-19!",

@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed, Util } = require("discord.js");
+import { MessageEmbed, Util } from "discord.js";
 
-module.exports = {
+export default {
 	name: "rolemembers",
 	aliases: ["rolemem", "rolemembers"],
 	description: "View all the members of a specified role; can be either name mention or ID",

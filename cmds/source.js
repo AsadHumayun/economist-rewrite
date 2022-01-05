@@ -1,10 +1,10 @@
 "use strict";
-const { MessageEmbed } = require('discord.js');
+import { MessageEmbed } from "discord.js";
 const fs = require('fs');
 const ms = require('ms');
 const rm = require('discord.js-reaction-menu');
 
-module.exports = {
+export default {
 	name: 'source',
 	category: 'own',
 	aliases: ['source', 'src'],

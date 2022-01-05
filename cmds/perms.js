@@ -1,7 +1,7 @@
 "use strict";
 const { Permissions, MessageEmbed } = require("discord.js");
 
-module.exports = {
+export default {
 	name: "perms",
 	category: "utl",
 	aliases: ["perms", "permissions", "permcheck"],

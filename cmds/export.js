@@ -1,8 +1,8 @@
 "use strict";
-const { Util } = require("discord.js");
-const delay = require("delay");
+import { Util } from "discord.js";
+import delay from "delay";
 
-module.exports = {
+export default {
 	name: "export",
 	aliases: ["export"],
 	description: "Exports all entries out of the database, either into a txt file, or sends it via DM. Good for periodically backing up the database.",

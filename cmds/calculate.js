@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const { evaluate } = require("mathjs");
+import { MessageEmbed } from "discord.js";
+import { evaluate } from "mathjs";
 
-module.exports = {
+export default {
 	name: "calculate",
 	aliases: ["calculate", "calc", "math", "maths"],
 	description: "Calculates a calculation and returns the numerical answer",

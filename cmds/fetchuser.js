@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const { inspect } = require("util");
+import { MessageEmbed } from "discord.js";
+import { inspect } from "util";
 
-module.exports = {
+export default {
 	name: "fetchuser",
 	aliases: ["fetchuser", "fetch-user", "fu"],
 	category: "own",

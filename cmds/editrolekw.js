@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "editrolekw",
 	aliases: ["editrolekw", "edrk", "erk"],
 	description: "Edit a role's keyword. usage `editrolekw <old keyword> <new keyword>`",

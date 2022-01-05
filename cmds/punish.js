@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const ms = require("ms");
+import { MessageEmbed } from "discord.js";
+import ms from "ms";
 
-module.exports = {
+export default {
 	name: "punish",
 	aliases: [ "punish", "pnsh" ],
 	description: "Punish a user for violating a specific rule; bot will automatically upgrade the intensity of the punishment based off of current offences in relation to that violation.",

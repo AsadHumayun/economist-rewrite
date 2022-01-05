@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "ptransfer",
 	aliases: ["ptransfer", "transferitm"],
 	description: "Transfers one of your owned items to another user; 2 hours' cooldown",

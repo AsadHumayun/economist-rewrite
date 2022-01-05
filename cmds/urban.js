@@ -1,9 +1,9 @@
 "use strict";
-const Discord = require('discord.js');
+import Discord from "discord.js";
 const fetch = require('node-fetch')
 const querystring = require('querystring')
 
-module.exports = {
+export default {
 	name: 'urban',
 	aliases: ['urban', 'define'],
 	category: 'utl',

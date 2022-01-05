@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "rolecolor",
 	aliases: ["rolecolor", "rolecolour", "rc"],
 	description: "Change the color of your assignable role! (for black, use `#000001`)",

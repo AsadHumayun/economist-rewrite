@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require('discord.js');
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: 'removereplacer',
 	aliases: ['replacer.removeone', 'removereplacer', 'repl.rem', 'delreplacer'],
 	category: 'utl',

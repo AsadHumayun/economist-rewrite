@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed, Permissions } = require("discord.js");
+import { MessageEmbed, Permissions } from "discord.js";
 
-module.exports = {
+export default {
 	name: "deleterole",
 	aliases: ["deleterole", "dr"],
 	category: "own",

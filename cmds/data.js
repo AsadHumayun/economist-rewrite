@@ -1,7 +1,7 @@
 "use strict";
-const { Util } = require("discord.js");
+import { Util } from "discord.js";
 
-module.exports = {
+export default {
 	name: "data",
 	aliases: ["getdata", "data", "gd", "userdata"],
 	category: "utl",

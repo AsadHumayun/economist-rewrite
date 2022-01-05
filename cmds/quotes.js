@@ -1,7 +1,7 @@
 "use strict";
-const { Util, MessageEmbed } = require("discord.js");
+import { Util, MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "quotes",
 	aliases: ["quotes"],
 	descripton: "Shows you all of your quotations.",

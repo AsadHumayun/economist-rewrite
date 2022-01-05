@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require('discord.js');
+import { MessageEmbed } from "discord.js";
 const ms = require('ms');
 
-module.exports = {
+export default {
 	name: 'stroke',
 	aliases: ['stroke', 'str'],
 	description: "Stroke your pet and increase its Affection by 1",

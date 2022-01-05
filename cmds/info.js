@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 const osu = require("node-os-utils");
 
-module.exports = {
+export default {
 	name: "info",
 	aliases: ["info", "stats", "uptime"],
 	description: "View some bot infomation",

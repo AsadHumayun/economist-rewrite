@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "unpunish",
 	aliases: ["unpunish", "unpnsh"],
 	description: "Remove a user's offence, and unmutes them if necessary.\nNote: this command will NOT unban users -- that should be done via the unban command.",

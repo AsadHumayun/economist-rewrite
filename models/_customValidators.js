@@ -1,5 +1,5 @@
 "use strict";
-module.exports = {
+export default {
 	allNumbers: function(data) {
 		data = data.toString().split(";").map(Number);
 		if (data.includes(NaN)) throw new Error("\n[CustomValidator => allNumbers] [Fail] All values must be numeric.");

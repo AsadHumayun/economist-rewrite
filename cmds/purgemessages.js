@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 const moment = require("moment");
 
-module.exports = {
+export default {
 	name: "purgemessages",
 	aliases: ["purgemessages", "clear"],
 	description: "mass deletes messages within a channel - max: 100, min: 1",

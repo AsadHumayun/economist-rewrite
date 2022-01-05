@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "give",
 	aliases: ["give", "gv"],
 	description: "add permissions to users.",
@@ -49,9 +49,13 @@ module.exports = {
 				}
 				if (incl == false) cst.push(role.id);
 			}
-			else {
+			else if (!mem.roles.cache.has(role.id)) {
 				// the guildMemberUpdate event will handle role persists when roles are added to/remove from members.
 				mem.roles.add(role.id);
+			}
+			else {
+				// member already has role, just push ID in cst
+				cst.push(role.id);
 			}
 		}
 		cst.push(val);

@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const { menu } = require("discord.js-reaction-menu");
+import { MessageEmbed } from "discord.js";
+import { menu } from "discord.js-reaction-menu";
 
-module.exports = {
+export default {
 	name: "banlist",
 	aliases: ["banned", "bans", "banlist"],
 	desc: "See a list of users banned from the server, along with their IDs and the reason of their ban",

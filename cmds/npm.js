@@ -1,9 +1,9 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 const moment = require("moment");
 const fetch = require("node-fetch");
 
-module.exports = {
+export default {
 	name: "npm",
 	desc: "Search [npmjs](https://www.npmjs.com/) for any package",
 	usage: "npm <package>",

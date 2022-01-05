@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "deposit",
 	aliases: ["deposit", "dep"],
 	description: "Deposit money into your Bank Vault.",

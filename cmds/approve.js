@@ -1,7 +1,8 @@
 "use strict";
-const { MessageEmbed, escapeMarkdown } = require("discord.js");
+import { MessageEmbed, Util } from "discord.js";
+const escapeMarkdown = Util.escapeMarkdown;
 
-module.exports = {
+export default {
 	name: "approve",
 	aliases: ["approve"],
 	category: "utl",

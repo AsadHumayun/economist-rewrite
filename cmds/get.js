@@ -1,7 +1,7 @@
 "use strict";
-const Discord = require("discord.js");
+import { Util, MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "get",
 	aliases: ["get", "getv"],
 	description: "gets a value from the database and returns it. (also shows its data type and how it is formatted by the interpreter)",
@@ -21,7 +21,7 @@ module.exports = {
 		if (x.toString().length <= 4069 && (!(message.author.data.get("cst") || "").split(";").includes("tgt"))) {
 			message.reply({
 				embeds: [
-					new Discord.MessageEmbed()
+					new MessageEmbed()
 						.setColor(message.author.color)
 						.setDescription(x.toString())
 						.setFooter(ot)
@@ -30,7 +30,7 @@ module.exports = {
 			});
 		}
 		else {
-			const msgs = Discord.Util.splitMessage(x.toString(), { char: "" });
+			const msgs = Util.splitMessage(x.toString(), { char: "" });
 			for (const msg of msgs) {
 				message.channel.send({
 					content: msg,

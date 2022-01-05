@@ -1,7 +1,7 @@
 "use strict";
 const { MessageActionRow, MessageButton } = require("discord.js");
 
-module.exports = {
+export default {
 	name: "invite",
 	aliases: ["invite", "inv"],
 	description: "View the bot's invite link to add it to other servers",

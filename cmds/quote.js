@@ -1,8 +1,8 @@
 "use strict";
 /* eslint-disable prefer-const */
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: "quote",
 	aliases: ["quote"],
 	description: "Shows you a random quote from your collection",

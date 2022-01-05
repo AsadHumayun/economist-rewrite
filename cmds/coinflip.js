@@ -1,9 +1,9 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const delay = require("delay");
-const ms = require("ms");
+import { MessageEmbed } from "discord.js";
+import delay from "delay";
+import ms from "ms";
 
-module.exports = {
+export default {
 	name: "coinflip",
 	aliases: ["coinflip", "cf"],
 	description: "Bet X amount of money onto whether you get heads or tails and gain/lose it all",

@@ -1,8 +1,8 @@
 "use strict";
 const Discord = require("discord.js");
-const { inspect } = require("util");
+import { inspect } from "util";
 
-module.exports = {
+export default {
 	name: "eval",
 	aliases: ["run", "evaluate", "eval", "evalu8"],
 	desc: "Takes some javascript code and evaluates it! This is limited to our bot developers as it is very powerful.",

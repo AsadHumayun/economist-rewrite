@@ -1,5 +1,5 @@
 "use strict";
-module.exports = {
+export default {
 	name: "remove",
 	aliases: ["delete", "del", "remove"],
 	description: "Deletes something from the database",

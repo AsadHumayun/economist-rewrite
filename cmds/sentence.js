@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const delay = require("delay");
+import { MessageEmbed } from "discord.js";
+import delay from "delay";
 
-module.exports = {
+export default {
 	_msgSendDelay: 1000,
 	name: "sentence",
 	aliases: ["sentence", "sente"],

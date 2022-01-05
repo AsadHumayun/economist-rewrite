@@ -1,7 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
+import moment from "moment";
 
-module.exports = {
+export default {
 	name: "snipe",
 	aliases: ['snipe', 'sn'],
 	description: 'View the last deleted message in the current channel',
@@ -16,7 +17,7 @@ module.exports = {
 			.setTitle(`Sniped Message`)
 			.setAuthor(user.tag, user.displayAvatarURL({ dynamic: true }))
 			.setDescription(snipedMsg.message)
-			.setFooter(`Sent ${require('moment')(new Date(snipedMsg.at)).format('MMMM Do YYYY, h:mm:ss A UTC')}`)
+			.setFooter(`Sent ${moment(new Date(snipedMsg.at)).format('MMMM Do YYYY, h:mm:ss A UTC')}`)
 		message.reply("", {
 			embed: EM
 		}).catch((e) => { message.reply("bruv i need the embed links permission for this to work") })		

@@ -1,10 +1,10 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const { inspect } = require("util");
-const fetch = require("node-fetch");
-const moment = require("moment");
+import { MessageEmbed } from "discord.js";
+import { inspect } from "util";
+import fetch from "node-fetch";
+import moment from "moment";
 
-module.exports = {
+export default {
 	name: "github",
 	aliases: ["github", "git", "gh"],
 	description: "View a GitHub user stats; 5 seconds cooldown since this uses my personal github access token and I am **NOT** getting myself banned. The exact number of allowed requests will remain unspecified, don't bother asking me.",

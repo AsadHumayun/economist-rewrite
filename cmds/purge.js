@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const { Op } = require("sequelize");
+import { MessageEmbed } from "discord.js";
+import { Op } from "sequelize";
 
-module.exports = {
+export default {
 	name: "purge",
 	aliases: ["purge"],
 	description: "Removes a CST value from every user. This is done db-side, so even if a user shares no mutual servers with the bot, their data will still be edited.",

@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const delay = require("delay");
+import { MessageEmbed } from "discord.js";
+import delay from "delay";
 
-module.exports = {
+export default {
 	name: "search",
 	aliases: ["search", "srch"],
 	description: "Lets your dragon go out in search of things...",

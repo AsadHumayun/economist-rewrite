@@ -1,7 +1,7 @@
 "use strict";
-const { MessageEmbed } = require('discord.js');
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+export default {
 	name: 'suggest',
 	aliases: ['suggest', 'addsmthnew'],
 	description: 'Suggest a new idea to be added to the bot; will be posted in <#758598514623643690>',

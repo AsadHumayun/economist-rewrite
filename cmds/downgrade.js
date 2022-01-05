@@ -1,8 +1,8 @@
 "use strict";
-const { MessageEmbed } = require("discord.js");
-const ms = require("ms");
+import { MessageEmbed } from "discord.js";
+import ms from "ms";
 
-module.exports = {
+export default {
 	name: "downgrade",
 	aliases: ["downgrade", "decondition"],
 	description: "downgrade one of your dragon's stat and receive one credit in return",
