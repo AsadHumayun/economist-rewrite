@@ -19,7 +19,7 @@ export default {
 			if (u.bot == true || cst.includes("maxdragon888")) {
 				data = client.config.statics.defaults.maxDragon;
 			}
-			const alias = await client.config.getDragonAlias(message.author.id, client);
+			const alias = await client.config.getDragonAlias(message.author.id);
 			data = data.split(";");
 			if (data.length < client.config.statics.defaults.intendedPetLength) return message.reply("Malformed dragon data; please contact an administrator in the support server and they'll gladly fix it for you!");
 			const emb = new MessageEmbed()

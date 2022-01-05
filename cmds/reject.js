@@ -1,5 +1,5 @@
 "use strict";
-const { MessageEmbed, escapeMarkdown } = require("discord.js");
+import { MessageEmbed, Util } from "discord.js";
 
 export default {
 	name: "reject",
@@ -23,7 +23,7 @@ export default {
 				const rec = new MessageEmbed()
 					.setColor(client.config.statics.defaults.channels.colors.red)
 					.setTitle(val.title)
-					.setDescription(`${client.config.statics.defaults.emoji.err} **Bug report #${val.number} was rejected by ${escapeMarkdown(message.author.tag)}**`);
+					.setDescription(`${client.config.statics.defaults.emoji.err} **Bug report #${val.number} was rejected by ${Util.escapeMarkdown(message.author.tag)}**`);
 				col.first().edit({
 					content: null,
 					embeds: [

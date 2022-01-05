@@ -1,6 +1,7 @@
 "use strict";
 // eslint-disable-next-line no-unused-vars
 import { Client, Channel, ChannelManager, User, Collection, MessageEmbed, DiscordAPIError, MessagePayload, Message } from "discord.js";
+import aliases from "./petaliases.js";
 import { readdirSync } from "fs";
 import { inspect } from "util";
 
@@ -316,7 +317,7 @@ class Funcs {
 	 * This function will cache all the commands in `dir`, therefore making them usable.
 	 * @param {string} dir Directory of which to load commands from
 	 * @param {Collection<K, V>} clientCommands client.config.commands collection - loads commands into this collection
-	 * @returns {Array<Boolean, Collection<cmd.name, cmd>> | Error}
+	 * @returns {Array<Boolean, Collection<ommand.name, command>> | Error}
 	 */
 	// (method) Funcs.cacheCommands(dir: string, clientCommands: Collection<K, V>): Array<boolean, Collection<cmd.name, cmd>> | Error
 	async cacheCommands(dir, clientCommands) {
@@ -324,8 +325,7 @@ class Funcs {
 		try {
 			for (const file of readdirSync(dir).filter((f) => f.endsWith(".js"))) {
 				const command = await import(`${dir}/${file}`);
-				console.log(command);
-				clientCommands.set(command.name, command);
+				clientCommands.set(command.default.name, command.default);
 				cmds++;
 			}
 			return [true, cmds];
@@ -341,14 +341,13 @@ class Funcs {
 	 * * Users are able to do `~dragonalias` to see a list of their aliases, indexed. They will then do `~dragonalias <index>`, replacing `<index>` with the index of their choice, which means that the bot will switch their alias to whatever they had chosen.
 	 * @param {string} uid The ID of a Discord user whose dragon alias is to be fetched
 	 * @returns {Array<string, string[]>}
-	 * @async @function
+	 * @async @method
 	 */
 	async getDragonAlias(uid, client) {
 		if (client) console.warn("DeprecationWarning: client passed into getDragonAlias function when not necessary.");
 		const data = await this.client.db.getUserData(uid);
 		const currAlias = data.get("crls") || "default";
 		if (currAlias) {
-			const aliases = import("./petaliases.json");
 			const petname = data.get("petname") || "dragon";
 			const names = Object.keys(aliases).map((key) => key.toLowerCase());
 			if (names.includes(currAlias)) {

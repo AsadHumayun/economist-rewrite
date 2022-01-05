@@ -1,6 +1,6 @@
 "use strict";
 import { MessageEmbed } from "discord.js";
-const moment = require("moment");
+import moment from "moment";
 
 export default {
 	name: "purgemessages",

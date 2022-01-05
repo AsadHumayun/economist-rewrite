@@ -16,19 +16,19 @@ export default (sequelize, DataTypes) => {
 		adren: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		adrenc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		bal: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		bcmd: {
@@ -37,7 +37,7 @@ export default (sequelize, DataTypes) => {
 		bgc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		bio: {
@@ -50,19 +50,19 @@ export default (sequelize, DataTypes) => {
 		cfc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		chillc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		chillpills: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		chnl: {
@@ -78,7 +78,7 @@ export default (sequelize, DataTypes) => {
 		cmds: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		cst: {
@@ -97,13 +97,13 @@ export default (sequelize, DataTypes) => {
 		dgrc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		dlc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		dlstr: {
@@ -115,25 +115,25 @@ export default (sequelize, DataTypes) => {
 		dns: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		dose0: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		dose1: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		dpc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		drgs: {
@@ -145,13 +145,13 @@ export default (sequelize, DataTypes) => {
 		fdc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		fishc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		fsh: {
@@ -163,7 +163,7 @@ export default (sequelize, DataTypes) => {
 		hgs: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		mt: {
@@ -199,7 +199,7 @@ export default (sequelize, DataTypes) => {
 		pq: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		qts: {
@@ -211,38 +211,38 @@ export default (sequelize, DataTypes) => {
 		rbc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		sgstc: {
 			type: DataTypes.DECIMAL,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		spse: {
 			type: DataTypes.STRING,
 			unique: true,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		sntc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		srchc: {
 			type: DataTypes.DECIMAL,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		stn: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		stnb: {
@@ -251,7 +251,7 @@ export default (sequelize, DataTypes) => {
 		strc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 		upgr: {
@@ -277,7 +277,7 @@ export default (sequelize, DataTypes) => {
 		xpc: {
 			type: DataTypes.NUMBER,
 			validate: {
-				isNumber: customValidators.isNumber,
+				_isNumber: customValidators._isNumber,
 			},
 		},
 	});

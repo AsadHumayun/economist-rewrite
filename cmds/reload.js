@@ -14,7 +14,7 @@ export default {
 		const command = client.config.commands.get(commandName)
 			|| client.config.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 		if (!command) return message.reply(`A command by that name/alias was not found. Look in \`${message.guild.prefix}help\` for a list of existing commands`);
-		delete require.cache[require.resolve(`./${command.name}.js`)];
+		// delete require.cache[require.resolve(`./${command.name}.js`)];
 		client.emit("debug", `[CLIENT => CommandsCache] [Remove] ${command.name}.js`);
 		// delaying ensures that the remove debug message is sent BEFORE the add debug message.
 		await delay(100);

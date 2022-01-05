@@ -1,5 +1,5 @@
 "use strict";
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+import { MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 
 export default {
 	name: "disown",

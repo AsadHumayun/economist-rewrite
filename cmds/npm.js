@@ -1,7 +1,7 @@
 "use strict";
 import { MessageEmbed } from "discord.js";
-const moment = require("moment");
-const fetch = require("node-fetch");
+import moment from "moment";
+import fetch from "node-fetch";
 
 export default {
 	name: "npm",

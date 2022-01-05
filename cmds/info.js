@@ -1,6 +1,6 @@
 "use strict";
 import { MessageEmbed } from "discord.js";
-const osu = require("node-os-utils");
+import osu from "node-os-utils";
 
 export default {
 	name: "info",

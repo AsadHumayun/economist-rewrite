@@ -1,5 +1,5 @@
 "use strict";
-const { MessageEmbed, UserFlags } = require("discord.js");
+import { MessageEmbed, UserFlags } from "discord.js";
 
 export default {
 	name: "profile",

@@ -1,5 +1,6 @@
 "use strict";
 import { Util } from "discord.js";
+import { inspect } from "util";
 import delay from "delay";
 
 export default {
@@ -27,7 +28,7 @@ export default {
 				}
 				else {continue;}
 			}
-			return Buffer.from(require("util").inspect(entry, { depth: null })).toString("base64");
+			return Buffer.from(inspect(entry, { depth: null })).toString("base64");
 		});
 		await msg.edit({ content: `Successfully compiled ${entries.length} ${opts[option]} models in ${Date.now() - start} ms.` });
 		const msgs = Util.splitMessage(entries.join(";"), { maxLength: 2000, char: "" });

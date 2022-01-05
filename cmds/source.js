@@ -1,8 +1,8 @@
 "use strict";
 import { MessageEmbed } from "discord.js";
-const fs = require('fs');
-const ms = require('ms');
-const rm = require('discord.js-reaction-menu');
+import fs from 'fs';
+import ms from "ms";
+import { menu } from "discord.js-reaction-menu";
 
 export default {
 	name: 'source',
@@ -28,7 +28,7 @@ export default {
 			for (const x in map) {
 				embeds.push(new MessageEmbed().setColor(message.author.color).setTitle(`Command Source Code | ${command.name}`).setDescription(`\`\`\`js\n${map[x]}\n\`\`\``))
 			};
-			return new rm.menu(message.channel, message.author.id, embeds, ms('10m'))
+			return new menu(message.channel, message.author.id, embeds, ms('10m'))
 		});
 	}
 }

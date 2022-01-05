@@ -79,9 +79,9 @@ console.log("Creating commands cache...");
 client.config.commands = new Collection();
 
 console.log("Caching commands...");
-client.config.cacheCommands("./cmds", client.config.commands);
-console.log(`Successfully cached ${client.config.commands.size} commands`);
-// `messageUpdate` event, emitted when a message is edited.
+client.config.cacheCommands("./cmds", client.config.commands)
+	.then((e) => console.log(`Successfully cached ${e[1]} commands`));
+
 client.on("messageUpdate", async (oldMessage, newMessage) => {
 	if (oldMessage.channel.type == "dm") return;
 	if ((oldMessage.guild.id != client.config.statics.supportServer || (oldMessage.author.bot) || (oldMessage.content === newMessage.content))) return;

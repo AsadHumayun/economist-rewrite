@@ -1,4 +1,5 @@
 "use strict";
+import aliases from "../petaliases.js";
 import { MessageEmbed } from "discord.js";
 
 export default {
@@ -10,10 +11,10 @@ export default {
 	async run(client, message, args) {
 		let hasAliases = [];
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
-		const dragAliases = Object.keys(require("../petaliases.json")).map((k) => k.toLowerCase());
+		const dragAliases = Object.keys(aliases).map((k) => k.toLowerCase());
 		hasAliases = dragAliases.filter((alias) => cst.includes(alias));
 		hasAliases.push("default");
-		let currAlias = message.author.data.get("crls" + message.author.id).toLowerCase();
+		let currAlias = message.author.data.get("crls").toLowerCase();
 		if (!dragAliases.includes(currAlias)) {
 			currAlias = "default";
 		}

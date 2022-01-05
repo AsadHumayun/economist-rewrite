@@ -1,6 +1,6 @@
 "use strict";
-const Discord = require("discord.js");
-const moment = require("moment");
+import * as Discord from "discord.js"
+import moment from "moment";
 
 export default {
 	name: "userinfo",

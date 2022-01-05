@@ -1,7 +1,7 @@
 "use strict";
 import Discord from "discord.js";
-const fetch = require('node-fetch')
-const querystring = require('querystring')
+import fetch from "node-fetch";
+import qs from "querystring";
 
 export default {
 	name: 'urban',
@@ -13,7 +13,7 @@ export default {
 		if (!args.length) {
 			return message.reply(`You need to include something to search the urban dictionary for`)
 		}
-		const query = querystring.stringify({ term: args.join(' ') });
+		const query = qs.stringify({ term: args.join(' ') });
 
 		const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`, { method: "GET" }).then(response => response.json());
 		if (!list) {

@@ -1,5 +1,5 @@
 "use strict";
-const Discord = require("discord.js");
+import Discord from "discord.js";
 import { inspect } from "util";
 
 export default {

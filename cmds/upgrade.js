@@ -1,5 +1,6 @@
 "use strict";
 import { MessageEmbed } from "discord.js";
+import aliases from "../petaliases.js";
 
 export default {
 	name: 'upgrade',
@@ -20,7 +21,6 @@ export default {
 		let emojis;
 		let display;
 		if (currAlias) {
-			const aliases = require('../petaliases.json');
 			const names = Object.keys(aliases);
 			if (names.includes(currAlias)) {
 				display = aliases[currAlias].DISPLAY_NAME;

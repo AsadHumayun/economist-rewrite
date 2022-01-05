@@ -1,5 +1,5 @@
 "use strict";
-const { MessageActionRow, MessageButton } = require("discord.js");
+import { MessageActionRow, MessageButton } from "discord.js";
 
 export default {
 	name: "invite",

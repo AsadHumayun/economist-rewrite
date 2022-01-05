@@ -1,5 +1,5 @@
 "use strict";
-const { Permissions, MessageEmbed } = require("discord.js");
+import { Permissions, MessageEmbed } from "discord.js";
 
 export default {
 	name: "perms",
