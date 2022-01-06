@@ -47,7 +47,7 @@ ${alias[1][7]} Affection  — ${client.config.comma(client.config.noExponents(da
 ${alias[1][8]} Glycogenesis — ${client.config.comma(client.config.noExponents(data[9]))}
 `,
 				);
-			return message.reply({ embeds: [emb] });
+			return message.reply({ embeds: [ emb ] });
 		}
 		// end function
 		let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
