@@ -1,5 +1,5 @@
 "use strict";
-import * as Discord from "discord.js";
+import { Permissions } from "discord.js";
 
 export default {
 	name: "slowmode",
@@ -9,34 +9,24 @@ export default {
 	usage: "slowmode <number of seconds>",
 	description: "Sert slowmode for the current channel, minimum 1 second and maximum 21600 seconds (6 hours)",
 	async run(client, message, args) {
-		const msg = await message.reply("One moment please...");
-		if (!message.member.hasPermission("MANAGE_CHANNELS")) {
-			return msg.edit("You do not have permission to use this command!");
+		if (!args.length) return message.reply(`You must follow the format of \`${message.guild.prefix}slowmode <seconds>\` in order for this command to work! (To disable slowmode, use \`0\` instead)`);
+
+		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
+			return message.reply("You must have the MANAGE_CHANNEL permission in order to use this command!");
 		}
-		else if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) {
-			return msg.edit("I do not have permissions to set slowmode for this channel! Please check my role permissions!");
+		if (!message.guild.me.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
+			return message.reply("I must have the MANAGE_CHANNELS permission in order for this command to work!");
+		}
+		const count = parseInt(args[0]);
+		if (isNaN(count)) {
+			return message.reply("You msut enter a positive number");
+		}
+		message.channel.setRateLimitPerUser(count);
+		if (count == 0) {
+			return message.reply(`${client.config.statics.defaults.emoji.tick} Successfully disabled slowmode in ${message.channel}`);
 		}
 		else {
-			const count = args[0];
-			if (!count) {
-				return msg.edit("You need to provide a number for slowmode!");
-			}
-			else {
-				const newCount = Number(count);
-				if (isNaN(newCount)) {
-					return msg.edit("Please give an actual number noob");
-				}
-				else {
-					message.channel.setRateLimitPerUser(newCount)
-						.catch((err) => {
-							return msg.edit("Sorry, there was an error");
-						});
-					if (newCount == "0" || newCount == 0) {
-						return msg.edit(`${client.config.statics.defaults.emoji.tick} Slowmode has been disabled for ${message.channel}`);
-					}
-					return msg.edit(client.config.statics.defaults.emoji.tick + " I have set slowmode for `" + newCount + "` seconds!");
-				}
-			}
+			message.reply(`${client.config.statics.defaults.emoji.tick} Set slowmode for \`${count}\` seconds!`);
 		}
 	},
 };
