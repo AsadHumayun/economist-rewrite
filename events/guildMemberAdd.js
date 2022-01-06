@@ -85,7 +85,7 @@ export default {
 			mute = mute.split(";");
 			if (mute[0] == "-1") {
 				client.config.commands.get("mute")
-					.run(client, { createdTimestamp: now, guild: member.guild, channel: channel, member: member.guild.member(client.user), author: client.user }, [member.id, "0", mute.slice(1).join(" ")]);
+					.run(client, { createdTimestamp: now, guild: member.guild, channel: channel, member: member.guild.member(client.user), author: client.user }, [member.id, "0", mute.slice(1).join(" ") || "Reason unspecified"]);
 			}
 			const date = Number(mute[0]);
 			const now = Date.now() / 60_000;
