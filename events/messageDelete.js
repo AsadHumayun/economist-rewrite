@@ -1,11 +1,10 @@
 import { MessageEmbed } from "discord.js";
-import * as moment from "moment";
 
 export default {
 	name: "messageDelete",
 	once: false,
 	async execute(client, message) {
-		if (message.guild.id !== client.config.statics.supportServer) return;
+		if (message.channel.type == "DM" || message.guild.id !== client.config.statics.supportServer) return;
 		if (!message.content) return;
 		const { executor } = (await message.guild.fetchAuditLogs({ limit: 1, type: "MESSAGE_DELETE" })).entries.first();
 		if (!message.author.bot) {
@@ -21,23 +20,14 @@ export default {
 				});
 			}
 		}
+		// todo: add support for logging images.
 		const embed = new MessageEmbed()
 			.setColor(client.config.statics.defaults.colors.red)
-			.setTitle("Message Deleted in #" + message.channel.name)
-			.setDescription(`**Deleted By:** ${executor ? `${executor.tag} (${executor.id})` : "UNKNOWN#0000"}\n**Sent By:** ${message.author.tag} (${message.author.id})`)
-			.addField("Message Sent At", moment(message.createdTimestamp))
-			.setFooter("Deleted")
-			.setTimestamp()
-			.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL(), url: message.url });
-		if (!message.content && (message.attachments.size)) {
-			embed
-				.setDescription(`Attachments Detected: ${message.attachments.map(x => `[Attachment](${x.url})`).join(" ")}`)
-				.setImage(message.attachments.first().url.replace("cdn", "media").replace("com", "net"));
-		}
-		else {
-			embed
-				.setDescription(message["content"]);
-		}
+			.setAuthor({ name: `Deleted by ${executor ? `${executor.tag} (${executor.id})` : "UNKNOWN#0000"}\n`, iconURL: executor?.displayAvatarURL({ dynamic: true }) })
+			.setTitle(`Message sent by ${message.author.tag} (${message.author.id}) deleted in #${message.channel.name}`)
+			.setDescription(message.content)
+			.setFooter(`Messgae ID: ${message.id}`)
+			.setTimestamp();
 		client.channels.cache.get(client.config.statics.defaults.channels.msgLogs).send({ embeds: [ embed ] }).catch(() => {return;});
 	},
 };
