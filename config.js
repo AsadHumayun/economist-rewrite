@@ -744,4 +744,4 @@ class ClientConfiguration extends Funcs {
 	}
 }
 
-export default ClientConfiguration;
+export { ClientConfiguration };
