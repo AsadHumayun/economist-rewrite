@@ -4,7 +4,7 @@ export default {
 	name: "messageUpdate",
 	once: false,
 	async execute(client, oldMessage, newMessage) {
-		if (oldMessage.channel.type == "dm") return;
+		if (oldMessage.channel.type == "DM") return;
 		if ((oldMessage.guild.id != client.config.statics.supportServer || (oldMessage.author.bot) || (oldMessage.content === newMessage.content))) return;
 		client.channels.cache.get(client.config.statics.defaults.channels.msgLogs).send({
 			embeds: [
