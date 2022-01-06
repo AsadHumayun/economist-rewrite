@@ -6,6 +6,7 @@ import Sequelize, { DataTypes } from "sequelize";
 
 import { EventHandler } from "./events/EventHandler.js";
 import { ClientConfiguration } from "./config.js";
+import { Notify } from "./functions.js";
 
 import User from "./models/User.js";
 import Guild from "./models/Guild.js";
@@ -93,6 +94,6 @@ const eventHandler = new EventHandler(client);
 
 eventHandler.load();
 
-process.on("unhandledRejection", client.config.Notify);
+process.on("unhandledRejection", (e) => Notify(e, null, client));
 
 client.login(process.env.token);
