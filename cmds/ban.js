@@ -6,6 +6,7 @@ export default {
 	aliases: ["ban"],
 	description: "Bans a user from the current guild.",
 	category: "mod",
+	ssOnly: true,
 	cst: "moderator",
 	async run(client, message, args) {
 		if (args.length < 1) return message.reply("You must provide a `user` resolvable for your ban.");

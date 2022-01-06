@@ -5,6 +5,7 @@ export default {
 	name: "deleterole",
 	aliases: ["deleterole", "dr"],
 	category: "own",
+	guildOnly: true,
 	description: "Remove a guild role",
 	async run(client, message, args) {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return message.reply("You must have the `MANAGE_ROLES` permission in order to use this command!");

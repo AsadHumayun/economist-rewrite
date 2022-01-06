@@ -5,6 +5,7 @@ export default {
 	name: "givemeallroles",
 	aliases: ["givemeallroles", "gvam", "gmar"],
 	category: "own",
+	guildOnly: true,
 	logAsAdminCommand: true,
 	cst: "gmar0",
 	async run(client, message) {

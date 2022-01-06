@@ -7,6 +7,7 @@ export default {
 	aliases: ["purgemessages", "clear"],
 	description: "mass deletes messages within a channel - max: 100, min: 1",
 	category: "mod",
+	guildOnly: true,
 	cst: "moderator",
 	async run(client, message, args) {
 		function date(_date = Date.now()) {

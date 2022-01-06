@@ -7,3 +7,24 @@
 [40740]: 27357148: [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~give 720270972229517413 administrator132465798
 [50570]: 27357148: [ER-PRIV (911784758600679455)][private (911802238442287124)]<object.values[this.length - 1]#8540 (720270972229517413)>: ~get 720270972229517413 cst
 [57354]: 27357148: [ER-PRIV (911784758600679455)][private (911802238442287124)]<object.values[this.length - 1]#8540 (720270972229517413)>: ~get 720270972229517413 chnl
+[349392]: 27357153: [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~remove 720270972229517413 cst
+[12234]: 27357715: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~set 501710994293129216 bal 999
+[154156]: 27357718: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~Eval         const LOG = Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+[53160]: 27357724:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~set
+[69005]: 27357734:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~set
+[109133]: 27357740: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~Eval         const LOG = Discord.Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+[119570]: 27357740: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~Eval         const old=1;const LOG = Discord.Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+[134786]: 27357740: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~Eval      this.isDM=function(){return true;};   const old=1;const LOG = Discord.Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+[142928]: 27357741: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~Eval      this.isDM=function(){return true;};   const old=1;const LOG = Discord.Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+
+LOG;
+[14513]: 27357746: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~getdata
+[22545]: 27357746: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~remove 501710994293129216 r
+[338022]: 27357752: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~give 501710994293129216 test
+[344222]: 27357752: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~take 501710994293129216 test
+[1184476]: 27357766: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~purge 10
+[356367]: 27357773: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~give 757958112992034918 757958112992034918
+[363447]: 27357774: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~give 501710994293129216 100000
+[30799]: 27357777: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~setprefix
+[40214]: 27357777: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~setprefix 911784758600679455 999
+[5577]: 27357778: [DMChannel (918130250649579520)] <Yukikaze#0240 (501710994293129216)>: ~setprefix 911784758600679455 999

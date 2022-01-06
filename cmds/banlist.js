@@ -8,6 +8,7 @@ export default {
 	desc: "See a list of users banned from the server, along with their IDs and the reason of their ban",
 	usage: "bans",
 	category: "mod",
+	ssOnly: true,
 	cst: "moderator",
 	async run(client, message) {
 		message.guild.bans.fetch()

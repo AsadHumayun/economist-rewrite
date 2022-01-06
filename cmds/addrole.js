@@ -6,6 +6,7 @@ export default {
 	aliases: ["addrole", "addarole"],
 	description: "Give a user an assignable role; you must supply its ID since it will add a set role to them as-is... kinda hard to explain",
 	category: "own",
+	ssOnly: true,
 	cst: "adr",
 	async run(client, message, args) {
 		if (args.length < 3) return message.reply({ content: "Format: `" + message.guild.prefix + "addarole <user> <id> <kw>`" });

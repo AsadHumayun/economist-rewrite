@@ -7,6 +7,7 @@ export default {
 	description: `Warn a user`,
 	category: 'mod',
 	cst: "tmod",
+	ssOnly: true,
 	async run(client, message, args) {
 		if (args.length < 2) {
 			return message.reply(`${client.config.statics.defaults.emoji.err} Incorrect usage; try using \`${message.guild.prefix}warn <user> <reason>\``)

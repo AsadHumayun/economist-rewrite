@@ -5,6 +5,7 @@ export default {
 	name: "addemoji",
 	aliases: ["addemoji", "add-emoji"],
 	description: "Adds an emoji in the current guild",
+	guildOnly: true,
 	async run(client, message, args) {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS)) return message.reply({ content: "You must have the `MANAGE_EMOJIS_AND_STICKERS` permission in order to use this command!" });
 		if (args.length < 2) return message.reply({ content: "You must provide a name and image URL for the new emoji under the format `" + message.guild.prefix + "addemoji <name> <URL>`" });

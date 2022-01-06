@@ -6,6 +6,7 @@ export default {
 	aliases: ["members", "membercount", "mc"],
 	description: "Gets the total members of a server and seperates them out; bot count, human count, etc, etc.",
 	category: "utl",
+	guildOnly: true,
 	usage: "membercount",
 	async run(client, message) {
 		message.reply({

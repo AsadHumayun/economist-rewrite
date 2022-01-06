@@ -6,6 +6,7 @@ export default {
 	aliases: ["unmute", "un-mute"],
 	description: "unmutes a user.",
 	category: "mod",
+	ssOnly: true,
 	cst: "tmod",
 	async run(client, message, args) {
 		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});

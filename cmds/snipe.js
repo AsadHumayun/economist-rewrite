@@ -7,6 +7,7 @@ export default {
 	aliases: ['snipe', 'sn'],
 	description: 'View the last deleted message in the current channel',
 	category: 'utl',
+	guildOnly: true,
 	cst: "snipe",
 	async run(client, message, args) { 
 		let snipedMsg = await client.db.get("snipe" + message.channel.id);

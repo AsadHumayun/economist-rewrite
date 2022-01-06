@@ -5,6 +5,7 @@ export default {
   name: "submit",
   aliases: ["submit"],
   description: "Submit your staff application",
+	ssOnly: true,
   async run(client, message, args) {
 		if (message.guild.id != client.config.statics.supportServer) {
       return message.reply("this command only works in our support server! Join by using `" + message.guild.prefix + "hub`");

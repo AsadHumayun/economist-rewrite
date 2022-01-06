@@ -6,6 +6,7 @@ export default {
 	aliases: ["unpunish", "unpnsh"],
 	description: "Remove a user's offence, and unmutes them if necessary.\nNote: this command will NOT unban users -- that should be done via the unban command.",
 	category: "mod",
+	ssOnly: true,
 	cst: "moderator",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("Correct usage: `" + message.guild.prefix + "unpunish <user> <offence index> <?reason>`; requires mod");

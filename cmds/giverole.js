@@ -6,6 +6,7 @@ export default {
 	aliases: ["giverole", "gr"],
 	description: "Assigns an assignable role to the mentioned user, only useable by the bot owner.",
 	category: "own",
+	ssOnly: true,
 	cst: "ggr",
 	// "ggr" standing for "give guild role"
 	async run(client, message, args) {

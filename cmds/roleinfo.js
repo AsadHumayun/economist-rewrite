@@ -6,6 +6,7 @@ export default {
 	aliases: ["roleinfo", "rf"],
 	description: "Displays information about a certain role",
 	category: "utl",
+	guildOnly: true,
 	usage: "roleinfo <@role, id or name>",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must specify a role for me to find! You can @mention the role, the ID or the name of the role");
