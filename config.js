@@ -1,9 +1,11 @@
 "use strict";
+import pkg from "discord.js";
 // eslint-disable-next-line no-unused-vars
-import { Client, Channel, ChannelManager, User, Collection, MessageEmbed, DiscordAPIError, MessagePayload, Message } from "discord.js";
+const { PresenceData, Client, Channel, ChannelManager, User, Collection, MessageEmbed, DiscordAPIError, MessagePayload, Message } = pkg;
 import aliases from "./petaliases.js";
 import { readdirSync } from "fs";
 import { inspect } from "util";
+
 
 /**
  * @classdesc These are some default functions. They have been globalised in such manner by purpose, as these functions are **__constantly__** in use by the programme, thus I deemed it more effecient to have one globalised class to manage and export functions.
@@ -377,6 +379,56 @@ class Funcs {
 		if (data.get("cst")?.split(";").includes("dnd")) return;
 		user.send(opts.message).catch(() => {return;});
 	}
+	/**
+	 * Updates the client presence
+	 * @param {PresenceData} presence Data for presence to be passed into `client#user#presence#set` method
+	 * @param {boolean} useDefault Whether or not to use the client's "default" presence data (use this for updating guild count) [Default: false]
+	 * @returns {void} void
+	 */
+	updatePresence(presence, useDefault = false) {
+		if (useDefault == true) {
+			this.client.user.presence.set({
+				activities: [{
+					name: `${this.client.guilds.cache.size} servers | ~support to join our support server for free 💵 500`,
+					type: "WATCHING",
+				}],
+				status: "dnd",
+			});
+		}
+		else {
+			this.client.user.presence.set(presence);
+		}
+	}
+	/**
+ * * Used to send an error to the exceptions channel. (This is also sent to the console.)
+ * * The function name is capitalised in order to prevent me from overusing it (yeah, I'm that lazy)
+ * * This function was not able to go in the `config.js` file due to certain complications
+ * @param {String} e exception that is to be recorded
+ * @param {?String} msgCont message content (only if this was used in a command - really helps with debugging)
+ */
+	Notify(e, msgCont) {
+		const rn = new Date().toISOString();
+		console.error(e);
+		if (!msgCont || msgCont.toString().length == 0) {
+			this.client.channels.cache.get(this.client.config.statics.defaults.channels.error).send({
+				content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
+			// very unliekly that a normal exception/error will exceed 2,000 characters in length.
+			}).catch(() => {return;});
+		// to prevent messageSendFailure erros from throwing. They flood the console and often I can't do anything about it so it's better to just ignore those.
+		}
+		else {
+			this.client.channels.cache.get(this.client.config.statics.defaults.channels.error).send({
+				content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
+				embeds: [
+					new MessageEmbed()
+						.setColor("#da0000")
+						.setDescription(msgCont instanceof Promise ? "Promse { <rejected> }" : msgCont.toString() || "Message content unavailable."),
+				],
+			})
+				.catch(() => {return;});
+		}
+	}
+
 }
 
 // static values
