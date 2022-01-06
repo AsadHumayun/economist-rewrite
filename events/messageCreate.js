@@ -206,7 +206,7 @@ export default {
 		setTimeout(() => timestamps.delete(message.author.id), 5000);
 
 		if ((command.guildOnly || command.ssOnly) && this.isDM(message.channel)) {
-			return message.reply({ content: "This command may not be run in a DMChannel.\nTry running the command in a server.", allowedMentions: { repliedUser: true } });
+			return message.reply({ content: "This command may not be executed in a DMChannel. Try running the command in a server.", allowedMentions: { repliedUser: true } });
 		}
 
 		if (command.disabled) {
