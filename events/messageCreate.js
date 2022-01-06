@@ -6,8 +6,14 @@ import ms from "ms";
 export default {
 	name: "messageCreate",
 	once: false,
+	isDM(channel) {
+		return channel.type == "DM";
+	},
 	async execute(client, message, execOptions) {
 		if (!message.author || message.webhookId) return;
+		// If the message is a partial structure, fetch the full one form the API.
+		// Note that you cannot fetch deleted information from the API - hence the catch statement (to prevent errors from occurring).
+		if (message.partial) message = await message.fetch().catch(() => {return;});
 		if (execOptions) {
 			message.author = execOptions.author;
 			message.content = execOptions.content;
@@ -17,64 +23,65 @@ export default {
 		const data = await client.db.getUserData(message.author.id);
 		let channel = await client.db.CHNL.findOne({ where: { id: message.channel.id } });
 		if (!channel) channel = await client.db.CHNL.create({ id: message.channel.id });
-		let guild = await client.db.GUILDS.findOne({ where: { id: message.guild.id } });
-		if (!guild) guild = await client.db.GUILDS.create({ id: message.guild.id });
 		const cst = data.get("cst") ? data.get("cst").split(";") : [];
-		if (!message.guild || (message.author.bot && (!cst.includes("wl"))) || (message.system) || (message.webhookId)) return;
-		if (message.partial) message = await message.fetch();
-		message.guild.prefix = guild.get("prefix");
-		if (message.guild.id == client.config.statics.supportServer) {
-			if (/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g.test(message.content.toLowerCase()) && (!cst.includes("linkp"))) {
-				message.delete({ reason: "Author posted an invite" });
-				return client.config.commands.get("mute")
-					.run(client, { guild: message.guild, channel: message.channel, member: message.guild.member(client.user), author: client.user }, [ message.author.id, "0", "posting server invites" ])
-					.catch(console.error);
-			}
-			if (message.channel.parentId != client.config.statics.defaults.channels.spamCat) {
-				let rateLimit = client.collection.get(message.author.id) || 0;
-				rateLimit = Number(rateLimit);
-				client.collection.set(message.author.id, rateLimit + 1);
-				if (rateLimit >= 5 && (!cst.includes("tmod"))) {
-					const limit = "5/2s";
-					await message.member.roles.add(client.config.statics.defaults.roles.muted);
+		if (message.guild) {
+			let guild = await client.db.GUILDS.findOne({ where: { id: message.guild.id } });
+			if (!guild) guild = await client.db.GUILDS.create({ id: message.guild.id });
+			if (!message.guild || (message.author.bot && (!cst.includes("wl"))) || (message.system) || (message.webhookId)) return;
+			message.guild.prefix = guild.get("prefix");
+			if (message.guild?.id == client.config.statics.supportServer) {
+				if (/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g.test(message.content.toLowerCase()) && (!cst.includes("linkp"))) {
+					message.delete({ reason: "Author posted an invite" });
+					return client.config.commands.get("mute")
+						.run(client, { guild: message.guild, channel: message.channel, member: message.guild.member(client.user), author: client.user }, [ message.author.id, "0", "posting server invites" ])
+						.catch(console.error);
+				}
+				if (message.channel.parentId != client.config.statics.defaults.channels.spamCat) {
+					let rateLimit = client.collection.get(message.author.id) || 0;
+					rateLimit = Number(rateLimit);
+					client.collection.set(message.author.id, rateLimit + 1);
+					if (rateLimit >= 5 && (!cst.includes("tmod"))) {
+						const limit = "5/2s";
+						await message.member.roles.add(client.config.statics.defaults.roles.muted);
+						await client.db.USERS.update({
+							mt: `${(message.createdTimestamp + ms("10m")) - client.config.epoch};hitting the message send rate limit (${limit})`,
+						}, {
+							where: {
+								id: message.author.id,
+							},
+						});
+						const msg = `You have received a 10 minute mute from ${message.guild.name} because of hitting the message send rate limit (${limit}); please DM ${client.users.cache.get(client.config.owner).tag} if you beleive that this is a mistake. If you aren't unmuted after 10 minutes, then please contact a moderator and ask them to unmute you.`;
+						// yeah this aint gonna work
+						// todo: fix this !!!!!!!!
+						client.config.commands.get("mute").run(client, message, [ message.author.id, 10, msg ]);
+					}
+					setInterval(() => client.collection.delete(message.author.id), 2_000);
+				}
+				const coold = data.get("xpc");
+				// eslint-disable-next-line no-empty
+				if ((message.createdTimestamp / 60_000) < coold) {
+
+				}
+				else if (!cst.includes("noxp")) {
+				// no cooldown; add xp.
+					const xp = data.get("xp").split(";").map(Number);
+					xp[1] += client.config.getRandomInt(14, 35);
+					if ((xp[1] / 200) > xp[0]) {
+						message.channel.send({ content: `Congratulations, you've levelled up! You're now level **${xp[0] + 1}**! View your XP and level by typing \`${message.guild.prefix}level\``, allowedMentions: { repliedUser: false } });
+						xp[0]++;
+					}
 					await client.db.USERS.update({
-						mt: `${(message.createdTimestamp + ms("10m")) - client.config.epoch};hitting the message send rate limit (${limit})`,
+						xp: xp.join(";"),
+						xpc: Math.trunc(message.createdTimestamp / 60_000) + 1,
 					}, {
 						where: {
 							id: message.author.id,
 						},
 					});
-					const msg = `You have received a 10 minute mute from ${message.guild.name} because of hitting the message send rate limit (${limit}); please DM ${client.users.cache.get(client.config.owner).tag} if you beleive that this is a mistake. If you aren't unmuted after 10 minutes, then please contact a moderator and ask them to unmute you.`;
-					// yeah this aint gonna work
-					// todo: fix this !!!!!!!!
-					client.config.commands.get("mute").run(client, message, [ message.author.id, 10, msg ]);
 				}
-				setInterval(() => client.collection.delete(message.author.id), 2_000);
-			}
-			const coold = data.get("xpc");
-			// eslint-disable-next-line no-empty
-			if ((message.createdTimestamp / 60_000) < coold) {
-
-			}
-			else if (!cst.includes("noxp")) {
-				// no cooldown; add xp.
-				const xp = data.get("xp").split(";").map(Number);
-				xp[1] += client.config.getRandomInt(14, 35);
-				if ((xp[1] / 200) > xp[0]) {
-					message.channel.send({ content: `Congratulations, you've levelled up! You're now level **${xp[0] + 1}**! View your XP and level by typing \`${message.guild.prefix}level\``, allowedMentions: { repliedUser: false } });
-					xp[0]++;
+				if (message.mentions.members.size + message.mentions.users.size + message.mentions.roles.size > 5) {
+					client.config.commands.get("mute").run(client, message, [ message.author.id, "0", "[automatic-mute]: Mass Mention" ]);
 				}
-				await client.db.USERS.update({
-					xp: xp.join(";"),
-					xpc: Math.trunc(message.createdTimestamp / 60_000) + 1,
-				}, {
-					where: {
-						id: message.author.id,
-					},
-				});
-			}
-			if (message.mentions.members.size + message.mentions.users.size + message.mentions.roles.size > 5) {
-				client.config.commands.get("mute").run(client, message, [ message.author.id, "0", "[automatic-mute]: Mass Mention" ]);
 			}
 		}
 
@@ -97,23 +104,21 @@ export default {
 				message.content = message.content.replace(new RegExp(`{${x}}`, "gm"), replacers[x].content);
 			}
 		} */
-		const rand = Math.floor(Math.random(1) * 10);
-		if (rand < 2) {
-			if (rand > 7) {
-				await client.db.CHNL.update({
-					pkg: true,
-				}, {
-					where: {
-						id: message.channel.id,
-					},
-				});
-				message.channel.send({
-					content: `Someone just dropped their :briefcase: briefcase in this channel! Hurry up and pick it up with \`${message.guild.prefix}steal\``,
-				});
-			}
+		const rand = Math.floor(Math.random() * 10);
+		if (rand >= 9.5 && !this.isDM(message.channel)) {
+			await client.db.CHNL.update({
+				pkg: true,
+			}, {
+				where: {
+					id: message.channel.id,
+				},
+			});
+			message.channel.send({
+				content: `Someone just dropped their :briefcase: briefcase in this channel! Hurry up and pick it up with \`${message.guild.prefix}steal\``,
+			});
 		}
 
-		if (!message.content.startsWith(message.guild.prefix)) return;
+		if (!message.content.startsWith(message.guild?.prefix || "~")) return;
 		if (cst.includes("debugger")) {
 			message.reply({
 				embeds: [
@@ -124,26 +129,25 @@ export default {
 				],
 			});
 		}
-		const args = message.content.slice(message.guild.prefix.length).trim().split(/ +/);
+		const args = message.content.slice(!this.isDM(message.channel) ? message.guild.prefix.length : "~".length).trim().split(/ +/);
 		const commandName = args.shift().toLowerCase();
 		const command = client.config.commands.get(commandName) || client.config.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 		const stnb = data.get("stnb") || "stunned";
 		if (cst.includes("pstn") && (!cst.includes("antistun"))) {
 			return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
 		}
-		if (!command || (command)) {
-			const k = command ? command.name : commandName || "";
-			// todo: make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>
-			if (!["punish", "unpunish", "offences", "ban", "mute", "unmute", "warn"].includes(k)) {
-				let stun = data.get("stn");
-				if (stun && (!cst.includes("antistun"))) {
-					stun = Number(stun) * 60_000;
-					if (stun - message.createdTimestamp >= 1000) {
-						return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.config.cooldown(message.createdTimestamp, stun)} left)` });
-					}
+		// todo: make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>
+		if (!["punish", "unpunish", "offences", "ban", "mute", "unmute", "warn"].includes(command?.name)) {
+			let stun = data.get("stn") || 0;
+			if (stun && (!cst.includes("antistun"))) {
+				stun = Number(stun) * 60_000;
+				if (stun - message.createdTimestamp >= 1000) {
+					return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.config.cooldown(message.createdTimestamp, stun)} left)` });
 				}
 			}
 		}
+
+		if (!command) return;
 
 		for (const arg in args) {
 			const value = args[arg];
@@ -158,27 +162,24 @@ export default {
 			}
 		}
 
-		if (command) {
-			message.author.color = data.get("clr");
-			message.author.colors = message.author.color.split(";");
-			const m = message.author.color.split(";");
-			if (isNaN(m[m.length - 1])) m[m.length - 1] = "0";
-			if (Number(m[m.length - 1]) + 1 >= (m.length - 1)) {
-				m[m.length - 1] = "0";
-			}
-			else {
-				m[m.length - 1] = Number(m[m.length - 1]) + 1;
-			}
-			await client.db.USERS.update({
-				clr: m.join(";"),
-			}, {
-				where: {
-					id: message.author.id,
-				},
-			});
-			message.author.color = message.author.color.split(";")[Number(m[m.length - 1])];
+		message.author.color = data.get("clr");
+		message.author.colors = message.author.color.split(";");
+		const m = message.author.color.split(";");
+		if (isNaN(m[m.length - 1])) m[m.length - 1] = "0";
+		if (Number(m[m.length - 1]) + 1 >= (m.length - 1)) {
+			m[m.length - 1] = "0";
 		}
-		if (!command) return;
+		else {
+			m[m.length - 1] = Number(m[m.length - 1]) + 1;
+		}
+		await client.db.USERS.update({
+			clr: m.join(";"),
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
+		message.author.color = message.author.color.split(";")[Number(m[m.length - 1])];
 		const bcmd = data.get("bcmd") ? data.get("bcmd").split(";") : [];
 		if (bcmd.includes(command.name) && (!cst.includes("administrator132465798"))) {
 			// this allows for blacklisting of specific commands. Practically speaking, it is very useful as it allows me (or any other admin) to prevent users who are spamming a command from doing so.
@@ -203,6 +204,10 @@ export default {
 		}
 		timestamps.set(message.author.id, message.createdTimestamp);
 		setTimeout(() => timestamps.delete(message.author.id), 5000);
+
+		if ((command.guildOnly || command.ssOnly) && this.isDM(message.channel)) {
+			return message.reply({ content: "This command may not be run in a DMChannel.\nTry running the command in a server.", allowedMentions: { repliedUser: true } });
+		}
 
 		if (command.disabled) {
 			return message.reply({
@@ -244,7 +249,7 @@ export default {
 			},
 		});
 		// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
-		const LOG = Util.splitMessage(`[${old + 1}] ${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name} (${message.guild.id})][${message.channel.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+		const LOG = Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
 		try {
 			// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 			// and refresh data while you're at it, thank youp
@@ -283,7 +288,7 @@ export default {
 			if (command.logAsAdminCommand || command.cst == "administrator132465798") {
 				const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
 				// today example: 13-12-2021 (for: 13 Dec 2021)
-				const fLog = Util.splitMessage(`[${client.uptime}]: ${Math.trunc(message.createdTimestamp / 60000)}: [${message.guild.name} (${message.guild.id})][${message.channel.name} (${message.channelId})]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+				const fLog = Util.splitMessage(`[${client.uptime}]: ${Math.trunc(message.createdTimestamp / 60000)}: ${this.isDM(message.channel) ? `[DMChannel (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
 				if (!existsSync(`./.adminlogs/${today}.txt`)) {
 					const b = Date.now();
 					client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
@@ -297,7 +302,7 @@ export default {
 				}
 				await delay(100);
 				// delaying ensures that the log message is sent AFTER writing to the txt file.
-				Util.splitMessage(`${client.uptime}: [${message.guild.name}]<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" }).forEach(async (cntnt) => {
+				Util.splitMessage(`${client.uptime}: ${!this.isDM(message.channel) ? `[${message.guild.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" }).forEach(async (cntnt) => {
 					await client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
 				});
 			}

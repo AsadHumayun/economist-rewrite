@@ -33,7 +33,7 @@ export class EventHandler {
 				count++;
 			}
 			else {
-				if (this.debug) console.info(`Binding event "${file}"...`);
+				if (this.debug) console.info(`Binding event "${file.split(".")[0]}" (from ./events/${file})...`);
 				this.client.on(event.default.name, (...args) => event.default.execute(this.client, ...args));
 				count++;
 			}

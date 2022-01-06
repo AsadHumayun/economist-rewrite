@@ -1,12 +1,11 @@
 ﻿"use strict";
 /* eslint-env node es6 */
-import * as ClientConfiguration from "./config.js";
-
 import { Collection, Client, Options, Intents } from "discord.js";
 import { config } from "dotenv";
 import Sequelize, { DataTypes } from "sequelize";
 
 import { EventHandler } from "./events/EventHandler.js";
+import { ClientConfiguration } from "./config.js";
 
 import User from "./models/User.js";
 import Guild from "./models/Guild.js";
@@ -27,7 +26,19 @@ const client = new Client({
 		GuildBanManager: 0,
 	}),
 	allowedMentions: { parse: ["users", "roles"], repliedUser: false },
-	intents: new Intents().add([Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]),
+	/**
+	 *   - MESSAGE_CREATE
+  - MESSAGE_UPDATE
+  - MESSAGE_DELETE
+  - CHANNEL_PINS_UPDATE
+	 */
+	intents: new Intents().add([
+		Intents.FLAGS.GUILDS,
+		Intents.FLAGS.GUILD_MESSAGES,
+		Intents.FLAGS.GUILD_MEMBERS,
+		Intents.FLAGS.DIRECT_MESSAGES,
+	]),
+	partials: ["CHANNEL", "MESSAGE"],
 });
 
 /** Used for storing user command cooldowns and rate limits - there used to be 2 separate collections to store each, but that used more memory*/
@@ -58,7 +69,7 @@ if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
 	})();
 }
 
-client.config = new ClientConfiguration.default(client);
+client.config = new ClientConfiguration(client);
 client.db = {
 	USERS: Users,
 	CHNL: Channels,
