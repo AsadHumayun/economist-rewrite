@@ -11,6 +11,9 @@ export default {
 		const audit = (await oldChannel.guild.fetchAuditLogs({ limit: 1, type: "CHANNEL_UPDAYE" })).entries.first();
 		const oldPerms = [...oldChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
 		const newPerms = [...newChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
+		// if below statement is true, then the channel permissionOverwrites have not changed.
+		// this had to be added to prevent this event from emitting randomly whenever a different property of a channel was updated (e.g. slowmode, name change, etc.)
+		if (Object.entries(client.config.Inspect(oldPerms)).join(";") === Object.entries(client.config.Inspect(newPerms)).join(";")) return;
 		const rmv = [];
 		for (const x in oldPerms) {
 			const member = await newChannel.guild.members.fetch({ user: x.id, force: true }).catch(() => {return;});
