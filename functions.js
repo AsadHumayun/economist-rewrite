@@ -1,6 +1,7 @@
 import { MessageEmbed } from "discord.js";
 
 /**
+ * **NOTE:** Was originally in config.js, had to move due to client config. Now that I think about it, there was a much, much simpler way to do this. TODO: REVERT THIS TO THE OLD WAY IN WHICH IT USED TO BE STORED, BUT INSTEAD THIS TIME JUST HAVE THE CONFIG OBJECT BEING DECLARED **BEFORE** THE FNCS CLASS. DO NOT FORGET, THANK U :)
  * Used to send an error to the exceptions channel and stderr
  * The function name is capitalised in order to prevent me from overusing it (yeah, I'm that lazy)
  * This function was not able to go in the `config.js` file due to certain complications
