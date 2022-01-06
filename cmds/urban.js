@@ -1,5 +1,5 @@
 "use strict";
-import Discord from "discord.js";
+import * as Discord from "discord.js";
 import fetch from "node-fetch";
 import qs from "querystring";
 

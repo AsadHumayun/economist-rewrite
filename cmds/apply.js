@@ -44,8 +44,8 @@ export default {
 			}],
 		})
 			.catch((e) => {
-				message.reply({ content: `Unable to create TextBasedChannel, exception: \`${e}\`` });
-				client.Notify(e, message.content);
+				message.reply({ content: `Unable to create TextBasedChannel, exception: \`${e}\` has been reported.` });
+				client.config.Notify(e, message.content);
 			});
 		message.member.roles.add(client.config.statics.defaults.roles.applicant);
 		message.reply({ embeds: [

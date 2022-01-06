@@ -1,6 +1,6 @@
 "use strict";
-import Discord from "discord.js";
-const MessageEmbed = Discord.MessageEmbed;
+import { MessageEmbed } from "discord.js";
+
 export default {
 	name: "accept",
 	aliases: ["accept"],
