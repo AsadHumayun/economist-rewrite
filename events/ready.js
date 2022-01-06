@@ -3,6 +3,7 @@ export default {
 	once: false,
 	async execute(client) {
 		console.log(`\u2705 Logged in as ${client.user.tag}`);
+		client.config.updatePresence(null, true);
 		client.channels.cache.get(client.config.statics.defaults.channels.ready).send({ content: `[${new Date().toISOString()}]: instance created with ${client.guilds.cache.size} (U:${client.users.cache.size}) guilds cached` });
 		// cache support server guild members.
 		try {
