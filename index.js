@@ -27,7 +27,7 @@ const client = new Client({
 	}),
 	allowedMentions: { parse: ["users", "roles"], repliedUser: false },
 	/**
-	 *   - MESSAGE_CREATE
+	- MESSAGE_CREATE
   - MESSAGE_UPDATE
   - MESSAGE_DELETE
   - CHANNEL_PINS_UPDATE
