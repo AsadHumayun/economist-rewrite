@@ -50,7 +50,7 @@ export default {
 					Object.keys(Permissions.FLAGS).forEach((flag) => {
 						if (!Object.keys(permissions).includes(flag)) permissions[flag] = null;
 						console.debug(`Set permissions.${flag} as null`);
-					})
+					});
 					console.debug(permissions, deny, allow);
 					member.guild.channels.cache.get(x[0]).permissionOverwrites.edit(member.id, permissions);
 					client.channels.cache.get(client.config.statics.defaults.channels.sflp).send(`${Math.trunc(Date.now() / 60_000)}: Successfully restored permissions for M:<${member.user.tag} (${member.id})>: ${x[0]} -> d: ${x[1]}, a: ${x[2]}`);
