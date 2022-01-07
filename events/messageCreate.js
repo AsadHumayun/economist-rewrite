@@ -136,6 +136,7 @@ export default {
 		if (cst.includes("pstn") && (!cst.includes("antistun"))) {
 			return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
 		}
+
 		// todo: make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>
 		if (!["punish", "unpunish", "offences", "ban", "mute", "unmute", "warn"].includes(command?.name)) {
 			let stun = data.get("stn") || 0;
