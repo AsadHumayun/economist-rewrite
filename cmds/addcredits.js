@@ -15,21 +15,21 @@ export default {
 		const data = await client.db.getUserData(user.id);
 		const ucst = (data.get("cst") || "").split(";").includes("dragon");
 		if (!ucst) return message.reply("That person doesn't have a dragon!");
-		const pet = data.get("pet").split(";");
+		const pet = data.get("pet").split(";").map(Number);
 		if (pet.length < client.config.statics.intendedPetLength) return message.reply("Malformed pet - does not have at least " + client.config.statocs.intendedPetLength + " elements.");
-		data[4] = Number(data[4]) + credits;
+		const alias = await client.config.getDragonAlias(user.id);
+		pet[4] += credits;
 		await client.db.USERS.update({
 			pet: pet.join(";"),
 		}, {
 			where: {
-				id: message.author.id,
+				id: user.id,
 			},
 		});
-		const creditsEmoji = await client.config.getDragonAlias(user.id, client)[1][3];
 		message.reply({ embeds: [
 			new MessageEmbed()
 				.setColor(message.author.color)
-				.setDescription(`${user.tag} has received ${creditsEmoji} ${credits}`),
+				.setDescription(`${user.tag} has received ${alias[1][3]} ${credits}`),
 		] });
 	},
 };
