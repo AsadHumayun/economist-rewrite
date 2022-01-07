@@ -1,6 +1,5 @@
 "use strict";
 import { MessageEmbed } from "discord.js";
-import aliases from "../petaliases.js";
 
 export default {
 	name: "upgrade",
@@ -9,44 +8,27 @@ export default {
 	category: "pet",
 	cst: "dragon",
 	async run(client, message, args) {
-		let data = await client.db.get("pet" + message.author.id);
+		let data = message.author.data.get("pet").split(";").map(Number);
 		if (!data) data = client.config.statics.defaults.dragon;
-		if (message.author.cst.includes("maxdragon888")) data = client.config.statics.defaults.naxDragon;
-		data = data.split(";");
+		if (message.author.data.get("cst")?.split(";").includes("maxdragon888")) data = client.config.statics.defaults.naxDragon;
 		const stat = (args[0] || "").toLowerCase();
 		let Stat = client.config.statics.upgr.find((x) => stat.startsWith(x.split(";")[0]));
 		if (!Stat) return message.reply(`The different types of stats are: ${client.config.list(client.config.statics.upgr.map((x) => x.split(";")[1]))}`);
 		Stat = Stat.split(";");
-		const currAlias = await client.db.get("curralias" + message.author.id) || "default";
-		let emojis;
-		let display;
-		if (currAlias) {
-			const names = Object.keys(aliases);
-			if (names.includes(currAlias)) {
-				display = aliases[currAlias].DISPLAY_NAME;
-				selected = display;
-				emojis = aliases[currAlias].EMOJIS;
-			}
-			else {
-				display = "dragon";
-				emojis = client.config.defaults.PET_EMOJIS;
-			}
-		}
-		const pn = await client.db.get(`petname${message.author.id}`) || display;
-		display = pn;
-
+		const alias = await client.config.getDragonAlias(message.author.id);
 		let amt = isNaN(args[1]) ? 1 : Number(args[1]);
 		if (amt <= 0) amt = 1;
-		// level;health;energy;exp;credits;intel;endur;str;affec
-		const credits = Number(data[4]);
-		if (credits - amt < 0) return message.reply("You don't have enough credits for that!");
-		data[4] = credits - amt;
-		data[Stat[2]] = Number(data[Stat[2]]) + amt;
-		if (!message.author.cst.includes("maxdragon888")) await client.db.set("pet" + message.author.id, data.join(";"));
+		// level;health;energy;exp;data[4];intel;endur;str;affec
+		if (data[4] - amt < 0) return message.reply("You don't have enough credits for that!");
+		data[4] -= amt;
+		data[Stat[2]] += amt;
+		if (!message.author.data.get("cst")?.split(";").includes("maxdragon888")) await client.db.USERS.update({ pet: data.join(";") }, { where: { id: message.author.id } });
 		message.reply({
-			embed: new MessageEmbed()
-				.setColor(message.author.color)
-				.setDescription(`${message.author.tag} has upgraded their ${display}'s ${Stat[1]} by ${amt} credits but lost ${emojis[3]} ${amt} in the process!`),
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setDescription(`${message.author.tag} has upgraded their ${alias[0]}'s ${Stat[1]} by ${amt} credits but lost ${alias[1][3]} ${amt} in the process`),
+			],
 		});
 	},
 };
