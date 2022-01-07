@@ -2,24 +2,34 @@
 import { MessageEmbed } from "discord.js";
 
 export default {
-	name: 'steal',
-	description: 'steal a briefcase',
-	category: 'eco',
-	aliases: ['steal'],
-	async run(client, message, args) {
-		let _ = await client.db.get("briefcase" + message.channel.id);
-		if (!_) return message.reply("There are no briefcases to steal right now...");
-
-		await client.db.delete(`briefcase${message.channel.id}`);
-		let oldbal = await client.db.get(`bal${message.author.id}`) || 0;
-		let amt = Math.floor(
-			Math.random() * 1000
-		);
-		await client.db.set(`bal${message.author.id}`, oldbal + amt);
+	name: "steal",
+	description: "steal a briefcase",
+	category: "eco",
+	aliases: ["steal"],
+	async run(client, message) {
+		const channel = await client.db.CHNL.findOne({ where: { id: message.channel.id } });
+		if (!channel.get("pkg")) return message.reply("There are no briefcases to steal right now :c");
+		await client.db.CHNL.update({
+			pkg: null,
+		}, {
+			where: {
+				id: message.channel.id,
+			},
+		});
+		const amt = Math.floor(Math.random() * 1000);
+		await client.db.USERS.update({
+			bal: message.author.data.get("bal") + amt,
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
 		message.reply({
-			embed: new MessageEmbed()
-			.setColor(message.author.color)
-			.setDescription(`${message.author.tag} has stolen ${client.users.cache.filter(x => x.id != message.author.id).random().tag}'s briefcase and found :dollar: ${client.config.comma(amt)}`)
-		})
-	}
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setDescription(`${message.author.tag} has stolen ${client.users.cache.filter((x) => x.id != message.author.id && !x.bot).random().tag}'s briefcase and found :dollar: ${client.config.comma(amt)}`),
+			],
+		});
+	},
 };
