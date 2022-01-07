@@ -4,7 +4,7 @@ import { inspect } from "util";
 
 export default {
 	name: "eval",
-	aliases: ["run", "evaluate", "eval", "evalu8"],
+	aliases: ["eval"],
 	desc: "Takes some javascript code and evaluates it! This is limited to our bot developers as it is very powerful.",
 	usage: "eval <code>",
 	category: "own",
