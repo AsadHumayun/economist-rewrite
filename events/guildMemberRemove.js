@@ -10,8 +10,9 @@ export default {
 				new MessageEmbed()
 					.setTimestamp()
 					.setColor("#da0000")
+					.setDescription(`Created At: \`${member.user.createdAt.toISOString()}\`\nJoined At: \`${member.joinedAt.toISOString()}\``)
 					.setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
-					.setFooter(`Member Left • ID: ${member.user.id}`, member.user.displayAvatarURL({ dynamic: true })),
+					.setFooter(`Member Left • ID: ${member.user.id}`),
 			],
 		});
 	},

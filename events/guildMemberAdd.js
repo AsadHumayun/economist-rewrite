@@ -135,6 +135,7 @@ export default {
 			new MessageEmbed()
 				.setTimestamp()
 				.setColor("#00FF0C")
+				.setDescription(`Created At: \`${member.user.createdAt.toISOString()}\``)
 				.setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
 				.setFooter(`Member Joined • ID: ${member.user.id}`, member.user.displayAvatarURL({ dynamic: true })),
 		] });
