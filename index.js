@@ -5,7 +5,6 @@ import { config } from "dotenv";
 import Sequelize, { DataTypes } from "sequelize";
 
 import { EventHandler } from "./events/EventHandler.js";
-import { Notify } from "./functions.js";
 import { Utils, Constants } from "./utils/Construct.js";
 
 import User from "./models/User.js";
@@ -97,6 +96,6 @@ const eventHandler = new EventHandler(client, true);
 
 eventHandler.load();
 
-process.on("unhandledRejection", (e) => Notify(e, null, client));
+process.on("unhandledRejection", (e) => client.utils.notify(e, null, client));
 
 client.login(process.env.token);
