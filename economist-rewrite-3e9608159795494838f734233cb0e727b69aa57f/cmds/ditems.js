@@ -19,7 +19,7 @@ module.exports = {
 					.setTitle(`${user.tag}'s Donor Ranks`)
 					.setDescription(
 						`
-					\`${message.guild.prefix}ptransfer <user> <item>\` to transfer an item to another account
+					\`${message.guild ? message.guild.prefix : client.const.prefix}ptransfer <user> <item>\` to transfer an item to another account
 
 					\`\`\`\n${client.config.Inspect(cst.filter((x) => client.config.statics.ditems.map((i) => i.split(";")[1]).includes(x)))}\n\`\`\`
 					`,

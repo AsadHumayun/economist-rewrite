@@ -31,11 +31,11 @@ export default {
 			.then(async (interaction) => {
 				if (interaction.customId == "1") {
 					// user chose to delete dragon
-					client.channels.cache.get(client.config.statics.defaults.channels.dsl).send({ content: `Drgn disowned at ${new Date().toISOString()} by U:${message.author.tag}(${message.author.id})\n${pet}` });
+					client.channels.cache.get(client.const.channels.dsl).send({ content: `Drgn disowned at ${new Date().toISOString()} by U:${message.author.tag}(${message.author.id})\n${pet}` });
 					const cst = message.author.data.get("cst").split(";").filter((f) => !["dragon"].includes(f)).join(";");
 					await client.db.USERS.update({
 						cst,
-						pet: client.config.statics.defaults.dragon,
+						pet: client.const.dragon,
 					}, {
 						where: {
 							id: message.author.id,

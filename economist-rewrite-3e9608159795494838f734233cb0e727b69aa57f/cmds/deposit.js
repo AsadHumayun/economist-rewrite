@@ -23,7 +23,7 @@ module.exports = {
 		v[1] = Number(v[1]);
 		const capacity = v[0] * 5_000;
 		let curr = v[1];
-		if (curr + dep > capacity && (v[0] < 9999999999)) return message.reply(`Your vault does not have enough space to hold that much money; upgrade your vault with \`${message.guild.prefix}vupgrade\` in order to increase your Bank Vault's capacity!`);
+		if (curr + dep > capacity && (v[0] < 9999999999)) return message.reply(`Your vault does not have enough space to hold that much money; upgrade your vault with \`${message.guild ? message.guild.prefix : client.const.prefix}vupgrade\` in order to increase your Bank Vault's capacity!`);
 		curr += dep;
 		v[1] = curr;
 		await client.db.set("bal" + message.author.id, bal - dep);

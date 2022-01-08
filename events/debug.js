@@ -11,7 +11,7 @@ export default {
 		 * Thus, a webhook is used instead. A webhook has, in essence, is only used to send a message via a single HTTP POST request, and is independent to the client itself. This isn't really much of an issue, and is only really apparent here.
 		 * -I've added it to the config.js file anyway, simply because I would like to keep such conf values in one place, where I can easily manage them.
 		 */
-		const webh = new WebhookClient({ url: client.config.statics.defaults.webhooks.debugger });
+		const webh = new WebhookClient({ url: client.const.webhooks.debugger });
 		const send = Util.splitMessage(dbg, { maxLength: 2_000, char: "" });
 
 		send.forEach(async (message) => {

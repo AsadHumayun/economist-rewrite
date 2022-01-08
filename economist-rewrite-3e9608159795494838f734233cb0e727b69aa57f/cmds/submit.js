@@ -6,7 +6,7 @@ module.exports = {
   description: "Submit your staff application",
   async run(client, message, args) {
 		if (message.guild.id != client.config.statics.supportServer) {
-      return message.reply("this command only works in our support server! Join by using `" + message.guild.prefix + "hub`");
+      return message.reply("this command only works in our support server! Join by using `" + message.guild ? message.guild.prefix : client.const.prefix + "hub`");
   };    
 
     let cst = await client.db.get("cst" + message.author.id);

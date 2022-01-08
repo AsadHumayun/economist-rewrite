@@ -51,7 +51,7 @@ module.exports = {
 			data = data.split(";");
 			console.log(message.author.cst)
 	if (message.author.cst.includes("maxdragon888")) data = client.config.statics.defaults.naxDragon.split(";");
-	if (!data && (!message.author.cst.includes("maxdragon888"))) return message.reply("You must own a dragon in order to use this command! See `" + message.guild.prefix + "shop` for more information")
+	if (!data && (!message.author.cst.includes("maxdragon888"))) return message.reply("You must own a dragon in order to use this command! See `" + message.guild ? message.guild.prefix : client.const.prefix + "shop` for more information")
 	if (!data) data = client.config.statics.defaults.dragon;
 		let en = Number(data[2]);
 		let endur = Number(data[6]);
@@ -61,7 +61,7 @@ module.exports = {
 		let intel = Number(data[5]);
 		let consumed = Math.round((60 / (Math.log(endur + 9))));
 		if (en - consumed < 0) {
-			return message.reply("🥱 I'm too tired to go searching right now! Why not feed me by using `" + message.guild.prefix + "feed`?")
+			return message.reply("🥱 I'm too tired to go searching right now! Why not feed me by using `" + message.guild ? message.guild.prefix : client.const.prefix + "feed`?")
 		};
 		//parseFloat(((message.createdTimestamp + ms("20s"))/60_000)).toFixed(2)
 		await client.db.set("srchc" + message.author.id, client.config.parseCd(message.createdTimestamp, ms("20s"), true));		

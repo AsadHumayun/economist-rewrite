@@ -17,7 +17,7 @@ module.exports = {
 				new MessageEmbed()
 					.setColor(message.author.color)
 					.setTitle(`${user.tag}'s Items`)
-					.setDescription(`\`${message.guild.prefix}fish\` to earn some fish`)
+					.setDescription(`\`${message.guild ? message.guild.prefix : client.const.prefix}fish\` to earn some fish`)
 					.addField(
 						"Fish",
 						`

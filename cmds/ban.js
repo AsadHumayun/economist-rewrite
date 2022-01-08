@@ -10,18 +10,18 @@ export default {
 	cst: "moderator",
 	async run(client, message, args) {
 		if (args.length < 1) return message.reply("You must provide a `user` resolvable for your ban.");
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
-		if (!user) return message.reply(`${client.config.statics.defaults.emoji.err} You have provided an invalid user!`);
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
+		if (!user) return message.reply(`${client.const.emoji.err} You have provided an invalid user!`);
 		const data = await client.db.getUserData(user.id);
 		if ((data.get("cst") || "").split(";").includes("moderator")) return message.reply("You can't ban a moderator!");
 		const reason = args.slice(1).join(" ") || "<UNKNOWN REASON>";
 		const Notification = new MessageEmbed()
-			.setColor(client.config.statics.defaults.colors.red)
-			.setDescription(`You have received a permanent ban from ${message.guild.name}. Note that your ban might be lifted soon—to appeal for an unban (or check your remaining ban length), please PM ${client.users.cache.get(client.config.owner).tag}. Additionally, if you think this is a mistake or you were wrognly punished, please contact ${client.users.cache.get(client.config.owner).tag}`)
+			.setColor(client.const.colors.red)
+			.setDescription(`You have received a permanent ban from ${message.guild.name}. Note that your ban might be lifted soon—to appeal for an unban (or check your remaining ban length), please PM ${client.users.cache.get(client.utils.owner).tag}. Additionally, if you think this is a mistake or you were wrognly punished, please contact ${client.users.cache.get(client.utils.owner).tag}`)
 			.addField("Moderator", message.author.tag)
 			.addField("Reason", reason);
 
-		const msgs = [`${client.config.statics.defaults.emoji.tick} ${user.tag} was given a permanent ban for "${reason}"; they have been sent the following message:`];
+		const msgs = [`${client.const.emoji.tick} ${user.tag} was given a permanent ban for "${reason}"; they have been sent the following message:`];
 
 		const GuildMember = await message.guild.members.fetch(user.id).catch(() => {return;});
 

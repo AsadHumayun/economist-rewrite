@@ -14,7 +14,7 @@ module.exports = {
 		if (!usr) return message.reply("You must mention someone for this command to work!");
 		if (usr.id == client.owner) return message.reply(`${usr.tag} will keep all permissions regardless. You may not use this command on them!`);
 		const command = client.config.commands.get(args[1].toLowerCase()) || client.config.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(args[1].toLowerCase()));
-		if (!command) return message.reply(`A command with that name or alias was not found. Please look in \`${message.guild.prefix}commands\` for a list of existing commands.`);
+		if (!command) return message.reply(`A command with that name or alias was not found. Please look in \`${message.guild ? message.guild.prefix : client.const.prefix}commands\` for a list of existing commands.`);
 		let bcmd = await client.db.get("bcmd" + usr.id);
 		bcmd = bcmd ? bcmd.split(";") : [];
 		if (!bcmd.includes(command.name)) {

@@ -20,7 +20,7 @@ module.exports = {
 				if (!tst) return message.reply(`A role by the name "${name}" cannot be found.`);
 				role = tst;
 			} else {
-				return message.reply("You do not seem to own a role by that keyword - `" + message.guild.prefix + "roles` to view a list of roles that you own.")
+				return message.reply("You do not seem to own a role by that keyword - `" + message.guild ? message.guild.prefix : client.const.prefix + "roles` to view a list of roles that you own.")
 			}
 		} else {
 			role = roles.find((x) => x[0] == key);

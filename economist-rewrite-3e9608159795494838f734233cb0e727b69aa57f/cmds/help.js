@@ -39,7 +39,7 @@ module.exports = {
 			embed: new MessageEmbed()
 				.setTitle("Command Help")
 				.setColor(message.author.color)
-				.setDescription(`Here are some commands which can be used by members, arranged in categories. You can use \`${message.guild.prefix}help <command name>\` for some extra information on a certain command.`)
+				.setDescription(`Here are some commands which can be used by members, arranged in categories. You can use \`${message.guild ? message.guild.prefix : client.const.prefix}help <command name>\` for some extra information on a certain command.`)
 				.addField("Economy Commands", client.config.commands.filter((x) => x.category === "ecn").map((x) => `\`${x.name}\``).join(", "))
 				.addField("Staff Commands", client.config.commands.filter((x) => x.category === "btsf").map((x) => `\`${x.name}\``).join(", "))
 				.addField("Dragon Commands", client.config.commands.filter((x) => x.category === "pet").map((x) => `\`${x.name}\``).join(", "))

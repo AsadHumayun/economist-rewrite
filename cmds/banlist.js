@@ -14,7 +14,7 @@ export default {
 		message.guild.bans.fetch()
 			.then(async (bans) => {
 				if (bans.size == 0) {
-					return message.reply(`${client.config.statics.defaults.emoji.tick} There are no users banned from **${message.guild.name}**!`);
+					return message.reply(`${client.const.emoji.tick} There are no users banned from **${message.guild.name}**!`);
 				}
 				let counter = 1;
 				const string = bans.map((b) => `#${counter++} ${b.user.tag} (${b.user.id}) | ${b.reason || "<UNKNOWN REASON>"}`).join("\n");
@@ -24,7 +24,7 @@ export default {
 					embeds.push(
 						new MessageEmbed()
 							.setAuthor(`Users banned form ${message.guild.name}`, message.guild.iconURL({ dynamic: true }))
-							.setDescription("```\n" + client.config.trim(map[x], 4060) + "\n```")
+							.setDescription("```\n" + client.utils.trim(map[x], 4060) + "\n```")
 							.setColor(message.author.color),
 					);
 				}
@@ -36,7 +36,7 @@ export default {
 				})
 				// return new menu(message.channel, message.author.id, embeds, ms('10m'))
 					.catch(() => {
-						message.reply(`${client.config.emojis.error} | I was unable to find your bans list; please make sure I have the \`BAN_MEMBERS\` permission!`);
+						message.reply(`${client.utils.emojis.error} | I was unable to find your bans list; please make sure I have the \`BAN_MEMBERS\` permission!`);
 					});
 			});
 	},

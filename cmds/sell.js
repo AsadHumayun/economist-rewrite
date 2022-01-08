@@ -44,7 +44,7 @@ export default {
 			}
 			else if (x.startsWith("ch")) {
 				return {
-					item: [ "Chill Pills", client.config.emoji.chill ],
+					item: [ "Chill Pills", client.utils.emoji.chill ],
 					rate: 50,
 				};
 			}
@@ -85,7 +85,7 @@ export default {
 		message.reply({
 			embed: new MessageEmbed()
 				.setColor(message.author.color)
-				.setDescription(`${message.author.tag} has successfully sold ${identified.item[1]} ${client.config.comma(amt)} for :dollar: ${client.config.comma(amtGained)}`),
+				.setDescription(`${message.author.tag} has successfully sold ${identified.item[1]} ${client.utils.comma(amt)} for :dollar: ${client.utils.comma(amtGained)}`),
 		});
 	},
 };

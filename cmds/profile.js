@@ -8,11 +8,11 @@ export default {
 	description: "shows a user's profile",
 	async run(client, message, args) {
 		if (!args) args = [message.author.id];
-		let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
+		let usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) usr = message.author;
 		const data = await client.db.getUserData(usr.id);
 		const cst = data.get("cst") ? data.get("cst").split(";") : [];
-		const badges = Object.entries(client.config.statics.defaults.badges).filter((entry) => cst.includes(entry[0])).map((e) => e[1]);
+		const badges = Object.entries(client.const.badges).filter((entry) => cst.includes(entry[0])).map((e) => e[1]);
 		const cmds = data.get("cmds") ? data.get("cmds").toString() : "";
 		let color = data.get("clr").split(";");
 		color.pop();
@@ -32,7 +32,7 @@ export default {
 			.setDescription(`**Joined:** ${new Date(data.get("createdAt")).toISOString()}\n**Account Last Updated:** ${new Date(data.get("updatedAt")).toISOString()}`)
 			.addField("About Me", bio.replace(/\[+|\]+/gm, "").toString())
 			.setThumbnail(usr.displayAvatarURL({ dynamic: true }))
-			.addField("Commands Used", client.config.comma(cmds) || "0", true)
+			.addField("Commands Used", client.utils.comma(cmds) || "0", true)
 			.addField("Colour Preferences", color, true)
 			.addField("Flags", flags, true);
 		if (badges.length > 0) emb.addField("Badges", badges.join(""), true);

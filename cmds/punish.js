@@ -10,37 +10,37 @@ export default {
 	ssOnly: true,
 	cst: "tmod",
 	async run(client, message, args) {
-		if (args.length < 2) return message.reply(`You must specify a User and an offence under the format \`${message.guild.prefix}punish <user> <punishment index>\` in order for this command to work!`);
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		if (args.length < 2) return message.reply(`You must specify a User and an offence under the format \`${message.guild ? message.guild.prefix : client.const.prefix}punish <user> <punishment index>\` in order for this command to work!`);
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		if (isNaN(args[1])) return message.reply({ content: `Invalid index "${args[1]}"`, allowedMentions: { parse: [] } });
 		const data = await client.db.getUserData(user.id);
 		const index = Number(args[1]);
 		const ofncs = data.get("ofncs") ? data.get("ofncs").split(";").map(Number) : [];
-		if (!Object.values(client.config.statics.defaults.ofncs)[index - 1]) {
-			return message.reply(`Index ${index} out of bounds for length ${Object.keys(client.config.statics.defaults.ofncs).length}`);
+		if (!Object.values(client.const.ofncs)[index - 1]) {
+			return message.reply(`Index ${index} out of bounds for length ${Object.keys(client.const.ofncs).length}`);
 		}
 		if (!ofncs[index - 1]) ofncs[index - 1] = 0;
 		message.reply({
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${user.tag} has been punished for "${Object.values(client.config.statics.defaults.ofncs)[index - 1][0]}"; they were sent the following message:`),
+					.setDescription(`${user.tag} has been punished for "${Object.values(client.const.ofncs)[index - 1][0]}"; they were sent the following message:`),
 			],
 		});
-		const mem = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(user.id);
-		const level = Object.values(client.config.statics.defaults.ofncs)[index - 1][1];
+		const mem = await client.guilds.cache.get(client.const.supportServer).members.fetch(user.id);
+		const level = Object.values(client.const.ofncs)[index - 1][1];
 		async function ban() {
 			try {
 				const banEmbed = new MessageEmbed()
-					.setColor(client.config.statics.defaults.colors.red)
-					.setDescription(`You have received a permanent ban from ${message.guild.name}. If you believe that this is a mistake, please contact ${client.users.cache.get(client.config.owner).tag} (don't spam my DMs).`)
+					.setColor(client.const.colors.red)
+					.setDescription(`You have received a permanent ban from ${message.guild.name}. If you believe that this is a mistake, please contact ${client.users.cache.get(client.utils.owner).tag} (don't spam my DMs).`)
 					.addField("Moderator", message.author.tag, true)
-					.addField("Reason", Object.values(client.config.statics.defaults.ofncs)[index - 1][0], true);
+					.addField("Reason", Object.values(client.const.ofncs)[index - 1][0], true);
 				await message.channel.send({ embeds: [ banEmbed ] });
 				await mem.send({ embeds: [ banEmbed ] }).catch(() => message.channel.send(`Unable to send messages to this user: ${user.tag} (${user.id})`));
 				await mem.ban({
-					reason: `${Object.values(client.config.statics.defaults.ofncs)[index - 1][0]}\nResponsible moderator: U: ${message.author.tag} (${message.author.id}), target: ${user.tag} (${user.id})`,
+					reason: `${Object.values(client.const.ofncs)[index - 1][0]}\nResponsible moderator: U: ${message.author.tag} (${message.author.id}), target: ${user.tag} (${user.id})`,
 					days: 0,
 				});
 			}
@@ -49,19 +49,19 @@ export default {
 			}
 		}
 		async function muted(hrs) {
-			await mem.roles.add(client.config.statics.defaults.roles.muted).catch(() => {return;});
+			await mem.roles.add(client.const.roles.muted).catch(() => {return;});
 			await client.db.USERS.update({
-				mt: `${Math.trunc((message.createdTimestamp + ms(`${hrs}h`)) / 60_000)};${Object.values(client.config.statics.defaults.ofncs)[index - 1][0]}`,
+				mt: `${Math.trunc((message.createdTimestamp + ms(`${hrs}h`)) / 60_000)};${Object.values(client.const.ofncs)[index - 1][0]}`,
 			}, {
 				where: {
 					id: user.id,
 				},
 			});
 			const membed = new MessageEmbed()
-				.setColor(client.config.statics.defaults.colors.red)
-				.setDescription(`You have received a ${hrs} hour mute from ${message.guild.name}. You may leave and re-join the server after said time has passed to have your mute auto-removed. If you believe that this was an unjust punishment, please PM ${client.users.cache.get(client.config.owner).tag} (don't spam though, otherwise I'll just ignore you).`)
+				.setColor(client.const.colors.red)
+				.setDescription(`You have received a ${hrs} hour mute from ${message.guild.name}. You may leave and re-join the server after said time has passed to have your mute auto-removed. If you believe that this was an unjust punishment, please PM ${client.users.cache.get(client.utils.owner).tag} (don't spam though, otherwise I'll just ignore you).`)
 				.addField("Moderator", `${message.author.tag}`, true)
-				.addField("Reason", Object.values(client.config.statics.defaults.ofncs)[index - 1][0]);
+				.addField("Reason", Object.values(client.const.ofncs)[index - 1][0]);
 			try {
 				client.users.cache.get(user.id).send({ embeds: [ membed ] });
 				message.channel.send({ embeds: [ membed ] });
@@ -72,10 +72,10 @@ export default {
 		}
 		async function warn() {
 			const em = new MessageEmbed()
-				.setColor(client.config.statics.defaults.colors.red)
-				.setDescription(`You have received a warning from ${message.guild.name}. If you believe that this was a mistake, please PM ${client.users.cache.get(client.config.owner).tag} (don't spam though, otherwise I'll just ignore you).`)
+				.setColor(client.const.colors.red)
+				.setDescription(`You have received a warning from ${message.guild.name}. If you believe that this was a mistake, please PM ${client.users.cache.get(client.utils.owner).tag} (don't spam though, otherwise I'll just ignore you).`)
 				.addField("Moderator", `${message.author.tag}`, true)
-				.addField("Reason", Object.values(client.config.statics.defaults.ofncs)[index - 1][0]);
+				.addField("Reason", Object.values(client.const.ofncs)[index - 1][0]);
 			try {
 				client.users.cache.get(user.id).send({ embeds: [ em ] });
 				message.channel.send({ embeds: [ em ] });

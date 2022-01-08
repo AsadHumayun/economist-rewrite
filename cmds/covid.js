@@ -8,7 +8,7 @@ export default {
 	category: "fun",
 	async run(client, message, args) {
 		if (!message.author.data.get("cst").split(";").includes("covid")) return message.reply("You're not allowed to use this command! You can unlock it by getting infected with COVID-19!");
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You must mention somebody to infect!");
 		const data = await client.db.getUserData(user.id);
 		const cst = data.get("cst") ? data.get("cst").split(";") : [];

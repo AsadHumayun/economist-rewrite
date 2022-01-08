@@ -21,15 +21,15 @@ export default {
 				new MessageEmbed()
 					.setColor(message.author.color)
 					.setTitle("Bot Stats")
-					.setAuthor({ name: client.user.tag, iconURL: client.user.avatarURL({ dynamic: true }), url: client.config.statics.ssInvite })
+					.setAuthor({ name: client.user.tag, iconURL: client.user.avatarURL({ dynamic: true }), url: client.utils.ssInvite })
 					.addField("❯ Users Registered", rgu.toString(), true)
-					.addField("❯ Commands Used", `${client.config.comma(cmd)}/${client.config.comma(cmdCount)}`, true)
+					.addField("❯ Commands Used", `${client.utils.comma(cmd)}/${client.utils.comma(cmdCount)}`, true)
 					.addField("❯ CPU Usage", `\`${cpu}%\``, true)
 					.addField("❯ Created On", client.user.createdAt.toDateString(), true)
 					.addField("❯ Users Cached", client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0).toString(), true)
-					.addField("❯ Uptime", client.config.cooldown(message.createdTimestamp, message.createdTimestamp + client.uptime).toString() || "< 1s", true)
+					.addField("❯ Uptime", client.utils.cooldown(message.createdTimestamp, message.createdTimestamp + client.uptime).toString() || "< 1s", true)
 					.addField("❯ Memory Usage", `**~**${Math.trunc(process.memoryUsage().heapUsed / 1024 / 1024)}/${Math.trunc(process.memoryUsage().rss / 1024 / 1024)} MB`, true)
-					.addField("❯ Total Commands", client.config.commands.size.toString(), true)
+					.addField("❯ Total Commands", client.commands.size.toString(), true)
 					.setFooter(`Ready: ${new Date(client.readyTimestamp).toISOString()}\n"Users Cached" is not entirely accurate as the same user may be counted multiple times on different guilds`),
 			],
 		});

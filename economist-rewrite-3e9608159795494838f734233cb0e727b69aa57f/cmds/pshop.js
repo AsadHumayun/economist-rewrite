@@ -11,7 +11,7 @@ module.exports = {
 					.setColor(message.author.color)
 					.setTitle("XP Shop — " + message.author.tag)
 					.setDescription(`
-			Here's a list of permissions which you can purchase via \`${message.guild.prefix}pbuy <item>\`.
+			Here's a list of permissions which you can purchase via \`${message.guild ? message.guild.prefix : client.const.prefix}pbuy <item>\`.
 			
 			${client.config.statics.ditems.map((x) => `**${client.capital(x.split(";")[1])}**: \`${x.split(";")[3]}\` XP`).join("\n")}        
 							`),

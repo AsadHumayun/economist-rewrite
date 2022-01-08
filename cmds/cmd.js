@@ -9,12 +9,12 @@ export default {
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a user and a command name/alias in order for this command to work!");
-		const usr = await client.config.fetchUser(args[0])
+		const usr = await client.utils.fetchUser(args[0])
 			.catch(() => {return;});
 		if (!usr) return message.reply("You must mention someone for this command to work!");
 		if (usr.id == client.owner) return message.reply("just dont.");
-		const command = client.config.commands.get(args[1].toLowerCase()) || client.config.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(args[1].toLowerCase()));
-		if (!command) return message.reply(`A command by that name or alias was not found. Take a look in \`${message.guild.prefix}commands\` for a list of existing commands.`);
+		const command = client.commands.get(args[1].toLowerCase()) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(args[1].toLowerCase()));
+		if (!command) return message.reply(`A command by that name or alias was not found. Take a look in \`${message.guild ? message.guild.prefix : client.const.prefix}commands\` for a list of existing commands.`);
 		const data = await client.db.getUserData(usr.id);
 		let bcmd = data.get("bcmd") ? data.get("bcmd").split(";") : [];
 		if (!bcmd.includes(command.name)) {

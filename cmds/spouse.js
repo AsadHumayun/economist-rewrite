@@ -7,7 +7,7 @@ export default {
 	category: "ecn",
 	description: "See who someone is married to",
 	async run(client, message, args) {
-		let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
+		let usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) usr = message.author;
 		const data = await client.db.getUserData(usr.id);
 		const spouse = data.get("spse");

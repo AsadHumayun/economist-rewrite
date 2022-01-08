@@ -12,12 +12,12 @@ export default {
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a role<keyword> and member in order for this command to work!");
 		"~giverole <user> <keyword> <hoist>";
-		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [ ] } });
 		const data = await client.db.getUserData(usr.id);
 		const Name = `${usr.tag}'s New Custom Role`;
 		let roles = data.get("cstmrl") ? data.get("cstmrl").split(";") : [];
-		roles = client.config.listToMatrix(roles, 2);
+		roles = client.utils.listToMatrix(roles, 2);
 		const kw = args[1].toLowerCase();
 		const kws = roles.map((x) => x[0]);
 		// kw means keyword, kws means keywords.
@@ -49,7 +49,7 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${client.config.statics.defaults.emoji.tick} ${usr.tag} now has an assignable role (ID ${role.id})`),
+					.setDescription(`${client.const.emoji.tick} ${usr.tag} now has an assignable role (ID ${role.id})`),
 			],
 		});
 	},

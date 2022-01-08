@@ -13,18 +13,18 @@ export default {
 	async run(client, message, args) {
 		const coold = message.author.data.get("sntc");
 		if (coold) {
-			const data = client.config.cooldown(message.createdTimestamp, coold * 60_000);
+			const data = client.utils.cooldown(message.createdTimestamp, coold * 60_000);
 			if (data) {
 				return message.reply(`You must wait ${data} before you can sentence again!`);
 			}
 		}
 		if (!args.length) return message.reply("You must mention your target in order for this command to work!");
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		const data = await client.db.getUserData(user.id);
 		await client.db.USERS.update({
 			// 21600000ms = 6h
-			sntc: client.config.parseCd(message.createdTimestamp, 21600000),
+			sntc: client.utils.parseCd(message.createdTimestamp, 21600000),
 		}, {
 			where: {
 				id: message.author.id,
@@ -35,8 +35,8 @@ export default {
 		const bal = data.get("bal") || 0;
 		let amtLost = Math.floor(bal / 5);
 		if (bal - amtLost < 0) amtLost = bal;
-		//		await client.config.dm()
-		await client.config.dm({
+		//		await client.utils.dm()
+		await client.utils.dm({
 			userId: user.id,
 			message: {
 				embeds: [
@@ -48,7 +48,7 @@ export default {
 			channel: message.channel,
 		});
 		await delay(this._msgSendDelay);
-		await client.config.dm({
+		await client.utils.dm({
 			userId: user.id,
 			message: {
 				embeds: [
@@ -63,7 +63,7 @@ export default {
 
 		if (didntWork > 90) {
 			// 10% chance doesn't work, I believe.
-			await client.config.dm({
+			await client.utils.dm({
 				userId: user.id,
 				message: {
 					embeds: [
@@ -76,7 +76,7 @@ export default {
 			});
 			await delay(this._msgSendDelay);
 
-			await client.config.dm({
+			await client.utils.dm({
 				userId: user.id,
 				message: {
 					embeds: [
@@ -94,12 +94,12 @@ export default {
 			if (stunTime < 4) stunTime = 4;
 			stunTime *= 60_000;
 			//		stn: function (id, amt, client) {
-			await client.config.stn({
+			await client.utils.stn({
 				userId: user.id,
 				minutes: Math.trunc(stunTime / 60_000),
 				stnb: "in jail",
 			});
-			await client.config.dm({
+			await client.utils.dm({
 				userId: user.id,
 				message: {
 					embeds: [
@@ -112,13 +112,13 @@ export default {
 			});
 			await delay(this._msgSendDelay);
 
-			await client.config.dm({
+			await client.utils.dm({
 				userId: user.id,
 				message: {
 					embeds: [
 						new MessageEmbed()
 							.setColor(message.author.color)
-							.setDescription(`:dollar: ${client.config.comma(amtLost) || "0"} have been moved to ${message.author.tag}'s account since ${user.tag} was unable to win the court case lol`),
+							.setDescription(`:dollar: ${client.utils.comma(amtLost) || "0"} have been moved to ${message.author.tag}'s account since ${user.tag} was unable to win the court case lol`),
 					],
 				},
 				channel: message.channel,
@@ -137,7 +137,7 @@ export default {
 					id: message.author.id,
 				},
 			});
-			await client.config.dm({
+			await client.utils.dm({
 				userId: user.id,
 				message: {
 					embeds: [

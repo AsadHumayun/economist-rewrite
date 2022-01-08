@@ -10,12 +10,12 @@ export default {
 	async run(client, message, args) {
 		const result = Math.floor(Math.random(1) * 10);
 		const cooldown = message.author.data.get("rbc");
-		const cd = client.config.cooldown(message.createdTimestamp, cooldown * 60_000);
+		const cd = client.utils.cooldown(message.createdTimestamp, cooldown * 60_000);
 		if (cd) {
 			return message.reply(`You must wait another ${cd} before robbing someone again!`);
 		}
 		if (!args.length) return message.reply("You must mention a user in order for this command to work!");
-		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply("You must mention a user in order for this command to work!");
 		if (message.author.id == usr.id) return message.reply("You can't rob yourself!");
 		const data = await client.db.getUserData(usr.id);
@@ -29,7 +29,7 @@ export default {
 		if (authorBal < 1000) return message.reply("You must have at least :dollar: 1,000 in your account before robbing from someone!");
 		await client.db.USERS.update({
 			// 3 hour cooldown (10800000ms = 3h)
-			rbc: client.config.parseCd(message.createdTimestamp, 10800000),
+			rbc: client.utils.parseCd(message.createdTimestamp, 10800000),
 		}, {
 			where: {
 				id: message.author.id,
@@ -58,24 +58,24 @@ export default {
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`${message.author.tag} has stolen :dollar: ${client.config.comma(client.config.noExponents(stolen))} from ${usr.tag}!`),
+						.setDescription(`${message.author.tag} has stolen :dollar: ${client.utils.comma(client.utils.noExponents(stolen))} from ${usr.tag}!`),
 				],
 			});
-			client.config.dm({
+			client.utils.dm({
 				userId: usr.id,
 				message: {
 					embeds: [
 						new MessageEmbed()
-							.setColor(client.config.statics.defaults.colors.red)
+							.setColor(client.const.colors.red)
 							.setTitle("Uh Oh!")
-							.setDescription(`${message.author.tag} has stolen :dollar: ${client.config.comma(client.config.noExponents(stolen))} from you!`),
+							.setDescription(`${message.author.tag} has stolen :dollar: ${client.utils.comma(client.utils.noExponents(stolen))} from you!`),
 					],
 				},
 			});
 		}
 		else {
 			// user got caught by the police!
-			await client.config.stn({
+			await client.utils.stn({
 				userId: message.author.id,
 				minutes: 5,
 				stnb: "arrested",

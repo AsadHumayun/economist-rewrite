@@ -7,7 +7,7 @@ module.exports = {
 	category: "own",
 	cst: "administrator132465798",
 	async run(client, message, args) {
-		if (args.length < 2) return message.reply(`You must follow the following format: \`${message.guild.prefix}give <user> <...upgrade>\``);
+		if (args.length < 2) return message.reply(`You must follow the following format: \`${message.guild ? message.guild.prefix : client.const.prefix}give <user> <...upgrade>\``);
 		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
 

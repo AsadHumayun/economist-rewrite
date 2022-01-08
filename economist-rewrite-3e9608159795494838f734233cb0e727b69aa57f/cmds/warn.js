@@ -8,7 +8,7 @@ module.exports = {
 	cst: "tmod",
 	async run(client, message, args) {
 		if (args.length < 2) {
-			return message.reply(`${client.config.statics.defaults.emoji.err} Incorrect usage; try using \`${message.guild.prefix}warn <user> <reason>\``)
+			return message.reply(`${client.config.statics.defaults.emoji.err} Incorrect usage; try using \`${message.guild ? message.guild.prefix : client.const.prefix}warn <user> <reason>\``)
 		};
 		let usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if(!usr) return message.reply(`${client.config.statics.defaults.emoji.err} I can't seem to find that user...`);

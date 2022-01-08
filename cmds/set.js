@@ -10,7 +10,7 @@ export default {
 	category: "own",
 	async run(client, message, args) {
 		if (args.length < 3) return message.reply("You must specify a user, key and value.");
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You must specify a user for this command to work!");
 		await client.db.getUserData(user.id);
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
@@ -54,7 +54,7 @@ export default {
 					});
 				}
 				else {
-					message.reply(`Successfully set ${key} ${user.id} as ${client.config.trim(val, 1900)}`);
+					message.reply(`Successfully set ${key} ${user.id} as ${client.utils.trim(val, 1900)}`);
 				}
 			});
 		}

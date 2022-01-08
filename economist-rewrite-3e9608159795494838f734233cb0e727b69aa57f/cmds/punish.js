@@ -9,7 +9,7 @@ module.exports = {
 	ssOnly: true,
 	cst: "tmod",
 	async run(client, message, args) {
-		if (args.length < 2) return message.reply(`You must specify a User and an offence under the format \`${message.guild.prefix}punish <user> <punishment index>\` in order for this command to work!`);
+		if (args.length < 2) return message.reply(`You must specify a User and an offence under the format \`${message.guild ? message.guild.prefix : client.const.prefix}punish <user> <punishment index>\` in order for this command to work!`);
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
 		if (isNaN(args[1])) return message.reply(`Invalid index "${args[1]}"`, { allowedMentions: { parse: [] } });
