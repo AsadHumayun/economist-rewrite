@@ -8,18 +8,18 @@ export default {
 	description: "Allows you to go fishing!\nCosts :dollar: 50",
 	category: "ecn",
 	cst: "fishrod",
-	cstMessage: "You need a {client.config.statics.defaults.emoji.fishing_rod} in order to go fishing! `{message.guild.prefix}shop`",
+	cstMessage: "You need a {client.const.emoji.fishing_rod} in order to go fishing! `{message.guild ? message.guild.prefix : client.const.prefix}shop`",
 	async run(client, message) {
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (!cst.includes("fishrod")) return message.reply();
 
 		const cd = message.author.data.get("fishc") || 0;
-		const scnd = client.config.cooldown(message.createdTimestamp, cd * 60_000);
+		const scnd = client.utils.cooldown(message.createdTimestamp, cd * 60_000);
 		if (scnd) {
 			return message.reply(`Please wait another ${scnd} before fishing, otherwise your rod will break!`);
 		}
 		await client.db.USERS.update({
-			fishc: client.config.parseCd(message.createdTimestamp, 20_000, true),
+			fishc: client.utils.parseCd(message.createdTimestamp, 20_000, true),
 		}, {
 			where: {
 				id: message.author.id,
@@ -33,7 +33,7 @@ export default {
 			":fish:",
 		];
 		const bal = message.author.data.get("bal") || 0;
-		message.reply({ embeds: [ new MessageEmbed().setDescription(`${message.author.tag} locates their ${client.config.statics.defaults.emoji.fishing_rod} and goes fishing...`).setColor(message.author.color) ] });
+		message.reply({ embeds: [ new MessageEmbed().setDescription(`${message.author.tag} locates their ${client.const.emoji.fishing_rod} and goes fishing...`).setColor(message.author.color) ] });
 		await delay(2000);
 		const Fish = Math.floor(Math.random() * fishes.length);
 		const fish = fishes[Fish];

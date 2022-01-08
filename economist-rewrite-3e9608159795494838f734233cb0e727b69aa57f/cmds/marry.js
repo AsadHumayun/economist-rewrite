@@ -9,7 +9,7 @@ module.exports = {
 		const spouse = await client.db.get("spse" + message.author.id);
 		if (spouse) {
 			const spse = await client.config.fetchUser(spouse);
-			return message.reply(`Oi! Don't even think about cheating on ${spse.tag}. You can divorce them by using \`${message.guild.prefix}divorce\``);
+			return message.reply(`Oi! Don't even think about cheating on ${spse.tag}. You can divorce them by using \`${message.guild ? message.guild.prefix : client.const.prefix}divorce\``);
 		}
 		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
@@ -40,7 +40,7 @@ module.exports = {
 						embeds: [
 							new MessageEmbed()
 								.setColor(message.author.color)
-								.setDescription(`:sparkling_heart: ${message.author.tag} is now married to ${usr.tag}! \`${message.guild.prefix}spouse\``),
+								.setDescription(`:sparkling_heart: ${message.author.tag} is now married to ${usr.tag}! \`${message.guild ? message.guild.prefix : client.const.prefix}spouse\``),
 						],
 					});
 				}

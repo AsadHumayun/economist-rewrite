@@ -9,7 +9,7 @@ module.exports = {
 	async run(client, message) {
 		let cst = await client.db.get("cst" + message.author.id);
 		cst = cst ? cst.split(";") : [];
-		if (!cst.includes("fishrod")) return message.reply(`You need a ${client.config.statics.defaults.emoji.fishing_rod} in order to go fishing! \`${message.guild.prefix}shop\``);
+		if (!cst.includes("fishrod")) return message.reply(`You need a ${client.config.statics.defaults.emoji.fishing_rod} in order to go fishing! \`${message.guild ? message.guild.prefix : client.const.prefix}shop\``);
 
 		const cd = await client.db.get("fishc" + message.author.id);
 		const scnd = client.config.cooldown(message.createdTimestamp, cd * 60_000);

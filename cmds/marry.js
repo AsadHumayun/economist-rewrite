@@ -10,15 +10,15 @@ export default {
 		if (!args.length) return message.reply("You msut mention somebody that you'd like to marry in order for this command to work!");
 		const spouse = message.author.data.get("spse");
 		if (spouse) {
-			const spse = await client.config.fetchUser(spouse);
-			return message.reply(`Oi! Don't even think about cheating on ${spse.tag}. You can divorce them by using \`${message.guild.prefix}divorce\``);
+			const spse = await client.utils.fetchUser(spouse);
+			return message.reply(`Oi! Don't even think about cheating on ${spse.tag}. You can divorce them by using \`${message.guild ? message.guild.prefix : client.const.prefix}divorce\``);
 		}
-		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
 		if (usr.id == message.author.id) return message.reply("You can't marry yourself! Sorreh.");
 		const data = await client.db.getUserData(usr.id);
 		let spse0 = data.get("spse");
-		spse0 = await client.config.fetchUser(spse0).catch(() => {return;});
+		spse0 = await client.utils.fetchUser(spse0).catch(() => {return;});
 		if (spse0) {
 			return message.reply(`${usr.tag} is already married to ${spse0.tag}`);
 		}

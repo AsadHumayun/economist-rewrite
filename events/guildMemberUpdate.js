@@ -2,12 +2,12 @@ export default {
 	name: "guildMemberUpdate",
 	once: false,
 	async execute(client, oldMember, newMember) {
-		if (oldMember.guild.id != client.config.statics.supportServer) return;
+		if (oldMember.guild.id != client.const.supportServer) return;
 		// doesn't matter which one we use, oldMember.id and newMember.id will always remain the same.
 		const user = await client.db.getUserData(oldMember.id);
 		let cst = user.get("cst");
 		cst = cst ? cst.split(";") : [];
-		if (newMember.roles.cache.has(client.config.statics.defaults.roles.SERVER_BOOSTER) && (!cst.includes("booster"))) {
+		if (newMember.roles.cache.has(client.const.roles.SERVER_BOOSTER) && (!cst.includes("booster"))) {
 			cst.push("booster");
 		}
 		else if (cst.includes("booster")) {
@@ -33,7 +33,7 @@ export default {
 		}
 		const oldRoles = [...oldMember.roles.cache.keys()].filter((r) => r != newMember.guild.id);
 		const newRoles = [...newMember.roles.cache.keys()].filter((r) => r != newMember.guild.id);
-		client.config.statics.cstSpecials.forEach((s) => {
+		client.utils.cstSpecials.forEach((s) => {
 			cst = cst.map((f) => f == s[0] ? s[1] : f);
 		});
 		for (const f of cst) {
@@ -48,8 +48,8 @@ export default {
 		for (const f in cst) {
 			if (newMember.guild.roles.cache.get(cst[f]) && (!newRoles.includes(cst[f]))) cst = cst.filter((f0) => ![cst[f]].includes(f0));
 		}
-		cst = cst.filter((f) => !["", client.config.statics.defaults.roles.memberRole].includes(f));
-		client.config.statics.cstSpecials.forEach((s) => {
+		cst = cst.filter((f) => !["", client.const.roles.memberRole].includes(f));
+		client.utils.cstSpecials.forEach((s) => {
 			cst = cst.map((f) => f == s[1] ? s[0] : f);
 		});
 		// remove duplicates:

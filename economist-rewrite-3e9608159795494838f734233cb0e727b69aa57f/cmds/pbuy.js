@@ -6,7 +6,7 @@ module.exports = {
 	description: "Purchase something and use up some of your XP",
 	category: "util",
 	async run(client, message, args) {
-		if (!args.length) return message.reply(`You must follow the format of \`${message.guild.prefix}pbuy <item>\` in order for this command to work!`);
+		if (!args.length) return message.reply(`You must follow the format of \`${message.guild ? message.guild.prefix : client.const.prefix}pbuy <item>\` in order for this command to work!`);
 		let xp = await client.db.get("xp" + message.author.id) || "1;0";
 		const lvl = xp.split(";")[0];
 		xp = Number(xp.split(";")[1]);
@@ -20,7 +20,7 @@ module.exports = {
 		if (cst.includes(name)) return message.reply(`You already have a \`${name}\` on this account.`);
 		const role = client.config.statics.ditems[res].split(";")[2];
 		const price = client.config.statics.ditems[res].split(";")[3];
-		if (xp - price < 0) return message.reply(`You don't have enough XP to purchase the \`${name.toUpperCase()}\` permission! You are required to have a minimum of ${price} XP before purchasing this item; to view your current XP, type \`${message.guild.prefix}xp\``);
+		if (xp - price < 0) return message.reply(`You don't have enough XP to purchase the \`${name.toUpperCase()}\` permission! You are required to have a minimum of ${price} XP before purchasing this item; to view your current XP, type \`${message.guild ? message.guild.prefix : client.const.prefix}xp\``);
 		const ss = client.guilds.cache.get(client.config.statics.supportServer).members.cache.get(message.author.id);
 		if (ss) ss.roles.add(role);
 		cst.push(name);

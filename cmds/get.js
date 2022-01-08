@@ -10,7 +10,7 @@ export default {
 	category: "own",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a user and a key");
-		const user = await client.config.fetchUser(args[0]);
+		const user = await client.utils.fetchUser(args[0]);
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		const data = await client.db.getUserData(user.id);
 		const key = args.slice(1).join(" ");

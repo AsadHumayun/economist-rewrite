@@ -28,32 +28,32 @@ export default {
 			let guild = await client.db.GUILDS.findOne({ where: { id: message.guild.id } });
 			if (!guild) guild = await client.db.GUILDS.create({ id: message.guild.id });
 			if (!message.guild || (message.author.bot && (!cst.includes("wl"))) || (message.system) || (message.webhookId)) return;
-			message.guild.prefix = guild.get("prefix");
-			if (message.guild?.id == client.config.statics.supportServer) {
+			message.guild ? message.guild.prefix : client.const.prefix = guild.get("prefix");
+			if (message.guild?.id == client.const.supportServer) {
 				if (/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g.test(message.content.toLowerCase()) && (!cst.includes("linkp"))) {
 					message.delete({ reason: "Author posted an invite" });
-					return client.config.commands.get("mute")
+					return client.commands.get("mute")
 						.run(client, { guild: message.guild, channel: message.channel, member: message.guild.member(client.user), author: client.user }, [ message.author.id, "0", "posting server invites" ])
 						.catch(console.error);
 				}
-				if (message.channel.parentId != client.config.statics.defaults.channels.spamCat) {
+				if (message.channel.parentId != client.const.channels.spamCat) {
 					let rateLimit = client.collection.get(message.author.id) || 0;
 					rateLimit = Number(rateLimit);
 					client.collection.set(message.author.id, rateLimit + 1);
 					if (rateLimit >= 5 && (!cst.includes("tmod"))) {
 						const limit = "5/2s";
-						await message.member.roles.add(client.config.statics.defaults.roles.muted);
+						await message.member.roles.add(client.const.roles.muted);
 						await client.db.USERS.update({
-							mt: `${(message.createdTimestamp + ms("10m")) - client.config.epoch};hitting the message send rate limit (${limit})`,
+							mt: `${(message.createdTimestamp + ms("10m")) - client.utils.epoch};hitting the message send rate limit (${limit})`,
 						}, {
 							where: {
 								id: message.author.id,
 							},
 						});
-						const msg = `You have received a 10 minute mute from ${message.guild.name} because of hitting the message send rate limit (${limit}); please DM ${client.users.cache.get(client.config.owner).tag} if you beleive that this is a mistake. If you aren't unmuted after 10 minutes, then please contact a moderator and ask them to unmute you.`;
+						const msg = `You have received a 10 minute mute from ${message.guild.name} because of hitting the message send rate limit (${limit}); please DM ${client.users.cache.get(client.utils.owner).tag} if you beleive that this is a mistake. If you aren't unmuted after 10 minutes, then please contact a moderator and ask them to unmute you.`;
 						// yeah this aint gonna work
 						// todo: fix this !!!!!!!!
-						client.config.commands.get("mute").run(client, message, [ message.author.id, 10, msg ]);
+						client.commands.get("mute").run(client, message, [ message.author.id, 10, msg ]);
 					}
 					setInterval(() => client.collection.delete(message.author.id), 2_000);
 				}
@@ -65,9 +65,9 @@ export default {
 				else if (!cst.includes("noxp")) {
 				// no cooldown; add xp.
 					const xp = data.get("xp").split(";").map(Number);
-					xp[1] += client.config.getRandomInt(14, 35);
+					xp[1] += client.utils.getRandomInt(14, 35);
 					if ((xp[1] / 200) > xp[0]) {
-						message.channel.send({ content: `Congratulations, you've levelled up! You're now level **${xp[0] + 1}**! View your XP and level by typing \`${message.guild.prefix}level\``, allowedMentions: { repliedUser: false } });
+						message.channel.send({ content: `Congratulations, you've levelled up! You're now level **${xp[0] + 1}**! View your XP and level by typing \`${message.guild ? message.guild.prefix : client.const.prefix}level\``, allowedMentions: { repliedUser: false } });
 						xp[0]++;
 					}
 					await client.db.USERS.update({
@@ -80,7 +80,7 @@ export default {
 					});
 				}
 				if (message.mentions.members.size + message.mentions.users.size + message.mentions.roles.size > 5) {
-					client.config.commands.get("mute").run(client, message, [ message.author.id, "0", "[automatic-mute]: Mass Mention" ]);
+					client.commands.get("mute").run(client, message, [ message.author.id, "0", "[automatic-mute]: Mass Mention" ]);
 				}
 			}
 		}
@@ -114,7 +114,7 @@ export default {
 				},
 			});
 			message.channel.send({
-				content: `Someone just dropped their :briefcase: briefcase in this channel! Hurry up and pick it up with \`${message.guild.prefix}steal\``,
+				content: `Someone just dropped their :briefcase: briefcase in this channel! Hurry up and pick it up with \`${message.guild ? message.guild.prefix : client.const.prefix}steal\``,
 			});
 		}
 
@@ -129,9 +129,9 @@ export default {
 				],
 			});
 		}
-		const args = message.content.slice(!this.isDM(message.channel) ? message.guild.prefix.length : "~".length).trim().split(/ +/);
+		const args = message.content.slice(!this.isDM(message.channel) ? message.guild ? message.guild.prefix : client.const.prefix.length : "~".length).trim().split(/ +/);
 		const commandName = args.shift().toLowerCase();
-		const command = client.config.commands.get(commandName) || client.config.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 		const stnb = data.get("stnb") || "stunned";
 		if (cst.includes("pstn") && (!cst.includes("antistun"))) {
 			return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
@@ -143,7 +143,7 @@ export default {
 			if (stun && (!cst.includes("antistun"))) {
 				stun = Number(stun) * 60_000;
 				if (stun - message.createdTimestamp >= 1000) {
-					return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.config.cooldown(message.createdTimestamp, stun)} left)` });
+					return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.utils.cooldown(message.createdTimestamp, stun)} left)` });
 				}
 			}
 		}
@@ -216,12 +216,12 @@ export default {
 			});
 		}
 
-		if (command.cst && (!cst.includes(command.cst) && ((message.author.id != client.config.owner)))) {
+		if (command.cst && (!cst.includes(command.cst) && ((message.author.id != client.utils.owner)))) {
 			return message.reply(command.cstMessage || "You're not allowed to use this command!");
 		}
 
-		if (command.ssOnly && (message.guild.id != client.config.statics.supportServer)) {
-			return message.reply({ content: "This command only works in our support server! Join by using `" + message.guild.prefix + "support`!" });
+		if (command.ssOnly && (message.guild.id != client.const.supportServer)) {
+			return message.reply({ content: "This command only works in our support server! Join by using `" + message.guild ? message.guild.prefix : client.const.prefix + "support`!" });
 		}
 
 		function err(e) {
@@ -258,11 +258,11 @@ export default {
 			await command.run(client, message, args);
 		}
 		catch (e) {
-			client.channels.cache.get(client.config.statics.defaults.channels.error).send({
+			client.channels.cache.get(client.const.channels.error).send({
 				content: `[${new Date().toISOString()}]: Exception< (type: caughtError, onCommand?: true;) >:\n\`${e}\``,
 				embeds: [
 					new MessageEmbed()
-						.setColor(client.config.statics.defaults.colors.invisible)
+						.setColor(client.const.colors.invisible)
 						.setDescription(LOG.join("")),
 					// embed description has a max of 4k chars, very very unlikely that a normal message sent by a user will ever exceed that
 				],
@@ -280,7 +280,7 @@ export default {
 			});
 		}
 		catch (err) {
-			client.channels.cache.get(client.config.statics.defaults.channels.error).send({
+			client.channels.cache.get(client.const.channels.error).send({
 				content: `${message.createdTimestamp / 60_000}: error while updating db values "${message.author.id}.cmds"`,
 			});
 		}
@@ -292,10 +292,10 @@ export default {
 				const fLog = Util.splitMessage(`[${client.uptime}]: ${Math.trunc(message.createdTimestamp / 60000)}: ${this.isDM(message.channel) ? `[DMChannel (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
 				if (!existsSync(`./.adminlogs/${today}.txt`)) {
 					const b = Date.now();
-					client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
+					client.channels.cache.get(client.const.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
 					writeFile(`./.adminlogs/${today}.txt`, fLog.join(""), ((err) => {
-						if (err) console.error(err) && client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
-						client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
+						if (err) console.error(err) && client.channels.cache.get(client.const.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
+						client.channels.cache.get(client.const.channels.adminlog).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
 					}));
 				}
 				else {
@@ -303,14 +303,14 @@ export default {
 				}
 				await delay(100);
 				// delaying ensures that the log message is sent AFTER writing to the txt file.
-				Util.splitMessage(`${client.uptime}: ${!this.isDM(message.channel) ? `[${message.guild.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" }).forEach(async (cntnt) => {
-					await client.channels.cache.get(client.config.statics.defaults.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
+				Util.splitMessage(`${client.uptime} ${Math.trunc(message.createdTimestamp / 60_000)}: ${!this.isDM(message.channel) ? `[${message.guild.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" }).forEach(async (cntnt) => {
+					await client.channels.cache.get(client.const.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
 				});
 			}
 			// this optimised the below if statement by making it less cluttery and by handling half of it.
 			if (command.logs || (["tmod", "moderator", "srmod"].includes(command.cst))) {
 				if (!command.logs) command.logs = [];
-				if (["tmod", "moderator", "srmod"].includes(command.cst)) command.logs.push(client.config.statics.defaults.channels.modlog);
+				if (["tmod", "moderator", "srmod"].includes(command.cst)) command.logs.push(client.const.channels.modlog);
 				command.logs = [...new Set(command.logs)];
 				const pst = [];
 				for (const id of command.logs) {

@@ -7,7 +7,7 @@ module.exports = {
 	category: "own",
 	cst: "adr",
 	async run(client, message, args) {
-		if (args.length < 3) return message.reply({ content: "Format: `" + message.guild.prefix + "addarole <user> <id> <kw>`" });
+		if (args.length < 3) return message.reply({ content: "Format: `" + message.guild ? message.guild.prefix : client.const.prefix + "addarole <user> <id> <kw>`" });
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) {
 			return message.reply({ content: "User not found" });

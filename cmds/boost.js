@@ -8,10 +8,10 @@ export default {
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		function ln() {
-			return client.config.comma(Math.floor(Math.random() * 1000000000000)) + " minutes";
+			return client.utils.comma(Math.floor(Math.random() * 1000000000000)) + " minutes";
 		}
 		if (!args.length) return message.reply("You must mention a user to boost!");
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You have not mentioned a user!!");
 		const data = await client.db.getUserData(user.id);
 		const cst = data.get("cst") ? data.get("cst").split(";") : [];

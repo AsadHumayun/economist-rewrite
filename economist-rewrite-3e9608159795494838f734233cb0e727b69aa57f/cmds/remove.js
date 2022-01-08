@@ -11,7 +11,7 @@ module.exports = {
 		if (args.length < 2) return message.reply("You must specify a user and a key to remove");
 		const user = await client.config.fetchUser(args[0]);
 		let key = args.slice(1).join(' ');
-		if (!key) return message.reply("You must provide something to remove under the format of `" + message.guild.prefix + "delete <key>" + '`');
+		if (!key) return message.reply("You must provide something to remove under the format of `" + message.guild ? message.guild.prefix : client.const.prefix + "delete <key>" + '`');
 		let cst = await client.db.get("cst" + message.author.id);
       		    cst = cst ? cst.split(";") : [];
 		try {

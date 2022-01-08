@@ -37,7 +37,7 @@ module.exports = {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has set their colour preferences to \`${client.config.Inspect(colors)}\`. Use \`${message.guild.prefix}color\` to view a list of all your currently set colours.`),
+					.setDescription(`${message.author.tag} has set their colour preferences to \`${client.config.Inspect(colors)}\`. Use \`${message.guild ? message.guild.prefix : client.const.prefix}color\` to view a list of all your currently set colours.`),
 			],
 		});
 		colors.push("0");

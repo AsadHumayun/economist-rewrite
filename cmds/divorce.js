@@ -8,8 +8,8 @@ export default {
 	category: "ecn",
 	async run(client, message) {
 		const spouse = message.author.data.get("spse");
-		const usr = await client.config.fetchUser(spouse).catch(() => {return;});
-		if (!usr) return message.reply(`You're not married to anyone yet!\nUse \`${message.guild.prefix}marry <user>\` to marry someone.`);
+		const usr = await client.utils.fetchUser(spouse).catch(() => {return;});
+		if (!usr) return message.reply(`You're not married to anyone yet!\nUse \`${message.guild ? message.guild.prefix : client.const.prefix}marry <user>\` to marry someone.`);
 		const buttons = [
 			new MessageButton()
 				.setCustomId("0")

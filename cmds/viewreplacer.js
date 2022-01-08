@@ -13,7 +13,7 @@ export default {
 			return message.reply({
 				embed: new MessageEmbed()
 				.setColor(message.author['color'])
-				.setDescription(`No replacer named "${kw}" found. Look in \`${message.guild.prefix}replacers\` to view a list`)
+				.setDescription(`No replacer named "${kw}" found. Look in \`${message.guild ? message.guild.prefix : client.const.prefix}replacers\` to view a list`)
 			})
 		} else {
 			message.reply({

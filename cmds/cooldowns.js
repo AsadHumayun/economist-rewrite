@@ -9,14 +9,14 @@ export default {
 	category: "utl",
 	async run(client, message) {
 		const cds = [];
-		for (let cd of client.config.statics.defaults.cds) {
+		for (let cd of client.const.cds) {
 			cd = cd.split(";");
-			const cdm = client.config.cooldown(message.createdTimestamp, message.author.data.get(cd[0]) * 60_000, true);
+			const cdm = client.utils.cooldown(message.createdTimestamp, message.author.data.get(cd[0]) * 60_000, true);
 			if (cdm) {
 				cds.push(`${cd[1]}: ${cdm}`);
 			}
 		}
-		if (cds.length < 1) return message.reply(`You have no active cooldowns; displayed cooldowns are [dose chillpill, ${client.config.statics.defaults.cds.map((f) => f.split(";")[1]).join(", ")}]`);
+		if (cds.length < 1) return message.reply(`You have no active cooldowns; displayed cooldowns are [dose chillpill, ${client.const.cds.map((f) => f.split(";")[1]).join(", ")}]`);
 		message.reply({
 			embeds: [
 				new MessageEmbed()

@@ -14,7 +14,7 @@ export default {
 
 		if (!args.length) return message.reply("You must provide a valid ID of what you would like to purchase (the ID of an item is the number in brackets next to that item) in order for this command to work!");
 		const id = Number(args[0]);
-		const items = Object.entries(client.config.statics.shop);
+		const items = Object.entries(client.utils.shop);
 		// eslint-disable-next-line no-shadow
 		const ids = items.map(([, { id }]) => id);
 		// <LogicError <IfStatement>>: if statement not running

@@ -11,7 +11,7 @@ export default {
 	async run(client, message, args) {
 		const cd = message.author.data.get("dpc") || 0;
 		if (cd) {
-			const data = client.config.cooldown(message.createdTimestamp, cd * 60_000);
+			const data = client.utils.cooldown(message.createdTimestamp, cd * 60_000);
 			if (data) {
 				return message.reply(`You must wait ${data} before depriving another stat!`);
 			}
@@ -19,12 +19,12 @@ export default {
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (!cst.includes("dragon")) return message.reply("You do not have a pet dragon!");
 		let pet = message.author.data.get("pet");
-		if (cst.includes("maxdragon888")) pet = client.config.statics.defaults.naxDragon;
-		const alias = await client.config.getDragonAlias(message.author.id, client);
+		if (cst.includes("maxdragon888")) pet = client.const.naxDragon;
+		const alias = await client.utils.getDragonAlias(message.author.id, client);
 		pet = pet.split(";");
 		const stat = (args[0] || "").toLowerCase();
-		let Stat = client.config.statics.upgr.find((x) => stat.startsWith(x.split(";")[0]));
-		if (!Stat) return message.reply(`The different types of stats are: ${client.config.list(client.config.statics.upgr.map((x) => x.split(";")[1]))}`);
+		let Stat = client.utils.upgr.find((x) => stat.startsWith(x.split(";")[0]));
+		if (!Stat) return message.reply(`The different types of stats are: ${client.utils.list(client.utils.upgr.map((x) => x.split(";")[1]))}`);
 		Stat = Stat.split(";");
 		const Credits = Number(pet[Stat[2]]);
 		const amt = Credits - 1;
@@ -36,7 +36,7 @@ export default {
 		// shouldn't affect users with the maxdragon -- the maxdragon is intended to be a "ghost" type thing; it doesn't change no matter what the user does.
 		if (!cst.includes("maxdragon888")) {
 			await client.db.USERS.update({
-				dpc: client.config.parseCd(message.createdTimestamp, ms("6h")),
+				dpc: client.utils.parseCd(message.createdTimestamp, ms("6h")),
 				pet: pet.join(";"),
 			}, {
 				where: {

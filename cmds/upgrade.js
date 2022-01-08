@@ -9,13 +9,13 @@ export default {
 	cst: "dragon",
 	async run(client, message, args) {
 		let data = message.author.data.get("pet").split(";").map(Number);
-		if (!data) data = client.config.statics.defaults.dragon;
-		if (message.author.data.get("cst")?.split(";").includes("maxdragon888")) data = client.config.statics.defaults.naxDragon;
+		if (!data) data = client.const.dragon;
+		if (message.author.data.get("cst")?.split(";").includes("maxdragon888")) data = client.const.naxDragon;
 		const stat = (args[0] || "").toLowerCase();
-		let Stat = client.config.statics.upgr.find((x) => stat.startsWith(x.split(";")[0]));
-		if (!Stat) return message.reply(`The different types of stats are: ${client.config.list(client.config.statics.upgr.map((x) => x.split(";")[1]))}`);
+		let Stat = client.utils.upgr.find((x) => stat.startsWith(x.split(";")[0]));
+		if (!Stat) return message.reply(`The different types of stats are: ${client.utils.list(client.utils.upgr.map((x) => x.split(";")[1]))}`);
 		Stat = Stat.split(";");
-		const alias = await client.config.getDragonAlias(message.author.id);
+		const alias = await client.utils.getDragonAlias(message.author.id);
 		let amt = isNaN(args[1]) ? 1 : Number(args[1]);
 		if (amt <= 0) amt = 1;
 		// level;health;energy;exp;data[4];intel;endur;str;affec

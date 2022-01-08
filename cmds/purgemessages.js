@@ -48,9 +48,9 @@ export default {
 				}
 				embeds.push(embed);
 			}
-			embeds = client.config.listToMatrix(embeds, 10);
+			embeds = client.utils.listToMatrix(embeds, 10);
 			source.bulkDelete(coll, true).then(async () => {
-				if (message.guild.id == client.config.statics.supportServer) {
+				if (message.guild.id == client.const.supportServer) {
 					for (const embedArray of embeds) await logs.send({ embeds: [embedArray] });
 				}
 				// can't message.reply, since the original command message will have been deleted.
@@ -64,7 +64,7 @@ export default {
 			}).catch((err) => message.reply("Sorry, but there was an error whilst performing the request: " + err));
 		}
 		if (isNaN(args[0]) || (!args[0])) return message.reply({ content: `Invalid parameter "${args[0] || "null"}"; "n" must be of type Number`, allowedMentions: { parse: [] } });
-		const logs = client.channels.cache.get(client.config.statics.defaults.channels.msgLogs);
+		const logs = client.channels.cache.get(client.const.channels.msgLogs);
 		clear(Number(args[0]), logs, message);
 	},
 };

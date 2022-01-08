@@ -10,15 +10,15 @@ export default {
 	cst: "dragon",
 	cstMessage: "You do not seem to own a pet dragon! Use the tame command to tame one!",
 	async run(client, message) {
-		const alias = await client.config.getDragonAlias(message.author.id, client);
+		const alias = await client.utils.getDragonAlias(message.author.id, client);
 		const cd = message.author.data.get("srchc");
-		const scnd = client.config.cooldown(message.createdTimestamp, cd * 60_000);
+		const scnd = client.utils.cooldown(message.createdTimestamp, cd * 60_000);
 		if (scnd) {
 			return message.reply(`Please wait another ${scnd} before searching again!`);
 		}
 		let data = message.author.data.get("pet").split(";").map(Number);
-		if (message.author.data.get("cst")?.includes("maxdragon888")) data = client.config.statics.defaults.naxDragon.split(";");
-		if (!data) data = client.config.statics.defaults.dragon;
+		if (message.author.data.get("cst")?.includes("maxdragon888")) data = client.const.naxDragon.split(";");
+		if (!data) data = client.const.dragon;
 		const en = data[2];
 		const endur = data[6];
 		const lvl = data[0];
@@ -27,7 +27,7 @@ export default {
 		const intel = data[5];
 		const consumed = Math.round((60 / (Math.log(endur + 9))));
 		if (en - consumed < 0) {
-			return message.reply("🥱 I'm too tired to go searching right now! Why not feed me by using `" + message.guild.prefix + "feed`?");
+			return message.reply("🥱 I'm too tired to go searching right now! Why not feed me by using `" + message.guild ? message.guild.prefix : client.const.prefix + "feed`?");
 		}
 		// parseFloat(((message.createdTimestamp + ms("20s"))/60_000)).toFixed(2)
 		const f = (message.author.data.get("fsh") || "0;0;0;0;0;0").split(";").map(Number);
@@ -41,7 +41,7 @@ export default {
 		await client.db.USERS.update({
 			fsh: f.join(";"),
 			// set cooldown for 20s.
-			srchc: client.config.parseCd(message.createdTimestamp, 20_000, true),
+			srchc: client.utils.parseCd(message.createdTimestamp, 20_000, true),
 		}, {
 			where: {
 				id: message.author.id,
@@ -67,7 +67,7 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag}'s ${alias[0]} has found out that ${fish} ${client.config.noExponents(amtGained)} are dwelling in the lake`),
+					.setDescription(`${message.author.tag}'s ${alias[0]} has found out that ${fish} ${client.utils.noExponents(amtGained)} are dwelling in the lake`),
 			],
 		});
 		await delay(1500);
@@ -75,7 +75,7 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag}'s ${alias[0]} instantaneously lets out a mighty roar, <a:ecn_fire:804378228336361476> searing ${fish} ${client.config.noExponents(amtGained)} and obtained ${alias[1][2]} ${client.config.noExponents(xpGained) || "0"} in the process`),
+					.setDescription(`${message.author.tag}'s ${alias[0]} instantaneously lets out a mighty roar, <a:ecn_fire:804378228336361476> searing ${fish} ${client.utils.noExponents(amtGained)} and obtained ${alias[1][2]} ${client.utils.noExponents(xpGained) || "0"} in the process`),
 			],
 		});
 		data[3] = xp + xpGained;
@@ -85,7 +85,7 @@ export default {
 			let loops = 0;
 
 			if (lvl >= 50) return;
-			client.config.statics.reqs.forEach(async (req) => {
+			client.utils.reqs.forEach(async (req) => {
 				if (xp - req <= 0) {
 					levelups = loops + 1 - lvl;
 				}

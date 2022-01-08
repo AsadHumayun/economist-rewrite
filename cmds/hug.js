@@ -9,7 +9,7 @@ export default {
 	async run(client, message, args) {
 		const m = "You must mention somebody to hug!";
 		if (!args.length) return message.reply(m);
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply(m);
 		const data = await client.db.getUserData(user.id);
 		let hgs = data.get("hgs") || 0;

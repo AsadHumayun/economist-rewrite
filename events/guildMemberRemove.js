@@ -4,8 +4,8 @@ export default {
 	name: "guildMemberRemove",
 	once: false,
 	async execute(client, member) {
-		if (member.guild.id != client.config.statics.supportServer) return;
-		client.channels.cache.get(client.config.statics.defaults.channels.memberLog).send({
+		if (member.guild.id != client.const.supportServer) return;
+		client.channels.cache.get(client.const.channels.memberLog).send({
 			embeds: [
 				new MessageEmbed()
 					.setTimestamp()

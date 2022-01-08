@@ -5,7 +5,7 @@ import { readdirSync } from "fs";
  */
 export class EventHandler {
 	/**
-	 * @param {Client} client Currently instantiated Discord client
+	 * @param {Discord.Client} client Currently instantiated Discord client
 	 * @param {?boolean} debug Whether or not to have debug mode enabled
 	 * @constructor
 	 */

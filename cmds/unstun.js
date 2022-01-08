@@ -7,7 +7,7 @@ export default {
 	description: "unstuns a user, allowing them to use commands",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must specify the user to unstun in order for this command to work!");
-		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
 		const data = await client.db.getUserData(usr.id);
 		const stn = data.get("stn");

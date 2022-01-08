@@ -8,16 +8,16 @@ export default {
 	category: "own",
 	cst: "addcredits",
 	async run(client, message, args) {
-		if (args.length < 2) return message.reply("Desired usage for this command is: `" + message.guild.prefix + "addcredits <user> [amount]`");
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		if (args.length < 2) return message.reply("Desired usage for this command is: `" + message.guild ? message.guild.prefix : client.const.prefix + "addcredits <user> [amount]`");
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("Unknown user");
 		const credits = isNaN(args[1]) ? 1 : Number(args[1]);
 		const data = await client.db.getUserData(user.id);
 		const ucst = (data.get("cst") || "").split(";").includes("dragon");
 		if (!ucst) return message.reply("That person doesn't have a dragon!");
 		const pet = data.get("pet").split(";").map(Number);
-		if (pet.length < client.config.statics.intendedPetLength) return message.reply("Malformed pet - does not have at least " + client.config.statocs.intendedPetLength + " elements.");
-		const alias = await client.config.getDragonAlias(user.id);
+		if (pet.length < client.utils.intendedPetLength) return message.reply("Malformed pet - does not have at least " + client.utils.statocs.intendedPetLength + " elements.");
+		const alias = await client.utils.getDragonAlias(user.id);
 		pet[4] += credits;
 		await client.db.USERS.update({
 			pet: pet.join(";"),

@@ -8,14 +8,14 @@ export default {
 	category: "own",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a user and a key to remove");
-		const user = await client.config.fetchUser(args[0]);
+		const user = await client.utils.fetchUser(args[0]);
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		const key = args.slice(1).join(" ");
-		if (!key) return message.reply`You must provide something to remove under the format of \`${message.guild.prefix}remove <user> <key>\``;
+		if (!key) return message.reply`You must provide something to remove under the format of \`${message.guild ? message.guild.prefix : client.const.prefix}remove <user> <key>\``;
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (key == "pet") {
 			await client.db.USERS.update({
-				pet: client.config.statics.defaults.dragon,
+				pet: client.const.dragon,
 			}, {
 				where: {
 					id: user.id,

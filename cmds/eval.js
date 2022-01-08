@@ -13,7 +13,7 @@ export default {
 		// eval command is very powerful and dangerous.
 		// allows for a user to execute a piece of code.
 		// alllowed people are only myself (the ID in config.js ClientConfiguration class),
-		const devs = [client.config.owner, "757958112992034918"];
+		const devs = [client.utils.owner, "757958112992034918"];
 
 		if (!devs.includes(message.author.id)) {
 			// they get denied access.
@@ -50,10 +50,10 @@ export default {
 				content: null,
 				embeds: [
 					new Discord.MessageEmbed()
-						.setColor(client.config.statics.defaults.colors.green)
+						.setColor(client.const.colors.green)
 						.setTitle("Successfully evaluated in " + (Date.now() - s) + " ms")
 						.setFooter(new Date(message.createdTimestamp).toISOString())
-						.setDescription(`\`\`\`\n${client.config.trim(cleaned, 4090)}\n\`\`\``),
+						.setDescription(`\`\`\`\n${client.utils.trim(cleaned, 4090)}\n\`\`\``),
 				],
 			});
 		}

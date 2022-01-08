@@ -7,7 +7,7 @@ export default {
 	description: "View someone's avatar - works for people who are not in the current server too",
 	async run(client, message, args) {
 		if (!args.length) args = [message.author.id];
-		let user = await client.config.fetchUser(args[0])
+		let user = await client.utils.fetchUser(args[0])
 			.catch(() => {return;});
 		if (!user) user = message.author;
 		message.reply({

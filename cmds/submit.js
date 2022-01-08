@@ -12,7 +12,7 @@ export default {
 		const ch = message.guild.channels.cache.find((x) => (x.topic || "").toLowerCase().split(";").includes(message.author.id));
 		if (!ch) return message.reply("You haven't even applied for staff yet!");
 		cst.push("sbmt");
-		client.channels.cache.get(client.config.channels.appNotifs).send(`Application ${ch} submitted by ${message.author.tag} (${message.author.id}). Pending review.`);
+		client.channels.cache.get(client.utils.channels.appNotifs).send(`Application ${ch} submitted by ${message.author.tag} (${message.author.id}). Pending review.`);
 		message.reply({
 			embeds: [
 				new MessageEmbed()

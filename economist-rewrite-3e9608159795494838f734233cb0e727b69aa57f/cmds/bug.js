@@ -8,11 +8,11 @@ module.exports = {
 	async run(client, message) {
 		let count = await client.db.get("bgc" + client.user.id) || 0;
 		count = Number(count);
-		const arr = message.content.slice(message.guild.prefix.length + 3).split(/\|+/);
+		const arr = message.content.slice(message.guild ? message.guild.prefix : client.const.prefix.length + 3).split(/\|+/);
 		const title = arr[0];
 		const desc = arr.slice(1).join(" ");
 		if (!title || !desc) {
-			return message.reply("You must include a title and a description for your bug separated by `|`, for example: `" + message.guild.prefix + "bug title for bug | description`");
+			return message.reply("You must include a title and a description for your bug separated by `|`, for example: `" + message.guild ? message.guild.prefix : client.const.prefix + "bug title for bug | description`");
 		}
 		let id = Math.floor(Math.random() * 100000);
 		const val = await client.db.get("bugr" + id);

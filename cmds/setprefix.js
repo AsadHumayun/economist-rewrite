@@ -25,7 +25,7 @@ export default {
 				},
 			});
 			message.reply(`Successfully set prefix for guild [**${Util.escapeMarkdown(client.guilds.cache.get(guildid).name || "<UNKNOWN GUILD>")}**] as "${prefix.toLowerCase()}"`);
-			client.channels.cache.get(client.config.statics.defaults.channels.pfx).send(`<${message.author.tag} (${message.author.id})>: ${message.channel.type == "GUILD_TEXT" ? `[${message.guild.name} (${message.guild.id})]` : `[DMChannel (${message.channel.id})]`}: ${message.content}`);
+			client.channels.cache.get(client.const.channels.pfx).send(`<${message.author.tag} (${message.author.id})>: ${message.channel.type == "GUILD_TEXT" ? `[${message.guild.name} (${message.guild.id})]` : `[DMChannel (${message.channel.id})]`}: ${message.content}`);
 		}
 		catch (e) {
 			message.reply(`Error when updating prefix for ${guildid}: \`${e}\``);

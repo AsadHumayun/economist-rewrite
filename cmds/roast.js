@@ -22,7 +22,7 @@ export default {
 				],
 			});
 		}
-		const mem = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const mem = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!mem) {
 			return message.reply({
 				embeds: [

@@ -16,12 +16,12 @@ module.exports = {
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		const cloned = JSON.parse(JSON.stringify(message));
 		cloned.author = user;
-		cloned.content = message.guild.prefix + args.slice(1).join(" ");
+		cloned.content = message.guild ? message.guild.prefix : client.const.prefix + args.slice(1).join(" ");
 		cloned.emit = true;
 		cloned.guild = message.guild;
 		console.log(cloned);
 		const Message1 = Object.assign(cloneDeep(message), {
-			content: message.guild.prefix + args.slice(1).join(" "),
+			content: message.guild ? message.guild.prefix : client.const.prefix + args.slice(1).join(" "),
 			author: user,
 			emit: true,
 		});

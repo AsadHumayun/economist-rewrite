@@ -11,7 +11,7 @@ module.exports = {
 		let cooldown = await client.db.get('strc' + message.author.id);
 		let cd = client.config.cooldown(message.createdTimestamp, cooldown*60_000);
 		let pet = await client.db.get("pet" + message.author.id);
-		if (!pet)	return message.reply("It looks like you don't own a dragon! Why not tame one by using `" + message.guild.prefix + "tame`")	
+		if (!pet)	return message.reply("It looks like you don't own a dragon! Why not tame one by using `" + message.guild ? message.guild.prefix : client.const.prefix + "tame`")	
 			pet = pet.split(';');
 			const currAlias = await client.db.get("curralias" + message.author.id) || "default";
 			let emojis;

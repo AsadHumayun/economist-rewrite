@@ -11,13 +11,13 @@ export default {
 	cstMessage: "You must own a dragon in order to use this command!",
 	async run(client, message) {
 		const cooldown = message.author.data.get("strc");
-		const cd = client.config.cooldown(message.createdTimestamp, cooldown * 60_000);
+		const cd = client.utils.cooldown(message.createdTimestamp, cooldown * 60_000);
 		const pet = message.author.data.get("pet").split(";").map(Number);
 		if (!pet)	return message.reply("It looks like you don't own a dragon! Why not tame one by using `" + message.guild?.prefix || "~" + "tame`");
-		const alias = await client.config.getDragonAlias(message.author.id);
+		const alias = await client.utils.getDragonAlias(message.author.id);
 		if (cd) return message.reply(`You must wait another ${cd} before stroking your ${alias[0]} again!`);
 		pet[8] += 1;
-		if (!message.author.data.get("cst")?.split(";").includes("maxdragon888")) await client.db.USERS.update({ pet: pet.join(";"), strc: client.config.parseCd(message.createdTimestamp, ms("3h"))	}, { where: { id: message.author.id } });
+		if (!message.author.data.get("cst")?.split(";").includes("maxdragon888")) await client.db.USERS.update({ pet: pet.join(";"), strc: client.utils.parseCd(message.createdTimestamp, ms("3h"))	}, { where: { id: message.author.id } });
 		message.reply({
 			embeds: [
 				new MessageEmbed()

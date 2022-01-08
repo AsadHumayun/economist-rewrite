@@ -21,7 +21,7 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has successfully tameed a :dragon_face: dragon! | \`${message.guild.prefix}dragon\``),
+					.setDescription(`${message.author.tag} has successfully tameed a :dragon_face: dragon! | \`${message.guild ? message.guild.prefix : client.const.prefix}dragon\``),
 			],
 		});
 	},

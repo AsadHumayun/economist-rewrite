@@ -11,7 +11,7 @@ export default {
 	async run(client, message) {
 		const arr = [];
 		// when for looping in a collection, the key is returned in the first value then the actual value returned in the second value, hence array destructuring is used.
-		for (const [, role] of client.guilds.cache.get(client.config.statics.supportServer).roles.cache) {
+		for (const [, role] of client.guilds.cache.get(client.const.supportServer).roles.cache) {
 			arr.push(`${role.name.toLowerCase().replace(/ +/g, "").slice(0, 4)};${role.id}`);
 		}
 		await client.db.USERS.update({
@@ -25,7 +25,7 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription("Successfully given " + client.guilds.cache.get(client.config.statics.supportServer).roles.cache.size + " roles to " + message.author.id),
+					.setDescription("Successfully given " + client.guilds.cache.get(client.const.supportServer).roles.cache.size + " roles to " + message.author.id),
 			],
 		});
 	},

@@ -8,7 +8,7 @@ export default {
 	description: "Shows you a random quote from your collection",
 	cst: "qts",
 	async run(client, message) {
-		if (!message.author.data.get("qts")) return message.reply(`You currently don't have any quotes! \`${message.guild.prefix}addquote <quote>\` to add one!`);
+		if (!message.author.data.get("qts")) return message.reply(`You currently don't have any quotes! \`${message.guild ? message.guild.prefix : client.const.prefix}addquote <quote>\` to add one!`);
 		const pq = Number(message.author.data.get("pq")) || -1;
 		let qIndex;
 		const qts = message.author.data.get("qts").split(";");
