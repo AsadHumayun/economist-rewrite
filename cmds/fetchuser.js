@@ -19,7 +19,7 @@ export default {
 			content: null,
 			embeds: [
 				new MessageEmbed()
-					.setAuthor(user.tag, user.displayAvatarURL())
+					.setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() })
 					.setColor(message.author.color)
 					.setDescription("```js\n" + data + "\n```")
 					.setFooter(`in ${Date.now() - msg.createdTimestamp} MS`),

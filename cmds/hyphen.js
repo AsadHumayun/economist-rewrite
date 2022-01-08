@@ -14,7 +14,7 @@ export default {
 		message.reply({
 			embeds: [
 				new MessageEmbed()
-					.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }), client.utils.inv)
+					.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }), url: client.utils.inv })
 					.setColor(message.author.color)
 					.setDescription(client.utils.hyphen(str, num, {
 						removeWhiteSpaces: true,

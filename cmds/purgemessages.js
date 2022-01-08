@@ -37,7 +37,7 @@ export default {
 						.setColor(message.author.color)
 						.setTitle(`Channel Purging${collected.length > 1 ? ` - Part ${i + 1}` : ""}`)
 						.setDescription(`Deleted from: ${source}`)
-						.setAuthor(`${author.tag} (${author.id})`, author.displayAvatarURL({ dynamic: true }))
+						.setAuthor({ name: `${author.tag} (${author.id})`, iconURL: author.displayAvatarURL({ dynamic: true }) })
 						.setTimestamp(trigger.editedAt ? trigger.editedAt : trigger.createdAt),
 					group = collected[i];
 				for (const msg of group) {

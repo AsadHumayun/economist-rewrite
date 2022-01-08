@@ -13,7 +13,7 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true }))
+					.setAuthor({ name: message.guild.name, iconURL: message.guild.iconURL({ dynamic: true }) })
 					// the numbers are converted to strings because that is a requirement. An error is thrown otherwise. Probably to enforce consistensy
 					.addField("Humans", message.guild.members.cache.filter((e) => !e.user.bot).size.toString(), true)
 					.addField("Bots", message.guild.members.cache.filter((e) => e.user.bot).size.toString(), true)

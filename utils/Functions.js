@@ -1,7 +1,7 @@
 import { readdirSync } from "fs";
 import { inspect } from "util";
 
-import aliases from "../petaliases.js";
+import aliases from "./petaliases.js";
 
 
 /**

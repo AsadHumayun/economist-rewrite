@@ -30,7 +30,7 @@ export default {
 		}
 		const embed = new MessageEmbed()
 			.setColor(message.author.color)
-			.setAuthor(`Bug Report #${number}`)
+			.setAuthor({ name: `Bug Report #${number}` })
 			.setTitle(title)
 			.setDescription(desc)
 			.setTimestamp()
