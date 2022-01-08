@@ -15,7 +15,7 @@ export default {
 				new MessageEmbed()
 					.setColor(message.author.color)
 					.setImage(user.displayAvatarURL({ dynamic: true, format: "png" }))
-					.setAuthor(user.tag, user.displayAvatarURL({ dynamic: false, format: "png" })),
+					.setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({ dynamic: false, format: "png" }) }),
 			],
 		});
 	},

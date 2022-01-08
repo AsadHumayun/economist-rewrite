@@ -23,7 +23,7 @@ export default {
 				for (const x in map) {
 					embeds.push(
 						new MessageEmbed()
-							.setAuthor(`Users banned form ${message.guild.name}`, message.guild.iconURL({ dynamic: true }))
+							.setAuthor({ name: `Users banned form ${message.guild.name}`, iconURL: message.guild.iconURL({ dynamic: true }) })
 							.setDescription("```\n" + client.utils.trim(map[x], 4060) + "\n```")
 							.setColor(message.author.color),
 					);
@@ -34,7 +34,6 @@ export default {
 					pages: embeds,
 					time: 600_000,
 				})
-				// return new menu(message.channel, message.author.id, embeds, ms('10m'))
 					.catch(() => {
 						message.reply(`${client.utils.emojis.error} | I was unable to find your bans list; please make sure I have the \`BAN_MEMBERS\` permission!`);
 					});

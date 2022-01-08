@@ -20,7 +20,7 @@ export default {
 		}
 		const emb = new MessageEmbed()
 			.setColor(message.author.color)
-			.setAuthor("GitHub User Search", "https://cdn.asad.codes/static/github.png", `https://github.com/${args[0]}`)
+			.setAuthor({ name: "GitHub User Search", iconURL: "https://cdn.asad.codes/static/github.png", url: `https://github.com/${args[0]}` })
 			.setTitle(`${res.login}'s GitHub Profile`)
 			.setThumbnail(res.avatar_url)
 			.setDescription(res.bio ? `**Bio:** ${res.bio}` : "None")
