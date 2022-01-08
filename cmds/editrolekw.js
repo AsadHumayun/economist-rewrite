@@ -10,9 +10,9 @@ export default {
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must provide a valid role keyword.");
 		let roles = message.author.data.get("cstmrl");
-		if (!roles) return message.reply(`${client.config.statics.defaults.emoji.err} You do not own any custom roles.`);
+		if (!roles) return message.reply(`${client.const.emoji.err} You do not own any custom roles.`);
 
-		roles = client.config.listToMatrix(roles.split(";"), 2);
+		roles = client.utils.listToMatrix(roles.split(";"), 2);
 		const kw = roles.map((x) => x[0]);
 		const key = args[0].toLowerCase();
 		const newkw = args[1].toLowerCase();
@@ -26,7 +26,7 @@ export default {
 		role[0] = newkw;
 		roles = roles.filter((x) => x[1] != oldRole.split(";")[1]);
 		roles.push(role);
-		roles = client.config.arrayMove(roles, roles.length - 1, indx);
+		roles = client.utils.arrayMove(roles, roles.length - 1, indx);
 		roles = roles.map((x) => Array.from(x).join(";"));
 		await client.db.USERS.update({
 			cstmrl: roles.join(";"),

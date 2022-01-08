@@ -8,7 +8,7 @@ module.exports = {
 	async run(client, message) {
 		// "args" weren't passed through here because they're not used, means memory isn't wasted on that var, makking this more efficient.
 		let p = await client.db.get("pet" + message.author.id);
-		if (!p) return message.reply("You must have a dragon in order for it to defend you! tame one by using `" + message.guild.prefix + "tame`");
+		if (!p) return message.reply("You must have a dragon in order for it to defend you! tame one by using `" + message.guild ? message.guild.prefix : client.const.prefix + "tame`");
 		p = p.split(";");
 		const dragonAlias = await client.config.getDragonAlias(message.author.id, client);
 		let cst = await client.db.get("cst" + message.author.id) || "";

@@ -10,7 +10,7 @@ export default {
 	cst: "dm",
 	async run(client, message, args) {
 		// by doing args[0]||"", it means that args[0] will a) never be undefined, and b) will mean that the user fetch request still fails, therefore the if statement below it triggers. This saves me from having to write in ANOTHER if statement.
-		const user = await client.config.fetchUser(args[0] || "").catch(() => {return;});
+		const user = await client.utils.fetchUser(args[0] || "").catch(() => {return;});
 		if (!user) return message.reply("You must mention the recipient in order for this command to work!");
 
 		const msg = args.slice(1).join(" ");

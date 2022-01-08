@@ -11,7 +11,7 @@ module.exports = {
 		if (!usr) usr = message.author;
 		let cmds = await client.db.get("cmds" + usr.id) || 1;
 		let color = await client.db.get('color' + usr.id) || client.config.defaultHexColor;
-		const bio = await client.db.get('bio' + usr.id) || 'Set a bio using `' + message.guild.prefix + "bio`"
+		const bio = await client.db.get('bio' + usr.id) || 'Set a bio using `' + message.guild ? message.guild.prefix : client.const.prefix + "bio`"
 		function format(str) {
 			let newStr = str.replace(/_+/g, " ").toLowerCase();
 			newStr = newStr.split(/ +/).map(x => `${x[0].toUpperCase()}${x.slice(1)}`).join(' ');

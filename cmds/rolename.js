@@ -9,16 +9,16 @@ export default {
 	ssOnly: true,
 	async run(client, message, args) {
 		if (args.length < 2) {
-			return message.reply("You must specify a valid role keyword and a new role name under the format of `" + message.guild.prefix + "rolename <keyword> <new name>`");
+			return message.reply("You must specify a valid role keyword and a new role name under the format of `" + message.guild ? message.guild.prefix : client.const.prefix + "rolename <keyword> <new name>`");
 		}
 		let roles = message.author.data.get("cstmrl");
-		if (!roles) return message.reply(`${client.config.statics.defaults.emoji.err} You do not own any custom roles. `);
+		if (!roles) return message.reply(`${client.const.emoji.err} You do not own any custom roles. `);
 
-		roles = client.config.listToMatrix(roles.split(";"), 2);
+		roles = client.utils.listToMatrix(roles.split(";"), 2);
 		const key = args[0].toLowerCase();
 		const kw = roles.map((x) => x[0]);
 		if (!kw.includes(key)) {
-			return message.reply(`A role by that keyword was not found. Please use \`${message.guild.prefix}roles\` to view a list of roles that you own. If you are still having trouble, please message ${client.users.cache.get(client.config.owner).tag}.`);
+			return message.reply(`A role by that keyword was not found. Please use \`${message.guild ? message.guild.prefix : client.const.prefix}roles\` to view a list of roles that you own. If you are still having trouble, please message ${client.users.cache.get(client.utils.owner).tag}.`);
 		}
 		const role = roles.find((x) => x[0] == key);
 
@@ -27,7 +27,7 @@ export default {
 
 		const Role = message.guild.roles.cache.get(role[1]);
 		const rname = Role.name;
-		if (!Role) return message.reply(`${client.config.statics.defaults.emoji.err} I cannot find your custom role!`);
+		if (!Role) return message.reply(`${client.const.emoji.err} I cannot find your custom role!`);
 		Role.setName(name);
 		return message.reply({
 			embeds: [

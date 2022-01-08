@@ -15,7 +15,7 @@ module.exports = {
 					.setDescription(
 						`
 					Here's a list of keywords which the bot automatically replaces in every message it receives. Note that these cannot be disabled and are the same for everyone.
-					You can use these interchangeably between commands. For example, \`${message.guild.prefix}pay @User#1234 allmoney\` will pay User#1234 all of the author's balance.
+					You can use these interchangeably between commands. For example, \`${message.guild ? message.guild.prefix : client.const.prefix}pay @User#1234 allmoney\` will pay User#1234 all of the author's balance.
 
 					${kws.map((x) => "`" + x + "`").join(", ")}
 

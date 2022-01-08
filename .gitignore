@@ -1,6 +1,6 @@
+node_modules/
 .VSCodeCounter/
 .env
 economist.pem
 logging/administrator_logs.txt
-logging/administrator_logs.txt
-node_modules/
+economist-rewrite-3e9608159795494838f734233cb0e727b69aa57f/**

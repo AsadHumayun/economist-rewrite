@@ -9,16 +9,16 @@ export default {
 	cst: "srmod",
 	cstMessage: "You must be a **Senior Moderator** in order to use this command!",
 	async run(client, message, args) {
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You must mention a user whose application you wish to decline!");
 		const data = await client.db.getUserData(user.od);
-		if (!data.get("cst").split(";").includes("sbmt")) return message.reply(`That user hasn't submitted their staff application yet! They can do so by using \`${message.guild.prefix}submit\``);
+		if (!data.get("cst").split(";").includes("sbmt")) return message.reply(`That user hasn't submitted their staff application yet! They can do so by using \`${message.guild ? message.guild.prefix : client.const.prefix}submit\``);
 		const ch = message.guild.channels.cache.find((x) => (x.topic || "").toLowerCase().split(";").includes(user.id));
 		if (!ch) return message.reply("That user has not applied for staff.");
-		client.channels.cache.get(client.config.channels.appNotifs)
+		client.channels.cache.get(client.utils.channels.appNotifs)
 			.send(`Application ${ch} submitted by ${user.tag} (${user.id}) has been **declined** by ${message.author.tag} (${message.author.id})`);
 		const em = new MessageEmbed()
-			.setColor(client.config.statics.defaults.channels.colors.red)
+			.setColor(client.const.channels.colors.red)
 			.setDescription("Sorry, but your Staff Application has been declined.")
 			.addField("Senior Moderator", message.author.tag)
 			.addField("Reason", args.slice(1).join(" ") || "Please contact me for your reason.");

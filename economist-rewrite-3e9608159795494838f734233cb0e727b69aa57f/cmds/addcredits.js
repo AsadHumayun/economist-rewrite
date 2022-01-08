@@ -7,7 +7,7 @@ module.exports = {
 	category: "own",
 	cst: "addcredits",
 	async run(client, message, args) {
-		if (args.length < 2) return message.reply("Desired usage for this command is: `" + message.guild.prefix + "addcredits <user> [amount]`");
+		if (args.length < 2) return message.reply("Desired usage for this command is: `" + message.guild ? message.guild.prefix : client.const.prefix + "addcredits <user> [amount]`");
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("Unknown user");
 		const credits = isNaN(args[1]) ? 1 : Number(args[1]);

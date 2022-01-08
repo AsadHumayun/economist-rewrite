@@ -19,7 +19,7 @@ module.exports = {
 				new MessageEmbed()
 					.setColor(message.author.color)
 					.setTitle(`${usr.tag}'s Custom Roles (${roles.length} currently owned)`)
-					.setDescription(`You may assign roles displayed here to users in the support server\n\`${message.guild.prefix}role <role> <user>\` to add/remove a role from a user (support server only)\n\`${message.guild.prefix}rolecolor <role> <color>\` to edit a role's colour\n\`${message.guild.prefix}rolename <role> <new name>\` to edit a role's name\`\`\`\n{\n${resp || "[ NONE lol ]"}\n}\n\`\`\``),
+					.setDescription(`You may assign roles displayed here to users in the support server\n\`${message.guild ? message.guild.prefix : client.const.prefix}role <role> <user>\` to add/remove a role from a user (support server only)\n\`${message.guild ? message.guild.prefix : client.const.prefix}rolecolor <role> <color>\` to edit a role's colour\n\`${message.guild ? message.guild.prefix : client.const.prefix}rolename <role> <new name>\` to edit a role's name\`\`\`\n{\n${resp || "[ NONE lol ]"}\n}\n\`\`\``),
 			],
 		});
 	},

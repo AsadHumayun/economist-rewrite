@@ -7,7 +7,7 @@ module.exports = {
 	category: "mod",
 	cst: "moderator",
 	async run(client, message, args) {
-		if (args.length < 2) return message.reply("Correct usage: `" + message.guild.prefix + "unpunish <user> <offence index>`; requires mod");
+		if (args.length < 2) return message.reply("Correct usage: `" + message.guild ? message.guild.prefix : client.const.prefix + "unpunish <user> <offence index>`; requires mod");
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply(`"${args[0]}" isn't a valid user??`);
 		let ofncs = await client.db.get("ofncs" + user.id);

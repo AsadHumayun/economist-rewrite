@@ -14,7 +14,7 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(client.config.noExponents(number)),
+					.setDescription(client.utils.noExponents(number)),
 			],
 		});
 	},

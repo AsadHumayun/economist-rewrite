@@ -9,15 +9,15 @@ export default {
 	ssOnly: true,
 	cst: "moderator",
 	async run(client, message, args) {
-		if (args.length < 2) return message.reply("Correct usage: `" + message.guild.prefix + "unpunish <user> <offence index> <?reason>`; requires mod");
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		if (args.length < 2) return message.reply("Correct usage: `" + message.guild ? message.guild.prefix : client.const.prefix + "unpunish <user> <offence index> <?reason>`; requires mod");
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		const data = await client.db.getUserData(user.id);
 		const ofncs = data.get("ofncs") ? data.get("ofncs").split(";").map(Number) : [];
 		const reason = args.slice(2).join(" ");
 		const index = Number(args[1]);
-		if (!Object.values(client.config.statics.defaults.ofncs)[index - 1]) {
-			return message.reply(`Index ${index} out of bounds for length ${Object.keys(client.config.statics.defaults.ofncs).length}`);
+		if (!Object.values(client.const.ofncs)[index - 1]) {
+			return message.reply(`Index ${index} out of bounds for length ${Object.keys(client.const.ofncs).length}`);
 		}
 		if (!ofncs[index - 1]) ofncs[index - 1] = 0;
 		ofncs[index - 1] = ofncs[index - 1] - 1;
@@ -32,12 +32,12 @@ export default {
 			},
 		});
 		message.reply(`Successfully updated ofncs ${index} ${user.id} from ${ofncs[index - 1] + 1} to ${ofncs[index - 1]} ${reason ? `(reason: ${reason})` : ""}`);
-		const level = Object.values(client.config.statics.defaults.ofncs)[index - 1][1];
-		const mem = await client.guilds.cache.get(client.config.statics.supportServer).members.fetch(user.id);
+		const level = Object.values(client.const.ofncs)[index - 1][1];
+		const mem = await client.guilds.cache.get(client.const.supportServer).members.fetch(user.id);
 		if (!mem) return;
 		async function unmute() {
-			if (!mem.roles.cache.has(client.config.statics.defaults.roles.muted)) return;
-			mem.roles.remove(client.config.statics.defaults.roles.muted).catch(() => {return;});
+			if (!mem.roles.cache.has(client.const.roles.muted)) return;
+			mem.roles.remove(client.const.roles.muted).catch(() => {return;});
 			message.channel.send({
 				embeds: [
 					new MessageEmbed()
@@ -46,7 +46,7 @@ export default {
 				],
 			});
 			const e = new MessageEmbed()
-				.setColor(client.config.statics.defaults.colors.green)
+				.setColor(client.const.colors.green)
 				.setDescription("Your mute has been removed")
 				.addField("Moderator", message.author.tag)
 				.addField("Reason", reason.toString() || "Moderator didn't specify a reason.");

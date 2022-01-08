@@ -25,7 +25,7 @@ export default {
 		// docs ref: https://discord.js.org/#/docs/main/stable/class/GuildChannelManager?scrollTo=create
 		const appChannel = await message.guild.channels.create(`app-${message.author.id}`, {
 			// GuildChannelManager.create docs ref: https://discord.js.org/#/docs/main/stable/typedef/CategoryCreateChannelOptions
-			parent: client.config.statics.defaults.channels.appCat,
+			parent: client.const.channels.appCat,
 			type: "TEXT",
 			topic: message.author.id,
 			nsfw: false,
@@ -39,7 +39,7 @@ export default {
 				allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.READ_MESSAGE_HISTORY, Permissions.FLAGS.SEND_MESSAGES],
 				deny: [],
 			}, {
-				id: client.config.statics.defaults.roles.mod.normal,
+				id: client.const.roles.mod.normal,
 				allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.READ_MESSAGE_HISTORY],
 				deny: [],
 			}],
@@ -48,10 +48,10 @@ export default {
 				message.reply({ content: `Unable to create TextBasedChannel, exception: \`${e}\` has been reported.` });
 				Notify(e, message.content, client);
 			});
-		message.member.roles.add(client.config.statics.defaults.roles.applicant);
+		message.member.roles.add(client.const.roles.applicant);
 		message.reply({ embeds: [
 			new MessageEmbed()
-				.setColor(client.config.statics.defaults.colors.green)
+				.setColor(client.const.colors.green)
 				.setDescription(`${message.author.tag} has successfully applied for staff! \`#${appChannel.name}\``),
 		] });
 		appChannel.send({ content: `Welcome ${message.author} to your personal staff application channel!`, embeds: [

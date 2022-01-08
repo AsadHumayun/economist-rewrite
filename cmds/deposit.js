@@ -16,7 +16,7 @@ export default {
 		const v = message.author.data.get("v").split(";").map(Number);
 		const capacity = v[0] * 5_000;
 		let curr = v[1];
-		if (curr + dep > capacity && (v[0] < 9999999999)) return message.reply(`Your vault does not have enough space to hold that much money; upgrade your vault with \`${message.guild.prefix}vupgrade\` in order to increase your Bank Vault's capacity!`);
+		if (curr + dep > capacity && (v[0] < 9999999999)) return message.reply(`Your vault does not have enough space to hold that much money; upgrade your vault with \`${message.guild ? message.guild.prefix : client.const.prefix}vupgrade\` in order to increase your Bank Vault's capacity!`);
 		curr += dep;
 		v[1] = curr;
 		await client.db.USERS.update({
@@ -31,10 +31,10 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has deposited :dollar: ${client.config.comma(client.config.noExponents(dep))} into their secure bank vault, which now holds a total of :dollar: ${client.config.comma(client.config.noExponents(v[1]))}`),
+					.setDescription(`${message.author.tag} has deposited :dollar: ${client.utils.comma(client.utils.noExponents(dep))} into their secure bank vault, which now holds a total of :dollar: ${client.utils.comma(client.utils.noExponents(v[1]))}`),
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`They now have :dollar: ${client.config.comma(client.config.noExponents(bal - dep))} left in their balance!`),
+					.setDescription(`They now have :dollar: ${client.utils.comma(client.utils.noExponents(bal - dep))} left in their balance!`),
 			],
 		});
 	},

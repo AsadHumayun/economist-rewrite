@@ -10,21 +10,21 @@ export default {
 	async run(client, message, args) {
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		let pet = message.author.data.get("pet");
-		if (cst.includes("maxdragon888")) pet = client.config.statics.defaults.naxDragon;
+		if (cst.includes("maxdragon888")) pet = client.const.naxDragon;
 		pet = pet.split(";");
 
 		const cooldown = message.author.data.get("fdc");
 		if (cooldown && (!cst.includes("maxdragon888"))) {
-			const data = client.config.cooldown(message.createdTimestamp, cooldown * 60_000);
+			const data = client.utils.cooldown(message.createdTimestamp, cooldown * 60_000);
 			if (data) {
 				return message.reply(`Your dragon is convulsing its wings in annoyance; you should try again in ${data}`);
 			}
 		}
-		const alias = await client.config.getDragonAlias(message.author.id, client);
+		const alias = await client.utils.getDragonAlias(message.author.id, client);
 		const input = (args[0] || "").toLowerCase();
-		const foods = client.config.statics.defaults.foods;
+		const foods = client.const.foods;
 		const type = foods[Object.keys(foods).find((x) => input.startsWith(x))];
-		if (!type || (!args.length)) return message.reply(`The different types of food are ${client.config.list(Object.values(foods).map((x) => x.name))}`);
+		if (!type || (!args.length)) return message.reply(`The different types of food are ${client.utils.list(Object.values(foods).map((x) => x.name))}`);
 		if (!cst.includes("maxdragon888")) {
 			const health = Number(pet[1]);
 			const en = Number(pet[2]);
@@ -78,7 +78,7 @@ export default {
 			time *= 60000;
 			if (!cst.includes("maxdragon888")) {
 				await client.db.USERS.update({
-					fdc: client.config.parseCd(message.createdTimestamp, time),
+					fdc: client.utils.parseCd(message.createdTimestamp, time),
 				}, {
 					where: {
 						id: message.author.id,

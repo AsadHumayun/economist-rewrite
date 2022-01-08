@@ -4,7 +4,7 @@ export default {
 	name: "messageDelete",
 	once: false,
 	async execute(client, message) {
-		if (message.channel.type == "DM" || message.guild.id !== client.config.statics.supportServer) return;
+		if (message.channel.type == "DM" || message.guild.id !== client.const.supportServer) return;
 		if (!message.content) return;
 		const { executor } = (await message.guild.fetchAuditLogs({ limit: 1, type: "MESSAGE_DELETE" })).entries.first();
 		if (!message.author.bot) {
@@ -22,12 +22,12 @@ export default {
 		}
 		// todo: add support for logging images.
 		const embed = new MessageEmbed()
-			.setColor(client.config.statics.defaults.colors.red)
+			.setColor(client.const.colors.red)
 			.setAuthor({ name: `Deleted by ${executor ? `${executor.tag} (${executor.id})` : "UNKNOWN#0000"}\n`, iconURL: executor?.displayAvatarURL({ dynamic: true }) })
 			.setTitle(`Message sent by ${message.author.tag} (${message.author.id}) deleted in #${message.channel.name}`)
 			.setDescription(message.content)
 			.setFooter(`Messgae ID: ${message.id}`)
 			.setTimestamp();
-		client.channels.cache.get(client.config.statics.defaults.channels.msgLogs).send({ embeds: [ embed ] }).catch(() => {return;});
+		client.channels.cache.get(client.const.channels.msgLogs).send({ embeds: [ embed ] }).catch(() => {return;});
 	},
 };

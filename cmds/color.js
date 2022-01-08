@@ -16,7 +16,7 @@ export default {
 					new MessageEmbed()
 						.setColor(message.author.color)
 						.setTitle(`${message.author.tag}'s Colour Preferences`)
-						.setDescription(`Every time you use a command, each colour is cycled through sequentially. The last value is where the bot is currently at in your cycle. \n\n\`\`\`js\n${client.config.Inspect(clrs.split(";"))}\`\`\``),
+						.setDescription(`Every time you use a command, each colour is cycled through sequentially. The last value is where the bot is currently at in your cycle. \n\n\`\`\`js\n${client.utils.Inspect(clrs.split(";"))}\`\`\``),
 				],
 			});
 		}
@@ -31,14 +31,14 @@ export default {
 			});
 
 		if (colors.includes(false)) {
-			return message.reply("One of your provided hex colour codes is not valid, please check all values and try again. To add more than one colour, simply separate each one by spaces. If you're still having trouble, feel free to contact `" + client.users.cache.get(client.config.owner).tag + "`");
+			return message.reply("One of your provided hex colour codes is not valid, please check all values and try again. To add more than one colour, simply separate each one by spaces. If you're still having trouble, feel free to contact `" + client.users.cache.get(client.utils.owner).tag + "`");
 		}
 
 		message.reply({
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has set their colour preferences to \`${client.config.Inspect(colors)}\`. Use \`${message.guild.prefix}color\` to view a list of all your currently set colours.`),
+					.setDescription(`${message.author.tag} has set their colour preferences to \`${client.utils.Inspect(colors)}\`. Use \`${message.guild ? message.guild.prefix : client.const.prefix}color\` to view a list of all your currently set colours.`),
 			],
 		});
 		colors.push("0");

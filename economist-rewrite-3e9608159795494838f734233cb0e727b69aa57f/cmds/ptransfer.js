@@ -6,7 +6,7 @@ module.exports = {
 	description: "Transfers one of your owned items to another user; 2 hours' cooldown",
 	category: "utl",
 	async run(client, message, args) {
-		if (args.length < 2) return message.reply(`Please use the following format: \`${message.guild.prefix}transferitm <user> <item>\``);
+		if (args.length < 2) return message.reply(`Please use the following format: \`${message.guild ? message.guild.prefix : client.const.prefix}transferitm <user> <item>\``);
 		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You must mention a user!");
 		let cst = await client.db.get("cst" + message.author.id);

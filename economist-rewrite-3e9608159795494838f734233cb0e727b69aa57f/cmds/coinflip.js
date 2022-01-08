@@ -11,7 +11,7 @@ module.exports = {
 		const cd = await client.db.get("cfc" + message.author.id);
 		const scd = Math.round(((cd * 60_000) - message.createdTimestamp) / 1000);
 		if (scd > 0) return message.reply(`You must wait ${scd} seconds before flipping another coin!`);
-		if (!(args[0] && (args[0].toLowerCase().startsWith("h") || (args[0].toLowerCase().startsWith("t"))))) return message.reply(`You must specify either "h" or "t" and a bet under the format: \`${message.guild.prefix}coinflip <h or t> <bet>\``);
+		if (!(args[0] && (args[0].toLowerCase().startsWith("h") || (args[0].toLowerCase().startsWith("t"))))) return message.reply(`You must specify either "h" or "t" and a bet under the format: \`${message.guild ? message.guild.prefix : client.const.prefix}coinflip <h or t> <bet>\``);
 		const res = Math.round(Math.random()) == 1 ? "heads" : "tails";
 		let bal = await client.db.get("bal" + message.author.id) || "0";
 		bal = Number(bal);

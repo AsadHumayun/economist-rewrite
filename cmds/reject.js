@@ -13,17 +13,17 @@ export default {
 		const reason = args.slice(1).join(" ");
 		message.delete().catch(() => {return;});
 		const val = await client.db.get(`bugr${id}`);
-		if (!val) return message.reply(`${client.config.statics.defaults.emoji.err} No bug report with ID "${id}" was found.`);
-		client.channels.cache.get(client.config.channels.bug)
+		if (!val) return message.reply(`${client.const.emoji.err} No bug report with ID "${id}" was found.`);
+		client.channels.cache.get(client.utils.channels.bug)
 			.messages.fetch({
 				limit: 1,
 				around: val.msg,
 			})
 			.then(async (col) => {
 				const rec = new MessageEmbed()
-					.setColor(client.config.statics.defaults.channels.colors.red)
+					.setColor(client.const.channels.colors.red)
 					.setTitle(val.title)
-					.setDescription(`${client.config.statics.defaults.emoji.err} **Bug report #${val.number} was rejected by ${Util.escapeMarkdown(message.author.tag)}**`);
+					.setDescription(`${client.const.emoji.err} **Bug report #${val.number} was rejected by ${Util.escapeMarkdown(message.author.tag)}**`);
 				col.first().edit({
 					content: null,
 					embeds: [
@@ -32,7 +32,7 @@ export default {
 				});
 			})
 			.catch((x) => message.reply("There was an error: `" + x + "`"));
-		message.reply(`${client.config.statics.defaults.emoji.err} You've rejected bug with ID **${id}**`);
+		message.reply(`${client.const.emoji.err} You've rejected bug with ID **${id}**`);
 		await client.db.delete(`bugr${id}`);
 		client.users.cache.get(val.author)
 			.send(`Your bug (${id}) has been rejected by ${message.author.tag}\n${reason ? `${message.author.tag}'s Comments: ${reason}` : ""}`)

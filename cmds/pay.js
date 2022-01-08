@@ -13,7 +13,7 @@ export default {
 			return message.reply("That amount exceeds your current balance");
 		}
 		const authorBal = isNaN(message.author.data.get("bal")) ? 0 : message.author.data.get("bal");
-		const usr = await client.config.fetchUser(args[0]);
+		const usr = await client.utils.fetchUser(args[0]);
 		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
 		const data = await client.db.getUserData(usr.id);
 		if (message.author.id == usr.id) return message.reply("You can't pay yourself!");
@@ -44,7 +44,7 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`:dollar: ${client.config.trim(client.config.comma(client.config.noExponents(amt)), 1000)} have been transferred to ${usr.tag}'s account`),
+					.setDescription(`:dollar: ${client.utils.trim(client.utils.comma(client.utils.noExponents(amt)), 1000)} have been transferred to ${usr.tag}'s account`),
 			],
 		});
 	},

@@ -8,7 +8,7 @@ module.exports = {
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		if (args.length < 2) {
-			return message.reply(`You must follow the following format: \`${message.guild.prefix}take <user> <...upgrade>\``);
+			return message.reply(`You must follow the following format: \`${message.guild ? message.guild.prefix : client.const.prefix}take <user> <...upgrade>\``);
 		};
 		const permission = args.slice(1).join(' ');
 		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});

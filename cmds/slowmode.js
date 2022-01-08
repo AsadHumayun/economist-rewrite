@@ -9,7 +9,7 @@ export default {
 	usage: "slowmode <number of seconds>",
 	description: "Sert slowmode for the current channel, minimum 1 second and maximum 21600 seconds (6 hours)",
 	async run(client, message, args) {
-		if (!args.length) return message.reply(`You must follow the format of \`${message.guild.prefix}slowmode <seconds>\` in order for this command to work! (To disable slowmode, use \`0\` instead)`);
+		if (!args.length) return message.reply(`You must follow the format of \`${message.guild ? message.guild.prefix : client.const.prefix}slowmode <seconds>\` in order for this command to work! (To disable slowmode, use \`0\` instead)`);
 
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
 			return message.reply("You must have the MANAGE_CHANNEL permission in order to use this command!");
@@ -23,10 +23,10 @@ export default {
 		}
 		message.channel.setRateLimitPerUser(count);
 		if (count == 0) {
-			return message.reply(`${client.config.statics.defaults.emoji.tick} Successfully disabled slowmode in ${message.channel}`);
+			return message.reply(`${client.const.emoji.tick} Successfully disabled slowmode in ${message.channel}`);
 		}
 		else {
-			message.reply(`${client.config.statics.defaults.emoji.tick} Set slowmode for \`${count}\` seconds!`);
+			message.reply(`${client.const.emoji.tick} Set slowmode for \`${count}\` seconds!`);
 		}
 	},
 };

@@ -9,10 +9,10 @@ module.exports = {
 	async run(client, message, args) {
 		if (message.guild.id != client.config.statics.supportServer) return message.reply("This command only works in the support server as a result of how role information is manipulated.");		
 		if (args.length < 2) {
-			return message.reply("You must specify a valid role keyword and a new hex colour code under the format of `" + message.guild.prefix + "rolecolor <keyword> <hex colour>`")
+			return message.reply("You must specify a valid role keyword and a new hex colour code under the format of `" + message.guild ? message.guild.prefix : client.const.prefix + "rolecolor <keyword> <hex colour>`")
 		}
 		let col = args[1];
-		if (!col) return message.reply(`${client.config.statics.defaults.emoji.err} You need to provide a valid hex colour code. Make sure you use the correct format: \`${message.guild.prefix}rolecolor <role keyword> <hex color>\``)
+		if (!col) return message.reply(`${client.config.statics.defaults.emoji.err} You need to provide a valid hex colour code. Make sure you use the correct format: \`${message.guild ? message.guild.prefix : client.const.prefix}rolecolor <role keyword> <hex color>\``)
 
 		let roles = await client.db.get("cgrl" + message.author.id);
 		if (!roles) return message.reply(`${client.config.statics.defaults.emoji.err} You do not own any custom roles. `);

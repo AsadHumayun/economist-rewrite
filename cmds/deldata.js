@@ -9,7 +9,7 @@ export default {
 	category: "own",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must mention someone for me to forget!");
-		const usr = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) return message.reply({ content: `Unidentifiable user "${args[0]}"`, allowedMentions: { parse: [] } });
 		const userData = await client.db.USERS.findOne({ where: { id: usr.id } });
 		if (!userData) {

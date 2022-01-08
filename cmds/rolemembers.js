@@ -20,7 +20,7 @@ export default {
 			return message.reply({ embeds });
 		}
 		else {
-			const arr = client.config.listToMatrix(embeds, 10);
+			const arr = client.utils.listToMatrix(embeds, 10);
 			for (const Embeds of arr) {
 				message.author.send({
 					emebds: Embeds,

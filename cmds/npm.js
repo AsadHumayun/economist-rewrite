@@ -19,11 +19,11 @@ export default {
 						.setAuthor({ name: "NPM", iconURL: "https://i.imgur.com/ErKf5Y0.png", url: "https://www.npmjs.com/" })
 						.setTitle("Database Information")
 						.addField("Name", data.db_name, true)
-						.addField("Doc Count", client.config.comma(data.doc_count), true)
-						.addField("Modification Count", client.config.comma(data.update_seq), true)
+						.addField("Doc Count", client.utils.comma(data.doc_count), true)
+						.addField("Modification Count", client.utils.comma(data.update_seq), true)
 						.addField("Compact Running", (data.compact_running || false).toString(), true)
-						.addField("Deleted Documents", client.config.comma(data.doc_del_count), true)
-						.addField("Disk Size", `${client.config.comma(Math.trunc(Number(data.data_size / 1024 / 1024)))} / ${client.config.comma(Math.trunc(Number(data.disk_size) / 1024 / 1024))} MB`, true),
+						.addField("Deleted Documents", client.utils.comma(data.doc_del_count), true)
+						.addField("Disk Size", `${client.utils.comma(Math.trunc(Number(data.data_size / 1024 / 1024)))} / ${client.utils.comma(Math.trunc(Number(data.disk_size) / 1024 / 1024))} MB`, true),
 				],
 			});
 		}
@@ -50,7 +50,7 @@ export default {
 			.addField("Created On", moment.utc(body.time.created).format("YYYY/MM/DD hh:mm:ss"), true)
 			.addField("Last Modified", moment.utc(body.time.modified).format("YYYY/MM/DD hh:mm:ss"), true)
 			.addField("Main File", `\`${version.main}\`` || "`index.js`", true)
-			.addField("Maintainers", client.config.trim(body.maintainers.map(({ name }) => name).join(", "), 1024), true)
+			.addField("Maintainers", client.utils.trim(body.maintainers.map(({ name }) => name).join(", "), 1024), true)
 			.addField("Dependencies", dependencies.length > 0 ? dependencies.join(", ") : "None", true)
 			.setFooter(`In ${Date.now() - message.createdTimestamp} MS`);
 

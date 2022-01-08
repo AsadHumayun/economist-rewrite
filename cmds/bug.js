@@ -16,11 +16,11 @@ export default {
 				id: client.user.id,
 			},
 		});
-		const arr = message.content.slice(message.guild.prefix.length + 3).split(/\|+/);
+		const arr = message.content.slice(message.guild ? message.guild.prefix : client.const.prefix.length + 3).split(/\|+/);
 		const title = arr[0];
 		const desc = arr.slice(1).join(" ");
 		if (!title || !desc) {
-			return message.reply("You must include a title and a description for your bug separated by `|`, for example: `" + message.guild.prefix + "bug title for bug | description`");
+			return message.reply("You must include a title and a description for your bug separated by `|`, for example: `" + message.guild ? message.guild.prefix : client.const.prefix + "bug title for bug | description`");
 		}
 		let id = Math.floor(Math.random() * 100000);
 		let val = await client.db.BUGS.findOne({ where: { id } });
@@ -37,7 +37,7 @@ export default {
 			.addField("Staff", `\`~approve ${id} <message>\` to approve this bug report and send ${message.author.tag} <message>\n\`~reject ${id} <message>\` reject this bug and send ${message.author.tag} <message>`)
 			.setFooter(`${message.author.tag} | ${message.author.id}`);
 		message.reply(embed);
-		const msg = await client.channels.cache.get(client.config.channels.bug).send({ embeds: [embed] });
+		const msg = await client.channels.cache.get(client.utils.channels.bug).send({ embeds: [embed] });
 		await client.db.BUGS.create({
 			id,
 			title,

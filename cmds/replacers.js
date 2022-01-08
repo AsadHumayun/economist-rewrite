@@ -11,7 +11,7 @@ export default {
 	async run(client, message, args) {
 		const data = await client.db.get(`replacers${message.author.id}`) || {};
 		var count = 1;
-		const msg = Object.entries(data).map(x => `${count++} \`${x[0]}\` - Created At: ${moment(x[1].created).format('MMMM Do YYYY, h:mm:ss A')} - Content: ${client.config.trim(x[1].content, 50)}`).join('\n');
+		const msg = Object.entries(data).map(x => `${count++} \`${x[0]}\` - Created At: ${moment(x[1].created).format('MMMM Do YYYY, h:mm:ss A')} - Content: ${client.utils.trim(x[1].content, 50)}`).join('\n');
 		const emb = new MessageEmbed()
 		.setColor(message.author.color)
 		.setTitle(`${message.author.tag}'s Installed Supplanters`)

@@ -476,7 +476,7 @@ client.on("messageCreate", async (message) => {
 	if (!message.guild || (message.author.bot && (!cst.includes("wl"))) || (message.system) || (message.webhookId)) return;
 	if (message.partial) message = await message.fetch();
 	const prefix = await client.db.get("prefix" + message.guild.id) || client.config.statics.prefix;
-	message.guild.prefix = prefix;
+	message.guild ? message.guild.prefix : client.const.prefix = prefix;
 	if (message.guild.id == client.config.statics.supportServer) {
 		if (/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g.test(message.content.toLowerCase()) && (!cst.includes("linkp"))) {
 			message.delete({ reason: "author posted an invite" });
@@ -648,7 +648,7 @@ client.on("messageCreate", async (message) => {
 	}
 
 	if (command.ssOnly && (message.guild.id != client.config.statics.supportServer)) {
-		return message.reply({ content: "This command only works in our support server! Join by using `" + message.guild.prefix + "support`!" });
+		return message.reply({ content: "This command only works in our support server! Join by using `" + message.guild ? message.guild.prefix : client.const.prefix + "support`!" });
 	}
 
 	function err(e) {

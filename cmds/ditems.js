@@ -8,7 +8,7 @@ export default {
 	category: "utl",
 	async run(client, message, args) {
 		if (!args.length) args = [message.author.id];
-		let user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		let user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) user = message.author;
 		const data = await client.db.getUserData(user.id);
 		const cst = data.get("cst") ? data.get("cst").split(";") : [];
@@ -20,9 +20,9 @@ export default {
 					.setTitle(`${user.tag}'s Donor Ranks`)
 					.setDescription(
 						`
-					\`${message.guild.prefix}ptransfer <user> <item>\` to transfer an item to another account
+					\`${message.guild ? message.guild.prefix : client.const.prefix}ptransfer <user> <item>\` to transfer an item to another account
 
-					\`\`\`\n${client.config.Inspect(cst.filter((x) => client.config.statics.ditems.map((i) => i.split(";")[1]).includes(x)))}\n\`\`\`
+					\`\`\`\n${client.utils.Inspect(cst.filter((x) => client.utils.ditems.map((i) => i.split(";")[1]).includes(x)))}\n\`\`\`
 					`,
 					),
 			],

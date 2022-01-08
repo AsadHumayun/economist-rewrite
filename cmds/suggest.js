@@ -7,12 +7,12 @@ export default {
 	description: "Suggest a new idea to be added to the bot; will be posted in <#758598514623643690>",
 	category: "utl",
 	async run(client, message, args) {
-		const scnd = client.config.cooldown(message.createdTimestamp, (message.author.data.get("sgstc") || 0) * 60_000);
+		const scnd = client.utils.cooldown(message.createdTimestamp, (message.author.data.get("sgstc") || 0) * 60_000);
 		if (scnd) return message.reply(`You must wait another ${scnd} before suggesting again`);
 
 		if (!args.length) return message.reply("You must provide a suggestion for this command to work!");
 		await client.db.USERS.update({
-			sgstc: client.config.parseCd(message.createdTimestamp, 20000, true),
+			sgstc: client.utils.parseCd(message.createdTimestamp, 20000, true),
 		}, {
 			where: {
 				id: message.author.id,
@@ -26,7 +26,7 @@ export default {
 					.setDescription(`Thanks ${message.author.tag}, your suggestion has been received!`),
 			],
 		});
-		client.channels.cache.get(client.config.statics.defaults.channels.suggestions).send({
+		client.channels.cache.get(client.const.channels.suggestions).send({
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)

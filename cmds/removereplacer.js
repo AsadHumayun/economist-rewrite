@@ -13,7 +13,7 @@ export default {
 
 		var keyword = args[0].toLowerCase();
 		if (!Object.keys(data).includes(keyword)) {
-			return message.reply(`No supplanter with name "${keyword}" was found. Please look in \`${message.guild.prefix}replacers\` to view a list of all your currently active replacers.`);
+			return message.reply(`No supplanter with name "${keyword}" was found. Please look in \`${message.guild ? message.guild.prefix : client.const.prefix}replacers\` to view a list of all your currently active replacers.`);
 		} else {
 			const newData = data;
 			delete data[keyword];

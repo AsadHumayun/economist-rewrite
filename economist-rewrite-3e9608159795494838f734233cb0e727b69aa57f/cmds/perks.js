@@ -17,18 +17,18 @@ module.exports = {
 					Here's a list of things which you may purchase listed with their corresponding prices in bold. If you're confused on a command or have any further enquiries, please PM \`${client.users.cache.get(client.config.owner).tag}\`.
 		
 					**__Colorist__** (**£2**)
-						- Access to \`${message.guild.prefix}color\` - allows for an unlimited amount of colour preferences
+						- Access to \`${message.guild ? message.guild.prefix : client.const.prefix}color\` - allows for an unlimited amount of colour preferences
 		
 					**__Supreme__** (**£5**)
-						- Access to \`${message.guild.prefix}name <name>\`
-						- Access to \`${message.guild.prefix}deprive <stat>\`
-						- Access to \`${message.guild.prefix}cooldowns\`
+						- Access to \`${message.guild ? message.guild.prefix : client.const.prefix}name <name>\`
+						- Access to \`${message.guild ? message.guild.prefix : client.const.prefix}deprive <stat>\`
+						- Access to \`${message.guild ? message.guild.prefix : client.const.prefix}cooldowns\`
 		
 					**__Rebel__** (**£1**)
 						- Clears 3 second cooldown between using commands 
 		
 					**__Judge__** (**£4**)
-						- Access to \`${message.guild.prefix}sentence <user>\`
+						- Access to \`${message.guild ? message.guild.prefix : client.const.prefix}sentence <user>\`
 					
 					**__Nerd__*** (**£25**)
 						- Access to logs in our suppot server (it's priced higher to prevent more people from purchasing it).
@@ -43,12 +43,12 @@ module.exports = {
 					)
 					.addField("Custom Role Commands",
 						`
-		- \`${message.guild.prefix}roles\` - shows you a list of roles you own, with their keywords (in case you forget);
-		- \`${message.guild.prefix}role <role keyword> <user>\` - Used to assign the role, if the user already has the role then the bot will remove it;
-		- \`${message.guild.prefix}rolename <role keyword> <new name>\` - Edits the name of your owned role with said \`<role keyword>\`;
-		- \`${message.guild.prefix}rolecolor <role keyword> <new color>\` - Edits the colour of your role; must be a **hex** colour code. For help choosing one, click [here](https://htmlcolorcodes.com/);
-		- \`${message.guild.prefix}rolemembers <role name or ID>\` - Shows a list of all the members who have a certain role; note it works on any role (even if you don't own it) - make sure you specify a valid ID or name;
-		- \`${message.guild.prefix}editrolekw <old role keyword> <new role keyword>\` - Edits the keyword of a role, changing it to what you have specified.
+		- \`${message.guild ? message.guild.prefix : client.const.prefix}roles\` - shows you a list of roles you own, with their keywords (in case you forget);
+		- \`${message.guild ? message.guild.prefix : client.const.prefix}role <role keyword> <user>\` - Used to assign the role, if the user already has the role then the bot will remove it;
+		- \`${message.guild ? message.guild.prefix : client.const.prefix}rolename <role keyword> <new name>\` - Edits the name of your owned role with said \`<role keyword>\`;
+		- \`${message.guild ? message.guild.prefix : client.const.prefix}rolecolor <role keyword> <new color>\` - Edits the colour of your role; must be a **hex** colour code. For help choosing one, click [here](https://htmlcolorcodes.com/);
+		- \`${message.guild ? message.guild.prefix : client.const.prefix}rolemembers <role name or ID>\` - Shows a list of all the members who have a certain role; note it works on any role (even if you don't own it) - make sure you specify a valid ID or name;
+		- \`${message.guild ? message.guild.prefix : client.const.prefix}editrolekw <old role keyword> <new role keyword>\` - Edits the keyword of a role, changing it to what you have specified.
 		`,
 					)
 					.addField("Custom Channels",

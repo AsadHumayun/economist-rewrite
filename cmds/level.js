@@ -8,7 +8,7 @@ export default {
 	description: "View your or someone else's level & XP (only shows info from support server)",
 	async run(client, message, args) {
 		if (!args.length) args = [message.author.id];
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		let data;
 		if (user) {
 			data = await client.db.getUserData(user.id);

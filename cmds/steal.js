@@ -28,7 +28,7 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has stolen ${client.users.cache.filter((x) => x.id != message.author.id && !x.bot).random().tag}'s briefcase and found :dollar: ${client.config.comma(amt)}`),
+					.setDescription(`${message.author.tag} has stolen ${client.users.cache.filter((x) => x.id != message.author.id && !x.bot).random().tag}'s briefcase and found :dollar: ${client.utils.comma(amt)}`),
 			],
 		});
 	},

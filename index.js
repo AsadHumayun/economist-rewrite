@@ -5,8 +5,8 @@ import { config } from "dotenv";
 import Sequelize, { DataTypes } from "sequelize";
 
 import { EventHandler } from "./events/EventHandler.js";
-import { ClientConfiguration } from "./config.js";
 import { Notify } from "./functions.js";
+import { Utils, Constants } from "./utils/Construct.js";
 
 import User from "./models/User.js";
 import Guild from "./models/Guild.js";
@@ -45,6 +45,9 @@ const client = new Client({
 /** Used for storing user command cooldowns and rate limits - there used to be 2 separate collections to store each, but that used more memory*/
 client.collection = new Collection();
 
+/** Constants used globally by the client.*/
+client.const = Constants;
+
 console.log("Creating Sequelize instance...");
 const sequelize = new Sequelize("database", "user", "password", {
 	host: "localhost",
@@ -61,16 +64,14 @@ const Channels = Channel(sequelize, DataTypes);
 const Bugs = Bug(sequelize, DataTypes);
 
 if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
-	(async () => {
-		// have to use an asynchronous wrapper for sync method
-		console.log("Attempting to sync database...");
-		const now = Date.now();
-		await sequelize.sync({ force: true });
-		console.log(`Successfully synced database in ${Date.now() - now} ms`);
-	})();
+	console.log("Attempting to sync database...");
+	const now = Date.now();
+	sequelize.sync({ force: true });
+	console.log(`Successfully synced database in ${Date.now() - now} ms`);
 }
 
-client.config = new ClientConfiguration(client);
+client.utils = new Utils(client);
+
 client.db = {
 	USERS: Users,
 	CHNL: Channels,
@@ -84,10 +85,11 @@ client.db = {
 	}),
 };
 console.log("Loading commands...");
-// This is used to cache all of the commands upon startup
-client.config.commands = new Collection();
 
-client.config.cacheCommands("./cmds", client.config.commands)
+/** This is used to cache all of the commands upon startup */
+client.commands = new Collection();
+
+client.utils.cacheCommands("/cmds", client.commands)
 	.then((e) => console.log(`Registered ${e[1]} commands.`));
 
 const eventHandler = new EventHandler(client);

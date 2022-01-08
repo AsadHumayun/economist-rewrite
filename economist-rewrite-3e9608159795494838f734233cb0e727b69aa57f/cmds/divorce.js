@@ -8,7 +8,7 @@ module.exports = {
 	async run(client, message) {
 		const spouse = await client.db.get("spse" + message.author.id) || "";
 		const usr = await client.config.fetchUser(spouse).catch(() => {return;});
-		if (!usr) return message.reply(`You're not married to anyone yet! \`${message.guild.prefix}spouse\` to check who you're married with!`);
+		if (!usr) return message.reply(`You're not married to anyone yet! \`${message.guild ? message.guild.prefix : client.const.prefix}spouse\` to check who you're married with!`);
 
 		await client.db.delete("spse" + message.author.id);
 		await client.db.delete("spse" + spouse);

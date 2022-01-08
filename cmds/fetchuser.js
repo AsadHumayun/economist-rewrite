@@ -10,10 +10,10 @@ export default {
 	description: "fetches a user (as partial)",
 	usage: "fetchuser <id>",
 	async run(client, message, args) {
-		if (!args.length) return message.reply(`${client.config.statics.defaults.emoji.err} You must mention a valid user in order for this command to work!`);
+		if (!args.length) return message.reply(`${client.const.emoji.err} You must mention a valid user in order for this command to work!`);
 		const msg = await message.reply("Fetching user...");
-		const user = await client.config.fetchUser(args[0]).catch(() => {return;});
-		if (!user) return msg.edit(`${client.config.statics.defaults.emoji.err} I can't find that user.`);
+		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
+		if (!user) return msg.edit(`${client.const.emoji.err} I can't find that user.`);
 		const data = inspect(user, { depth: 10 });
 		msg.edit({
 			content: null,
