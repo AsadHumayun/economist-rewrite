@@ -25,6 +25,5 @@ export default {
 					.setDescription(`${message.author.tag} has successfully updated the server prefix to \`${prefix.toLowerCase()}\``),
 			],
 		});
-		client.channels.cache.get(client.const.channels.pfx).send(`[${new Date().toISOString()}]: (${message.guild.name} (${message.guild.id}))<${message.author.tag}(${message.author.id})>: ${message.content}`);
 	},
 };
