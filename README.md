@@ -1,2 +1,9 @@
-# economist-rewrite
- A rewritten version of my original Economist (almostStatic/Economist@master) for my computer science coursework.
+# Economist Rewrite
+> A rewritten version of my original project, Economist.
+
+## Author
+
+**Economist** © [Static](https://github.com/almoststatic).  
+Authored and maintained by Static.
+
+> GitHub [@almoststatic](https://github.com/iCrawl)
