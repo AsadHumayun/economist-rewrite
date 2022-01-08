@@ -42,12 +42,6 @@ const client = new Client({
 	partials: ["CHANNEL", "MESSAGE"],
 });
 
-/** Used for storing user command cooldowns and rate limits - there used to be 2 separate collections to store each, but that used more memory*/
-client.collection = new Collection();
-
-/** Constants used globally by the client.*/
-client.const = Constants;
-
 console.log("Creating Sequelize instance...");
 const sequelize = new Sequelize("database", "user", "password", {
 	host: "localhost",
@@ -84,6 +78,13 @@ client.db = {
 		return await Users.findOne({ where: { id: uid } });
 	}),
 };
+
+/** Used for storing user command cooldowns and rate limits - there used to be 2 separate collections to store each, but that used more memory*/
+client.collection = new Collection();
+
+/** Constants used globally by the client.*/
+client.const = Constants;
+
 console.log("Loading commands...");
 
 /** This is used to cache all of the commands upon startup */
@@ -92,7 +93,7 @@ client.commands = new Collection();
 client.utils.cacheCommands("/cmds", client.commands)
 	.then((e) => console.log(`Registered ${e[1]} commands.`));
 
-const eventHandler = new EventHandler(client);
+const eventHandler = new EventHandler(client, true);
 
 eventHandler.load();
 

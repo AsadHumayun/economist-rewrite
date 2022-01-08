@@ -28,7 +28,7 @@ export default {
 			let guild = await client.db.GUILDS.findOne({ where: { id: message.guild.id } });
 			if (!guild) guild = await client.db.GUILDS.create({ id: message.guild.id });
 			if (!message.guild || (message.author.bot && (!cst.includes("wl"))) || (message.system) || (message.webhookId)) return;
-			message.guild ? message.guild.prefix : client.const.prefix = guild.get("prefix");
+			message.guild.prefix = guild.get("prefix") || client.const.prefix;
 			if (message.guild?.id == client.const.supportServer) {
 				if (/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g.test(message.content.toLowerCase()) && (!cst.includes("linkp"))) {
 					message.delete({ reason: "Author posted an invite" });
@@ -129,7 +129,8 @@ export default {
 				],
 			});
 		}
-		const args = message.content.slice(!this.isDM(message.channel) ? message.guild ? message.guild.prefix : client.const.prefix.length : "~".length).trim().split(/ +/);
+
+		const args = message.content.slice(this.isDM(message.channel) ? client.const.prefix.length : message.guild.prefix.length).trim().split(/ +/);
 		const commandName = args.shift().toLowerCase();
 		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 		const stnb = data.get("stnb") || "stunned";
@@ -284,13 +285,16 @@ export default {
 				content: `${message.createdTimestamp / 60_000}: error while updating db values "${message.author.id}.cmds"`,
 			});
 		}
+
+		let send = true;
+		if (client.utils.owners.includes(message.author.id) && !cst.includes("adminlg")) send = false;
 		if (command && (!message.emit)) {
 			// prevents commands executed by another using from being logged. Helps cut down on spam and unnecessary logging.
 			if (command.logAsAdminCommand || command.cst == "administrator132465798") {
 				const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
 				// today example: 13-12-2021 (for: 13 Dec 2021)
 				const fLog = Util.splitMessage(`[${client.uptime}]: ${Math.trunc(message.createdTimestamp / 60000)}: ${this.isDM(message.channel) ? `[DMChannel (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
-				if (!existsSync(`./.adminlogs/${today}.txt`)) {
+				if (!existsSync(`./.adminlogs/${today}.txt`) && send) {
 					const b = Date.now();
 					client.channels.cache.get(client.const.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
 					writeFile(`./.adminlogs/${today}.txt`, fLog.join(""), ((err) => {
@@ -301,14 +305,16 @@ export default {
 				else {
 					createWriteStream(`./.adminlogs/${today}.txt`, { flags: "a" }).end(fLog.join(""));
 				}
-				await delay(100);
-				// delaying ensures that the log message is sent AFTER writing to the txt file.
-				Util.splitMessage(`${client.uptime} ${Math.trunc(message.createdTimestamp / 60_000)}: ${!this.isDM(message.channel) ? `[${message.guild.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" }).forEach(async (cntnt) => {
-					await client.channels.cache.get(client.const.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
-				});
+				if (send) {
+					await delay(100);
+					// delaying ensures that the log message is sent AFTER writing to the txt file.
+					Util.splitMessage(`${client.uptime} ${Math.trunc(message.createdTimestamp / 60_000)}: ${!this.isDM(message.channel) ? `[${message.guild.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" }).forEach(async (cntnt) => {
+						await client.channels.cache.get(client.const.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
+					});
+				}
 			}
 			// this optimised the below if statement by making it less cluttery and by handling half of it.
-			if (command.logs || (["tmod", "moderator", "srmod"].includes(command.cst))) {
+			if (command.logs || (["tmod", "moderator", "srmod"].includes(command.cst)) && send) {
 				if (!command.logs) command.logs = [];
 				if (["tmod", "moderator", "srmod"].includes(command.cst)) command.logs.push(client.const.channels.modlog);
 				command.logs = [...new Set(command.logs)];
