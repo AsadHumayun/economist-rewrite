@@ -39,11 +39,11 @@ export default {
 			});
 		}
 		client.db.USERS.update({
-			cst: cst.join(";")
+			cst: cst.join(";"),
 		}, {
 			where: {
-				id: user.id
-			}
-		})
+				id: user.id,
+			},
+		});
 	},
 };
