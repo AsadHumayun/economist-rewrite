@@ -1,6 +1,5 @@
 "use strict";
 import { MessageEmbed, Permissions } from "discord.js";
-import { Notify } from "../functions.js";
 
 export default {
 	name: "apply",
@@ -46,7 +45,7 @@ export default {
 		})
 			.catch((e) => {
 				message.reply({ content: `Unable to create TextBasedChannel, exception: \`${e}\` has been reported.` });
-				Notify(e, message.content, client);
+				client.utils.notify(e, message.content, client);
 			});
 		message.member.roles.add(client.const.roles.applicant);
 		message.reply({ embeds: [
