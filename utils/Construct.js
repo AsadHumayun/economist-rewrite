@@ -14,6 +14,7 @@ class Utils extends Funcs {
 		if (!client) throw new TypeError("[Class: Utils => Constructor]: client may not be null");
 		super(client);
 		this.client = client;
+		this.owners = ["501710994293129216"];
 		this.owner = "501710994293129216";
 	}
 }

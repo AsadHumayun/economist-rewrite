@@ -18,7 +18,7 @@ export default {
 		if (!dragAliases.includes(currAlias)) {
 			currAlias = "default";
 		}
-		// user didn't give any args, so show them their available dragon aliases.
+
 		if (!args.length) {
 			return message.reply({
 				embeds: [

@@ -1,4 +1,6 @@
 "use strict";
+import { Constants } from "../utils/Constants.js";
+
 export default (sequelize, DataTypes) => {
 	return sequelize.define("guild", {
 		id: {
@@ -9,7 +11,7 @@ export default (sequelize, DataTypes) => {
 		},
 		prefix: {
 			type: DataTypes.STRING,
-			defaultValue: "~",
+			defaultValue: Constants.prefix,
 		},
 	});
 };
