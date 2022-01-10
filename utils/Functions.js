@@ -409,14 +409,14 @@ class Funcs {
 		const rn = new Date().toISOString();
 		console.error(e);
 		if (!msgCont || msgCont.toString().length == 0) {
-			client.channels.cache.get(client.const.channels.error).send({
+			this.client.channels.cache.get(this.client.const.channels.error).send({
 				content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
 			// very unliekly that a normal exception/error will exceed 2,000 characters in length.
 			}).catch(() => {return;});
 		// to prevent messageSendFailure erros from throwing. They flood the console and often I can't do anything about it so it's better to just ignore those.
 		}
 		else {
-			client.channels.cache.get(client.const.channels.error).send({
+			this.client.channels.cache.get(this.client.const.channels.error).send({
 				content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
 				embeds: [
 					new MessageEmbed()
