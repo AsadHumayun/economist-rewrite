@@ -26,14 +26,14 @@ export default {
 		});
 		let e = new MessageEmbed()
 			.setColor(message.author.color)
-			.setTitle(`Coinflip - ${message.author.tag} (💵 ${client.utils.comma(bet)})`)
+			.setTitle(`Coinflip - ${message.author.tag} (💵 ${client.utils.comma(client.utils.noExponent(bet))})`)
 			.setDescription("**Flipping a coin...**");
 		const msg = await message.reply({ embeds: [e] });
 		const cst = message.author.data.get("cst").split(";");
 		await delay(2000);
 		if ((res.startsWith(args[0]) || (cst.includes("cfw"))) && (!cst.includes("cfl"))) {
 			const sads = [":(", ":/", ":c", ";(", ">:(", "(´；ω；`)", "(＃ﾟДﾟ)"];
-			e = e.setDescription(`It landed ${res} up ${sads[Math.floor(Math.random() * sads.length)]}... here's your :dollar: ${client.utils.comma(bet)} bet back, along with an extra :dollar: ${client.utils.comma(bet)} :((`);
+			e = e.setDescription(`It landed ${res} up ${sads[Math.floor(Math.random() * sads.length)]}... here's your :dollar: ${client.utils.comma(client.utils.noExponent(bet))} bet back, along with an extra :dollar: ${client.utils.comma(client.utils.noExponent(bet))} :((`);
 			msg.edit({ embeds: [e] });
 			await client.db.USERS.update({
 				bal: bal + (bet * 2),
@@ -51,8 +51,8 @@ export default {
 					id: message.author.id,
 				},
 			});
-			e = e.setDescription(`It landed ${res} up! Thanks for the free :dollar: ${client.utils.comma(bet)}, see you next time!`).setColor("#da0000");
-			msg.edit({ embed: e });
+			e = e.setDescription(`It landed ${res} up! Thanks for the free :dollar: ${client.utils.comma(client.utils.noExponent(bet))}, see you next time!`).setColor("#da0000");
+			msg.edit({ embeds: [e] });
 		}
 	},
 };
