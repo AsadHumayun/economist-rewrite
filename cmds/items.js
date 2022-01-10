@@ -31,7 +31,7 @@ export default {
 `, true,
 					)
 					.addField("Other", `
-${client.utils.emoji.chill} Chill Pills - ${client.utils.comma(cp)}
+${client.const.emoji.chill} Chill Pills - ${client.utils.comma(cp)}
 
 		`, true,
 					),
