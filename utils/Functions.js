@@ -405,6 +405,7 @@ class Funcs {
  * @param {Discord.Client} client The currently instantiated Discord client
  */
 	notify(e, msgCont, client) {
+		if (client) console.warn("DeprecationWarning: Client does not need to be passed into the client.utils.notify method.");
 		const rn = new Date().toISOString();
 		console.error(e);
 		if (!msgCont || msgCont.toString().length == 0) {
