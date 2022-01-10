@@ -2,29 +2,120 @@
 
 import { MessageEmbed } from "discord.js";
 
+/**
+ * Values that remain static and are used throughout the whole programme.
+ * It is advised to take care when modifying this file.
+ * @onst {object}
+ */
 const Constants = {
+	/**
+	 * Array of owner IDs
+	 * @const {string[]}
+	 */
 	owners: ["501710994293129216"],
+	/**
+	 * The ID of the owner to display on every command (eg `Contact User#1234 for help!`, User#1234 would be the owner's tag).
+	 * @const {string}
+	 */
 	get display() {
 		return this.owners[0];
 	},
+	/**
+	 * An invite to the bot's support server
+	 * @const {string}
+	 */
 	ssInvite: "https://discord.gg/",
+	/**
+	 * The ID of the bot's support server
+	 * @const {string}
+	 */
 	supportServer: "911784758600679455",
-	prefix: "~",
+	/**
+	 * A static invite URL for the bot.
+	 * Users can use this to add the bot to their guild (supplied by Discord).
+	 * @const {string}
+	 */
 	botInvite: "https://discord.com/oauth2/authorize?client_id=671708767813107724&scope=bot&permissions=67456065",
-	dailyReward: 5_000,
+	/**
+	 * The default prefix for all servers.
+	 * @const {string}
+	 */
+	prefix: "~",
+	/**
+	 * The amount of money that users will receive every time they run the `daily` command.
+	 * Multiplies with streak.
+	 * @const {number}
+	 */
+	dailyReward: 2_500,
+	/**
+	 * Upgradable stats in context of the `dragon` system.
+	 * @const {string[]}
+	 */
 	upgr: ["int;intellect;5", "end;endurance;6", "str;strength;7", "gl;glycogenesis;9"],
-	// following doubles each time, so it becomes harder for users to level up their dragon as their dragon becomes a higher level (and thus a higher requirement of XP to level up once more). These values were previously determined by an algorithm, however I deemed it faster in the ling run to just have them hard-coded. It saves processing time too, albeit not much, but it can help the bot catch up if there are loads of incompleted requests.
+	/**
+	 * The amount of XP required to obtain each dragon level, starting with the amount of XP needed to obtain level 2 being `400`.
+	 * Doubles each time, so it becomes more difficult as they (the users) progress.
+	 * @const {number[]}
+	 */
 	reqs: [400, 800, 1600, 3200, 6400, 12800, 25600, 51200, 102400, 204800, 409600, 819200, 1638400, 3276800, 6553600, 13107200, 26214400, 52428800, 104857600, 209715200, 419430400, 838860800, 1677721600, 3355443200, 6710886400, 13421772800, 26843545600, 53687091200, 107374182400, 214748364800, 429496729600, 858993459200, 1717986918400, 3435973836800, 6871947673600, 13743895347200, 27487790694400, 54975581388800, 109951162777600, 219902325555200, 439804651110400, 879609302220800, 1759218604441600, 3518437208883200, 7036874417766400, 14073748835532800, 28147497671065600, 56294995342131200, 112589990684262400, 225179981368524800],
-	PET_EMOJIS: [ "<:heart:912982056802340877>", ":zap:", ":star2:", ":star:", ":bulb:", ":field_hockey:", ":fire:", ":sparkling_heart:", ":pizza:" ],
+	/**
+	 * Array consisting of all the default emojis for the dragon system.
+	 * @const {string[]}
+	 */
+	PET_EMOJIS: ["<:heart:912982056802340877>", ":zap:", ":star2:", ":star:", ":bulb:", ":field_hockey:", ":fire:", ":sparkling_heart:", ":pizza:"],
+	/**
+	 * The intended array length for dragons.
+	 * Prevents unexpected behaviours.
+	 * @const {number}
+	 */
 	intendedPetLength: 10,
+	/**
+	 * The default value for dragons when a user does not have one set. This should be passed directly into the `models/User.js` file.
+	 * @const {string}
+	 */
 	dragon: "1;10000;100;0;1;1;1;1;0;1",
+	/**
+	 * The state in which a dragon will be when the user in context possesses the `maxdragon888` cst.
+	 * @const {string}
+	 */
 	maxDragon: "999999999;999999999;999999999;999999999;999999999;999999999;999999999;999999999;999999999;999999999",
+	/**
+	 * The default colour preference for all users.
+	 * Shown on embeds.
+	 * @const {string}
+	 */
 	clr: "#00aaaa",
+	/**
+	 * The maximum level that a dragon may be before it is counted as "maxed" out.
+	 * @const {number}
+	 */
 	maxLvl: 50,
-	boostPay: 5000,
+	/**
+	 * How much money a user will received in their balance once they boost the server.
+	 * @const {number}
+	 */
+	boostPay: 1_500,
+	/**
+	 * Exponent used to convert from MS to minutes.
+	 * @const {number}
+	 */
 	exp: 60000,
+	/**
+	 * The infinity symbol.
+	 * @const {string}
+	 */
 	inf: "∞",
+	/**
+	 * The keys of the cooldowns of each command, and their corresponding display names. Used in the `cooldowns` command.
+	 * @const {string[]}
+	 */
 	cds: ["adrenc;dose adrenaline", "cfc;coinflip", "dialc;dial", "dlc;daily", "dpc;deprive", "dgrc;downgrade", "fdc;feed", "fishc;fish", "rbc;rob", "sntc;sentence", "sgstc;suggest", "srchc;search", "strc;stroke", "xpc;xp cooldown"],
+	/**
+	 * The configured badges along with their emoji IDs.
+	 * The keys of each property act as the CST that a user must possess in order for them to have the badge, and the corresponding value is that badge's emoji ID.
+	 * Used in the `profile` command. There will be no further comments inside this object as it's all pretty self-explanatory.
+	 * @const {object}
+	 */
 	badges: {
 		administrator132465798: "<:admin:926431897695973436>",
 		owners: "<:owners:926433334140235786>",
@@ -33,41 +124,182 @@ const Constants = {
 		booster: "<:booster:927445472661098546>",
 		pstn: "<:permstunned:927446547547951135>",
 	},
+	/**
+	 * All of the required channels for the Discord client to function.
+	 * Primarily logging or config channels.
+	 * @const {object}
+	 */
 	channels: {
+		/**
+		 * The ID of the channel in which dragon disowns are logged.
+		 * @const {string}
+		 */
 		dsl: "918090868798423060",
+		/**
+		 * The ID of the channel in which guild prefix changes are logged.
+		 * @const {string}
+		 */
 		pfx: "912615890036604939",
+		/**
+		 * The ID of the channel in which the usage of administrator-level commands are logged.
+		 * **Pretty important**.
+		 * @const {string}
+		 */
 		adminlog: "912615914330017802",
+		/**
+		 * The ID of the channel in which channel overwrites are logged (refer to events/channelUpdate.js and events/channelCreate.js)
+		 * @const {string}
+		 */
 		sflp: "913342404772372490",
+		/**
+		 * The ID of the category in which users are allowed to freely spam, and hence will not be muted upon hitting the msg send rate limit.
+		 * @const {string}
+		 */
 		spamCat: "913341555975274507",
+		/**
+		 * The ID of the channel in which notifications for staff applications are sent to.=
+		 * @const {string}
+		 */
 		appNotifs: "912616373769875456",
+		/**
+		 * The ID of the category in which users' application channels will be created.
+		 * @const {string}
+		 */
 		appCat: "913341136939139082",
+		/**
+		 * The ID of the channel in which bugs are logged.
+		 * @const {string}
+		 */
 		bug: "912616349879107584",
+		/**
+		 * The ID of the `general` guild channel in the support server.
+		 * @const {string}
+		 */
 		general: "911784758600679459",
+		/**
+		 * The ID of the channel in which instances of the `ready` event are logged.
+		 * @const {string}
+		 */
 		ready: "912615725347254332",
-		reconnecting: "912615820125958185",
+		/**
+		 * The ID of the channel in which errors are logged.
+		 * @const {string}
+		 */
 		error: "912615833056976936",
-		rateLimit: "912615845161758730",
+		/**
+		 * The ID of the channel in which the bot's entrance and exit of guilds is logged.
+		 * @const {string}
+		 */
 		guildLogs: "912616010916433930",
+		/**
+		 * The ID of the channel in which member joins/leaves are logged, only in the support server.
+		 * @const {string}
+		 */
 		memberLog: "912616064112816148",
+		/**
+		 * The ID of the channel in which moderator actions are logged. (Support server only)
+		 * @const {string}
+		 */
 		modlog: "912616081238142976",
+		/**
+		 * The ID of the channel in which uses of the set command are logged.
+		 * This is no longer necessary due to the addition of `adminlogs` and will be removed in the future.
+		 * @deprecated
+		 * @const {string}
+		 */
 		set: "912616091266736148",
+		/**
+		 * The ID of the channel in which users' suggestions are forwarded to.
+		 * @const {string}
+		 */
 		suggestions: "912616289216909332",
+		/**
+		 * The ID of the channel in which message edits/deleted messages are logged.
+		 * @const {string}
+		 */
 		msgLogs: "912616260431400971",
+		/**
+		 * The ID of the channel in which boost messages are sent in.
+		 * @const {string}
+		 */
 		boostAnnCh: "912616201715322940",
+		/**
+		 * The ID of the channel in which bugs are logged.
+		 * @const {string}
+		 */
 		bugLog: "912616173978419240",
+		/**
+		 * The ID of the channel in which command uses are logged.
+		 * No longer used, may be removed in a future update.
+		 * @deprecated
+		 * @const {string}
+		 */
 		cmdLog: "912616134057025536",
 	},
+	/**
+	 * The role IDs which are registered by the bot.
+	 * These are typically used to give/transfer permissions, and keep track of permissions.
+	 */
 	roles: {
+		/**
+		 * The ID of the role bound to the Keyboard Warrior role.
+		 * @const {string}
+		 */
 		kw: "912641078547607582",
+		/**
+		 * The ID of the role which users receive once they use the `apply` command.
+		 * @const {string}
+		 */
 		applicant: "912641084604153866",
+		/**
+		 * The ID of the role bound to the Judge permission.
+		 * @const {string}
+		 */
 		judge: "912641088551010314",
+		/**
+		 * The ID of the role bound to the Businessman permission.
+		 * @deprecated
+		* @const {string}
+		 */
 		businessman: "912641098042732575",
+		/**
+		 * The ID of the Updates role.
+		 * This role gets mentioned for updates/announcements.
+		 * @const {string}
+		 */
 		updates: "912641384589164544",
+		/**
+		 * The ID of the Server Booster role.
+		 * @const {string}
+		 */
 		SERVER_BOOSTER: "",
+		/**
+		 * DBM, may be removed soon.
+		 * @deprecated
+		 * @const {string}
+		 */
 		db: "912641300505968640",
+		/**
+		 * The ID of the role bound to the Nerd permission.
+		 * @const {string}
+		 */
 		nerd: "912641306369593396",
+		/**
+		 * The ID of the Civilian role.
+		 * @const {string}
+		 */
 		civilian: "912617302279716886",
+		/**
+		 * The ID of the Admin role.
+		 * @const {string}
+		 */
 		admin: "911801537968369685",
+		/**
+		 * The ID of the role bound to the Judge permission.
+		 * @property {string} trial ID of the trial moderator role
+		 * @property {string} normal ID of the normal moderator role
+		 * @const {object}
+		 */
 		mod: { trial: "912641359297511515", normal: "912641363944824832" },
 		rebel: "912641468320088134",
 		sarg: "912641474900946974",

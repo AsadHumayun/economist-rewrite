@@ -34,7 +34,7 @@ export default {
 			}
 			else {
 				streak = streak ? streak.split(";").map(Number) : [0, 0];
-				amountAdded = 0.5 * client.utils.dailyReward * (streak[0] == 0 || isNaN(streak[0]) ? 1 : streak[0]);
+				amountAdded = client.const.dailyReward * (streak[0] == 0 || isNaN(streak[0]) ? 1 : streak[0]);
 				// increment streak
 				streak[0]++;
 				await client.db.USERS.update({
