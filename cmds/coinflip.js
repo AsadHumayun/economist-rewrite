@@ -52,7 +52,7 @@ export default {
 				},
 			});
 			e = e.setDescription(`It landed ${res} up! Thanks for the free :dollar: ${client.utils.comma(bet)}, see you next time!`).setColor("#da0000");
-			msg.edit({ embed: e });
+			msg.edit({ embeds: [e] });
 		}
 	},
 };
