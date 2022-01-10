@@ -295,9 +295,9 @@ const Constants = {
 		 */
 		admin: "911801537968369685",
 		/**
-		 * The ID of the role bound to the Judge permission.
-		 * @property {string} trial ID of the trial moderator role
-		 * @property {string} normal ID of the normal moderator role
+		 * The IDs of the `moderator` roles, which the exception of `srmod`, which has its own key.
+		 * @property {string} [trial] - ID of the trial moderator role
+		 * @property {string} [normal] - ID of the normal moderator role
 		 * @const {object}
 		 */
 		mod: { trial: "912641359297511515", normal: "912641363944824832" },
