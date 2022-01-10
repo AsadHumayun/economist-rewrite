@@ -1,11 +1,10 @@
 "use strict";
-
 import { MessageEmbed } from "discord.js";
 
 /**
  * Values that remain static and are used throughout the whole programme.
  * It is advised to take care when modifying this file.
- * @onst {object}
+ * @const {object}
  */
 const Constants = {
 	/**
@@ -259,7 +258,7 @@ const Constants = {
 		/**
 		 * The ID of the role bound to the Businessman permission.
 		 * @deprecated
-		* @const {string}
+		 * @const {string}
 		 */
 		businessman: "912641098042732575",
 		/**
@@ -296,25 +295,87 @@ const Constants = {
 		admin: "911801537968369685",
 		/**
 		 * The IDs of the `moderator` roles, which the exception of `srmod`, which has its own key.
-		 * @property {string} [trial] - ID of the trial moderator role
-		 * @property {string} [normal] - ID of the normal moderator role
+		 * @property {string} trial - ID of the trial moderator role
+		 * @property {string} normal - ID of the normal moderator role
 		 * @const {object}
 		 */
 		mod: { trial: "912641359297511515", normal: "912641363944824832" },
+		/**
+		 * The ID of the role bound to the Rebel permission.
+		 * @const {string}
+		 */
 		rebel: "912641468320088134",
+		/**
+		 * The ID of the role bound to the Sargent permission.
+		 * @const {string}
+		 */
 		sarg: "912641474900946974",
+		/**
+		 * The ID of the staff role
+		 * @deprecated
+		 * @const {string}
+		 */
 		staff: "912641480890413056",
+		/**
+		 * The ID of the Citizen role.
+		 * @const {string}
+		 */
 		cit: "912641662663131196",
+		/**
+		 * The ID of the role bound to the Colorist permission.
+		 * @const {string}
+		 */
 		col: "912641555184123924",
+		/**
+		 * the ID of the role bound to the Supreme permission.
+		 * @const {string}
+		 */
 		supreme: "912641563291713566",
+		/**
+		 * Not sure about this one, I'll fill out the comment for this later.
+		 * @const {string}
+		 * @todo
+		 * @deprecated
+		 */
 		warrior: "912641565346914304",
+		/**
+		 * The ID of the default role (I don't think that this is used anywhere)
+		 * @deprecated
+		 * @duplicate
+		 */
 		human: "912641644547936267",
+		/**
+		 * The ID of the role that all new members of the support server will receive upon joining.
+		 * @const {string}
+		 */
 		memberRole: "912641644547936267",
+		/**
+		 * The ID of the muted role
+		 * @see `mute`, `unmute`, `events/guildMemberAdd`
+		 */
 		muted: "912641654391988224",
+		/**
+		 * The ID of the Civilian role
+		 * @const {string}
+		 */
 		civ: "912641353333211146",
+		/**
+		 * The bot developer role ID
+		 * @const {string}
+		 */
 		botDeveloper: "912641730522783795",
+		/**
+		 * The ID of the senior moderator role.
+		 * Controls ability to accept/deny staff applications
+		 * @const {string}
+		 */
 		srmod: "912641369141559297",
 	},
+	/**
+	 * An object consisting of the emojis which are used by the bot.
+	 * With the exception of badge mojis; they have their own object.
+	 * @const {object}
+	 */
 	emoji: {
 		tick: "<:tick:912982622731370576>",
 		err: "<:error:912982623830282281>",
@@ -330,14 +391,27 @@ const Constants = {
 		bvault: ":bank:",
 		rc: ":rainbow:",
 	},
+	/**
+	 * An object consisting of colours used by the bot.
+	 * @const {object}
+	 */
 	colors: {
 		green: "#4bc46b",
 		red: "#e61c1c",
 		invisible: "#36393e",
 	},
+	/**
+	 * Contains webhooks used by the bot.
+	 * Debugger webhook receives informtion from the debug event.
+	 * @const {object}
+	 */
 	webhooks: {
 		debugger: "https://discord.com/api/webhooks/914286031325507584/rp7BIeS5RaZegZI3YzSfUlpyxASeA0dJfWC48O38fcaEe6EyH7LEAUxWY6mimmq0Ucyj",
 	},
+	/**
+	 * Contains punishable offences in regard to `punish` and `unpunish` commands.
+	 * @const {object}
+	 */
 	ofncs: {
 		"1": [ "Spam", 1 ],
 		"2": [ "Excessive Mentions", 1 ],
@@ -354,6 +428,10 @@ const Constants = {
 		"13": [ "Leaving server to evade punishments (before punished; not after)", 4 ],
 		"14": [ "Excessively Rude", 1 ],
 	},
+	/**
+	 * Contains information regarding all the different feedable foods. Check the `feed` command.
+	 * @const {object}
+	 */
 	foods: {
 		dolp: {
 			name: "dolphin",
@@ -410,133 +488,159 @@ const Constants = {
 			},
 		},
 	},
-};
-
-
-Constants.ditems = [`b;businessman;${Constants.roles.businessman};9999999999999999`, `col;colorist;${Constants.roles.col};2500`, `judge;judge;${Constants.roles.judge};1000`, `nerd;nerd;${Constants.roles.nerd};500`, `reb;rebel;${Constants.roles.rebel};250`, `s;supreme;${Constants.roles.supreme};10000`, `upda;updates;${Constants.roles.updates};1`];
-
-Constants.cstSpecials = [
-	[ "kw", Constants.roles.kw ],
-	[ "judge", Constants.roles.judge ],
-	[ "businessman", Constants.roles.businessman ],
-	[ "nerddd", Constants.roles.nerd ],
-	[ "civilian", Constants.roles.civilian ],
-	[ "muted", Constants.roles.muted ],
-	[ "rebel", Constants.roles.rebel ],
-	[ "supreme", Constants.roles.supreme ],
-	[ "colorist", Constants.roles.col ],
-	[ "tmod", Constants.roles.mod.trial ],
-	[ "moderator", Constants.roles.mod.normal ],
-	[ "srmod", Constants.roles.srmod ],
-	[ "citizen", Constants.roles.cit ],
-	[ "updt", Constants.roles.updates ],
-];
-
-Constants.shop = {
-	fishrod: {
-		displayName: "Fishing rod",
-		id: 1,
-		emoji: Constants.emoji.fishing_rod,
-		description: "Allows you to go fishing via `~fish`",
-		price: 250,
-		method: "cst",
-		condt: null,
+	// getters. They all have to be in a getter in order to be able to successfully self-reference this object.
+	/**
+	 * A list of ditems, along with their corresponding role IDs, CSTs, and XP prices.
+	 * @see `pbuy` and `ptransfer`
+	 * @const {string[]}
+	 */
+	get ditems() {
+		return [`b;businessman;${this.roles.businessman};9999999999999999`, `col;colorist;${this.roles.col};2500`, `judge;judge;${this.roles.judge};1000`, `nerd;nerd;${this.roles.nerd};500`, `reb;rebel;${this.roles.rebel};250`, `s;supreme;${this.roles.supreme};10000`, `upda;updates;${this.roles.updates};1`];
 	},
-	slrprmt: {
-		displayName: "The Seller's Permit",
-		id: 2,
-		emoji: Constants.emoji.slrprmt,
-		description: "Allows you to sell in-game items via `~sell`",
-		price: 50_000,
-		method: "cst",
-		condt: null,
+	/**
+	 * The "special" CSTs that also represent the presence of a certain role.
+	 * They supplant their corresponding role IDs in a user's role persist data.
+	 * This is done so it's just easier and quicker to determine whether or not a user has a valuable preconfigured role.
+	 * @const {string[][]}
+	 */
+	get cstSpecials() {
+		return [
+			[ "kw", this.roles.kw ],
+			[ "judge", this.roles.judge ],
+			[ "businessman", this.roles.businessman ],
+			[ "nerddd", this.roles.nerd ],
+			[ "civilian", this.roles.civilian ],
+			[ "muted", this.roles.muted ],
+			[ "rebel", this.roles.rebel ],
+			[ "supreme", this.roles.supreme ],
+			[ "colorist", this.roles.col ],
+			[ "tmod", this.roles.mod.trial ],
+			[ "moderator", this.roles.mod.normal ],
+			[ "srmod", this.roles.srmod ],
+			[ "citizen", this.roles.cit ],
+			[ "updt", this.roles.updates ],
+		];
 	},
-	chillpills: {
-		displayName: "1x Chill Pill",
-		id: 101,
-		emoji: Constants.emoji.chill,
-		description: "clears **all** exisiting cooldowns, 6 hour cooldown for consuimg this item; consume with `~dose chill`",
-		price: 10,
-		// method: incremental of (chillpills)
-		// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
-		method: "drgs.0",
-		condt: null,
+	/**
+	 * The shop items
+	 * @see `buy`
+	 * @const {object}
+	 */
+	get shop() {
+		return {
+			fishrod: {
+				displayName: "Fishing rod",
+				id: 1,
+				emoji: this.emoji.fishing_rod,
+				description: "Allows you to go fishing via `~fish`",
+				price: 250,
+				method: "cst",
+				condt: null,
+			},
+			slrprmt: {
+				displayName: "The Seller's Permit",
+				id: 2,
+				emoji: this.emoji.slrprmt,
+				description: "Allows you to sell in-game items via `~sell`",
+				price: 50_000,
+				method: "cst",
+				condt: null,
+			},
+			chillpills: {
+				displayName: "1x Chill Pill",
+				id: 101,
+				emoji: this.emoji.chill,
+				description: "clears **all** exisiting cooldowns, 6 hour cooldown for consuimg this item; consume with `~dose chill`",
+				price: 10,
+				// method: incremental of (chillpills)
+				// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
+				method: "drgs.0",
+				condt: null,
+			},
+			adren: {
+				displayName: "1x Adrenaline Syringe",
+				id: 101,
+				emoji: this.emoji.chill,
+				description: "clears **all** exisiting cooldowns, 6 hour cooldown for consuimg this item; consume with `~dose chill`",
+				price: 10,
+				// method: incremental of (chillpills)
+				// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
+				method: "drgs.0",
+				condt: null,
+			},
+			bvault: {
+				displayName: "Bank Vault",
+				id: 201,
+				emoji: this.emoji.bvault,
+				description: "Allows you to store money where it's safely hidden away from robbers; `~vault` to view your vault",
+				price: 25_000,
+				condt: null,
+			},
+			rc: {
+				displayName: "Random Colour Preference",
+				id: 202,
+				emoji: this.emoji.rc,
+				description: "Set a random colour preference whilst using commands",
+				price: 2_500,
+				execute: (async (id, client) => {
+					await client.db.getUserData(id);
+					// I'm aware this can be written as one line, but I've decided to write it like this so it's easier to read.
+					await client.db.USERS.udpate({
+						clr: "RANDOM;0",
+					}, {
+						where: {
+							id,
+						},
+					});
+				}),
+				condt: "message.author.color == \"RANDOM;0\"",
+			},
+		};
 	},
-	adren: {
-		displayName: "1x Adrenaline Syringe",
-		id: 101,
-		emoji: Constants.emoji.chill,
-		description: "clears **all** exisiting cooldowns, 6 hour cooldown for consuimg this item; consume with `~dose chill`",
-		price: 10,
-		// method: incremental of (chillpills)
-		// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
-		method: "drgs.0",
-		condt: null,
-	},
-	bvault: {
-		displayName: "Bank Vault",
-		id: 201,
-		emoji: Constants.emoji.bvault,
-		description: "Allows you to store money where it's safely hidden away from robbers; `~vault` to view your vault",
-		price: 25_000,
-		condt: null,
-	},
-	rc: {
-		displayName: "Random Colour Preference",
-		id: 202,
-		emoji: Constants.emoji.rc,
-		description: "Set a random colour preference whilst using commands",
-		price: 2_500,
-		execute: (async (id, client) => {
-			await client.db.getUserData(id);
-			// I'm aware this can be written as one line, but I've decided to write it like this so it's easier to read.
-			await client.db.USERS.udpate({
-				clr: "RANDOM;0",
-			}, {
-				where: {
-					id,
-				},
-			});
-		}),
-		condt: "message.author.color == \"RANDOM;0\"",
-	},
-};
-
-Constants.doses = [
-	[ `ch;chillpill;1;chillc;6h;${Constants.emoji.chill}`, (async (message) => {
-		const x = await message.client.db.get(`chillpills${message.author.id}`) || 0;
-		if (Number(x) == 0) {
-			return message.reply(`${Constants.emoji.chill} You don"t have any chill pills!`);
-		}
-		await message.client.db.set(`chillpills${message.author.id}`, Number(x - 1));
-		Constants.cds.forEach(async (c) => {
-			c = c.split(";")[0];
-			await message.client.db.delete(c + message.author.id);
-		});
-		message.reply({
-			embeds: [
-				new MessageEmbed()
-					.setColor(message.author.color)
-					.setDescription(`${message.author.tag} has consumed a ${message.client.Constants.statics.emoji.chill} and cleared all of their cooldowns!`),
+	/**
+	 * Different dosable items, along with a function that contains code and subtracts 1 from the current number of items and checks to see if they have enough to dose on that.
+	 * @see `dose` command
+	 * @const {(string | ((message: Discord.Message) => Promise<any>))[][]}
+	 */
+	get doses() {
+		return [
+			[ `ch;chillpill;1;chillc;6h;${this.emoji.chill}`, (async (message) => {
+				const x = await message.client.db.get(`chillpills${message.author.id}`) || 0;
+				if (Number(x) == 0) {
+					return message.reply(`${this.emoji.chill} You don"t have any chill pills!`);
+				}
+				await message.client.db.set(`chillpills${message.author.id}`, Number(x - 1));
+				this.cds.forEach(async (c) => {
+					c = c.split(";")[0];
+					await message.client.db.delete(c + message.author.id);
+				});
+				message.reply({
+					embeds: [
+						new MessageEmbed()
+							.setColor(message.author.color)
+							.setDescription(`${message.author.tag} has consumed a ${this.emoji.chill} and cleared all of their cooldowns!`),
+					],
+				});
+			}),
+			], [
+				"adren;adrenaline;45m;adrenc;3h;💉", (async (message) => {
+					let adren = await message.client.db.get("adren" + message.author.id);
+					if (!adren || (isNaN(adren))) adren = 0; else adren = Number(adren);
+					if (adren - 1 < 0) return message.reply("You don't have any adrenaline left!");
+					adren -= 1;
+					await message.client.db.set("adren" + message.author.id, adren);
+					message.reply({
+						embeds: [
+							new MessageEmbed()
+								.setColor(message.author.color)
+								.setDescription(`${message.author.tag} has injected themselves with 💉!`),
+						],
+					});
+				}),
 			],
-		});
-	}),
-	], [
-		"adren;adrenaline;45m;adrenc;3h;💉", (async (message) => {
-			let adren = await message.client.db.get("adren" + message.author.id);
-			if (!adren || (isNaN(adren))) adren = 0; else adren = Number(adren);
-			if (adren - 1 < 0) return message.reply("You don't have any adrenaline left!");
-			adren -= 1;
-			await message.client.db.set("adren" + message.author.id, adren);
-			message.reply({
-				embeds: [
-					new MessageEmbed()
-						.setColor(message.author.color)
-						.setDescription(`${message.author.tag} has injected themselves with 💉!`),
-				],
-			});
-		}),
-	],
-];
+		];
+	},
+};
 
+/** @exports Constants */
 export { Constants };

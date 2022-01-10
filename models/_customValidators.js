@@ -1,4 +1,5 @@
 "use strict";
+
 export function allNumbers(data) {
 	data = data.toString().split(";").map(Number);
 	if (data.includes(NaN)) throw new Error("\n[CustomValidator => allNumbers] [Fail] All values must be numeric.");

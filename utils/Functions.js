@@ -402,7 +402,7 @@ class Funcs {
  * This function was not able to go in the `config.js` file due to certain complications
  * @param {string} e exception that is to be recorded
  * @param {?string} msgCont message content (only if this was used in a command - really helps with debugging)
- * @param {Discord.Client} client The currently instantiated Discord client-
+ * @param {Discord.Client} client The currently instantiated Discord client
  */
 	notify(e, msgCont, client) {
 		const rn = new Date().toISOString();
