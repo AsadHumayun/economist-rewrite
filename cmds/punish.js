@@ -34,7 +34,7 @@ export default {
 			try {
 				const banEmbed = new MessageEmbed()
 					.setColor(client.const.colors.red)
-					.setDescription(`You have received a permanent ban from ${message.guild.name}. If you believe that this is a mistake, please contact ${client.users.cache.get(client.utils.owner).tag} (don't spam my DMs).`)
+					.setDescription(`You have received a permanent ban from ${message.guild.name}. If you believe that this is a mistake, please contact ${client.users.cache.get(client.const.display).tag} (don't spam my DMs).`)
 					.addField("Moderator", message.author.tag, true)
 					.addField("Reason", Object.values(client.const.ofncs)[index - 1][0], true);
 				await message.channel.send({ embeds: [ banEmbed ] });
@@ -59,7 +59,7 @@ export default {
 			});
 			const membed = new MessageEmbed()
 				.setColor(client.const.colors.red)
-				.setDescription(`You have received a ${hrs} hour mute from ${message.guild.name}. You may leave and re-join the server after said time has passed to have your mute auto-removed. If you believe that this was an unjust punishment, please PM ${client.users.cache.get(client.utils.owner).tag} (don't spam though, otherwise I'll just ignore you).`)
+				.setDescription(`You have received a ${hrs} hour mute from ${message.guild.name}. You may leave and re-join the server after said time has passed to have your mute auto-removed. If you believe that this was an unjust punishment, please PM ${client.users.cache.get(client.const.display).tag} (don't spam though, otherwise I'll just ignore you).`)
 				.addField("Moderator", `${message.author.tag}`, true)
 				.addField("Reason", Object.values(client.const.ofncs)[index - 1][0]);
 			try {
@@ -73,7 +73,7 @@ export default {
 		async function warn() {
 			const em = new MessageEmbed()
 				.setColor(client.const.colors.red)
-				.setDescription(`You have received a warning from ${message.guild.name}. If you believe that this was a mistake, please PM ${client.users.cache.get(client.utils.owner).tag} (don't spam though, otherwise I'll just ignore you).`)
+				.setDescription(`You have received a warning from ${message.guild.name}. If you believe that this was a mistake, please PM ${client.users.cache.get(client.const.display).tag} (don't spam though, otherwise I'll just ignore you).`)
 				.addField("Moderator", `${message.author.tag}`, true)
 				.addField("Reason", Object.values(client.const.ofncs)[index - 1][0]);
 			try {

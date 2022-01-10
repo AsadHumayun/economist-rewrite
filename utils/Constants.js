@@ -4,6 +4,9 @@ import { MessageEmbed } from "discord.js";
 
 const Constants = {
 	owners: ["501710994293129216"],
+	get display() {
+		return this.owners[0];
+	},
 	ssInvite: "https://discord.gg/",
 	supportServer: "911784758600679455",
 	prefix: "~",
@@ -303,6 +306,5 @@ Constants.doses = [
 		}),
 	],
 ];
-
 
 export { Constants };

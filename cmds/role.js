@@ -16,7 +16,7 @@ export default {
 		const key = args[0].toLowerCase();
 		const kw = roles.map((x) => x[0]);
 		if (!kw.includes(key)) {
-			return message.reply(`A role by that keyword was not found. Please use \`${message.guild ? message.guild.prefix : client.const.prefix}roles\` to view a list of roles that you own. If you are still having trouble, please message ${client.users.cache.get(client.utils.owner).tag}.`);
+			return message.reply(`A role by that keyword was not found. Please use \`${message.guild ? message.guild.prefix : client.const.prefix}roles\` to view a list of roles that you own. If you are still having trouble, please message ${client.users.cache.get(client.const.display).tag}.`);
 		}
 
 		let role = roles.find((x) => x[0] == key);

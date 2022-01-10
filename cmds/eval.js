@@ -13,7 +13,7 @@ export default {
 		// eval command is very powerful and dangerous.
 		// allows for a user to execute a piece of code.
 		// alllowed people are only myself (the ID in config.js ClientConfiguration class),
-		const devs = [client.utils.owner, "757958112992034918"];
+		const devs = client.const.owners;
 
 		if (!devs.includes(message.author.id)) {
 			// they get denied access.

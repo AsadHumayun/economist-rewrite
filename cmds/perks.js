@@ -15,7 +15,7 @@ export default {
 					.addField("Pricing", "Note that \"£\" refers to \"GBP\" (the \"Great British Pound\"). This is the only currency which will be accepted so you may have to convert from your current currency to GBP otherwise your payment may not be accepted and will be ignored.")
 					.setDescription(
 						`
-					Here's a list of things which you may purchase listed with their corresponding prices in bold. If you're confused on a command or have any further enquiries, please PM \`${client.users.cache.get(client.utils.owner).tag}\`.
+					Here's a list of things which you may purchase listed with their corresponding prices in bold. If you're confused on a command or have any further enquiries, please PM \`${client.users.cache.get(client.const.display).tag}\`.
 		
 					**__Colorist__** (**£2**)
 						- Access to \`${message.guild ? message.guild.prefix : client.const.prefix}color\` - allows for an unlimited amount of colour preferences
@@ -63,10 +63,10 @@ export default {
 				`,
 					)
 					.addField("Alternative Payment Methods",
-						`Please PM \`${client.users.cache.get(client.utils.owner).tag}\` with your payment information/credentials
+						`Please PM \`${client.users.cache.get(client.const.display).tag}\` with your payment information/credentials
 		**These payments __must__ bet in GBP or else they may be rejected.**
 		
-		**Discord Nitro Gift Codes** - Please PM these to \`${client.users.cache.get(client.utils.owner).tag}\`.
+		**Discord Nitro Gift Codes** - Please PM these to \`${client.users.cache.get(client.const.display).tag}\`.
 		`,
 					)
 					.addField("Additional Notes",
