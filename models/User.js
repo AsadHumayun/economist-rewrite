@@ -1,4 +1,6 @@
 "use strict";
+
+import { Constants } from "../utils/Constants.js";
 import * as customValidators from "./_customValidators.js";
 
 export default (sequelize, DataTypes) => {
@@ -180,7 +182,7 @@ export default (sequelize, DataTypes) => {
 		},
 		pet: {
 			type: DataTypes.STRING,
-			defaultValue: "1;10000;100;0;1;1;1;1;0;1",
+			defaultValue: Constants.dragon,
 			allowNull: false,
 			validate: {
 				isAllNumbers: customValidators.allNumbers,

@@ -35,7 +35,7 @@ export default {
 					time: 600_000,
 				})
 					.catch(() => {
-						message.reply(`${client.utils.emojis.error} | I was unable to find your bans list; please make sure I have the \`BAN_MEMBERS\` permission!`);
+						message.reply(`${client.const.emojis.error} | I was unable to find your bans list; please make sure I have the \`BAN_MEMBERS\` permission!`);
 					});
 			});
 	},

@@ -44,7 +44,7 @@ export default {
 			}
 			else if (x.startsWith("ch")) {
 				return {
-					item: [ "Chill Pills", client.utils.emoji.chill ],
+					item: [ "Chill Pills", client.const.emoji.chill ],
 					rate: 50,
 				};
 			}
