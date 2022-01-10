@@ -34,7 +34,7 @@ export default {
 			],
 		});
 		const dm = new MessageEmbed()
-			.setDescription(`You have received a ${amt == 0 ? "permanent" : `${amt} minute`} mute from ${message.guild.name}. Please contact ${client.users.cache.get(client.utils.owner).tag} if you believe that this is an unjust mute. You may leave and rejoin the server after the time specified has passed in order to have your mute removed.`)
+			.setDescription(`You have received a ${amt == 0 ? "permanent" : `${amt} minute`} mute from ${message.guild.name}. Please contact ${client.users.cache.get(client.const.display).tag} if you believe that this is an unjust mute. You may leave and rejoin the server after the time specified has passed in order to have your mute removed.`)
 			.setColor(client.const.colors.red)
 			.addField("Moderator", message.author.tag)
 			.addField("Reason", reason);

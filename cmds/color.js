@@ -31,7 +31,7 @@ export default {
 			});
 
 		if (colors.includes(false)) {
-			return message.reply("One of your provided hex colour codes is not valid, please check all values and try again. To add more than one colour, simply separate each one by spaces. If you're still having trouble, feel free to contact `" + client.users.cache.get(client.utils.owner).tag + "`");
+			return message.reply("One of your provided hex colour codes is not valid, please check all values and try again. To add more than one colour, simply separate each one by spaces. If you're still having trouble, feel free to contact `" + client.users.cache.get(client.const.display).tag + "`");
 		}
 
 		message.reply({

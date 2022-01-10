@@ -78,7 +78,7 @@ export default {
 			});
 		}
 		await user.reload();
-		let owner = await client.utils.fetchUser(client.utils.owner);
+		let owner = await client.utils.fetchUser(client.const.display);
 		owner = owner.tag;
 		let mute = user.get("mt");
 		if (mute) {

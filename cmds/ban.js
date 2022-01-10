@@ -17,7 +17,7 @@ export default {
 		const reason = args.slice(1).join(" ") || "<UNKNOWN REASON>";
 		const Notification = new MessageEmbed()
 			.setColor(client.const.colors.red)
-			.setDescription(`You have received a permanent ban from ${message.guild.name}. Note that your ban might be lifted soon—to appeal for an unban (or check your remaining ban length), please PM ${client.users.cache.get(client.utils.owner).tag}. Additionally, if you think this is a mistake or you were wrognly punished, please contact ${client.users.cache.get(client.utils.owner).tag}`)
+			.setDescription(`You have received a permanent ban from ${message.guild.name}. Note that your ban might be lifted soon—to appeal for an unban (or check your remaining ban length), please PM ${client.users.cache.get(client.const.display).tag}. Additionally, if you think this is a mistake or you were wrognly punished, please contact ${client.users.cache.get(client.const.display).tag}`)
 			.addField("Moderator", message.author.tag)
 			.addField("Reason", reason);
 

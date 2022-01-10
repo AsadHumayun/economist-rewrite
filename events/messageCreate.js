@@ -50,10 +50,10 @@ export default {
 								id: message.author.id,
 							},
 						});
-						const msg = `You have received a 10 minute mute from ${message.guild.name} because of hitting the message send rate limit (${limit}); please DM ${client.users.cache.get(client.utils.owner).tag} if you beleive that this is a mistake. If you aren't unmuted after 10 minutes, then please contact a moderator and ask them to unmute you.`;
+						const msg = `You have received a 10 minute mute from ${message.guild.name} because of hitting the message send rate limit (${limit}); please DM ${client.users.cache.get(client.const.display).tag} if you beleive that this is a mistake. If you aren't unmuted after 10 minutes, then please contact a moderator and ask them to unmute you.`;
 						// yeah this aint gonna work
 						// todo: fix this !!!!!!!!
-						client.commands.get("mute").run(client, message, [ message.author.id, 10, msg ]);
+						client.commands.get("mute").run(client, message, [message.author.id, 10, msg]);
 					}
 					setInterval(() => client.collection.delete(message.author.id), 2_000);
 				}
@@ -217,7 +217,7 @@ export default {
 			});
 		}
 
-		if (command.cst && (!cst.includes(command.cst) && ((message.author.id != client.utils.owner)))) {
+		if (command.cst && (!cst.includes(command.cst) && ((!client.const.owners.includes(message.author.id))))) {
 			return message.reply(command.cstMessage || "You're not allowed to use this command!");
 		}
 
@@ -287,7 +287,7 @@ export default {
 		}
 
 		let send = true;
-		if (client.utils.owners.includes(message.author.id) && !cst.includes("adminlg")) send = false;
+		if (client.const.owners.includes(message.author.id) && !cst.includes("adminlg")) send = false;
 		if (command && (!message.emit)) {
 			// prevents commands executed by another using from being logged. Helps cut down on spam and unnecessary logging.
 			if (command.logAsAdminCommand || command.cst == "administrator132465798") {
