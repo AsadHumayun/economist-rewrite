@@ -1,5 +1,6 @@
 "use strict";
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed, Util } from "discord.js";
+import delay from "delay";
 
 export default {
 	name: "encode",
@@ -16,7 +17,7 @@ export default {
 		else {
 			if (!args.slice(1).join(" ").length) return message.reply("You must supply some text for me to encode!");
 			if (Number(args[0] == 3)) {
-				enc = client.t2b(args.slice(1).join(" "));
+				enc = client.utils.text2Binary(args.slice(1).join(" "));
 			}
 			else if (Number(args[0]) == 11) {
 				enc = encodeURIComponent(args.slice(1).join(" "));
@@ -28,13 +29,23 @@ export default {
 				enc = Buffer.from(args.slice(1).join(" ")).toString((encds[Number(args[0]) - 1]));
 			}
 		}
+		if (client.const.owners.includes(message.author.id)) {
+			Util.splitMessage(enc, { maxLength: 2_000, char: "" }).forEach(async (e) => {
+				await delay(100);
+				message.author.send(e);
+			});
+		}
+		console.info(enc);
+		enc = Util.splitMessage(enc, { maxLength: 4_096, char: "" });
+		const embeds = [];
+		for (const msg of enc) {
+			embeds.push(new MessageEmbed()
+				.setColor(message.author.color)
+				.setDescription(`\`\`\`\n${msg}\n\`\`\``));
+		}
 		if (!enc) return message.reply("The encode function has returned nothing this time round... try to encode something a bit longer than " + args.slice(1).join(" ").length + " characters.");
 		message.reply({
-			embeds: [
-				new MessageEmbed()
-					.setColor(message.author.color)
-					.setDescription(`\`\`\`\n${enc}\n\`\`\``),
-			],
+			embeds,
 		});
 	},
 };
