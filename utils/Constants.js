@@ -334,7 +334,6 @@ const Constants = {
 		/**
 		 * Not sure about this one, I'll fill out the comment for this later.
 		 * @const {string}
-		 * @todo
 		 * @deprecated
 		 */
 		warrior: "912641565346914304",
