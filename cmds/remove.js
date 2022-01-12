@@ -7,7 +7,7 @@ export default {
 	cst: "administrator132465798",
 	category: "own",
 	async run(client, message, args) {
-		if (args.length < 2) return message.reply("You must specify a user and a key to remove");
+		if (args.length < 2) return message.reply("You must specify a user and a key to remove in order for this command to work!");
 		const user = await client.utils.fetchUser(args[0]);
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		const key = args.slice(1).join(" ");

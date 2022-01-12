@@ -14,11 +14,11 @@ export default {
 					new MessageButton()
 						.setStyle("LINK")
 						.setLabel("Bot Invite")
-						.setURL(client.utils.botInvite),
+						.setURL(client.const.botInvite),
 					new MessageButton()
 						.setStyle("LINK")
 						.setLabel("Support Server")
-						.setURL(client.utils.ssInvite),
+						.setURL(client.const.ssInvite),
 					new MessageButton()
 						// rickroll
 						.setStyle("LINK")

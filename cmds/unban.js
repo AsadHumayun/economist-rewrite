@@ -16,7 +16,7 @@ export default {
 		const reason = args.slice(1).join(" ") || "No reason given";
 		const Notification = new MessageEmbed()
 			.setColor(client.const.colors["green"])
-			.setDescription(`You have been unbanned from ${message.guild.name}. Please conduct yourself appropriately, in a manner such that you do not get banned again. [Support Server Invite](${client.utils.ssInvite})`)
+			.setDescription(`You have been unbanned from ${message.guild.name}. Please conduct yourself appropriately, in a manner such that you do not get banned again. [Support Server Invite](${client.const.ssInvite})`)
 			.addField("Moderator", message.author.tag)
 			.addField("Reason", reason);
 

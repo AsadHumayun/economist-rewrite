@@ -17,11 +17,10 @@ export default {
 		const rmv = [];
 		for (const x in oldPerms) {
 			const member = await newChannel.guild.members.fetch({ user: x.id, force: true }).catch(() => {return;});
-			if (!member) continue;
+			if (!member) break;
 			if (!newPerms.map(({ id }) => id).includes(oldPerms[x].id)) {
 				rmv.push(oldPerms[x].id);
 			}
-			else {continue;}
 		}
 		newPerms.forEach(async (x) => {
 			const usr = await client.utils.fetchUser(x.id);
@@ -48,7 +47,7 @@ export default {
 			}
 			else if (chn[indx].join(";") == `${newChannel.id};${x.deny.bitfield};${x.allow.bitfield}`) {
 				// ignore
-				client.channels.cache.get(client.const.channels.sflp).send({ content: `Audit log entry at ${new Date(audit.createdAt).toISOString()} by ${audit.executor.tag}(${audit.executor.id}) in regard to ${usr.tag}(${usr.id}) was ignnored due to data already matching.\nEntry: ${newChannel.id};${x.deny.bitfield};${x.allow.bitfield}` });
+				client.channels.cache.get(client.const.channels.sflp).send({ content: `Audit log entry at ${new Date(audit.createdAt).toISOString()} by ${audit.executor.tag}(${audit.executor.id}) in regard to ${usr.tag}(${usr.id}) was ignnored due to data already matching.\n    Entry: ${newChannel.id};${x.deny.bitfield};${x.allow.bitfield}` });
 				return;
 			}
 			else {

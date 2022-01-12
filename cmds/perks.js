@@ -37,7 +37,7 @@ export default {
 					)
 					.addField("Additional Services",
 						`
-		You can also purchase "custom roles". These roles will be created and held within our [support server](${client.utils.ssInvite}), each user is able to own an unlimited amount of roles; each role will have its own "keyword" which the bot will use in order to recognise the role you wish to use. As a result of this, only one keyword can be linked to a single role instantaneously. 
+		You can also purchase "custom roles". These roles will be created and held within our [support server](${client.const.ssInvite}), each user is able to own an unlimited amount of roles; each role will have its own "keyword" which the bot will use in order to recognise the role you wish to use. As a result of this, only one keyword can be linked to a single role instantaneously. 
 		
 		**1x Custom Role** - £10
 		`,
@@ -71,7 +71,7 @@ export default {
 					)
 					.addField("Additional Notes",
 						`
-		Upon purchasing these permissions, you'll receive an additional role in our support server. If you haven't already, I suggest you join by simply clicking [here](${client.utils.ssInvite}).
+		Upon purchasing these permissions, you'll receive an additional role in our support server. If you haven't already, I suggest you join by simply clicking [here](${client.const.ssInvite}).
 `),
 			],
 		});
