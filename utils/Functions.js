@@ -21,11 +21,13 @@ class Funcs {
 		 */
 		this.client = client;
 	}
+	get client() {
+		return this.client;
+	}
 	/**
 	 * Capitalises the first letter of the given string and returns the new string. Only the first letter is capitalised.
 	 * @param {string} str string to be capitalised
 	 * @returns {string} capitalised string
-	 * @method
 	 */
 	capital(str) {
 		return str[0].toUpperCase() + str.slice(1);
@@ -49,11 +51,10 @@ class Funcs {
 		return mention.match(/^<@!?(\d+)>$/)[1];
 	}
 	/**
-		 * Fetches a Discord User either by ID or raw mention
-		 * @param {string} str The mention - either ID or raw <@(!)id>
-		 * @returns {Discord.User} user
-		 * @async
-		 */
+	 * Fetches a Discord User either by ID or raw mention
+	 * @param {string} str The mention - either ID or raw <@(!)id>
+	 * @returns {Discord.User} Discord user
+	 */
 	async fetchUser(str) {
 		if (!str) return;
 		str = str.toString();
@@ -194,25 +195,24 @@ class Funcs {
 	 * @param {object} opts Options for the stun
 	 * @param {string} [opts.userId] Snowflake ID of the user who must be stunned
 	 * @param {number} [opts.minutes] Amount of minutes for which the user is stunned
-	 * @param {string} [opts.stnb] Stnb value (You can't do anything while you're {stnb}!)
+	 * @param {?string} [opts.stnb] Stnb value (You can't do anything while you're {stnb}!)
 	 * @returns {void} void
 	 * @async
 	 */
-	async stn(opts) {
-		const user = await this.client.users.fetch(opts.userId).catch(() => {return;});
+	async stn({ userId, minutes, stnb }) {
+		const user = await this.client.users.fetch(userId).catch(() => {return;});
 		if (!user) return;
-		const data = await this.client.db.getUserData(opts.userId);
+		const data = await this.client.db.getUserData(userId);
 		const dns = (isNaN(data.get("dns")) ? 0 : Number(data.get("dns"))) * 60_000;
 		if (dns && (Date.now() < dns)) return;
 		await this.client.db.USERS.update({
-			stn: Math.trunc((Date.now() / 60_000) + opts.minutes),
-			stnb: opts.stnb,
+			stn: Math.trunc((Date.now() / 60_000) + minutes),
+			stnb,
 		}, {
 			where: {
-				id: opts.userId,
+				id: userId,
 			},
 		});
-		return undefined;
 	}
 	/**
 	 * Converts normal string text into binary text.

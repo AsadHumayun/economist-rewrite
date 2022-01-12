@@ -21,7 +21,7 @@ export default {
 				new MessageEmbed()
 					.setColor(message.author.color)
 					.setTitle("Bot Stats")
-					.setAuthor({ name: client.user.tag, iconURL: client.user.avatarURL({ dynamic: true }), url: client.utils.ssInvite })
+					.setAuthor({ name: client.user.tag, iconURL: client.user.avatarURL({ dynamic: true }), url: client.const.ssInvite })
 					.addField("❯ Users Registered", rgu.toString(), true)
 					.addField("❯ Commands Used", `${client.utils.comma(cmd)}/${client.utils.comma(cmdCount)}`, true)
 					.addField("❯ CPU Usage", `\`${cpu}%\``, true)

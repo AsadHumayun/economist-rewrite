@@ -1,6 +1,6 @@
 "use strict";
 
-import { Constants } from "../utils/Constants.js";
+import { Constants } from "../Utils/Constants.js";
 import * as customValidators from "./_customValidators.js";
 
 export default (sequelize, DataTypes) => {

@@ -1,5 +1,5 @@
 "use strict";
-import aliases from "../utils/petaliases.js";
+import aliases from "../Utils/petaliases.js";
 import { MessageEmbed } from "discord.js";
 
 export default {
