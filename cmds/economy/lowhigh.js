@@ -78,7 +78,7 @@ export default {
 				msg.edit({
 					embeds: [
 						new MessageEmbed(msg.embeds[0])
-							.setColor("ff3c00")
+							.setColor(client.const.colors.expired)
 							.setDescription(`**This message has expired.**\n\n~~${msg.embeds[0].description}~~`),
 					],
 					components: [

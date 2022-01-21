@@ -404,6 +404,12 @@ const Constants = {
 		green: "#4bc46b",
 		red: "#e61c1c",
 		invisible: "#36393e",
+		/**
+		 * The colour that embeds will be changed to once they have expired.
+		 * Typically something orange/red.
+		 * @const {hexColourCode as String}
+		 */
+		expired: "#ff3c00",
 	},
 	/**
 	 * Contains webhooks used by the bot.
@@ -605,7 +611,7 @@ const Constants = {
 	/**
 	 * Different dosable items, along with a function that contains code and subtracts 1 from the current number of items and checks to see if they have enough to dose on that.
 	 * @see `dose` command
-	 * @const {(string | ((message: Discord.Message) => Promise<any>))[][]}
+	 * @type {Array<Array<string, function>>}
 	 */
 	get doses() {
 		return [

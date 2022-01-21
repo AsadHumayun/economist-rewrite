@@ -89,9 +89,9 @@ export default (sequelize, DataTypes) => {
 		cstmrl: {
 			type: DataTypes.TEXT,
 		},
-		crls: {
+		curr: {
 			type: DataTypes.STRING,
-			defaultValue: "dragon",
+			defaultValue: "default",
 			validate: {
 				isAlphanumeric: true,
 			},
@@ -180,7 +180,7 @@ export default (sequelize, DataTypes) => {
 				isAllNumbers: customValidators.allNumbers,
 			},
 		},
-		pet: {
+		drgn: {
 			type: DataTypes.STRING,
 			defaultValue: Constants.dragon,
 			allowNull: false,
@@ -262,6 +262,7 @@ export default (sequelize, DataTypes) => {
 		v: {
 			type: DataTypes.STRING,
 			defaultValue: "1;0",
+			allowNull: false,
 			validate: {
 				isAllNumbers: customValidators.allNumbers,
 			},

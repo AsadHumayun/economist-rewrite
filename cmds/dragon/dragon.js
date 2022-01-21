@@ -10,7 +10,7 @@ export default {
 	async run(client, message, args) {
 		async function Embed(u) {
 			const userData = await client.db.getUserData(u.id);
-			let data = userData.get("pet");
+			let data = userData.get("drgn");
 			const cst = (userData.get("cst") || "").split(";");
 			if (!cst.includes("dragon")) {
 				return message.reply(`${message.author.id == u.id ? "You don't own a dragon!" : `${u.tag} does not own a dragon!`} Why not tame one by using \`${message.guild?.prefix || "~"}tame\``);

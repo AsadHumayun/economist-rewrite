@@ -7,7 +7,7 @@ export default {
 	description: "Upgrade one of your dragon's stat",
 	cst: "dragon",
 	async run(client, message, args) {
-		let data = message.author.data.get("pet").split(";").map(Number);
+		let data = message.author.data.get("drgn").split(";").map(Number);
 		if (!data) data = client.const.dragon;
 		if (message.author.data.get("cst")?.split(";").includes("maxdragon888")) data = client.const.naxDragon;
 		const stat = (args[0] || "").toLowerCase();

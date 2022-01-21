@@ -5,7 +5,8 @@
 		"es6": true
 	},
 	"globals": {
-		"BigInt": true
+		// BigInt is just the BigInt JS data type
+		"BigInt": "readonly"
 	},
 	"parserOptions": {
 		"ecmaVersion": 2021,

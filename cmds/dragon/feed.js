@@ -8,7 +8,7 @@ export default {
 	cst: "dragon",
 	async run(client, message, args) {
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
-		let pet = message.author.data.get("pet");
+		let pet = message.author.data.get("drgn");
 		if (cst.includes("maxdragon888")) pet = client.const.naxDragon;
 		pet = pet.split(";");
 

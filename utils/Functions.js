@@ -71,7 +71,7 @@ class Funcs {
 	 * @param {?string} x String in which to insert commas.
 	 */
 	comma(x) {
-		return x ? x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") : "0";
+		return x ? this.noExponents(x.toString()).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") : "0";
 	}
 	/**
 	 * Applies digit trimming to a `str` instance
@@ -350,7 +350,7 @@ class Funcs {
 	async getDragonAlias(uid, client) {
 		if (client) console.warn("DeprecationWarning: client passed into getDragonAlias function when not necessary.");
 		const data = await this.client.db.getUserData(uid);
-		const currAlias = data.get("crls") || "default";
+		const currAlias = data.get("curr") || "default";
 		if (currAlias) {
 			const petname = data.get("petname") || "default";
 			const names = Object.keys(aliases).map(k => k.toLowerCase());
