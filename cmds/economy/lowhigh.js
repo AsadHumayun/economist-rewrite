@@ -6,9 +6,9 @@ export default {
 	aliases: ["lowhigh", "highlow", "hl", "lh"],
 	description: "The bot will generate 2 random numbers between 0 and 100. One number will be displayed for you. It is your job to guess as to whether or not the random number is gerater than, less than, or equal to the other random number that has not been shown to you. If you manage to guess it correctly, you will receive a random amount of :dollar: in the range of 750-1000.",
 	async run(client, message) {
-		/**
-		 * @todo Add cooldown for hl
-		 */
+		const cd = message.author.data.get("hlc");
+		const c = client.utils.cooldown(message.createdTimestamp, cd * 60_000);
+		if (c) return message.reply(`You must wait another ${c} before you can use this command again!`);
 		const random = client.utils.getRandomInt(0, 100);
 		const random0 = client.utils.getRandomInt(0, 100);
 
@@ -36,6 +36,13 @@ export default {
 					.setDescription(`Your number is: **${random0}**.\n\nIt is your job to guess as to whether or not the other random number that I generated is either lower, higher, or exactly the same as **${random0}**)`),
 			],
 		}).catch(() => {return;});
+		await client.db.USERS.update({
+			hlc: Math.trunc(message.createdTimestamp / 60_000) + 10,
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
 		const filter = (interaction) => {
 			interaction.deferUpdate();
 			return interaction.user.id === message.author.id;
