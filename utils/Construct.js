@@ -4,6 +4,7 @@ import { Funcs } from "./Functions.js";
 /**
  * Utilities class, in context of the currently instantiated Discord client.
  * Acessible via `client.utils` (ref: index.js)
+ * @extends {Funcs}
  */
 class Utils extends Funcs {
 	/**

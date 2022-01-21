@@ -164,8 +164,7 @@ export default {
 			}
 		}
 
-		message.author.color = data.get("clr");
-		message.author.colors = message.author.color.split(";");
+		message.author.color = data.get("clr") || client.const.clr;
 		const m = message.author.color.split(";");
 		if (isNaN(m[m.length - 1])) m[m.length - 1] = "0";
 		if (Number(m[m.length - 1]) + 1 >= (m.length - 1)) {
@@ -222,7 +221,8 @@ export default {
 		}
 
 		if (command.ssOnly && (message.guild.id != client.const.supportServer)) {
-			return message.reply({ content: "This command only works in our support server! Join by using `" + message.guild ? message.guild.prefix : client.const.prefix + "support`!" });
+			console.log("e");
+			return message.reply(`Sorry but this command can only be used in my support guild! Join by using the \`${message.guild ? message.guild.prefix : client.const.prefix}invite\`!`);
 		}
 
 		function err(e) {
