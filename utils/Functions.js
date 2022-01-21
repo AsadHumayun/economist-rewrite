@@ -3,7 +3,9 @@ import { readdirSync } from "fs";
 import { inspect } from "util";
 
 import aliases from "./petaliases.js";
+import { Constants } from "./Constants.js";
 
+const { PET_EMOJIS } = Constants;
 
 /**
  * @classdesc These are some default functions. They have been globalised in such manner by purpose, as these functions are **__constantly__** in use by the programme, thus I deemed it more effecient to have one globalised class to manage and export functions.
@@ -17,12 +19,9 @@ class Funcs {
 	constructor(client) {
 		/**
 		 * The currently instantiated client.
-		 * @static @readonly
+		 * @static
 		 */
 		this.client = client;
-	}
-	get client() {
-		return this.client;
 	}
 	/**
 	 * Capitalises the first letter of the given string and returns the new string. Only the first letter is capitalised.
@@ -285,7 +284,7 @@ class Funcs {
 	 * Preps cooldown value then sets it. Not complicated.
 	 * @param {Date} now Current MS timestamp
 	 * @param {number} cd Cooldown to add (in MS)
-	 * @param {boolean} includeDecimals Whether or not to include decimals into the date returned
+	 * @param {?boolean} includeDecimals Whether or not to include decimals into the date returned
 	 * @returns {Date} Date at which the cooldown will end --- in MS
 	 */
 	parseCd(now, cd, includeDecimals = false) {
@@ -315,22 +314,29 @@ class Funcs {
 	/**
 	 * This function will cache all the commands in `dir`, therefore making them usable.
 	 * @param {string} dir Directory of which to load commands from
-	 * @param {Collection<K, V>} clientCommands client.commands collection - loads commands into this collection
-	 * @returns {Array<Boolean, Collection<ommand.name, command>> | Error}
+	 * @param {Discord.Collection<K, V>} clientCommands client.commands collection - loads commands into this collection
+	 * @returns {number | Error}
 	 */
 	async cacheCommands(dir, clientCommands) {
+		dir = `${process.cwd()}${dir}`;
+		const subFolders = readdirSync(dir);
+		if (!subFolders) throw new RangeError(`[utils => CommandsCache] [Fail]: No subfolders found in directory, open '${dir}'.`);
 		let cmds = 0;
-		try {
-			for (const file of readdirSync(`${process.cwd()}${dir}`).filter((f) => f.endsWith(".js"))) {
-				const command = await import(`file://${process.cwd()}${dir}/${file}`);
-				clientCommands.set(command.default.name, command.default);
-				cmds++;
+		// subFolders' names act as the command's category name.
+		for (const folder of subFolders) {
+			for (const file of readdirSync(`${dir}/${folder}`).filter(f => f.endsWith(".js"))) {
+				try {
+					const command = await import(`file://${dir}/${folder}/${file}`);
+					command.default.category = folder;
+					clientCommands.set(command.default.name, command.default);
+					cmds++;
+				}
+				catch (err) {
+					throw new Error(`[CLIENT => Fncs] [CommandCacheError] (on '${dir}/${folder}/${file}'):\n${err.stack}`);
+				}
 			}
-			return [true, cmds];
 		}
-		catch (err) {
-			throw new Error(`[CLIENT => Fncs] [CommandCacheError]:\n${err.stack}`);
-		}
+		return cmds;
 	}
 	/**
 	 * This function will get the display name and the emojis for a user"s dragon alias.
@@ -346,14 +352,14 @@ class Funcs {
 		const data = await this.client.db.getUserData(uid);
 		const currAlias = data.get("crls") || "default";
 		if (currAlias) {
-			const petname = data.get("petname") || "dragon";
-			const names = Object.keys(aliases).map((key) => key.toLowerCase());
+			const petname = data.get("petname") || "default";
+			const names = Object.keys(aliases).map(k => k.toLowerCase());
 			if (names.includes(currAlias)) {
 				// petname takes priority over alias.DISPLAY_NAME, gives users more freedom.
 				return [petname || aliases[currAlias].DISPLAY_NAME, aliases[currAlias].EMOJIS];
 			}
 			else {
-				return [petname || "dragon", ["<:heart:912982056802340877>", ":zap:", ":star2:", ":star:", ":bulb:", ":field_hockey:", ":fire:", ":sparkling_heart:", ":pizza:" ]];
+				return [petname || "dragon", PET_EMOJIS];
 			}
 		}
 	}
@@ -362,7 +368,7 @@ class Funcs {
 	 * @param {object} opts Options
 	 * @param {string} [opts.userId] ID of the user to DM. It is named userId for consistency
 	 * @param {Discord.Message} [opts.message] Object that should be passed into `<TextBasedChannel>.send()`method.
-	 * @param {?Discord.Channel} [opts.channel] Optional channel to also send the message in
+	 * @param {?Discord.TextChannel} [opts.channel] Optional channel to also send the message in
 	 * @returns {void} void
 	 * @async
 	 */
@@ -429,4 +435,4 @@ class Funcs {
 	}
 }
 
-export { Funcs };
+export { Funcs, PET_EMOJIS };

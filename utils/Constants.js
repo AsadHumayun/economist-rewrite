@@ -1,5 +1,9 @@
 "use strict";
+
+import petaliases from "./petaliases.js";
+
 import { MessageEmbed } from "discord.js";
+import { readdirSync } from "fs";
 
 /**
  * Values that remain static and are used throughout the whole programme.
@@ -14,11 +18,18 @@ const Constants = {
 	owners: ["501710994293129216"],
 	/**
 	 * The ID of the owner to display on every command (eg `Contact User#1234 for help!`, User#1234 would be the owner's tag).
+	 * Default: owners[0]
 	 * @const {string}
 	 */
 	get display() {
 		return this.owners[0];
 	},
+	/**
+	 * A list of command categories
+	 * @const {string[]}
+	 * @see help
+	 */
+	commandCategories: readdirSync(`${process.cwd()}/cmds`),
 	/**
 	 * An invite to the bot's support server
 	 * @const {string}
@@ -58,11 +69,6 @@ const Constants = {
 	 */
 	reqs: [400, 800, 1600, 3200, 6400, 12800, 25600, 51200, 102400, 204800, 409600, 819200, 1638400, 3276800, 6553600, 13107200, 26214400, 52428800, 104857600, 209715200, 419430400, 838860800, 1677721600, 3355443200, 6710886400, 13421772800, 26843545600, 53687091200, 107374182400, 214748364800, 429496729600, 858993459200, 1717986918400, 3435973836800, 6871947673600, 13743895347200, 27487790694400, 54975581388800, 109951162777600, 219902325555200, 439804651110400, 879609302220800, 1759218604441600, 3518437208883200, 7036874417766400, 14073748835532800, 28147497671065600, 56294995342131200, 112589990684262400, 225179981368524800],
 	/**
-	 * Array consisting of all the default emojis for the dragon system.
-	 * @const {string[]}
-	 */
-	PET_EMOJIS: ["<:heart:912982056802340877>", ":zap:", ":star2:", ":star:", ":bulb:", ":field_hockey:", ":fire:", ":sparkling_heart:", ":pizza:"],
-	/**
 	 * The intended array length for dragons.
 	 * Prevents unexpected behaviours.
 	 * @const {number}
@@ -80,10 +86,10 @@ const Constants = {
 	maxDragon: "999999999;999999999;999999999;999999999;999999999;999999999;999999999;999999999;999999999;999999999",
 	/**
 	 * The default colour preference for all users.
-	 * Shown on embeds.
+	 * Shown on embeds when the user does not have a custom preference set.
 	 * @const {string}
 	 */
-	clr: "#00aaaa",
+	clr: "#00aaaa;0",
 	/**
 	 * The maximum level that a dragon may be before it is counted as "maxed" out.
 	 * @const {number}
@@ -638,6 +644,22 @@ const Constants = {
 				}),
 			],
 		];
+	},
+	/**
+	 * The different pet aliases,  imported from `Utils/petaliases.js`.
+	 * Attached to client.
+	 * @const {object}
+	 */
+	petaliases,
+	/**
+	 * Look-up-table used to convert a string to a math operator function
+	 * @see `cmds/economy/lowhigh.js`
+	 * @const {object}
+	 */
+	mathOps: {
+		">": function(x, y) {return x > y;},
+		"<":  function(x, y) {return x < y;},
+		"===": function(x, y) {return x === y;},
 	},
 };
 

@@ -38,7 +38,7 @@ const client = new Client({
 		Intents.FLAGS.GUILD_MEMBERS,
 		Intents.FLAGS.DIRECT_MESSAGES,
 	]),
-	partials: ["CHANNEL", "MESSAGE"],
+	partials: ["CHANNEL"],
 });
 
 console.log("Creating Sequelize instance...");
@@ -78,7 +78,10 @@ client.db = {
 	}),
 };
 
-/** Used for storing user command cooldowns and rate limits - there used to be 2 separate collections to store each, but that used more memory*/
+/**
+ * Used for storing user command cooldowns and rate limits - there used to be 2 separate collections to store each, but that used more memory.
+ * @type {Collection}
+ */
 client.collection = new Collection();
 
 /** Constants used globally by the client.*/
@@ -90,12 +93,12 @@ console.log("Loading commands...");
 client.commands = new Collection();
 
 client.utils.cacheCommands("/cmds", client.commands)
-	.then((e) => console.log(`Registered ${e[1]} commands.`));
+	.then(e => console.log(`Registered ${e} commands.`));
 
-const eventHandler = new EventHandler(client, true);
+const eventHandler = new EventHandler(client, false);
 
 eventHandler.load();
 
-process.on("unhandledRejection", (e) => client.utils.notify(e, null, client));
+process.on("unhandledRejection", e => client.utils.notify(e, null));
 
 client.login(process.env.token);
