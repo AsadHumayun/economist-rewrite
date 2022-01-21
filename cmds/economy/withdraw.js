@@ -2,32 +2,37 @@
 import { MessageEmbed } from "discord.js";
 
 export default {
-  name: "withdraw",
-  aliases: ["withdraw", "with", "w"],
-  description: "Withdraw money from your Bank Vault and gain it as balance money.",
-  async run(client, message, args) {
-    let cst = await client.db.get("cst" + message.author.id) || "";
-        cst = cst.split(";");
-    if (!cst.includes("bvault")) return message.reply("You must own a Bank Vault in order to use this command!")
-    if (isNaN(args[0]) || (Number(args[0]) <= 0)) return message.reply("You must enter a positive number");
-    let w = Number(args[0]);
-    let bal = await client.db.get("bal" + message.author.id) || 0;
-        bal = Number(bal);
+	name: "withdraw",
+	aliases: ["withdraw", "with", "w"],
+	description: "Withdraw money from your Bank Vault and gain it as balance money.",
+	cst: "bvault",
+	cstMessage: "You must own a bank vault in order for this command to work!",
+	async run(client, message, args) {
+		const bal = message.author.data.get("bal") || 0;
+		const v = message.author.data.get("v").split(";").map(Number);
 
-    let v = await client.db.get("v" + message.author.id) || "1;0";
-        v = v.split(";");
-        v[0] = Number(v[0]);
-        v[1] = Number(v[1]);
-    let curr = v[1];
-    if (curr - w < 0) return message.reply(`Your vault doesn't contain enough money!`);
-    curr -= w;
-    v[1] = curr;
-    await client.db.set("bal" + message.author.id, bal + w)
-    await client.db.set("v" + message.author.id, v.join(";"))
-    message.reply({
-      embed: new MessageEmbed()
-      .setColor(message.author.color)
-      .setDescription(`${message.author.tag} has withdrawn :dollar: ${w} form their Bank Vault. Their Bank Vault now has :dollar: ${v[1]}`)
-    });
-  }
-}
+		if (args[0].toLowerCase() === "max") args[0] = v[1];
+		if (isNaN(args[0]) || (Number(args[0]) <= 0)) return message.reply("You must enter a positive number");
+		const w = Number(args[0]);
+		let curr = v[1];
+		if (curr - w < 0) return message.reply("Your vault doesn't contain enough money!");
+		curr -= w;
+		v[1] = curr;
+
+		await client.db.USERS.update({
+			bal: bal + w,
+			v: v.join(";"),
+		}, {
+			where: {
+				id: message.author.id,
+			},
+		});
+		message.reply({
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setDescription(`${message.author.tag} has withdrawn :dollar: ${client.utils.comma(w)} form their Bank Vault. Their Bank Vault now has :dollar: ${client.utils.comma(v[1])}`),
+			],
+		});
+	},
+};

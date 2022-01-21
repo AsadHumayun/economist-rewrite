@@ -14,7 +14,7 @@ export default {
 		const data = await client.db.getUserData(user.id);
 		const ucst = (data.get("cst") || "").split(";").includes("dragon");
 		if (!ucst) return message.reply("That person doesn't have a dragon!");
-		const pet = data.get("pet").split(";").map(Number);
+		const pet = data.get("drgn").split(";").map(Number);
 		if (pet.length < client.const.intendedPetLength) return message.reply("Malformed pet - does not have at least " + client.utils.statocs.intendedPetLength + " elements.");
 		const alias = await client.utils.getDragonAlias(user.id);
 		pet[4] += credits;

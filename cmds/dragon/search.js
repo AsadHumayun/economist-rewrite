@@ -15,7 +15,7 @@ export default {
 		if (scnd) {
 			return message.reply(`Please wait another ${scnd} before searching again!`);
 		}
-		let data = message.author.data.get("pet").split(";").map(Number);
+		let data = message.author.data.get("drgn").split(";").map(Number);
 		if (message.author.data.get("cst")?.includes("maxdragon888")) data = client.const.naxDragon.split(";");
 		if (!data) data = client.const.dragon;
 		const en = data[2];

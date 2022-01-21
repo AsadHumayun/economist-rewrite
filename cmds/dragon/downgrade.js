@@ -13,7 +13,7 @@ export default {
 		if (data) {
 			return message.reply(`You must wait another ${data} before downgrading another one of your dragon's stat!`);
 		}
-		data = message.author.data.get("pet");
+		data = message.author.data.get("drgn");
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (cst.includes("maxdragon888")) data = client.const.maxDragon;
 		data = data.split(";");

@@ -13,7 +13,7 @@ export default {
 		const aliases = client.const.petaliases;
 		const dragAliases = Object.entries(aliases);
 		hasAliases = dragAliases.filter(alias => cst.includes(alias[0].toLowerCase()));
-		let currAlias = message.author.data.get("crls")?.toLowerCase();
+		let currAlias = message.author.data.get("curr")?.toLowerCase();
 		if (!dragAliases.includes(currAlias)) {
 			currAlias = "default";
 		}
@@ -47,13 +47,12 @@ export default {
 			i.deferUpdate();
 			return i.user.id === message.author.id;
 		};
-		msg.awaitMessageComponent({ filter, componentType: "SELECT_MENU", time: 60_000 })
+		msg.awaitMessageComponent({ filter, componentType: "SELECT_MENU", time: 5000 })
 			.then(async res => {
-				console.log(res);
 				const values = res.values[0].split(";");
 				const alias = client.const.petaliases[values[0]];
 				await client.db.USERS.update({
-					crls: values[0],
+					curr: values[0],
 					petname: alias.DISPLAY_NAME,
 				}, {
 					where: {
@@ -72,9 +71,13 @@ export default {
 			})
 			.catch(() => {
 				msg.edit({
-
+					embeds: [
+						new MessageEmbed(msg.embeds[0])
+							.setColor(client.const.colors.expired)
+							.setTitle("This message has expired.")
+							.setDescription(`~~${msg.embeds[0].description}~~`),
+					],
 				});
 			});
-		// user has given args; allow them to choose/select an alias.
 	},
 };

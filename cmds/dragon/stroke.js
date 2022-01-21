@@ -11,7 +11,7 @@ export default {
 	async run(client, message) {
 		const cooldown = message.author.data.get("strc");
 		const cd = client.utils.cooldown(message.createdTimestamp, cooldown * 60_000);
-		const pet = message.author.data.get("pet").split(";").map(Number);
+		const pet = message.author.data.get("drgn").split(";").map(Number);
 		if (!pet)	return message.reply("It looks like you don't own a dragon! Why not tame one by using `" + message.guild?.prefix || "~" + "tame`");
 		const alias = await client.utils.getDragonAlias(message.author.id);
 		if (cd) return message.reply(`You must wait another ${cd} before stroking your ${alias[0]} again!`);

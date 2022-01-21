@@ -8,7 +8,7 @@ export default {
 	cst: "dragon",
 	cstMessage: "You do not own a pet dragon. Use `{prefix}tame` to purchase one!",
 	async run(client, message) {
-		const pet = message.author.data.get("pet");
+		const pet = message.author.data.get("drgn");
 		const buttons = [
 			new MessageButton()
 				.setStyle("SUCCESS")
