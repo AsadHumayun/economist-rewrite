@@ -283,5 +283,11 @@ export default (sequelize, DataTypes) => {
 				_isNumber: customValidators._isNumber,
 			},
 		},
+		hlc: {
+			type: DataTypes.NUMBER,
+			validate: {
+				_isNumber: customValidators._isNumber,
+			},
+		},
 	});
 };
