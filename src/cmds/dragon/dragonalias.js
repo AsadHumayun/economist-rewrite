@@ -47,7 +47,7 @@ export default {
 			i.deferUpdate();
 			return i.user.id === message.author.id;
 		};
-		msg.awaitMessageComponent({ filter, componentType: "SELECT_MENU", time: 5000 })
+		msg.awaitMessageComponent({ filter, componentType: "SELECT_MENU", time: 30_000 })
 			.then(async res => {
 				const values = res.values[0].split(";");
 				const alias = client.const.petaliases[values[0]];

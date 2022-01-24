@@ -29,7 +29,7 @@ const Constants = {
 	 * @const {string[]}
 	 * @see help
 	 */
-	commandCategories: readdirSync(`${process.cwd()}/cmds`),
+	commandCategories: readdirSync(`${process.cwd()}/src/cmds`),
 	/**
 	 * An invite to the bot's support server
 	 * @const {string}
