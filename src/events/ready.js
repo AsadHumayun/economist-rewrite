@@ -11,7 +11,7 @@ export default {
 			client.emit("debug", `[CLIENT => Cache] [GuildMember] ${client.guilds.cache.get(client.const.supportServer).members.cache.size}/${client.guilds.cache.get(client.const.supportServer).memberCount} members of ${client.const.supportServer} cached`);
 		}
 		catch (e) {
-			client.emit("debug", `[CLIENT => Cache] [GuildMember] [CacheFailure] Failed to cache members of guild ${client.const.supportServer}.\nError: ${e}`);
+			client.emit("debug", `[CLIENT => Cache] [GuildMember] [CacheFailure (on 'ready')]: Failed to cache members of guild ${client.const.supportServer}.\nError: ${e}`);
 		}
 		client.user.color = client.const.clr;
 		client.user.data = await client.db.getUserData(client.user.id);

@@ -12,9 +12,13 @@ import Guild from "./models/Guild.js";
 import Channel from "./models/Channel.js";
 import Bug from "./models/Bug.js";
 
+// loads .env content into `process.env`
 config();
 
-/** The currently instantiated Discord client*/
+/**
+ * The currently instantiated Discord Client.
+ * @type {Discord.Client}
+ */
 const client = new Client({
 	// Overriding the cache used in GuildManager, ChannelManager, GuildChannelManager, RoleManager, and PermissionOverwriteManager is unsupported and will break functionality
 	makeCache: Options.cacheWithLimits({
@@ -26,18 +30,13 @@ const client = new Client({
 		GuildBanManager: 0,
 	}),
 	allowedMentions: { parse: ["users", "roles"], repliedUser: false },
-	/**
-	- MESSAGE_CREATE
-  - MESSAGE_UPDATE
-  - MESSAGE_DELETE
-  - CHANNEL_PINS_UPDATE
-	 */
 	intents: new Intents().add([
 		Intents.FLAGS.GUILDS,
 		Intents.FLAGS.GUILD_MESSAGES,
 		Intents.FLAGS.GUILD_MEMBERS,
 		Intents.FLAGS.DIRECT_MESSAGES,
 	]),
+	// enable commands in DMChannels
 	partials: ["CHANNEL"],
 });
 
@@ -45,7 +44,7 @@ console.log("Creating Sequelize instance...");
 const sequelize = new Sequelize("database", "user", "password", {
 	host: "localhost",
 	dialect: "sqlite",
-	storage: "database.sqlite",
+	storage: "./database.sqlite",
 	logging: false,
 });
 
@@ -65,17 +64,25 @@ if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
 
 client.utils = new Utils(client);
 
+client._seq = sequelize;
+
 client.db = {
 	USERS: Users,
 	CHNL: Channels,
 	BUGS: Bugs,
 	GUILDS: Guilds,
-	getUserData: (async (uid) => {
-		const user = await Users.findOne({ where: { id: uid } });
+	/**
+	 * Returns the data for a user.
+	 * Creates an account for the user in the database if none found.
+	 * @param {string} uid Discord User ID to fetch data for.
+	 * @returns {Promise<UserData>} UserData as Object
+	 */
+	async getUserData(uid) {
+		const user = await Users.findByPk(uid);
 		if (!user) Users.create({ id: uid });
 
-		return await Users.findOne({ where: { id: uid } });
-	}),
+		return await Users.findByPk(uid);
+	},
 };
 
 /**
@@ -92,10 +99,10 @@ console.log("Loading commands...");
 /** This is used to cache all of the commands upon startup */
 client.commands = new Collection();
 
-client.utils.cacheCommands("/cmds", client.commands)
+client.utils.cacheCommands("/src/cmds", client.commands)
 	.then(e => console.log(`Registered ${e} commands.`));
 
-const eventHandler = new EventHandler(client, false);
+const eventHandler = new EventHandler(client, true);
 
 eventHandler.load();
 

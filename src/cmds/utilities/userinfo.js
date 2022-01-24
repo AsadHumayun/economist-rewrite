@@ -21,12 +21,11 @@ export default {
 			if (m.permissions.has(Discord.Permissions.FLAGS.ADMINISTRATOR)) return ["Administrator"];
 			return Object.keys(Discord.Permissions.FLAGS).filter((f) => m.permissions.has(f));
 		}
-		if (!args.length) args = [message.author.id];
+		if (!args.length) args[0] = message.author.id;
 		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
-		const member = await message.guild.members.fetch(user.id)
-			.catch(() => {return;});
+		const member = await message.guild?.members.fetch(user.id).catch(() => {return;});
 
-		const flags = (Object.keys(Discord.UserFlags.FLAGS).filter((flag) => user.flags.has(flag)) || ["No flags."]).join(", ");
+		const flags = (Object.keys(Discord.UserFlags.FLAGS).filter(flag => user.flags.has(flag)).map(format) || ["No flags."]).join(", ");
 		const mutuals = client.guilds.cache.filter(async (x) => {
 			const mmbr = await x.members.fetch(user.id).catch(() => {return;});
 			if (mmbr) {
@@ -47,7 +46,7 @@ export default {
 						.setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({ dynamic: true, format: "png" }) })
 						.setDescription("This user is not a member of this server thus very limited information can be displayed.")
 						.addField("Joined Discord At", user.createdAt.toISOString(), true)
-						.addField("Bot", user.bot, true)
+						.addField("Bot", user.bot.toString(), true)
 						.addField("Detected Flags", flags, true),
 				],
 			});

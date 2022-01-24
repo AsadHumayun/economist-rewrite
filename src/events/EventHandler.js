@@ -12,7 +12,16 @@ export class EventHandler {
 	constructor(client, debug = false) {
 		if (!client) throw new TypeError("[EventHandler => Constructor] [client]: Client may not be null");
 		if (typeof debug !== "boolean") throw new TypeError(`[EventHandler => Constructor] [debug]: debug must be of type Boolean. Received type ${typeof debug}`);
+		/**
+		 * The currently instantiated Discord client
+		 * @type {Discord.Client}
+		 */
 		this.client = client;
+		/**
+		 * Prints debug info to console when `true`.
+		 * Useful for debugging.
+		 * @type {boolean}
+		 */
 		this.debug = debug;
 	}
 	/**
@@ -22,7 +31,7 @@ export class EventHandler {
 	async load() {
 		console.info("Loading events...");
 		let count = 0;
-		const eventFiles = readdirSync("./events/").filter((f) => f.endsWith(".js") && !["EventHandler.js"].includes(f));
+		const eventFiles = readdirSync(`${process.cwd()}/src/events/`).filter(f => f.endsWith(".js") && !["EventHandler.js"].includes(f));
 		if (this.debug) console.log("Iterating files:\n", eventFiles);
 		for (const file of eventFiles) {
 			const event = await import(`./${file}`);
