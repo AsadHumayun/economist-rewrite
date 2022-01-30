@@ -3,8 +3,8 @@ import { MessageActionRow, MessageButton } from "discord.js";
 
 export default {
 	name: "invite",
-	aliases: ["invite", "support", "hub"],
-	description: "View the bot's invite link to add it to other servers",
+	aliases: ["invite", "support", "hub", "links", "link"],
+	description: "Get a URL to invite the bot, or to join the support server... or something *special*!",
 	async run(client, message) {
 		message.channel.send({
 			content: "Here are some useful links...",

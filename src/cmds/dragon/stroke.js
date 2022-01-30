@@ -16,19 +16,13 @@ export default {
 		const alias = await client.utils.getDragonAlias(message.author.id);
 		if (cd) return message.reply(`You must wait another ${cd} before stroking your ${alias[0]} again!`);
 		pet[8] += 1;
-		if (!message.author.data.get("cst")?.split(";").includes("maxdragon888")) await client.db.USERS.update({ pet: pet.join(";"), strc: client.utils.parseCd(message.createdTimestamp, ms("3h"))	}, { where: { id: message.author.id } });
+		if (!message.author.data.get("cst")?.split(";").includes("maxdragon888")) await client.db.USERS.update({ drgn: pet.join(";"), strc: client.utils.parseCd(message.createdTimestamp, ms("3h"))	}, { where: { id: message.author.id } });
 		message.reply({
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
 					.setDescription(`${alias[1][7]} ${message.author.tag} has stroked their ${alias[0]}`),
 			],
-		});
-		await client.db.USERS.update({
-		}, {
-			where: {
-				id: message.author.id,
-			},
 		});
 	},
 };

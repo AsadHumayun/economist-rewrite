@@ -5,6 +5,7 @@ import { config } from "dotenv";
 import Sequelize, { DataTypes } from "sequelize";
 
 import { EventHandler } from "./events/EventHandler.js";
+import { Logger } from "./Utils/Logger.js";
 import { Utils, Constants } from "./Utils/Construct.js";
 
 import User from "./models/User.js";
@@ -14,6 +15,8 @@ import Bug from "./models/Bug.js";
 
 // loads .env content into `process.env`
 config();
+
+process.logger = new Logger();
 
 /**
  * The currently instantiated Discord Client.
@@ -40,7 +43,7 @@ const client = new Client({
 	partials: ["CHANNEL"],
 });
 
-console.log("Creating Sequelize instance...");
+process.logger.info("INIT", "Creating Sequelize instance...");
 const sequelize = new Sequelize("database", "user", "password", {
 	host: "localhost",
 	dialect: "sqlite",
@@ -48,7 +51,7 @@ const sequelize = new Sequelize("database", "user", "password", {
 	logging: false,
 });
 
-console.log("Defining models...");
+process.logger.info("INIT", "Defining models...");
 
 const Users = User(sequelize, DataTypes);
 const Guilds = Guild(sequelize, DataTypes);
@@ -56,10 +59,10 @@ const Channels = Channel(sequelize, DataTypes);
 const Bugs = Bug(sequelize, DataTypes);
 
 if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
-	console.log("Attempting to sync database...");
+	process.logger.warn("ARGV", "Attempting to sync database...");
 	const now = Date.now();
 	sequelize.sync({ force: true });
-	console.log(`Successfully synced database in ${Date.now() - now} ms`);
+	process.logger.info("ARGV", `Successfully synced database in ${Date.now() - now} ms`);
 }
 
 client.utils = new Utils(client);
@@ -75,7 +78,7 @@ client.db = {
 	 * Returns the data for a user.
 	 * Creates an account for the user in the database if none found.
 	 * @param {string} uid Discord User ID to fetch data for.
-	 * @returns {Promise<UserData>} UserData as Object
+	 * @returns {Promise<Record<K, V>>} UserData as Object
 	 */
 	async getUserData(uid) {
 		const user = await Users.findByPk(uid);
@@ -94,15 +97,15 @@ client.collection = new Collection();
 /** Constants used globally by the client.*/
 client.const = Constants;
 
-console.log("Loading commands...");
+process.logger.info("INIT", "Loading Commands...");
 
 /** This is used to cache all of the commands upon startup */
 client.commands = new Collection();
 
 client.utils.cacheCommands("/src/cmds", client.commands)
-	.then(e => console.log(`Registered ${e} commands.`));
+	.then(e => process.logger.success("INIT", `Registered ${e} commands.`));
 
-const eventHandler = new EventHandler(client, true);
+const eventHandler = new EventHandler(client, false);
 
 eventHandler.load();
 

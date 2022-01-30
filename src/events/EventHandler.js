@@ -29,24 +29,24 @@ export class EventHandler {
 	 * @returns {void} void
 	 */
 	async load() {
-		console.info("Loading events...");
+		process.logger.info("INIT-EH", "Loading events...");
 		let count = 0;
 		const eventFiles = readdirSync(`${process.cwd()}/src/events/`).filter(f => f.endsWith(".js") && !["EventHandler.js"].includes(f));
-		if (this.debug) console.log("Iterating files:\n", eventFiles);
+		if (this.debug) process.logger.info("INIT-EH", "Iterating files:\n", eventFiles);
 		for (const file of eventFiles) {
 			const event = await import(`./${file}`);
-			if (this.debug) console.info(`Imported ${file}, type ${typeof event}`);
+			if (this.debug) process.logger.success("INIT-EH", `Imported ${file}, type ${typeof event}`);
 			if (event.default.once) {
-				if (this.debug) console.info(`Acknowledged ${file} event as ONCE\nBinding event imported form "${file}"...`);
+				if (this.debug) process.logger.info("INIT-EH", `Acknowledged ${file} event as ONCE\nBinding event imported form "${file}"...`);
 				this.client.once(event.default.name, (...args) => event.default.execute(this.client, ...args));
 				count++;
 			}
 			else {
-				if (this.debug) console.info(`Binding event "${file.split(".")[0]}" (from ./events/${file})...`);
+				if (this.debug) process.logger.info("INIT-EH", `Binding event "${file.split(".")[0]}" (from ./events/${file})...`);
 				this.client.on(event.default.name, (...args) => event.default.execute(this.client, ...args));
 				count++;
 			}
 		}
-		console.info(`Registered ${count} events.`);
+		process.logger.success("INIT-EH", `Registered ${count} events.`);
 	}
 }

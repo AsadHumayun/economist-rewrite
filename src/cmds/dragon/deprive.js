@@ -36,7 +36,7 @@ export default {
 		if (!cst.includes("maxdragon888")) {
 			await client.db.USERS.update({
 				dpc: client.utils.parseCd(message.createdTimestamp, ms("6h")),
-				pet: pet.join(";"),
+				drgn: pet.join(";"),
 			}, {
 				where: {
 					id: message.author.id,

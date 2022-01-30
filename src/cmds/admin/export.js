@@ -23,7 +23,7 @@ export default {
 			for (const key of Object.keys(entry)) {
 				// note the use of strict === comparison - prevents something with a value of "null" as opposed to null being removed.
 				if (entry[key] === null) {
-					console.log(`Deleted key ${key}`);
+					process.logger.info("EXPORTCOMMAND", `Deleted key ${key}`);
 					delete entry[key];
 				}
 				else {continue;}

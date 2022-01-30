@@ -19,7 +19,7 @@ export default {
 		const alias = await client.utils.getDragonAlias(user.id);
 		pet[4] += credits;
 		await client.db.USERS.update({
-			pet: pet.join(";"),
+			drgn: pet.join(";"),
 		}, {
 			where: {
 				id: user.id,
