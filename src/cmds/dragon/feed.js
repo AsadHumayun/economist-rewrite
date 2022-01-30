@@ -47,7 +47,7 @@ export default {
 				amt -= 1;
 				await client.db.USERS.update({
 					[type.key]: amt,
-					pet: pet.join(";"),
+					drgn: pet.join(";"),
 				}, {
 					where: {
 						id: message.author.id,

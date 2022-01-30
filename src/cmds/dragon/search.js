@@ -84,7 +84,7 @@ export default {
 			let loops = 0;
 
 			if (lvl >= 50) return;
-			client.utils.reqs.forEach(async (req) => {
+			client.const.reqs.forEach(async (req) => {
 				if (xp - req <= 0) {
 					levelups = loops + 1 - lvl;
 				}
@@ -104,7 +104,7 @@ export default {
 				});
 			}
 			await client.db.USERS.update({
-				pet: data.join(";"),
+				drgn: data.join(";"),
 			}, {
 				where: {
 					id: message.author.id,

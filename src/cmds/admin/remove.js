@@ -12,9 +12,9 @@ export default {
 		const key = args.slice(1).join(" ");
 		if (!key) return message.reply`You must provide something to remove under the format of \`${message.guild ? message.guild.prefix : client.const.prefix}remove <user> <key>\``;
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
-		if (key == "pet") {
+		if (key == "drgn") {
 			await client.db.USERS.update({
-				pet: client.const.dragon,
+				drgn: client.const.dragon,
 			}, {
 				where: {
 					id: user.id,
