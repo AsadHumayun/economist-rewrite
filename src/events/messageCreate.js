@@ -221,8 +221,7 @@ export default {
 		}
 
 		if (command.ssOnly && (message.guild.id != client.const.supportServer)) {
-			console.log("e");
-			return message.reply(`Sorry but this command can only be used in my support guild! Join by using the \`${message.guild ? message.guild.prefix : client.const.prefix}invite\`!`);
+			return message.reply(`Sorry but this command can only be used in my support guild! Join by using the \`${message.guild ? message.guild.prefix : client.const.prefix}links\` command!`);
 		}
 
 		function err(e) {
