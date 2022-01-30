@@ -47,7 +47,7 @@ class Logger {
 	 * @param {...any} args Parameters to be logged.
 	 * @returns {void} void
 	 */
-	void function raw(...args) {
+	raw(...args) {
 		console.log(...args);
 	}
 }
