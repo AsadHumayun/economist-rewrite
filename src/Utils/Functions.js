@@ -3,9 +3,6 @@ import { readdirSync } from "fs";
 import { inspect } from "util";
 
 import aliases from "./petaliases.js";
-import { Constants } from "./Constants.js";
-
-const { PET_EMOJIS } = Constants;
 
 /**
  * @classdesc These are some default functions. They have been globalised in such manner by purpose, as these functions are **__constantly__** in use by the programme, thus I deemed it more effecient to have one globalised class to manage and export functions.
@@ -348,20 +345,16 @@ class Funcs {
 	 * @async
 	 */
 	async getDragonAlias(uid, client) {
-		if (client) console.warn("DeprecationWarning: client passed into getDragonAlias function when not necessary.");
+		if (client) process.logger.warn("DEPRECATION", "client passed into getDragonAlias function when not necessary.");
 		const data = await this.client.db.getUserData(uid);
-		const currAlias = data.get("curr") || "default";
-		if (currAlias) {
-			const petname = data.get("petname") || "default";
-			const names = Object.keys(aliases).map(k => k.toLowerCase());
-			if (names.includes(currAlias)) {
-				// petname takes priority over alias.DISPLAY_NAME, gives users more freedom.
-				return [petname || aliases[currAlias].DISPLAY_NAME, aliases[currAlias].EMOJIS];
-			}
-			else {
-				return [petname || "dragon", PET_EMOJIS];
-			}
-		}
+		let currAlias = data.get("curr")?.toLowerCase() || "default";
+		const aliasMap = Object.keys(aliases).map(k => k.toLowerCase());
+		if (!aliasMap.includes(currAlias)) currAlias = "default";
+		let petname = data.get("petname");
+		const names = Object.keys(aliases).map(k => k.toLowerCase());
+		if (names.includes(petname.toLowerCase())) petname = "default";
+		// petname takes priority over alias.DISPLAY_NAME, gives users more freedom.
+		return [petname || aliases[currAlias].DISPLAY_NAME, aliases[currAlias].EMOJIS];
 	}
 	/**
 	 * The function will DM a user in context of a (gameplay) command.
@@ -373,7 +366,7 @@ class Funcs {
 	 * @async
 	 */
 	async dm(opts) {
-		if (!opts.message || !opts.userId) throw new TypeError("opts.message or opts.userId are null/missing.");
+		if (!opts.message || !opts.userId) throw new TypeError("opts.message | opts.userId are null/missing.");
 		const user = await this.client.users.fetch(opts.userId).catch(() => {return;});
 		if (!user) return;
 		const data = await this.client.db.getUserData(opts.userId);
@@ -411,7 +404,7 @@ class Funcs {
  * @param {Discord.Client} client The currently instantiated Discord client
  */
 	notify(e, msgCont, client) {
-		if (client) console.warn("DeprecationWarning: Client does not need to be passed into the client.utils.notify method.");
+		if (client) process.logger.warn("DEPRECATION", "Client does not need to be passed into the client.utils.notify method.");
 		const rn = new Date().toISOString();
 		console.error(e);
 		if (!msgCont || msgCont.toString().length == 0) {
@@ -435,4 +428,4 @@ class Funcs {
 	}
 }
 
-export { Funcs, PET_EMOJIS };
+export { Funcs };

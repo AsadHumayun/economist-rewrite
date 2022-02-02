@@ -62,7 +62,7 @@ if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
 	process.logger.warn("ARGV", "Attempting to sync database...");
 	const now = Date.now();
 	sequelize.sync({ force: true });
-	process.logger.info("ARGV", `Successfully synced database in ${Date.now() - now} ms`);
+	process.logger.success("ARGV", `Successfully synced database in ${Date.now() - now} ms`);
 }
 
 client.utils = new Utils(client);
