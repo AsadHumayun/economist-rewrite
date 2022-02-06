@@ -44,6 +44,7 @@ const client = new Client({
 });
 
 process.logger.info("INIT", "Creating Sequelize instance...");
+
 const sequelize = new Sequelize("database", "user", "password", {
 	host: "localhost",
 	dialect: "sqlite",
@@ -59,10 +60,10 @@ const Channels = Channel(sequelize, DataTypes);
 const Bugs = Bug(sequelize, DataTypes);
 
 if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
-	process.logger.warn("ARGV", "Attempting to sync database...");
+	process.logger.warn("ARGV:S", "Attempting to sync database...");
 	const now = Date.now();
 	sequelize.sync({ force: true });
-	process.logger.success("ARGV", `Successfully synced database in ${Date.now() - now} ms`);
+	process.logger.success("ARGV:S", `Successfully synced database in ${Date.now() - now} ms`);
 }
 
 client.utils = new Utils(client);
@@ -78,7 +79,7 @@ client.db = {
 	 * Returns the data for a user.
 	 * Creates an account for the user in the database if none found.
 	 * @param {string} uid Discord User ID to fetch data for.
-	 * @returns {Promise<Record<K, V>>} UserData as Object
+	 * @returns {Promise<UserData<Record<K, V>>>} UserData as Object
 	 */
 	async getUserData(uid) {
 		const user = await Users.findByPk(uid);
@@ -103,12 +104,12 @@ process.logger.info("INIT", "Loading Commands...");
 client.commands = new Collection();
 
 client.utils.cacheCommands("/src/cmds", client.commands)
-	.then(e => process.logger.success("INIT", `Registered ${e} commands.`));
+	.then(e => process.logger.success("INIT", `Registered ${e} commands`));
 
 const eventHandler = new EventHandler(client, false);
 
 eventHandler.load();
 
-process.on("unhandledRejection", e => client.utils.notify(e, null));
+process.on("unhandledRejection", client.utils.notify);
 
 client.login(process.env.token);

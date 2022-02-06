@@ -350,9 +350,7 @@ class Funcs {
 		let currAlias = data.get("curr")?.toLowerCase() || "default";
 		const aliasMap = Object.keys(aliases).map(k => k.toLowerCase());
 		if (!aliasMap.includes(currAlias)) currAlias = "default";
-		let petname = data.get("petname");
-		const names = Object.keys(aliases).map(k => k.toLowerCase());
-		if (names.includes(petname.toLowerCase())) petname = "default";
+		const petname = data.get("petname");
 		// petname takes priority over alias.DISPLAY_NAME, gives users more freedom.
 		return [petname || aliases[currAlias].DISPLAY_NAME, aliases[currAlias].EMOJIS];
 	}

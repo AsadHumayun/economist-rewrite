@@ -42,8 +42,8 @@ export default {
 				embeds: [
 					new Discord.MessageEmbed()
 						.setColor(message.author.color)
-						.setThumbnail(user.displayAvatarURL({ dynamic: true, format: "png" }))
-						.setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({ dynamic: true, format: "png" }) })
+						.setThumbnail(user.displayAvatarURL({ dynamic: true }))
+						.setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({ dynamic: true }) })
 						.setDescription("This user is not a member of this server thus very limited information can be displayed.")
 						.addField("Joined Discord At", user.createdAt.toISOString(), true)
 						.addField("Bot", user.bot.toString(), true)
