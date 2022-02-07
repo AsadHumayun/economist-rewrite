@@ -323,9 +323,9 @@ class Funcs {
 		for (const folder of subFolders) {
 			for (const file of readdirSync(`${dir}/${folder}`).filter(f => f.endsWith(".js"))) {
 				try {
-					const command = await import(`file://${dir}/${folder}/${file}`);
-					command.default.category = folder;
-					clientCommands.set(command.default.name, command.default);
+					const { default: command } = await import(`file://${dir}/${folder}/${file}`);
+					command.category = folder;
+					clientCommands.set(command.name, command);
 					cmds++;
 				}
 				catch (err) {
@@ -336,7 +336,7 @@ class Funcs {
 		return cmds;
 	}
 	/**
-	 * This function will get the display name and the emojis for a user"s dragon alias.
+	 * This function will get the display name and the emojis for a user's dragon alias.
 	 * * Each user can have their own dragon alias (of course, I would have to add it to `petaliases.json` for it to be registered as such).
 	 * * An "alias" allows a user to replace the "dragon" for anything else, as well as allowing them to choose custom emojis for their stats on their dragon. In the latter parts of the bot, there is a system that will allow users to give/take access of the alias from people.
 	 * * Users are able to do `~dragonalias` to see a list of their aliases, indexed. They will then do `~dragonalias <index>`, replacing `<index>` with the index of their choice, which means that the bot will switch their alias to whatever they had chosen.
@@ -404,17 +404,17 @@ class Funcs {
 	notify(e, msgCont, client) {
 		if (client) process.logger.warn("DEPRECATION", "Client does not need to be passed into the client.utils.notify method.");
 		const rn = new Date().toISOString();
-		console.error(e);
-		if (!msgCont || msgCont.toString().length == 0) {
+		process.logger.error("CommandError", e);
+		if (!msgCont) {
 			this.client.channels.cache.get(this.client.const.channels.error).send({
-				content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
+				content: `[${rn}]: <unhandledRejection>:\n\`${e}\``,
 			// very unliekly that a normal exception/error will exceed 2,000 characters in length.
 			}).catch(() => {return;});
 		// to prevent messageSendFailure erros from throwing. They flood the console and often I can't do anything about it so it's better to just ignore those.
 		}
 		else {
 			this.client.channels.cache.get(this.client.const.channels.error).send({
-				content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
+				content: `[${rn}]: <unhandledRejection>:\n\`${e}\``,
 				embeds: [
 					new MessageEmbed()
 						.setColor("#da0000")
