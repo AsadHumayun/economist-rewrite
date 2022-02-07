@@ -6,6 +6,7 @@ export default {
 	name: "approve",
 	aliases: ["approve"],
 	description: "approve a bug. All this does is post it in #announcements lol",
+	usage: "<bugID: number>",
 	cst: "bgmngr",
 	async run(client, message, args) {
 		if (!args.length) return message.reply({ content: "You must provide a bug ID of the bug you wish to approve" });

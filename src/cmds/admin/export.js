@@ -6,6 +6,7 @@ import delay from "delay";
 export default {
 	name: "export",
 	aliases: ["export"],
+	usage: "<model: one of ['USER', 'GUILD', 'CHANNEL', 'BUG']>",
 	description: "Exports all entries out of the database, either into a txt file, or sends it via DM. Good for periodically backing up the database.",
 	owner: true,
 	cst: "exportdata",

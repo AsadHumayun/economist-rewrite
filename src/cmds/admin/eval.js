@@ -1,12 +1,12 @@
 "use strict";
-import * as Discord from "discord.js";
+import { MessageEmbed } from "discord.js";
 import { inspect } from "util";
 
 export default {
 	name: "eval",
 	aliases: ["eval"],
 	desc: "Takes some javascript code and evaluates it! This is limited to our bot developers as it is very powerful.",
-	usage: "eval <code>",
+	usage: "<code: string>",
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		// eval command is very powerful and dangerous.
@@ -48,7 +48,7 @@ export default {
 			msg.edit({
 				content: null,
 				embeds: [
-					new Discord.MessageEmbed()
+					new MessageEmbed()
 						.setColor(client.const.colors.green)
 						.setTitle("Successfully evaluated in " + (Date.now() - s) + " ms")
 						.setFooter(new Date(message.createdTimestamp).toISOString())
@@ -60,7 +60,7 @@ export default {
 			msg.edit({
 				content: null,
 				embeds: [
-					new Discord.MessageEmbed()
+					new MessageEmbed()
 						.setTitle("Error")
 						.setDescription(`\`\`\`\n${err}\n\`\`\``)
 						.setColor([255, 0, 0])

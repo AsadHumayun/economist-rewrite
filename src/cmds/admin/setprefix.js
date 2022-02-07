@@ -5,6 +5,7 @@ export default {
 	name: "setprefix",
 	aliases: ["setprefix", "forceprefix"],
 	cst: "administrator132465798",
+	usage: "<guild: snowflake> <new prefix: string>",
 	description: "This command allows bot staff to change the prefix for your server in case you've forgotten it or have trouble resetting it",
 	async run(client, message, args) {
 		if (args.length < 1) return message.reply("You must specify the ID of the guild whose prefix you wish to change.");
