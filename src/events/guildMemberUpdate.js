@@ -33,7 +33,7 @@ export default {
 		}
 		const oldRoles = [...oldMember.roles.cache.keys()].filter((r) => r != newMember.guild.id);
 		const newRoles = [...newMember.roles.cache.keys()].filter((r) => r != newMember.guild.id);
-		client.utils.cstSpecials.forEach((s) => {
+		client.const.cstSpecials.forEach((s) => {
 			cst = cst.map((f) => f == s[0] ? s[1] : f);
 		});
 		for (const f of cst) {
@@ -49,7 +49,7 @@ export default {
 			if (newMember.guild.roles.cache.get(cst[f]) && (!newRoles.includes(cst[f]))) cst = cst.filter((f0) => ![cst[f]].includes(f0));
 		}
 		cst = cst.filter((f) => !["", client.const.roles.memberRole].includes(f));
-		client.utils.cstSpecials.forEach((s) => {
+		client.const.cstSpecials.forEach((s) => {
 			cst = cst.map((f) => f == s[1] ? s[0] : f);
 		});
 		// remove duplicates:

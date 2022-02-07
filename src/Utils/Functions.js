@@ -3,9 +3,6 @@ import { readdirSync } from "fs";
 import { inspect } from "util";
 
 import aliases from "./petaliases.js";
-import { Constants } from "./Constants.js";
-
-const { PET_EMOJIS } = Constants;
 
 /**
  * @classdesc These are some default functions. They have been globalised in such manner by purpose, as these functions are **__constantly__** in use by the programme, thus I deemed it more effecient to have one globalised class to manage and export functions.
@@ -326,9 +323,9 @@ class Funcs {
 		for (const folder of subFolders) {
 			for (const file of readdirSync(`${dir}/${folder}`).filter(f => f.endsWith(".js"))) {
 				try {
-					const command = await import(`file://${dir}/${folder}/${file}`);
-					command.default.category = folder;
-					clientCommands.set(command.default.name, command.default);
+					const { default: command } = await import(`file://${dir}/${folder}/${file}`);
+					command.category = folder;
+					clientCommands.set(command.name, command);
 					cmds++;
 				}
 				catch (err) {
@@ -339,7 +336,7 @@ class Funcs {
 		return cmds;
 	}
 	/**
-	 * This function will get the display name and the emojis for a user"s dragon alias.
+	 * This function will get the display name and the emojis for a user's dragon alias.
 	 * * Each user can have their own dragon alias (of course, I would have to add it to `petaliases.json` for it to be registered as such).
 	 * * An "alias" allows a user to replace the "dragon" for anything else, as well as allowing them to choose custom emojis for their stats on their dragon. In the latter parts of the bot, there is a system that will allow users to give/take access of the alias from people.
 	 * * Users are able to do `~dragonalias` to see a list of their aliases, indexed. They will then do `~dragonalias <index>`, replacing `<index>` with the index of their choice, which means that the bot will switch their alias to whatever they had chosen.
@@ -348,20 +345,14 @@ class Funcs {
 	 * @async
 	 */
 	async getDragonAlias(uid, client) {
-		if (client) console.warn("DeprecationWarning: client passed into getDragonAlias function when not necessary.");
+		if (client) process.logger.warn("DEPRECATION", "client passed into getDragonAlias function when not necessary.");
 		const data = await this.client.db.getUserData(uid);
-		const currAlias = data.get("curr") || "default";
-		if (currAlias) {
-			const petname = data.get("petname") || "default";
-			const names = Object.keys(aliases).map(k => k.toLowerCase());
-			if (names.includes(currAlias)) {
-				// petname takes priority over alias.DISPLAY_NAME, gives users more freedom.
-				return [petname || aliases[currAlias].DISPLAY_NAME, aliases[currAlias].EMOJIS];
-			}
-			else {
-				return [petname || "dragon", PET_EMOJIS];
-			}
-		}
+		let currAlias = data.get("curr")?.toLowerCase() || "default";
+		const aliasMap = Object.keys(aliases).map(k => k.toLowerCase());
+		if (!aliasMap.includes(currAlias)) currAlias = "default";
+		const petname = data.get("petname");
+		// petname takes priority over alias.DISPLAY_NAME, gives users more freedom.
+		return [petname || aliases[currAlias].DISPLAY_NAME, aliases[currAlias].EMOJIS];
 	}
 	/**
 	 * The function will DM a user in context of a (gameplay) command.
@@ -373,7 +364,7 @@ class Funcs {
 	 * @async
 	 */
 	async dm(opts) {
-		if (!opts.message || !opts.userId) throw new TypeError("opts.message or opts.userId are null/missing.");
+		if (!opts.message || !opts.userId) throw new TypeError("opts.message | opts.userId are null/missing.");
 		const user = await this.client.users.fetch(opts.userId).catch(() => {return;});
 		if (!user) return;
 		const data = await this.client.db.getUserData(opts.userId);
@@ -411,19 +402,19 @@ class Funcs {
  * @param {Discord.Client} client The currently instantiated Discord client
  */
 	notify(e, msgCont, client) {
-		if (client) console.warn("DeprecationWarning: Client does not need to be passed into the client.utils.notify method.");
+		if (client) process.logger.warn("DEPRECATION", "Client does not need to be passed into the client.utils.notify method.");
 		const rn = new Date().toISOString();
-		console.error(e);
-		if (!msgCont || msgCont.toString().length == 0) {
+		process.logger.error("CommandError", e);
+		if (!msgCont) {
 			this.client.channels.cache.get(this.client.const.channels.error).send({
-				content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
+				content: `[${rn}]: <unhandledRejection>:\n\`${e}\``,
 			// very unliekly that a normal exception/error will exceed 2,000 characters in length.
 			}).catch(() => {return;});
 		// to prevent messageSendFailure erros from throwing. They flood the console and often I can't do anything about it so it's better to just ignore those.
 		}
 		else {
 			this.client.channels.cache.get(this.client.const.channels.error).send({
-				content: `[${rn}]: <type: unhandledRejection>:\n\`${e}\``,
+				content: `[${rn}]: <unhandledRejection>:\n\`${e}\``,
 				embeds: [
 					new MessageEmbed()
 						.setColor("#da0000")
@@ -435,4 +426,4 @@ class Funcs {
 	}
 }
 
-export { Funcs, PET_EMOJIS };
+export { Funcs };
