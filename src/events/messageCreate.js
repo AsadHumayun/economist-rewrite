@@ -21,11 +21,11 @@ export default {
 			message.channel.send(`Setting this.message.author.id as ${message.author.id}\nSetting this.message.content as ${message.content}. Marked this.message.emit as true`);
 		}
 		const data = await client.db.getUserData(message.author.id);
-		let channel = await client.db.CHNL.findOne({ where: { id: message.channel.id } });
+		let channel = await client.db.CHNL.findByPk(message.channel.id);
 		if (!channel) channel = await client.db.CHNL.create({ id: message.channel.id });
 		const cst = data.get("cst") ? data.get("cst").split(";") : [];
 		if (message.guild) {
-			let guild = await client.db.GUILDS.findOne({ where: { id: message.guild.id } });
+			let guild = await client.db.GUILDS.findByPk(message.guild.id);
 			if (!guild) guild = await client.db.GUILDS.create({ id: message.guild.id });
 			if (!message.guild || (message.author.bot && (!cst.includes("wl"))) || (message.system) || (message.webhookId)) return;
 			message.guild.prefix = guild.get("prefix") || client.const.prefix;
@@ -119,6 +119,16 @@ export default {
 		}
 
 		if (!message.content.startsWith(message.guild?.prefix || "~")) return;
+
+		const args = message.content.slice(this.isDM(message.channel) ? client.const.prefix.length : message.guild.prefix.length).trim().split(/ +/);
+		const commandName = args.shift().toLowerCase();
+		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+		const stnb = data.get("stnb") || "stunned";
+		if (channel.get("dsbs") && command.name !== "disable") return;
+		if (cst.includes("pstn") && (!cst.includes("antistun"))) {
+			return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
+		}
+
 		if (cst.includes("debugger")) {
 			message.reply({
 				embeds: [
@@ -128,14 +138,6 @@ export default {
 						.setDescription("```\n" + message.content + "\n```"),
 				],
 			});
-		}
-
-		const args = message.content.slice(this.isDM(message.channel) ? client.const.prefix.length : message.guild.prefix.length).trim().split(/ +/);
-		const commandName = args.shift().toLowerCase();
-		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
-		const stnb = data.get("stnb") || "stunned";
-		if (cst.includes("pstn") && (!cst.includes("antistun"))) {
-			return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
 		}
 
 		// todo: make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>

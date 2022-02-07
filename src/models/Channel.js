@@ -1,4 +1,5 @@
 "use strict";
+
 export default (Sequelize, DataTypes) => {
 	return Sequelize.define("channel", {
 		id: {
@@ -6,6 +7,14 @@ export default (Sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			unique: true,
 			allowNull: false,
+		},
+		/**
+		 * Whether or not commands can be run in the channel.
+		 * @type {boolean}
+		 */
+		dsbs: {
+			type: DataTypes.BOOLEAN,
+			default: false,
 		},
 		pkg: {
 			type: DataTypes.BOOLEAN,
