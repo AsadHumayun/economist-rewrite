@@ -5,6 +5,7 @@ export default {
 	name: "avatar",
 	aliases: ["avatar", "av", "pfp"],
 	description: "View someone's avatar - works for people who are not in the current server too",
+	usage: "<user: ?UserResolvable>",
 	async run(client, message, args) {
 		if (!args.length) args = [message.author.id];
 		let user = await client.utils.fetchUser(args[0])

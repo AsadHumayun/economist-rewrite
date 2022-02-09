@@ -3,6 +3,7 @@
 export default {
 	name: "say",
 	aliases: ["say", "echo"],
+	usage: "<message: string>",
 	description: "Gets the bot to say your message",
 	cst: "say",
 	cstMessage: "This command is locked due to the possibility of abuse",

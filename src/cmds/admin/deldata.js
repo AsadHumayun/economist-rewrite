@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "deldata",
 	aliases: ["deldata", "removedata", "forget"],
+	usage: "<user: UserResolvable>",
 	description: "Innact the right to be forgotten (deletes all your data)",
 	cst: "administrator132465798",
 	async run(client, message, args) {

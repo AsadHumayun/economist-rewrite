@@ -5,7 +5,7 @@ export default {
 	name: "set",
 	aliases: ["set", "s"],
 	description: "sets a value with key `<key>` and value `<value>` in the database",
-	usage: "<key> <value>",
+	usage: "<user: UserResolvable> <key: string> <...value: any>",
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		if (args.length < 3) return message.reply("You must specify a user, key and value.");

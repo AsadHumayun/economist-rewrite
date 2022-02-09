@@ -6,6 +6,7 @@ export default {
 	aliases: ["withdraw", "with", "w"],
 	description: "Withdraw money from your Bank Vault and gain it as balance money.",
 	cst: "bvault",
+	usage: "<amount: number>",
 	cstMessage: "You must own a bank vault in order for this command to work!",
 	async run(client, message, args) {
 		const bal = message.author.data.get("bal") || 0;

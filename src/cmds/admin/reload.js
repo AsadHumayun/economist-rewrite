@@ -5,8 +5,8 @@ export default {
 	name: "reload",
 	aliases: ["r", "reload"],
 	description: "Reloads a command",
+	usage: "<command: string>",
 	cst: "administrator132465798",
-	usage: "reload <command name or alias>",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must specify a valid command name/alias in order for this command to work!");
 		const commandName = args[0].toLowerCase();

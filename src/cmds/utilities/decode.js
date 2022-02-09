@@ -6,11 +6,12 @@ export default {
 	name: "decode",
 	aliases: ["decode", "dnc"],
 	description: "decodes any supplied text",
+	usage: "<encoding: number> <text: string>",
 	async run(client, message, args) {
 		const encds = ["ascii", "base64", "hex", "latin1", "ucs-2", "ucs2", "utf-8", "utf16le", "utf8", "url"];
 		let enc;
 		if (!encds[Number(args[0]) - 1] || (isNaN(args[0]))) {
-			return message.reply(`Invalid index "${args[0] || "null"}"; the indexes are as follows: ${encds.map((x) => `${x} (\`${encds.indexOf(x) + 1}\`)`).join(", ")}`);
+			return message.reply({ content: `Invalid index "${args[0] || "null"}"; the indexes are as follows: ${encds.map((x) => `${x} (\`${encds.indexOf(x) + 1}\`)`).join(", ")}`, allowedMentions: { parse: [] } });
 		}
 		else {
 			if (!args.slice(1).join(" ").length) return message.reply("You must supply some text for me to decode!");

@@ -6,6 +6,7 @@ export default {
 	aliases: ["prefix"],
 	description: "Edits the server prefix",
 	guildOnly: true,
+	usage: "<prefix: string>",
 	async run(client, message, args) {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.reply("You need the `MANAGE_GUILD` permission in order to use this command!");
 		const prefix = args[0].trim();

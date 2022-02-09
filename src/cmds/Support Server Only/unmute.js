@@ -5,6 +5,7 @@ export default {
 	name: "unmute",
 	aliases: ["unmute", "un-mute"],
 	description: "unmutes a user.",
+	usage: "<user: UserResolvable> <reason: ?string>",
 	ssOnly: true,
 	cst: "tmod",
 	async run(client, message, args) {

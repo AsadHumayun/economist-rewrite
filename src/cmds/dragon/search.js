@@ -5,11 +5,12 @@ import delay from "delay";
 export default {
 	name: "search",
 	aliases: ["search", "srch"],
-	description: "Lets your dragon go out in search of things...",
+	description: "Lets your dragon go out in search of prey, consuming a certain amount of energy but gaining a certain amount of experience, depending on your dragon's stats",
+	usage: "",
 	cst: "dragon",
 	cstMessage: "You do not seem to own a pet dragon! Use the tame command to tame one!",
 	async run(client, message) {
-		const alias = await client.utils.getDragonAlias(message.author.id, client);
+		const alias = await client.utils.getDragonAlias(message.author.id);
 		const cd = message.author.data.get("srchc");
 		const scnd = client.utils.cooldown(message.createdTimestamp, cd * 60_000);
 		if (scnd) {

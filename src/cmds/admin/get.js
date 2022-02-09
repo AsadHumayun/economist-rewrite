@@ -5,7 +5,7 @@ export default {
 	name: "get",
 	aliases: ["get", "getv"],
 	description: "gets a value from the database and returns it. (also shows its data type and how it is formatted by the interpreter)",
-	usage: "<user> <key>",
+	usage: "<user: UserResolvable> <key: string>",
 	logAsAdminCommand: true,
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a user and a key");

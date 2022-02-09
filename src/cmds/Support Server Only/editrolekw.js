@@ -5,6 +5,7 @@ export default {
 	name: "editrolekw",
 	aliases: ["editrolekw", "edrk", "erk"],
 	description: "Edit a role's keyword. usage `editrolekw <old keyword> <new keyword>`",
+	usage: "<old role keyword: string> <new role keyword: string>",
 	cst: "editrolekw",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must provide a valid role keyword.");

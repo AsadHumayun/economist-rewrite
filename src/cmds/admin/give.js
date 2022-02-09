@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "give",
 	aliases: ["give", "gv"],
+	usage: "<user: UserResolvable> <cst | rolename: string>",
 	description: "add permissions to users.",
 	cst: "administrator132465798",
 	async run(client, message, args) {

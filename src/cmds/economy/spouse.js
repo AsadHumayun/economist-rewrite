@@ -4,7 +4,8 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "spouse",
 	aliases: ["spouse"],
-	description: "See who someone is married to",
+	description: "Check another user's spouse. If no arguments are provided, it'll just show your spouse.",
+	usage: "<user: ?UserResolvable>",
 	async run(client, message, args) {
 		let usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) usr = message.author;

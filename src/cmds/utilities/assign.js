@@ -4,6 +4,7 @@ export default {
 	name: "assign",
 	aliases: ["assign", "assignupgr"],
 	description: "Assigns access to your currently owned or co-owned dragon aliases",
+	usage: "<user: UserResolvable> <upgrade: string>",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply(`You msut folloe the format of \`${message.guild?.prefix || "~"}assign <user> <dragon alias | upgrade>\` in order for this command to work!`);
 		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});

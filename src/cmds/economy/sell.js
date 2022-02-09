@@ -5,6 +5,7 @@ export default {
 	name: "sell",
 	aliases: ["sell"],
 	description: "Sell some of your items off",
+	usage: "<item: string> <amount: ?number>",
 	disabled: true,
 	async run(client, message, args) {
 		let cst = await client.db.get("cst" + message.author.id) || "";
@@ -62,7 +63,7 @@ export default {
 			// selling a fish
 			let fish = await client.db.get("fsh" + message.author.id) || "0;0;0;0;0";
 			fish = fish.split(";");
-			for (x in fish) {
+			for (const x in fish) {
 				fish[x] = Number(fish[x]);
 			}
 			if (fish[identified.item[2]] < amt) return message.reply(`You don't have enough ${identified.item[1]} ${identified.item[0]}`);

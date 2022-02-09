@@ -5,6 +5,7 @@ export default {
 	name: "covid",
 	aliases: ["covid", "corona"],
 	description: "Infect someone with COVID-19!",
+	usage: "<user: UserResolvable>",
 	async run(client, message, args) {
 		if (!message.author.data.get("cst").split(";").includes("covid")) return message.reply("You're not allowed to use this command! You can unlock it by getting infected with COVID-19!");
 		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});

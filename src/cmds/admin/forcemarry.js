@@ -5,6 +5,7 @@ export default {
 	name: "forcemarry",
 	aliases: ["forcemarry", "forcem", "fm"],
 	description: "force-marry 2 users.",
+	usage: "<user1: UserResolvable> <user2: UserResolvable>",
 	cst: "fm",
 	logAsAdminCommand: true,
 	async run(client, message, args) {

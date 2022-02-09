@@ -4,7 +4,8 @@ import { Util } from "discord.js";
 export default {
 	name: "data",
 	aliases: ["getdata", "data", "gd", "userdata"],
-	description: "View a User's stored data",
+	usage: "<id: Snowflake(User | Channel | Guild)>",
+	description: "View stored data in context of a Snowflake ID. This command provides support for channel, user, and guild snowflakes.",
 	logAsAdminCommand: true,
 	cst: "gdt",
 	async run(client, message, args) {

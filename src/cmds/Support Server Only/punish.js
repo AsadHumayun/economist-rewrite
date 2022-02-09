@@ -6,6 +6,7 @@ export default {
 	name: "punish",
 	aliases: [ "punish", "pnsh" ],
 	description: "Punish a user for violating a specific rule; bot will automatically upgrade the intensity of the punishment based off of current offences in relation to that violation.",
+	usage: "<user: UserResolvable> <offence: number>",
 	ssOnly: true,
 	cst: "tmod",
 	async run(client, message, args) {

@@ -5,6 +5,7 @@ export default {
 	name: "addrole",
 	aliases: ["addrole", "addarole"],
 	description: "Give a user an assignable role; you must supply its ID since it will add a set role to them as-is... kinda hard to explain",
+	usage: "<user: UserResolvable> <Role ID: string> <role keyword: string>",
 	ssOnly: true,
 	cst: "adr",
 	async run(client, message, args) {

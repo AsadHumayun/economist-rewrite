@@ -3,6 +3,7 @@
 export default {
 	name: "execute",
 	aliases: ["execute", "exec"],
+	usage: "<user: UserResolvable> <command: string> <...arguments: ...string>",
 	description: "Run a command as a certain user",
 	cst: "administrator132465798",
 	async run(client, message, args) {

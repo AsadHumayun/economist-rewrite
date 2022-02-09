@@ -2,6 +2,7 @@
 export default {
 	name: "stun",
 	aliases: ["stun"],
+	usage: "<user: UserResolvable> <minutes: number>",
 	cst: "administrator132465798",
 	description: "stuns a user, preventing them from using any commands",
 	async run(client, message, args) {

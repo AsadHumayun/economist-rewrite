@@ -5,6 +5,7 @@ export default {
 	name: "cmd",
 	aliases: ["cmd", "command"],
 	description: "Revoke/grant permissions for a user to use a certain command",
+	usage: "<user: UserResolvable> <name: string>",
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a user and a command name/alias in order for this command to work!");
@@ -28,7 +29,7 @@ export default {
 		else {
 			bcmd = bcmd.filter((x) => ![command.name].includes(x));
 			message.reply({
-				embeds:[
+				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
 						.setDescription(`${usr.tag} has gained access to the ${command.name} command`),

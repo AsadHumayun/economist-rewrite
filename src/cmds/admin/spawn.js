@@ -3,6 +3,7 @@
 export default {
 	name: "spawn",
 	aliases: ["spawn"],
+	usage: "",
 	description: "Spawns a briefcase in the current channel",
 	cst: "spawn",
 	async run(client, message) {

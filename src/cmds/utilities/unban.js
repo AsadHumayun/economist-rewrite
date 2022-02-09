@@ -5,6 +5,7 @@ export default {
 	name: "unban",
 	aliases: ["unban"],
 	description: "unbans a user from the current guild.",
+	usage: "<user: UserResolvable> <reason: ?string>",
 	cst: "moderator",
 	ssOnly: true,
 	async run(client, message, args) {

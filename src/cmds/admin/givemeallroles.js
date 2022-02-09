@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "givemeallroles",
 	aliases: ["givemeallroles", "gvam", "gmar"],
+	usage: "",
 	guildOnly: true,
 	logAsAdminCommand: true,
 	cst: "gmar0",

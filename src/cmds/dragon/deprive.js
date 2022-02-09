@@ -5,6 +5,7 @@ import ms from "ms";
 export default {
 	name: "deprive",
 	aliases: ["deprive"],
+	usage: "<stat: string>",
 	description: "Completely deprive your pet's credits on a stat, reducing it to 1 and receive the appropriate amount of credits in return; 2h cooldown",
 	cst: "supreme",
 	async run(client, message, args) {

@@ -13,7 +13,7 @@ export default {
 			return message.reply(`Oi! Don't even think about cheating on ${spse.tag}. You can divorce them by using \`${message.guild ? message.guild.prefix : client.const.prefix}divorce\``);
 		}
 		const usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
-		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
+		if (!usr) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		if (usr.id == message.author.id) return message.reply("You can't marry yourself! Sorreh.");
 		const data = await client.db.getUserData(usr.id);
 		let spse0 = data.get("spse");

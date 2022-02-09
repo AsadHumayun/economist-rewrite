@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "feed",
 	aliases: ["f", "feed"],
+	usage: "<food: string>",
 	description: "Feed your dragon and do *stuff*...",
 	cst: "dragon",
 	async run(client, message, args) {

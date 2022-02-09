@@ -5,6 +5,7 @@ export default {
 	name: "hug",
 	aliases: [ "hug" ],
 	description: "Hug someone (only works in the support server)",
+	usage: "<user: UserResolvable>",
 	async run(client, message, args) {
 		const m = "You must mention somebody to hug!";
 		if (!args.length) return message.reply(m);

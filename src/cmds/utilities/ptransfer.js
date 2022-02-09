@@ -5,6 +5,7 @@ export default {
 	name: "ptransfer",
 	aliases: ["ptransfer", "transferitm"],
 	description: "Transfers one of your owned items to another user; 2 hours' cooldown",
+	usage: "<user: UserResolvable> <ditem: string>",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply(`Please use the following format: \`${message.guild ? message.guild.prefix : client.const.prefix}transferitm <user> <item>\``);
 		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});

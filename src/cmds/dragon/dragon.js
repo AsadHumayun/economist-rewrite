@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "dragon",
 	aliases: ["dragon", "d"],
+	usage: "",
 	description: "View your dragon's stats",
 	cst: "dragon",
 	cstMessage: "You do not own a pet dragon. You may purchase one with `{prefix}tame`!",

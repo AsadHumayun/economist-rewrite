@@ -5,6 +5,7 @@ export default {
 	name: "addcredits",
 	aliases: [ "addcredits", "addcred" ],
 	description: "Adds pet credits to a certain user",
+	usage: "<user: UserResolvable> <credits: ?number>",
 	cst: "addcredits",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("Desired usage for this command is: `" + message.guild ? message.guild.prefix : client.const.prefix + "addcredits <user> [amount]`");

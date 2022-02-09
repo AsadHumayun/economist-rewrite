@@ -5,6 +5,7 @@ import { Op } from "sequelize";
 export default {
 	name: "purge",
 	aliases: ["purge"],
+	usage: "<cst: string>",
 	description: "Removes a CST value from every user. This is done db-side, so even if a user shares no mutual servers with the bot, their data will still be edited.",
 	cst: "administrator132465798",
 	async run(client, message, args) {

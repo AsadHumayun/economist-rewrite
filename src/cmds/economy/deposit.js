@@ -5,6 +5,7 @@ export default {
 	name: "deposit",
 	aliases: ["deposit", "dep"],
 	description: "Deposit money into your Bank Vault.",
+	usage: "<money: number>",
 	cst: "bvault",
 	cstMessage: "You must own a Bank Vault in order for this command to work!",
 	async run(client, message, args) {

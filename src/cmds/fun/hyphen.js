@@ -5,6 +5,7 @@ export default {
 	name: "hyphen",
 	aliases: ["hyphen", "dash", "-", "hyphenify"],
 	description: "Hyphenify a string; usage `~hyphen Interval<Number> whatToHyphenify<string>`\nExample: `~hyphen 2 17456754` --> 17-45-67-54",
+	usage: "<toHyphen: string> <interval: number>",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply(`You must provide 2 valid arguments under the format of \`${message.guild ? message.guild.prefix : client.const.prefix}hyphen <interval> <string>\`. Example \`${message.guild ? message.guild.prefix : client.const.prefix}hyphen 2 183948374\` would return \`18-39-48-37-4\``);
 		if (isNaN(args[0])) return message.reply({ content: `Invalid argument "${args[0]}", must be a number`, allowedMentions: { parse: [] } });

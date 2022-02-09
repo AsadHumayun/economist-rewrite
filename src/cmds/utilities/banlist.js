@@ -6,7 +6,6 @@ export default {
 	name: "banlist",
 	aliases: ["banned", "bans", "banlist"],
 	desc: "See a list of users banned from the server, along with their IDs and the reason of their ban",
-	usage: "bans",
 	ssOnly: true,
 	cst: "moderator",
 	async run(client, message) {

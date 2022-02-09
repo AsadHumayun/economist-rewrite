@@ -5,6 +5,7 @@ import delay from "delay";
 export default {
 	name: "boost",
 	aliases: ["boost"],
+	usage: "<user: UserResolvable>",
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		function ln() {

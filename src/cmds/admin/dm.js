@@ -4,7 +4,8 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "dm",
 	aliases: ["dm"],
-	description: "DMs a user (bot dev only)",
+	usage: "<user: UserResolvable> <message: string>",
+	description: "This command will send `<message>` to the target user.",
 	logAsAdminCommand: true,
 	cst: "dm",
 	async run(client, message, args) {
@@ -18,8 +19,8 @@ export default {
 		// uclr[uclr.length - 1]: the last number tells you where the bot is in its colour cycle. This is updated b4 each command use in index.js.
 		const emb = new MessageEmbed()
 			.setColor(uclr[uclr.length - 1])
-			.setDescription(msg.toString())
-			.setFooter(`Sent by: ${message.author.tag}(${message.author.id})`, message.author.displayAvatarURL({ dynamic: true }));
+			.setAuthor({ name: `${message.author.username}(${message.author.id})`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+			.setDescription(msg.toString());
 		message.reply({
 			embeds: [
 				new MessageEmbed()

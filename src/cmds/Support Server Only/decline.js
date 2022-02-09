@@ -8,6 +8,7 @@ export default {
 	ssOnly: true,
 	cst: "srmod",
 	cstMessage: "You must be a **Senior Moderator** in order to use this command!",
+	usage: "<member: UserResolvable>",
 	async run(client, message, args) {
 		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply("You must mention a user whose application you wish to decline!");

@@ -8,6 +8,7 @@ export default {
 	name: "github",
 	aliases: ["github", "git", "gh"],
 	description: "View a GitHub user stats; 5 seconds cooldown since this uses my personal github access token and I am **NOT** getting myself banned. The exact number of allowed requests will remain unspecified, don't bother asking me.",
+	usage: "<username: string>",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must specify a query in order for this command to work!");
 		args[0] = encodeURIComponent(args[0]);

@@ -3,7 +3,7 @@ export default {
 	name: "remove",
 	aliases: ["delete", "del", "remove"],
 	description: "Deletes something from the database",
-	usage: "<name of thing to delete(string)>",
+	usage: "<key: string>",
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a user and a key to remove in order for this command to work!");

@@ -5,6 +5,7 @@ export default {
 	name: "suggest",
 	aliases: ["suggest", "addsmthnew"],
 	description: "Suggest a new idea to be added to the bot; will be posted in <#758598514623643690>",
+	usage: "<suggestion: string>",
 	async run(client, message, args) {
 		const scnd = client.utils.cooldown(message.createdTimestamp, (message.author.data.get("sgstc") || 0) * 60_000);
 		if (scnd) return message.reply(`You must wait another ${scnd} before suggesting again`);

@@ -1,7 +1,9 @@
 "use strict";
+
 export default {
 	name: "unstun",
 	aliases: ["unstun", "un-stun"],
+	usage: "<user: UserResolvable>",
 	cst: "administrator132465798",
 	description: "unstuns a user, allowing them to use commands",
 	async run(client, message, args) {

@@ -6,7 +6,7 @@ export default {
 	name: "urban",
 	aliases: ["urban", "define"],
 	description: "Search the urban dictionary for something. It will show the first given result/definition. Can only be used in NSFW channels.",
-	usage: "urban <word>",
+	usage: "<word: string>",
 	async run(client, message, args) {
 		if (!args.length) {
 			return message.reply("You must include a search term in order for this command to work!");
@@ -17,7 +17,7 @@ export default {
 		if (!list) {
 			return message.reply("I cannot find that word!");
 		}
-		const [answer] = list;
+		const [ answer ] = list;
 		message.reply({
 			embeds: [
 				new MessageEmbed()

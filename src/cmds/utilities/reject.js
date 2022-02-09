@@ -5,6 +5,7 @@ export default {
 	name: "reject",
 	aliases: ["reject", "rej"],
 	description: "Reject a bug, completely disregarding it.",
+	usage: "<bug: number> <reason: ?string>",
 	cst: "bgmngr",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must provide a bug ID of the bug you wish to reject");

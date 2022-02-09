@@ -6,6 +6,7 @@ export default {
 	name: "timeout",
 	aliases: ["timeout", "silence"],
 	description: "Timeout a server member.",
+	usage: "<user: UserResolvable> <time (in minutes) (use 0 to remove timeout): number> <reason: ?string>",
 	cst: "moderator",
 	ssOnly: true,
 	/**

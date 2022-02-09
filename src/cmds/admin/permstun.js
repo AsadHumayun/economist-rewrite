@@ -2,7 +2,8 @@
 export default {
 	name: "permstun",
 	aliases: ["permstun", "perm"],
-	description: "Permanently stuns a user",
+	description: "Permanently stuns a user with optional `stnb`",
+	usage: "<user: UserResolvable> <reason (as stnb): string>",
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		if (!args.length) return message.reply(`You must supply a user argument alongside a reason under the format \`${message.guild ? message.guild.prefix : client.const.prefix}permstun <user> [reason]\``);

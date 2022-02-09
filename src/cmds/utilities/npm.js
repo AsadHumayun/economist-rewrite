@@ -6,8 +6,8 @@ import fetch from "node-fetch";
 export default {
 	name: "npm",
 	desc: "Search [npmjs](https://www.npmjs.com/) for any package",
-	usage: "npm <package>",
 	aliases: ["npm", "npmjs"],
+	usage: "<package: ?string>",
 	async run(client, message, args) {
 		if (!args.length) {
 			const res = await fetch("https://registry.npmjs.com/");

@@ -7,7 +7,7 @@ export default {
 	aliases: ["fetchuser", "fetch-user", "fu"],
 	cst: "administrator132465798",
 	description: "fetches a user (as partial)",
-	usage: "fetchuser <id>",
+	usage: "<user: UserResolvable>",
 	async run(client, message, args) {
 		if (!args.length) return message.reply(`${client.const.emoji.err} You must mention a valid user in order for this command to work!`);
 		const msg = await message.reply("Fetching user...");

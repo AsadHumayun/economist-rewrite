@@ -6,6 +6,7 @@ export default {
 	aliases: ["removequote", "rq"],
 	description: "Removes a quotation from your collection of quotes.",
 	cst: "qts",
+	usage: "<quoteIndex: number>",
 	async run(client, message, args) {
 		let qts = message.author.data.get("qts");
 		if (!qts) return message.reply("You don't have any quotes!");

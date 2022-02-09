@@ -5,6 +5,7 @@ export default {
 	name: "unpunish",
 	aliases: ["unpunish", "unpnsh"],
 	description: "Remove a user's offence, and unmutes them if necessary.\nNote: this command will NOT unban users -- that should be done via the unban command.",
+	usage: "<user: UserResolvable> <offence: number> <reason: ?string>",
 	ssOnly: true,
 	cst: "moderator",
 	async run(client, message, args) {

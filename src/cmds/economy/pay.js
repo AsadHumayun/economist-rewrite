@@ -5,7 +5,7 @@ export default {
 	name: "pay",
 	aliases: ["pay"],
 	description: "Pay someone else :dollar:\n\nTo pay someone your entire balance, use `all`. To pay someone half your balance, use `half`. These keywords are specific to this command only, and will **not** work while using others.",
-	usage: "pay <user> <amount>",
+	usage: "<user: UserResolvable> <amount: number>",
 	async run(client, message, args) {
 		if (args.length < 1) return message.reply("You must mention a user in order for this command to work!");
 		function notEnough() {

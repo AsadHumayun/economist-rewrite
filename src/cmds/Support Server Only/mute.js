@@ -5,6 +5,7 @@ export default {
 	name: "mute",
 	aliases: ["mute"],
 	description: "Mutes a user",
+	usage: "<user: UserResolvable> <time (in minutes, use 0 for perm mutes): number> <reason: ?string>",
 	ssOnly: true,
 	cst: "tmod",
 	async run(client, message, args) {

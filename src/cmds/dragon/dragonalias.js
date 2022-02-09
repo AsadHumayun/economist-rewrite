@@ -5,6 +5,7 @@ import { MessageEmbed, MessageActionRow, MessageSelectMenu } from "discord.js";
 export default {
 	name: "dragonalias",
 	aliases: ["dragonalias", "da"],
+	usage: "<SELECT_MENU_INTERACTION>",
 	cst: "dragon",
 	description: "Choose a dragon alias to be displayed on your dragon!",
 	async run(client, message) {

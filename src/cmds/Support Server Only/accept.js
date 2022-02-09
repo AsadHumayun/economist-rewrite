@@ -6,6 +6,7 @@ export default {
 	aliases: ["accept"],
 	description: "Accept someone's staff app",
 	cst: "srmod",
+	usage: "<member: UserResolvable>",
 	ssOnly: true,
 	async run(client, message, args) {
 		if (!message.member.roles.cache.has(client.const.roles.srmod)) return message.reply({ content: "You must be a **Senior Moderator** in order to accept/decline users' applications." });

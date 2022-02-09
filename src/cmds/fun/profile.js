@@ -5,6 +5,7 @@ export default {
 	name: "profile",
 	aliases: ["profile", "prof"],
 	description: "shows a user's profile",
+	usage: "<user: UserResolvable>",
 	async run(client, message, args) {
 		if (!args) args = [message.author.id];
 		let usr = await client.utils.fetchUser(args[0]).catch(() => {return;});

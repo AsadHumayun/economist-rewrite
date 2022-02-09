@@ -5,7 +5,7 @@ export default {
 	name: "rob",
 	aliases: ["rob", "ripoff"],
 	description: "Rob a user, stealing X amount of the User's balance",
-	usage: "rob <user>",
+	usage: "<user: UserResolvable>",
 	async run(client, message, args) {
 		const result = Math.floor(Math.random(1) * 10);
 		const cooldown = message.author.data.get("rbc");

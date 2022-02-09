@@ -5,6 +5,7 @@ export default {
 	name: "bio",
 	aliases: ["bio", "setbio"],
 	description: "Edits your `bio` (Shwon in the `profile` command)",
+	usage: "<bio: ?string>",
 	async run(client, message, args) {
 		let str = args.join(" ") || "";
 		// bio is of type Sequelize.STRING

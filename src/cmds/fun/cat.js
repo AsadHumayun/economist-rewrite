@@ -6,7 +6,6 @@ export default {
 	name: "cat",
 	aliases: ["cat"],
 	description: "Get a picture of a random cat",
-	usage: "cat",
 	async run(client, message) {
 		if (!message.guild.me.permissions.has(Permissions.FLAGS.EMBED_LINKS)) {
 			return message.reply("I need the Embed Links permission for this command to work.");
