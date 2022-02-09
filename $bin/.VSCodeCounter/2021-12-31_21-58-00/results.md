@@ -2,7 +2,7 @@
 
 Date : 2021-12-31 21:58:00
 
-Directory c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite
+Directory c:\Users\Ethan\OneDrive - E\Documents\GitHub\economist-rewrite
 
 Total : 294 files,  23625 codes, 680 comments, 606 blanks, all 24911 lines
 
