@@ -1,0 +1,197 @@
+Date : 2022-01-10 22:40:29
+Directory : c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite
+Total : 165 files,  7642 codes, 713 comments, 292 blanks, all 8647 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |        160 |      7,480 |        713 |        288 |      8,481 |
+| JSON       |          2 |        103 |          0 |          1 |        104 |
+| Database   |          1 |         51 |          0 |          0 |         51 |
+| Markdown   |          1 |          6 |          0 |          3 |          9 |
+| Batch      |          1 |          2 |          0 |          0 |          2 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                   | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                      |        165 |      7,642 |        713 |        292 |      8,647 |
+| cmds                                                                                                                   |        134 |      5,653 |        118 |        217 |      5,988 |
+| events                                                                                                                 |         15 |        794 |         63 |         28 |        885 |
+| models                                                                                                                 |          5 |        360 |          2 |          6 |        368 |
+| utils                                                                                                                  |          4 |        595 |        516 |         13 |      1,124 |
++------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                               | language   | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\.eslintrc.json              | JSON       |         56 |          0 |          0 |         56 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\README.md                   | Markdown   |          6 |          0 |          3 |          9 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\8ball.js               | JavaScript |         42 |          0 |          2 |         44 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\accept.js              | JavaScript |         33 |          0 |          1 |         34 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\addcredits.js          | JavaScript |         34 |          0 |          1 |         35 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\addemoji.js            | JavaScript |         17 |          0 |          1 |         18 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\addquote.js            | JavaScript |         31 |          0 |          1 |         32 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\addreplacer.js         | JavaScript |          7 |         16 |          1 |         24 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\addrole.js             | JavaScript |         38 |          0 |          1 |         39 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\apply.js               | JavaScript |         57 |          4 |          1 |         62 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\approve.js             | JavaScript |         47 |          0 |          1 |         48 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\assign.js              | JavaScript |         48 |          0 |          1 |         49 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\avatar.js              | JavaScript |         21 |          0 |          1 |         22 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\balance.js             | JavaScript |         21 |          0 |          1 |         22 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\ban.js                 | JavaScript |         46 |          1 |          4 |         51 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\banlist.js             | JavaScript |         41 |          0 |          1 |         42 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\bio.js                 | JavaScript |         36 |          1 |          1 |         38 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\boost.js               | JavaScript |         66 |          0 |          1 |         67 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\bug.js                 | JavaScript |         49 |          0 |          1 |         50 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\buy.js                 | JavaScript |         63 |          7 |          4 |         74 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\calculate.js           | JavaScript |         20 |          0 |          1 |         21 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\cat.js                 | JavaScript |         24 |          0 |          1 |         25 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\clrs.js                | JavaScript |         23 |          2 |          1 |         26 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\cmd.js                 | JavaScript |         47 |          0 |          1 |         48 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\coinflip.js            | JavaScript |         57 |          0 |          1 |         58 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\color.js               | JavaScript |         49 |          0 |          4 |         53 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\cooldowns.js           | JavaScript |         28 |          0 |          1 |         29 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\covid.js               | JavaScript |         48 |          0 |          1 |         49 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\cstmrl.js              | JavaScript |         23 |          0 |          1 |         24 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\daily.js               | JavaScript |         58 |          1 |          1 |         60 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\data.js                | JavaScript |         50 |          9 |          1 |         60 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\decline.js             | JavaScript |         40 |          0 |          1 |         41 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\decode.js              | JavaScript |         32 |          2 |          2 |         36 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\defend.js              | JavaScript |         42 |          1 |          1 |         44 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\deldata.js             | JavaScript |         27 |          0 |          1 |         28 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\deleterole.js          | JavaScript |         32 |          0 |          1 |         33 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\deposit.js             | JavaScript |         40 |          0 |          1 |         41 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\deprive.js             | JavaScript |         53 |          1 |          1 |         55 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\disown.js              | JavaScript |         65 |          2 |          1 |         68 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\ditems.js              | JavaScript |         28 |          0 |          3 |         31 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\divorce.js             | JavaScript |         69 |          1 |          3 |         73 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\dm.js                  | JavaScript |         37 |          2 |          2 |         41 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\dose.js                | JavaScript |         34 |          0 |          1 |         35 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\downgrade.js           | JavaScript |         46 |          0 |          1 |         47 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\dragon.js              | JavaScript |         54 |          2 |          1 |         57 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\dragonalias.js         | JavaScript |         51 |          1 |          2 |         54 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\editreplacer.js        | JavaScript |         27 |          0 |          1 |         28 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\editrolekw.js          | JavaScript |         44 |          0 |          2 |         46 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\encode.js              | JavaScript |         50 |          0 |          1 |         51 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\eval.js                | JavaScript |         64 |          5 |          4 |         73 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\execute.js             | JavaScript |         15 |          0 |          0 |         15 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\export.js              | JavaScript |         38 |          6 |          1 |         45 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\feed.js                | JavaScript |         88 |          0 |          2 |         90 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\fetchuser.js           | JavaScript |         28 |          0 |          1 |         29 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\fish.js                | JavaScript |         84 |          1 |          2 |         87 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\forcemarry.js          | JavaScript |         40 |          0 |          2 |         42 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\get.js                 | JavaScript |         42 |          0 |          1 |         43 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\github.js              | JavaScript |         41 |          0 |          1 |         42 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\give.js                | JavaScript |         71 |          3 |          3 |         77 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\givemeallroles.js      | JavaScript |         30 |          1 |          1 |         32 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\giverole.js            | JavaScript |         53 |          2 |          1 |         56 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\help.js                | JavaScript |         41 |          9 |          5 |         55 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\hug.js                 | JavaScript |         31 |          0 |          1 |         32 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\hyphen.js              | JavaScript |         25 |          0 |          1 |         26 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\info.js                | JavaScript |         35 |          0 |          2 |         37 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\invite.js              | JavaScript |         29 |          1 |          1 |         31 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\items.js               | JavaScript |         38 |          0 |          3 |         41 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\keywords.js            | JavaScript |         25 |          0 |          2 |         27 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\level.js               | JavaScript |         30 |          0 |          1 |         31 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\marry.js               | JavaScript |         86 |          0 |          3 |         89 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\membercount.js         | JavaScript |         22 |          1 |          1 |         24 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\mute.js                | JavaScript |         66 |          0 |          1 |         67 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\name.js                | JavaScript |         28 |          0 |          1 |         29 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\npm.js                 | JavaScript |         56 |          0 |          3 |         59 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\offences.js            | JavaScript |         31 |          0 |          2 |         33 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\pay.js                 | JavaScript |         50 |          0 |          1 |         51 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\pbuy.js                | JavaScript |         41 |          0 |          2 |         43 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\perks.js               | JavaScript |         69 |          0 |         10 |         79 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\perms.js               | JavaScript |         28 |          0 |          1 |         29 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\permstun.js            | JavaScript |         26 |          1 |          0 |         27 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\ping.js                | JavaScript |         25 |          1 |          1 |         27 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\prefix.js              | JavaScript |         28 |          0 |          1 |         29 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\profile.js             | JavaScript |         38 |          2 |          1 |         41 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\pshop.js               | JavaScript |         20 |          0 |          2 |         22 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\ptransfer.js           | JavaScript |         50 |          0 |          4 |         54 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\pull.js                | JavaScript |         21 |          1 |          1 |         23 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\punish.js              | JavaScript |        130 |          9 |          2 |        141 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\purge.js               | JavaScript |         48 |          2 |          1 |         51 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\purgemessages.js       | JavaScript |         62 |          4 |          4 |         70 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\quote.js               | JavaScript |         38 |          2 |          1 |         41 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\quotes.js              | JavaScript |         22 |          0 |          1 |         23 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\reject.js              | JavaScript |         40 |          0 |          1 |         41 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\reload.js              | JavaScript |         30 |          2 |          1 |         33 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\remove.js              | JavaScript |         42 |          0 |          0 |         42 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\removequote.js         | JavaScript |         33 |          0 |          1 |         34 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\removereplacer.js      | JavaScript |         26 |          0 |          2 |         28 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\replacers.js           | JavaScript |         20 |          0 |          1 |         21 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\roast.js               | JavaScript |         45 |          0 |          1 |         46 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\rob.js                 | JavaScript |         95 |          3 |          1 |         99 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\role.js                | JavaScript |         46 |          0 |          4 |         50 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\rolecolor.js           | JavaScript |         64 |          0 |          4 |         68 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\roleinfo.js            | JavaScript |         32 |          0 |          1 |         33 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\rolemembers.js         | JavaScript |         30 |          0 |          1 |         31 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\rolename.js            | JavaScript |         36 |          0 |          4 |         40 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\say.js                 | JavaScript |         15 |          0 |          1 |         16 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\search.js              | JavaScript |        112 |          2 |          2 |        116 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\sell.js                | JavaScript |         88 |          1 |          2 |         91 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\sentence.js            | JavaScript |        144 |          4 |          5 |        153 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\set.js                 | JavaScript |         63 |          1 |          1 |         65 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\setprefix.js           | JavaScript |         31 |          0 |          2 |         33 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\shop.js                | JavaScript |         28 |          0 |          1 |         29 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\slowmode.js            | JavaScript |         30 |          0 |          2 |         32 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\snipe.js               | JavaScript |         26 |          0 |          1 |         27 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\spawn.js               | JavaScript |         24 |          0 |          1 |         25 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\spouse.js              | JavaScript |         23 |          0 |          1 |         24 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\steal.js               | JavaScript |         34 |          0 |          1 |         35 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\stroke.js              | JavaScript |         34 |          0 |          1 |         35 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\stun.js                | JavaScript |         22 |          0 |          0 |         22 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\submit.js              | JavaScript |         30 |          0 |          1 |         31 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\suggest.js             | JavaScript |         37 |          0 |          2 |         39 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\take.js                | JavaScript |         65 |          0 |          2 |         67 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\tame.js                | JavaScript |         27 |          0 |          1 |         28 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\unban.js               | JavaScript |         33 |          0 |          2 |         35 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\unmute.js              | JavaScript |         41 |          0 |          1 |         42 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\unpunish.js            | JavaScript |         68 |          0 |          1 |         69 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\unstun.js              | JavaScript |         25 |          0 |          0 |         25 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\updates.js             | JavaScript |         43 |          0 |          1 |         44 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\upgrade.js             | JavaScript |         32 |          1 |          1 |         34 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\upgrs.js               | JavaScript |         21 |          0 |          1 |         22 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\urban.js               | JavaScript |         31 |          0 |          2 |         33 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\userinfo.js            | JavaScript |         78 |          0 |          3 |         81 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\vault.js               | JavaScript |         25 |          0 |          1 |         26 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\viewreplacer.js        | JavaScript |         28 |          0 |          1 |         29 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\vupgrade.js            | JavaScript |         56 |          0 |          3 |         59 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\warn.js                | JavaScript |         40 |          0 |          5 |         45 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\cmds\withdraw.js            | JavaScript |         32 |          0 |          2 |         34 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\config.js                   | JavaScript |          9 |          2 |          4 |         15 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\database.sqlite             | Database   |         51 |          0 |          0 |         51 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\EventHandler.js      | JavaScript |         30 |         12 |          1 |         43 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\channelCreate.js     | JavaScript |         32 |          2 |          0 |         34 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\channelUpdate.js     | JavaScript |        104 |          9 |          3 |        116 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\debug.js             | JavaScript |         14 |          7 |          2 |         23 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\error.js             | JavaScript |          7 |          0 |          0 |          7 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\guildCreate.js       | JavaScript |         10 |          0 |          0 |         10 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\guildDelete.js       | JavaScript |          9 |          0 |          0 |          9 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\guildMemberAdd.js    | JavaScript |        139 |          3 |          1 |        143 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\guildMemberRemove.js | JavaScript |         18 |          0 |          1 |         19 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\guildMemberUpdate.js | JavaScript |         63 |          2 |          0 |         65 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\messageCreate.js     | JavaScript |        290 |         25 |         18 |        333 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\messageDelete.js     | JavaScript |         30 |          2 |          1 |         33 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\messageUpdate.js     | JavaScript |         23 |          0 |          1 |         24 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\ready.js             | JavaScript |         18 |          1 |          0 |         19 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\events\warn.js              | JavaScript |          7 |          0 |          0 |          7 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\index.js                    | JavaScript |         69 |         12 |         20 |        101 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\models\Bug.js               | JavaScript |         31 |          0 |          0 |         31 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\models\Channel.js           | JavaScript |         19 |          1 |          0 |         20 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\models\Guild.js             | JavaScript |         16 |          0 |          1 |         17 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\models\User.js              | JavaScript |        283 |          1 |          2 |        286 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\models\_customValidators.js | JavaScript |         11 |          0 |          3 |         14 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\package.json                | JSON       |         47 |          0 |          1 |         48 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\start.bat                   | Batch      |          2 |          0 |          0 |          2 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\utils\Constants.js          | JavaScript |        302 |        342 |          2 |        646 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\utils\Construct.js          | JavaScript |         10 |          8 |          2 |         20 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\utils\Functions.js          | JavaScript |        260 |        166 |          6 |        432 |
+| c:\Users\Ethan\OneDrive - St John Payne Catholic School\Documents\GitHub\economist-rewrite\utils\petaliases.js         | JavaScript |         23 |          0 |          3 |         26 |
+| Total                                                                                                                  |            |      7,642 |        713 |        292 |      8,647 |
++------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
