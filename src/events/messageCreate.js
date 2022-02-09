@@ -11,6 +11,7 @@ export default {
 	},
 	async execute(client, message, execOptions) {
 		if (!message.author || message.webhookId) return;
+		if (!client.const.owners.includes(message.author.id)) return;
 		// If the message is a partial structure, fetch the full one form the API.
 		// Note that you cannot fetch deleted information from the API - hence the catch statement (to prevent errors from occurring).
 		if (message.partial) message = await message.fetch().catch(() => {return;});
@@ -253,6 +254,8 @@ export default {
 		});
 		// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
 		const LOG = Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+		const fLog = Util.splitMessage(`${old + 1}<${client.uptime} [${Math.trunc(message.createdTimestamp / 60000)}]>: ${this.isDM(message.channel) ? `[<DMChannel> (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})].[${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+
 		try {
 			// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 			// and refresh data while you're at it, thank youp
@@ -287,24 +290,28 @@ export default {
 			});
 		}
 
+		// eslint-disable-next-line prefer-const
 		let send = true;
-		if (client.const.owners.includes(message.author.id) && !cst.includes("adminlg")) send = false;
+		/**
+		 * @warning this is force-disabled to provide more evidence for NEA.<Testing>.
+		 */
+		// if (client.const.owners.includes(message.author.id)) send = false;
 		if (command && (!message.emit)) {
 			// prevents commands executed by another using from being logged. Helps cut down on spam and unnecessary logging.
 			if (command.logAsAdminCommand || command.cst == "administrator132465798") {
-				const today = new Date(message.createdTimestamp).toISOString().split("T")[0].split("-").reverse().join("-");
-				// today example: 13-12-2021 (for: 13 Dec 2021)
-				const fLog = Util.splitMessage(`[${client.uptime}]: ${Math.trunc(message.createdTimestamp / 60000)}: ${this.isDM(message.channel) ? `[DMChannel (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
-				if (!existsSync(`./.adminlogs/${today}.txt`) && send) {
+				const today = new Date(message.createdTimestamp).toISOString().split("T")[0];
+				// today example: 2021-12-13 (for: 13 Dec 2021)
+				if (!existsSync(`./.adminlogs/${today}`) && send) {
 					const b = Date.now();
 					client.channels.cache.get(client.const.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
-					writeFile(`./.adminlogs/${today}.txt`, fLog.join(""), ((err) => {
-						if (err) console.error(err) && client.channels.cache.get(client.const.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
+					writeFile(`./.adminlogs/${today}`, fLog.join(""), ((err) => {
+						if (err) process.logger.error("ADMINLOGS.FSERROR(CREATE_FILE)", err) && client.channels.cache.get(client.const.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
 						client.channels.cache.get(client.const.channels.adminlog).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
+						process.logger.success("ADMINLOGS", "Created file in " + (Date.now() - b) + " ms");
 					}));
 				}
 				else {
-					createWriteStream(`./.adminlogs/${today}.txt`, { flags: "a" }).end(fLog.join(""));
+					createWriteStream(`./.adminlogs/${today}`, { flags: "a" }).end(fLog.join(""));
 				}
 				if (send) {
 					await delay(100);

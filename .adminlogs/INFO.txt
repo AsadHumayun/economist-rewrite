@@ -1,0 +1,7 @@
+Admin logs. Usage of admin commands are logged here, useful for tracing what happened on a day-by-day basis.
+
+@template
+CommandNumber<client.uptime, [timestamp accurate to minutes; rounded down to nearest min]>:  [GuildName|<DMChannel> (ID)].[ChannelName (ID)]<User#1234 (ID)>: Message.content
+
+@example
+39<218835 [27407496]>:  [ER-PRIV (911784758600679455)].[adminlog (912615914330017802)]<Yukikaze#0240 (501710994293129216)>: ~get
