@@ -4,6 +4,7 @@ import { MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 export default {
 	name: "disown",
 	aliases: ["disown"],
+	usage: "",
 	description: "This **deletes** your dragon. **THIS ACTION CAN NOT AND WILL NOT BE UNDONE.**",
 	cst: "dragon",
 	cstMessage: "You do not own a pet dragon. Use `{prefix}tame` to purchase one!",

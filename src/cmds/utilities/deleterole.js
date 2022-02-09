@@ -6,6 +6,7 @@ export default {
 	aliases: ["deleterole", "dr"],
 	guildOnly: true,
 	description: "Remove a guild role",
+	usage: "<roleID: Snowflake<string>>",
 	async run(client, message, args) {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return message.reply("You must have the `MANAGE_ROLES` permission in order to use this command!");
 		let role;

@@ -6,10 +6,10 @@ export default {
 	aliases: ["roleinfo", "rf"],
 	description: "Displays information about a certain role",
 	guildOnly: true,
-	usage: "roleinfo <@role, id or name>",
+	usage: "<role: snowflake | name | @GuildRoleMention>",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must specify a role for me to find! You can @mention the role, the ID or the name of the role");
-		const role = message.guild.roles.cache.find(x => x.name.toLowerCase() == args.join(" ").toLowerCase()) || message.guild.roles.cache.find(x => x.name.toLowerCase().startsWith(args[0].toLowerCase())) || message.guild.roles.cache.find(x => x.id == args[0]) || (message.mentions.roles.first());
+		const role = message.guild.roles.cache.find(x => x.name.toLowerCase() == args.join(" ").toLowerCase()) || message.guild.roles.cache.find(x => x.name.toLowerCase().startsWith(args[0].toLowerCase())) || message.guild.roles.cache.get(args[0]) || (message.mentions.roles.first());
 		if (!role) return message.reply({ content: `Unknown Role "${client.utils.trim(args.join(" "), 1888)}"`, allowedMentions: { parse: [] } });
 		const members = client.utils.trim(role.members.map(x => x.user.tag).join(", "), 1024);
 		const embeds = [

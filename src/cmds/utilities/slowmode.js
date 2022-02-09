@@ -5,7 +5,7 @@ export default {
 	name: "slowmode",
 	aliases: ["slow", "slowmode"],
 	guildOnly: true,
-	usage: "slowmode <number of seconds>",
+	usage: "<seconds (use 0 to remove slowmode): number>",
 	description: "Sert slowmode for the current channel, minimum 1 second and maximum 21600 seconds (6 hours)",
 	async run(client, message, args) {
 		if (!args.length) return message.reply(`You must follow the format of \`${message.guild ? message.guild.prefix : client.const.prefix}slowmode <seconds>\` in order for this command to work! (To disable slowmode, use \`0\` instead)`);

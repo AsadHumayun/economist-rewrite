@@ -5,6 +5,7 @@ export default {
 	name: "help",
 	aliases: ["help", "helpme", "cmdhelp", "commands", "cmds"],
 	description: "*helps* you?",
+	usage: "<command: ?string>",
 	async run(client, message, args) {
 		if (args.length) {
 			const command = client.commands.get(args[0].toLowerCase()) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(args[0].toLowerCase()));
@@ -19,7 +20,7 @@ export default {
 						.setDescription(command.description)
 						.addField("Aliases", command.aliases.join(", "), true)
 						.addField("Category", client.utils.capital(command.category), true)
-						.addField("Usage", `\`\`\`\n${command.name} ${command.usage}\n\`\`\``),
+						.addField("Usage", `\`\`\`fix\n${message.guild?.prefix || client.const.prefix}${command.name} ${command.usage}\n\`\`\``),
 				],
 			});
 		}

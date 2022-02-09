@@ -6,6 +6,7 @@ export default {
 	aliases: ["addquote", "aq"],
 	description: "Adds a quote to your collection of quotations!",
 	cst: "qts",
+	usage: "<quote: string>",
 	cstMessage: "Usage of this command requires special permissions!",
 	async run(client, message, args) {
 		const quote = args.join(" ").replace(/;+/gmi, "");

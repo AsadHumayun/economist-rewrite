@@ -5,6 +5,7 @@ export default {
 	name: "role",
 	aliases: ["role"],
 	description: "adds/removes a role from someone only if you own an assignable role :D",
+	usage: "<role: string> <user: UserResolvable>",
 	ssOnly: true,
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must provide a valid role keyword followed by the target user!");

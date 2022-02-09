@@ -5,6 +5,7 @@ import delay from "delay";
 export default {
 	name: "fish",
 	aliases: ["cast", "fish"],
+	usage: "",
 	description: "Allows you to go fishing!\nCosts :dollar: 50",
 	cst: "fishrod",
 	cstMessage: "You need a {client.const.emoji.fishing_rod} in order to go fishing! `{message.guild ? message.guild.prefix : client.const.prefix}shop`",

@@ -5,7 +5,7 @@ export default {
 	name: "8ball",
 	aliases: ["8ball", "b"],
 	description: "Ask the bot a question and get its reponse/idea about it. I'm sure you know what 8ball really is.\nWhy not try it out?",
-	usage: "8ball <question>",
+	usage: "<question: string>",
 	async run(client, message, args) {
 		if (!args.length) {
 			return message.reply({ content: ":x: You need to ask me a question..." });

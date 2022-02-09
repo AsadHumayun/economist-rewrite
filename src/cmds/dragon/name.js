@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "name",
 	aliases: ["name", "dragonname", "namedragon", "dragon-name", "name-dragon", "petname"],
+	usage: "<name: string>",
 	description: "Name your dragon.",
 	cst: "supreme",
 	async run(client, message, args) {

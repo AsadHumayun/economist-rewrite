@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "offences",
 	aliases: [ "offences", "offenses", "ofncs" ],
+	usage: "<user: ?UserResolvable>",
 	description: "View a user's offences (mod only)",
 	cst: "tmod",
 	async run(client, message, args) {

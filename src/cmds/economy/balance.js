@@ -5,7 +5,7 @@ export default {
 	name: "balance",
 	aliases: ["balance", "bal", "money"],
 	description: "Check someone's balance, see how much money they have",
-	usage: "<User(id | @Mention)>",
+	usage: "<user: ?UserResolvable>",
 	async run(client, message, args) {
 		let usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) usr = message.author;

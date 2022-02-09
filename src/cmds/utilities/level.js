@@ -5,6 +5,7 @@ export default {
 	name: "level",
 	aliases: ["level", "xp", "lvl"],
 	description: "View your or someone else's level & XP (only shows info from support server)",
+	usage: "<user: ?UserResolvable>",
 	async run(client, message, args) {
 		if (!args.length) args = [message.author.id];
 		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});

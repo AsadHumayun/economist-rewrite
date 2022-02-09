@@ -5,6 +5,7 @@ export default {
 	name: "pbuy",
 	aliases: ["pbuy"],
 	description: "Purchase something and use up some of your XP",
+	usage: "<ditem: string>",
 	async run(client, message, args) {
 		if (!args.length) return message.reply(`You must follow the format of \`${message.guild ? message.guild.prefix : client.const.prefix}pbuy <item>\` in order for this command to work!`);
 		let xp = message.author.data.get("xp") ? message.author.data.get("xp").split(";").map(Number) : [1, 0];

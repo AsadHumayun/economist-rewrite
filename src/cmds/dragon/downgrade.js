@@ -5,6 +5,7 @@ import ms from "ms";
 export default {
 	name: "downgrade",
 	aliases: ["downgrade", "decondition"],
+	usage: "<stat: string>",
 	description: "downgrade one of your dragon's stat and receive one credit in return",
 	cst: "dragon",
 	async run(client, message, args) {
@@ -21,7 +22,7 @@ export default {
 		let Stat = client.utils.upgr.find((x) => stat.startsWith(x.split(";")[0]));
 		if (!Stat) return message.reply(`The different types of stats are: ${client.utils.list(client.utils.upgr.map((x) => x.split(";")[1]))}`);
 		Stat = Stat.split(";");
-		const alias = await client.utils.getDragonAlias(message.author.id, client);
+		const alias = await client.utils.getDragonAlias(message.author.id);
 		data[4] = Number(data[4]) + 1;
 		data[Stat[2]] = Number(data[Stat[2]]) - 1;
 		if (data[Stat[2]] <= 1) return message.reply(`Each of your ${alias[0]}'s stats must have at least 1 point.`);

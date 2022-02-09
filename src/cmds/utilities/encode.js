@@ -6,6 +6,7 @@ export default {
 	name: "encode",
 	aliases: ["encode", "enc"],
 	description: "Encodes any supplied text",
+	usage: "<encoding: number> <text: string>",
 	async run(client, message, args) {
 		if (!args[0]) args[0] = "null";
 		const encds = ["ascii", "base64", "binary", "hex", "latin1", "ucs-2", "ucs2", "utf-8", "utf16le", "utf8", "url", "reverse"];

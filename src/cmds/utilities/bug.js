@@ -5,6 +5,7 @@ export default {
 	name: "bug",
 	aliases: ["bug"],
 	description: "Reports a bug in the support server. These will be reveiwed and taken seriously - spam or missuse of this command may result in a stun or blacklist from using this command.",
+	usage: "<title: string> | <description: string>",
 	async run(client, message) {
 		const clientData = await client.db.getUserData(client.user.id);
 		const number = clientData.get("bgc") ? clientData.get("bgc") + 1 : 1;

@@ -7,6 +7,7 @@ export default {
 	name: "coinflip",
 	aliases: ["coinflip", "cf"],
 	description: "Bet X amount of money onto whether you get heads or tails and gain/lose it all",
+	usage: "<coin: \"h\" or \"t\"> <bet: ?number>",
 	async run(client, message, args) {
 		const scd = Math.round(((message.author.data.get("cfc") * 60_000) - message.createdTimestamp) / 1000);
 		if (scd > 0) return message.reply(`You must wait ${scd} seconds before flipping another coin!`);

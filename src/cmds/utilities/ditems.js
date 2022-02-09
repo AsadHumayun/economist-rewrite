@@ -5,6 +5,7 @@ export default {
 	name: "ditems",
 	aliases: ["dperms", "ditems"],
 	description: "Shows your currently active special/donor permissions",
+	usage: "<user: ?UserResolvable>",
 	async run(client, message, args) {
 		if (!args.length) args = [message.author.id];
 		let user = await client.utils.fetchUser(args[0]).catch(() => {return;});

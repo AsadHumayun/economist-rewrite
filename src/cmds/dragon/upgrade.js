@@ -5,6 +5,7 @@ export default {
 	name: "upgrade",
 	aliases: ["upgrade", "improve", "up", "upgr"],
 	description: "Upgrade one of your dragon's stat",
+	usage: "<stat: string> <upgradeAmount: ?number>",
 	cst: "dragon",
 	async run(client, message, args) {
 		let data = message.author.data.get("drgn").split(";").map(Number);

@@ -4,7 +4,7 @@ import * as Discord from "discord.js";
 export default {
 	name: "userinfo",
 	aliases: ["user", "who", "whois", "userinfo", "ui"],
-	usage: "userinfo <user>",
+	usage: "<user: UserResolvable>",
 	description: "See some basic user information",
 	async run(client, message, args) {
 		/**

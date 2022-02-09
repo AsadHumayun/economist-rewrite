@@ -5,6 +5,7 @@ export default {
 	name: "rolename",
 	aliases: ["rolename", "rolename", "rn"],
 	description: "Change the name of your assignable role!",
+	usage: "<role: string> <name: string>",
 	ssOnly: true,
 	async run(client, message, args) {
 		if (args.length < 2) {

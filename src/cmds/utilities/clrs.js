@@ -5,6 +5,7 @@ export default {
 	name: "clrs",
 	aliases: [ "viewclrs", "clrs", "colors", "colours", "clr" ],
 	description: "View someone's colour preferences",
+	usage: "<user: ?UserResolvable>",
 	async run(client, message, args) {
 		if (!args) args = [message.author.id];
 		let usr = await client.utils.fetchUser(args[0])

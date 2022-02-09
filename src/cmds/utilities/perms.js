@@ -5,6 +5,7 @@ export default {
 	name: "perms",
 	aliases: ["perms", "permissions", "permcheck"],
 	description: "See someone's server permissions",
+	usage: "<user: ?UserResolvable>",
 	async run(client, message, args) {
 		function format(str) {
 			let newStr = str.replace(/_+/g, " ").toLowerCase();

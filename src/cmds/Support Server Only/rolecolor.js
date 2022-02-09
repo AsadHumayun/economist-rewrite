@@ -5,7 +5,7 @@ export default {
 	name: "rolecolor",
 	aliases: ["rolecolor", "rolecolour", "rc"],
 	description: "Change the color of your assignable role! (for black, use `#000001`)",
-	usage: "rolecolor <@role, ID or name> <new hex color>",
+	usage: "<role: string> <color: hexValue<string>>",
 	ssOnly: true,
 	async run(client, message, args) {
 		if (args.length < 2) {

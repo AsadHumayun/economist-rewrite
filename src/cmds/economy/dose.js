@@ -6,6 +6,7 @@ export default {
 	name: "dose",
 	aliases: ["dose", "consume"],
 	description: "dose on something",
+	usage: "<drug: string>",
 	async run(client, message, args) {
 		const dose = (args[0] || "").toLowerCase();
 		const res = client.utils.doses.findIndex((d) => dose.startsWith(d[0].split(";")[0]));

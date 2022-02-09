@@ -5,6 +5,7 @@ export default {
 	name: "giverole",
 	aliases: ["giverole", "gr"],
 	description: "Assigns an assignable role to the mentioned user, only useable by the bot owner.",
+	usage: "<user: UserResolvable> <keyword: string> <hoist (include '-h' if you wuold like to hoist)>",
 	ssOnly: true,
 	cst: "ggr",
 	// "ggr" standing for "give guild role"
@@ -32,7 +33,7 @@ export default {
 				hoist: hoist == true ? true : false,
 				permissions: 0,
 			},
-			reason: `Creating an assignable role for ${usr.tag} (${usr.id}), with keyword "${kw}"\nU:${message.author.tag}(${message.author.id})`,
+			reason: `Creating an assignable role for ${usr.tag} (${usr.id}), with keyword "${kw}"\nResponsible U:${message.author.tag}(${message.author.id})`,
 		});
 		args[1] = args[1].toLowerCase();
 		roles.push([kw, role.id]);

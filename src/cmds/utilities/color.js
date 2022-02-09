@@ -5,7 +5,7 @@ export default {
 	name: "color",
 	aliases: ["color", "colour", "setcolor", "setcolour", "set-color", "set-colour"],
 	description: "Changes your colour prefrence (custom color on embeds) you must have the colorist role in the main server",
-	usage: "<hexCode>",
+	usage: "<...colors: hex<string>>",
 	cst: "colorist",
 	async run(client, message, args) {
 		if (!args.length) {
