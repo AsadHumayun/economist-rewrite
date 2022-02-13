@@ -16,7 +16,7 @@ class Funcs {
 	constructor(client) {
 		/**
 		 * The currently instantiated client.
-		 * @static
+		 * @type {Discord.Client}
 		 */
 		this.client = client;
 	}
@@ -155,19 +155,16 @@ class Funcs {
 		if (r.length < 1) return false;
 		if (r.length > 1 && (!ws)) r = r.filter((x) => x[0] != "seconds");
 		if (r.length == 2) return `${r[0][1]} ${r[0][0]} and ${r[1][1]} ${r[1][0]}`;
-		function ls(arr) {
-			return arr.map((elmt) => arr.indexOf(elmt) == (arr.length - 1) ? `and ${elmt}` : elmt);
-		}
 		// Property 'length' does not exist on type '{}'.ts(2339)
 		// ignore ts(2339) error; this shouldn't be popping up for plain JS files. Microsoft, you need to up your game! (I am using VSC as my IDE)
-		return r.length >= 2 ? ls(r.map((x) => `${x[1]} ${x[1] == 1 ? x[0].slice(0, -1) : x[0]}`)).join(", ") : r.map((g) => `${g[1]} ${g[1] == 1 ? g[0].slice(0, -1) : g[0]}`).join(", ");
+		return r.length >= 2 ? this.list(r.map((x) => `${x[1]} ${x[1] == 1 ? x[0].slice(0, -1) : x[0]}`)).join(", ") : r.map((g) => `${g[1]} ${g[1] == 1 ? g[0].slice(0, -1) : g[0]}`).join(", ");
 	}
 	/**
 	 * Removes the exponent ("E") on numbers expressed in scientific notation
 	 * @param {?number} x Number that is to be expanded.
 	 * @returns {string}
 	 */
-	noExponents(x) {
+	noExponents(x = 0) {
 		if (isNaN(x)) return "0";
 		const data = String(Number(x)).split(/[eE]/);
 		if (data.length == 1) return data[0];

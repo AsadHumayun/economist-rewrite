@@ -5,7 +5,7 @@ export default {
 	name: "pull",
 	aliases: [],
 	description: "",
-	usage: "",
+
 	cst: "pull",
 	disabled: false,
 	async run(client, message) {

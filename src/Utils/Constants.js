@@ -1,9 +1,9 @@
 "use strict";
 
-import petaliases from "./petaliases.js";
-
 import { MessageEmbed } from "discord.js";
 import { readdirSync } from "fs";
+
+import petaliases from "./petaliases.js";
 
 /**
  * Values that remain static and are used throughout the whole programme.
@@ -12,10 +12,10 @@ import { readdirSync } from "fs";
  */
 const Constants = {
 	/**
-	 * Array of owner IDs
+	 * Array of owner IDs. These users always bypass all permission checks and have maximum bot access priviliges.
 	 * @const {string[]}
 	 */
-	owners: ["501710994293129216"],
+	owners: ["501710994293129216", "757958112992034918"],
 	/**
 	 * The ID of the owner to display on every command (eg `Contact User#1234 for help!`, User#1234 would be the owner's tag).
 	 * Default: owners[0]
@@ -666,6 +666,23 @@ const Constants = {
 		">": function(x, y) {return x > y;},
 		"<":  function(x, y) {return x < y;},
 		"===": function(x, y) {return x === y;},
+	},
+	/**
+	 * An object which contains messages that a user will receive if they do not possess the certain CST the key represents.
+	 * For example, `"mod": "You're not a mod!"` means that if a command with cst requirement `mod` is run, and the user
+	 * does not posseess the `mod` cst, then the message `"You're not a mod!"` will be displayed.
+	 * @resolvesGitHubIssue #43
+	 * @const {object}
+	 */
+	cstMessages: {
+		administrator132465798: "You must be a bot administrator in order to use this command!",
+		bvault: "You must own a bank vault in order to use this command!",
+		dragon: "You must own a dragon in order to use this command! You may purchase one by using `<Prefix>tame`",
+		judge: "You must be a judge in order to use this command!",
+		moderator: "You must be a moderator in order to use this command!",
+		qts: "You really thought that you were cool enough to use this command?",
+		srmod: "You must be a senior moderator in order to use this command!",
+		supreme: "You must have the SUPREME permission in order to use this command!",
 	},
 };
 

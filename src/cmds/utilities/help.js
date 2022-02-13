@@ -20,7 +20,7 @@ export default {
 						.setDescription(command.description)
 						.addField("Aliases", command.aliases.join(", "), true)
 						.addField("Category", client.utils.capital(command.category), true)
-						.addField("Usage", `\`\`\`fix\n${message.guild?.prefix || client.const.prefix}${command.name} ${command.usage}\n\`\`\``),
+						.addField("Usage", `\`\`\`\n${message.guild?.prefix || client.const.prefix}${command.name} ${command.usage}\n\`\`\``),
 				],
 			});
 		}

@@ -7,7 +7,6 @@ export default {
 	description: "Adds a quote to your collection of quotations!",
 	cst: "qts",
 	usage: "<quote: string>",
-	cstMessage: "Usage of this command requires special permissions!",
 	async run(client, message, args) {
 		const quote = args.join(" ").replace(/;+/gmi, "");
 		if (!quote.length) return message.reply("You must enter a quotation to add in order for this command to work!");

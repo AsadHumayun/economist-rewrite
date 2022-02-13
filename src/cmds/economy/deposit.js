@@ -7,7 +7,6 @@ export default {
 	description: "Deposit money into your Bank Vault.",
 	usage: "<money: number>",
 	cst: "bvault",
-	cstMessage: "You must own a Bank Vault in order for this command to work!",
 	async run(client, message, args) {
 		if (isNaN(args[0]) || (Number(args[0]) <= 0)) return message.reply("You must enter a positive number");
 		const dep = Number(args[0]);
