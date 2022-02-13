@@ -8,7 +8,6 @@ export default {
 	aliases: ["sentence", "sente"],
 	cst: "judge",
 	usage: "<user: UserResolvable>",
-	cstMessage: "You must be a judge in order to use this command!",
 	description: "judge a user, stunning them in a range of 4-10 minutes.",
 	async run(client, message, args) {
 		const coold = message.author.data.get("sntc");

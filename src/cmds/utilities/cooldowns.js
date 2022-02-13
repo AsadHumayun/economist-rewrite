@@ -5,7 +5,6 @@ export default {
 	name: "cooldowns",
 	aliases: ["cds", "cooldowns", "cd", "coold"],
 	cst: "supreme",
-	cstMessage: "You're not prestigious enough to use this command! (requires Supreme)",
 	async run(client, message) {
 		const cds = [];
 		for (let cd of client.const.cds) {

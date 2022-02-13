@@ -1,9 +1,10 @@
 "use strict";
+
 export default {
 	name: "remove",
 	aliases: ["delete", "del", "remove"],
 	description: "Deletes something from the database",
-	usage: "<key: string>",
+	usage: "<user: UserResolvable> <key: string>",
 	cst: "administrator132465798",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a user and a key to remove in order for this command to work!");

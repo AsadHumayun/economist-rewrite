@@ -6,7 +6,6 @@ export default {
 	aliases: ["vupgrade", "vupgr"],
 	description: "Upgrade your vault, costing :dollar: 500 at first, but every time you upgrade, the more you'll need to pay the next time you upgrade again.",
 	cst: "bvault",
-	cstMessage: "You must own a bank vault in order for this command to work!",
 	async run(client, message, args) {
 		const bal = message.author.data.get("bal");
 		const v = message.author.data.get("v").split(";").map(Number);

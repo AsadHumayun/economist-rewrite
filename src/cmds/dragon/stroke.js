@@ -7,7 +7,6 @@ export default {
 	aliases: ["stroke", "str"],
 	description: "Stroke your pet and increase its Affection by 1",
 	cst: "dragon",
-	cstMessage: "You must own a dragon in order to use this command!",
 	async run(client, message) {
 		const cooldown = message.author.data.get("strc");
 		const cd = client.utils.cooldown(message.createdTimestamp, cooldown * 60_000);

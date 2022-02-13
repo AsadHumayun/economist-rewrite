@@ -19,7 +19,7 @@ export default {
 			message.author = execOptions.author;
 			message.content = execOptions.content;
 			message.emit = true;
-			message.channel.send(`Setting this.message.author.id as ${message.author.id}\nSetting this.message.content as ${message.content}. Marked this.message.emit as true`);
+			message.channel.send(`Setting message.author.id as ${message.author.id}\nSetting message.content as ${message.content}\nSetting message.emit as true`);
 		}
 		const data = await client.db.getUserData(message.author.id);
 		let channel = await client.db.CHNL.findByPk(message.channel.id);
@@ -185,8 +185,9 @@ export default {
 		});
 		message.author.color = message.author.color.split(";")[Number(m[m.length - 1])];
 		const bcmd = data.get("bcmd") ? data.get("bcmd").split(";") : [];
-		if (bcmd.includes(command.name) && (!cst.includes("administrator132465798"))) {
-			// this allows for blacklisting of specific commands. Practically speaking, it is very useful as it allows me (or any other admin) to prevent users who are spamming a command from doing so.
+		if (bcmd.includes(command.name) && (!cst.includes("administrator132465798") || client.const.owners.includes(message.author.id))) {
+			// this allows for blacklisting of specific commands. Practically speaking, it is very useful as it allows me
+			// (or any other admin) to prevent users who are spamming a command from doing so.
 			return message.reply("You do not have permissions to use that command!");
 		}
 
@@ -220,7 +221,7 @@ export default {
 		}
 
 		if (command.cst && (!cst.includes(command.cst) && ((!client.const.owners.includes(message.author.id))))) {
-			return message.reply(command.cstMessage || "You're not allowed to use this command!");
+			return message.reply(client.const.cstMessages[command.cst] ? client.const.cstMessages[command.cst].replaceAll("<Prefix>", message.guild?.prefix || client.const.prefix) : (command.cstMessage ? command.cstMessage : "You're not allowed to use this command!"));
 		}
 
 		if (command.ssOnly && (message.guild.id != client.const.supportServer)) {
@@ -228,8 +229,8 @@ export default {
 		}
 
 		function err(e) {
-			console.error(e);
-			if (!message.author.debug) {
+			process.logger.error("CommandError", e);
+			if (!cst.includes("debugger")) {
 				return message.reply(`Sorry, but an error occurred :/\n\`${e}\``);
 			}
 			else {
@@ -237,7 +238,7 @@ export default {
 					new MessageEmbed()
 						.setColor("#da0000")
 						.setTitle("[DEBUGGER]: Sorry, but an error occured :/")
-						.setDescription(`\`\`\`\n${e.stack}\n\`\`\``),
+						.setDescription(`\`\`\`\n${e}\n\`\`\`\n\n(stacktrace hidden)`),
 				],
 				});
 			}

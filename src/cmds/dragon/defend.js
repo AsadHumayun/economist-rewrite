@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default {
 	name: "defend",
 	aliases: [ "protect", "defend" ],
-	usage: "",
+
 	description: "Toggle your dragon's protection — whether or not it will defend you when someone attempts to attack you.",
 	async run(client, message) {
 		// "args" weren't passed through here because they're not used, means memory isn't wasted on that var, makking this more efficient.

@@ -9,10 +9,6 @@ export default {
 	usage: "<user: UserResolvable> <time (in minutes) (use 0 to remove timeout): number> <reason: ?string>",
 	cst: "moderator",
 	ssOnly: true,
-	/**
-	 * @todo add a cstMessage type of object in Constants.
-	 */
-	cstMessage: "You must be a moderator in order to use this command!",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply(`You must use the command under the format of \`${message.guild?.prefix || client.const.prefix}timeout <User> <Time (minutes)> <?reason>\` in order for this command to work!`);
 		if (isNaN(args[1]) || Number(args[1]) <= 0) return message.reply("You must enter a positive number");
