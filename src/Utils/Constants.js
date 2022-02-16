@@ -671,7 +671,7 @@ const Constants = {
 	 * An object which contains messages that a user will receive if they do not possess the certain CST the key represents.
 	 * For example, `"mod": "You're not a mod!"` means that if a command with cst requirement `mod` is run, and the user
 	 * does not posseess the `mod` cst, then the message `"You're not a mod!"` will be displayed.
-	 * @resolvesGitHubIssue #43
+	 * @issue #43
 	 * @const {object}
 	 */
 	cstMessages: {
