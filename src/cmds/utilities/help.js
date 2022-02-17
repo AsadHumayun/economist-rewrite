@@ -18,7 +18,7 @@ export default {
 						.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
 						.setTitle(`Command: \`${message.guild ? message.guild.prefix : client.const.prefix}${command.name}\``)
 						.setDescription(command.description)
-						.addField("Aliases", command.aliases.join(", "), true)
+						.addField("Aliases", command.aliases?.join(", ") || command.name, true)
 						.addField("Category", client.utils.capital(command.category), true)
 						.addField("Usage", `\`\`\`\n${message.guild?.prefix || client.const.prefix}${command.name} ${command.usage || ""}\n\`\`\``),
 				],
