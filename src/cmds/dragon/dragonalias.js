@@ -41,7 +41,7 @@ export default {
 			components: [ menu ],
 			allowedMentions: { repliedUser: true },
 		});
-		// TODO:
+		// @todo
 		// Do something that prevents all of these lil functions ftom being scattered around
 		// define it in utils or smth
 		const filter = (i) => {

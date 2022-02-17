@@ -3,6 +3,8 @@ Comment on this in your coursework:
 - ESM circular dependencies; you cannot import export modules that do that to each other, known as a circular module dependency. It messes with the ESM interpreter. 
 I encoutnered this issue when attempting to import default PET_EMOJIS from ./Constants.js into ./petaliases.js ---- this just didn't work, kept causing the following error: 
 
+The scenario produced an error with the following stacktrace:
+
 ReferenceError: Cannot access 'Constants' before initialization
     at file:///C:/Users/U/Documents/GitHub/economist-rewrite/Utils/Functions.js:8:24
     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)

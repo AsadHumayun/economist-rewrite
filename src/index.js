@@ -79,7 +79,7 @@ client.db = {
 	 * Returns the data for a user.
 	 * Creates an account for the user in the database if none found.
 	 * @param {string} uid Discord User ID to fetch data for.
-	 * @returns {Promise<UserData<Record<K, V>>>} UserData as Object
+	 * @returns {Promise<UserData<Record>>} UserData as Object
 	 */
 	async getUserData(uid) {
 		const user = await Users.findByPk(uid);

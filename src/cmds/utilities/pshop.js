@@ -13,7 +13,7 @@ export default {
 					.setDescription(`
 			Here's a list of permissions which you can purchase via \`${message.guild ? message.guild.prefix : client.const.prefix}pbuy <item>\`.
 			
-			${client.utils.ditems.map((x) => `**${client.capital(x.split(";")[1])}**: \`${x.split(";")[3]}\` XP`).join("\n")}        
+			${client.const.ditems.map((x) => `**${client.utils.capital(x.split(";")[1])}**: \`${x.split(";")[3]}\` XP`).join("\n")}        
 							`),
 			],
 		});

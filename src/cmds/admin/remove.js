@@ -14,6 +14,8 @@ export default {
 		if (!key) return message.reply`You must provide something to remove under the format of \`${message.guild ? message.guild.prefix : client.const.prefix}remove <user> <key>\``;
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (key == "drgn") {
+			// only doing this for this DB value. If I end up having to do it for multiple, I'll probably end up making a
+			// fancy system for it all, but can't be asked to do that right now for just one key. Lol.
 			await client.db.USERS.update({
 				drgn: client.const.dragon,
 			}, {
