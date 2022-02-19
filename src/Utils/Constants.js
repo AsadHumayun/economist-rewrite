@@ -684,6 +684,97 @@ const Constants = {
 		srmod: "You must be a senior moderator in order to use this command!",
 		supreme: "You must have the SUPREME permission in order to use this command!",
 	},
+	/**
+	 * An array consisting of purchaseable items.
+	 * @type {Array<Record<string, Array<Record>>}
+	 */
+	get shopItems() {
+		return [
+			{
+				categoryName: "General",
+				// was previously named "shopItems" but later changed to just "items"
+				// to prevent confusion
+				items: [
+					{
+						ID: 1,
+						DISPLAY_NAME: "Fishing Rod",
+						DESCRIPTION: "Allows you to go fishing via `<Prefix>fish`",
+						CST: "fishrod",
+						EMOJI: this.emoji.fishing_rod,
+						SELLABLE: true,
+						PRICE: 25,
+						// no cooldown here as there is a command cooldown on the fish command globally
+						CD: null,
+					},
+					{
+						ID: 2,
+						DISPLAY_NAME: "The Seller's Permit",
+						DESCRIPTION: "Allows you to sell certain in-game items via `<Prefix>sell` for a neat profit",
+						CST: "slrprmt",
+						EMOJI: this.emoji.slrprmt,
+						SELLABLE: false,
+						PRICE: 25,
+						CD: null,
+					},
+				],
+			},
+			{
+				categoryName: "Foodstuffs",
+				items: [
+					{
+						ID: 101,
+						DISPLAY_NAME: "Chill Pill",
+						DESCRIPTION: "removes all cooldowns, 6 hour cooldown for consuimg this item; consume with `<Prefix>dose chill`",
+						CST: null,
+						EMOJI: this.emoji.chill,
+						SELLABLE: true,
+						PRICE: 25,
+						// 6h
+						CD: 21600000,
+					},
+					{
+						ID: 202,
+						DISPLAY_NAME: "Adrenaline",
+						DESCRIPTION: "Inject yourself with this energizing hormone! Enter either a `<Prefix>fight` or `<Prefix>flight` state!",
+						CST: null,
+						EMOJI: this.emoji.adrenaline,
+						SELLABLE: true,
+						PRICE: 25,
+						// 90m, 1.5hr
+						CD: 5400000,
+						// how long the affects of this drug will last
+						// 30m, .5 hr
+						POTENCY: 1800000,
+					},
+				],
+			},
+			{
+				categoryName: "Utils",
+				items: [
+					{
+						ID: 201,
+						DISPLAY_NAME: "Bank Vault",
+						DESCRIPTION: "Allows you to store money where it's safely hidden away from attackers; `<Prefix>vault` to view your vault",
+						CST: "bvault",
+						EMOJI: this.emoji.bvault,
+						SELLABLE: false,
+						PRICE: 10_000,
+						CD: null,
+					},
+					{
+						ID: 202,
+						DISPLAY_NAME: "Random Colour Preference",
+						DESCRIPTION: "Set a random colour preference whilst using commands (different each time)",
+						CST: "rc",
+						EMOJI: this.emoji.rc,
+						SELLABLE: false,
+						PRICE: 500,
+						CD: null,
+					},
+				],
+			},
+		];
+	},
 };
 
 /** @exports Constants */
