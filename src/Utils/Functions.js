@@ -401,7 +401,7 @@ class Funcs {
 	notify(e, msgCont, client) {
 		if (client) process.logger.warn("DEPRECATION", "Client does not need to be passed into the client.utils.notify method.");
 		const rn = new Date().toISOString();
-		process.logger.error("CommandError", e);
+		process.logger.error("CommandError", e.stack);
 		if (!msgCont) {
 			this.client.channels.cache.get(this.client.const.channels.error).send({
 				content: `[${rn}]: <unhandledRejection>:\n\`${e}\``,

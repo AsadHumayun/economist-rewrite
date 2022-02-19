@@ -229,7 +229,7 @@ export default {
 		}
 
 		function err(e) {
-			process.logger.error("CommandError", e);
+			process.logger.error("CommandError", e.stack);
 			if (!cst.includes("debugger")) {
 				return message.reply(`Sorry, but an error occurred :/\n\`${e}\``);
 			}
