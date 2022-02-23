@@ -5,13 +5,9 @@ import delay from "delay";
 export default {
 	name: "fish",
 	aliases: ["cast", "fish"],
-
 	description: "Allows you to go fishing!\nCosts :dollar: 50",
 	cst: "fishrod",
 	async run(client, message) {
-		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
-		if (!cst.includes("fishrod")) return message.reply();
-
 		const cd = message.author.data.get("fishc") || 0;
 		const scnd = client.utils.cooldown(message.createdTimestamp, cd * 60_000);
 		if (scnd) {
