@@ -382,6 +382,11 @@ const Constants = {
 	 * @const {object}
 	 */
 	emoji: {
+		fish: ":fish:",
+		dolphin: ":dolphin:",
+		shark: ":shark:",
+		blowfish: ":blowfish:",
+		trop: ":tropical_fish:",
 		tick: "<:tick:912982622731370576>",
 		err: "<:error:912982623830282281>",
 		fishing_rod: "<:fishrod:912982603425005588>",
@@ -611,7 +616,7 @@ const Constants = {
 	/**
 	 * Different dosable items, along with a function that contains code and subtracts 1 from the current number of items and checks to see if they have enough to dose on that.
 	 * @see `dose` command
-	 * @type {Array<Array<string, function>>}
+	 * @type {Array<Array<string | function>>}
 	 */
 	get doses() {
 		return [
@@ -676,8 +681,9 @@ const Constants = {
 	 */
 	cstMessages: {
 		administrator132465798: "You must be a bot administrator in order to use this command!",
-		bvault: "You must own a bank vault in order to use this command!",
+		bvault: "You must own a bank vault in order to use this command! Take a look in `<Prefix>shop` to view more information",
 		dragon: "You must own a dragon in order to use this command! You may purchase one by using `<Prefix>tame`",
+		fishrod: "You must own a fishing rod in order to use this command! Take a look in `<Prefix>shop` and purchase one.",
 		judge: "You must be a judge in order to use this command!",
 		moderator: "You must be a moderator in order to use this command!",
 		qts: "You really thought that you were cool enough to use this command?",
@@ -686,9 +692,10 @@ const Constants = {
 	},
 	/**
 	 * An array consisting of purchaseable items.
-	 * @type {Array<Record<string, Array<Record>>}
+	 * @type {Array<record<{ categoryName: string, items: Array<record<{ ID: number, DISPLAY_NAME: string, DESCRIPTION: string, CST: string, EMOJI: string, SELLABLE: boolean, PRICE: number, CD: ?number, POTENCY: ?number }>> }>>}
 	 */
 	get shopItems() {
+		const currThis = this;
 		return [
 			{
 				categoryName: "General",
@@ -719,7 +726,7 @@ const Constants = {
 				],
 			},
 			{
-				categoryName: "Foodstuffs",
+				categoryName: "Consumables/Drugs",
 				items: [
 					{
 						ID: 101,
@@ -733,7 +740,7 @@ const Constants = {
 						CD: 21600000,
 					},
 					{
-						ID: 202,
+						ID: 102,
 						DISPLAY_NAME: "Adrenaline",
 						DESCRIPTION: "Inject yourself with this energizing hormone! Enter either a `<Prefix>fight` or `<Prefix>flight` state!",
 						CST: null,
@@ -745,6 +752,56 @@ const Constants = {
 						// how long the affects of this drug will last
 						// 30m, .5 hr
 						POTENCY: 1800000,
+					},
+					{
+						ID: 103,
+						DISPLAY_NAME: "Fish",
+						CST: null,
+						ENOJI: this.emoji.fish,
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
+					},
+					{
+						ID: 104,
+						DISPLAY_NAME: "Tropical Fish",
+						CST: null,
+						ENOJI: this.emoji.trop,
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
+					},
+					{
+						ID: 105,
+						DISPLAY_NAME: "Shark",
+						CST: null,
+						ENOJI: this.emoji.shark,
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
+					},
+					{
+						ID: 106,
+						DISPLAY_NAME: "Blowfish",
+						CST: null,
+						ENOJI: this.emoji.blowfish,
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
+					},
+					{
+						ID: 107,
+						DISPLAY_NAME: "Dolphin",
+						CST: null,
+						ENOJI: ":dolphin:",
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
 					},
 				],
 			},
@@ -774,6 +831,9 @@ const Constants = {
 				],
 			},
 		];
+	},
+	debug() {
+		return this.emoji;
 	},
 };
 
