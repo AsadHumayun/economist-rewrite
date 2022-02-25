@@ -9,6 +9,9 @@ export default {
 	ssOnly: true,
 	cst: "moderator",
 	async run(client, message, args) {
+		/**
+		 * @todo implement removeZeros function
+		 */
 		if (args.length < 2) return message.reply("Correct usage: `" + message.guild ? message.guild.prefix : client.const.prefix + "unpunish <user> <offence index> <?reason>`; requires mod");
 		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
