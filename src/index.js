@@ -111,4 +111,4 @@ eventHandler.load();
 
 process.on("unhandledRejection", client.utils.notify);
 
-client.login(process.env.token)
+client.login(process.env.token);
