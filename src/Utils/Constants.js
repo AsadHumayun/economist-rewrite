@@ -826,7 +826,7 @@ const Constants = {
 						DESCRIPTION: "Allows you to store money where it's safely hidden away from attackers; `<Prefix>vault` to view your vault",
 						CST: "bvault",
 						EMOJI: this.emoji.bvault,
-						SELLABLE: false,
+						SELLABLE: true,
 						PRICE: 10_000,
 						CD: null,
 					},
