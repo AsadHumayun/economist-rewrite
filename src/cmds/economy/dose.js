@@ -8,8 +8,6 @@ export default {
 	usage: "<drug: string>",
 	async run(client, message, args) {
 		const names = (client.const.shopItems.map(({ items }) => items.map(({ DISPLAY_NAME }) => DISPLAY_NAME).join(";")).join(";")).split(";");
-		console.log(names, client.utils.rossCaps(args.join(" ")));
-		console.log(names.find(e => e.startsWith(client.utils.rossCaps(args.join(" ")))));
 		if (!names.find(e => e.startsWith(client.utils.rossCaps(args.join(" "))))) return message.reply("You must provide a valid ID of what you would like to purchase (the ID of an item is the number in brackets next to that item in the shop) in order for this command to work!");
 		const item = client.const.shopItems.map(({ items }) => items.find(({ DISPLAY_NAME }) => DISPLAY_NAME.startsWith(client.utils.rossCaps(args.join(" "))))).filter(f => typeof f != "undefined")[0];
 		if (item.CST || !item.CDK) return message.reply("You cannot consume that item");
