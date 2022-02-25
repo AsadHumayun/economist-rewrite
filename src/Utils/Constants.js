@@ -729,12 +729,6 @@ const Constants = {
 				categoryName: "Consumables/Drugs",
 				items: [
 					{
-						ID: 999,
-						DISPLAY_NAME: "test",
-		//				DESCRIPTION: "test",
-						EMOJI: 'test'
-					},
-					{
 						ID: 101,
 						DISPLAY_NAME: "Chill Pill",
 						DESCRIPTION: "removes all cooldowns, 6 hour cooldown for consuimg this item; consume with `<Prefix>dose chill`",
