@@ -421,6 +421,17 @@ class Funcs {
 				.catch(() => {return;});
 		}
 	}
+	/**
+	 * Removes zeros from an array.
+	 * @param {number[]} array Removes all zeros from the array.
+	 * @returns {number[]}
+	 */
+	removeZeros(array) {
+		for (const elmt in array) {
+			if (array[elmt] == 0) array[elmt] = "";
+		}
+		return array;
+	}
 }
 
 export { Funcs };
