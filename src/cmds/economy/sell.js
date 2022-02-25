@@ -29,7 +29,7 @@ export default {
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`${message.author.tag} has successfully sold ${item.EMOJI} ${item.DISPLAY_NAME} and received :dollar: ${client.utils.comma(item.PRICE / 2)}`),
+						.setDescription(`${message.author.tag} has successfully sold ${item.EMOJI} ${item.DISPLAY_NAME} and received :dollar: ${client.utils.comma(Math.round(item.DISPLAY_NAME == client.const.shopItems[2].items[1].DISPLAY_NAME ? client.const.shopItems[2].items[1].PRICE : item.PRICE / 2))}`),
 				],
 			});
 		}
