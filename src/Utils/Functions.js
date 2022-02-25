@@ -432,6 +432,9 @@ class Funcs {
 		}
 		return array;
 	}
+	rossCaps(str) {
+		return str.split(" ").map(this.capital).join(" ");
+	}
 }
 
 export { Funcs };
