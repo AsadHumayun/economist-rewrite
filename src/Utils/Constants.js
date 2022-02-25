@@ -729,6 +729,12 @@ const Constants = {
 				categoryName: "Consumables/Drugs",
 				items: [
 					{
+						ID: 999,
+						DISPLAY_NAME: "test",
+		//				DESCRIPTION: "test",
+						EMOJI: 'test'
+					},
+					{
 						ID: 101,
 						DISPLAY_NAME: "Chill Pill",
 						DESCRIPTION: "removes all cooldowns, 6 hour cooldown for consuimg this item; consume with `<Prefix>dose chill`",
@@ -756,8 +762,9 @@ const Constants = {
 					{
 						ID: 103,
 						DISPLAY_NAME: "Fish",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
-						ENOJI: this.emoji.fish,
+						EMOJI: this.emoji.fish,
 						SELLABLE: true,
 						PRICE: 25,
 						CD: null,
@@ -766,8 +773,9 @@ const Constants = {
 					{
 						ID: 104,
 						DISPLAY_NAME: "Tropical Fish",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
-						ENOJI: this.emoji.trop,
+						EMOJI: this.emoji.trop,
 						SELLABLE: true,
 						PRICE: 25,
 						CD: null,
@@ -776,8 +784,9 @@ const Constants = {
 					{
 						ID: 105,
 						DISPLAY_NAME: "Shark",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
-						ENOJI: this.emoji.shark,
+						EMOJI: this.emoji.shark,
 						SELLABLE: true,
 						PRICE: 25,
 						CD: null,
@@ -786,8 +795,9 @@ const Constants = {
 					{
 						ID: 106,
 						DISPLAY_NAME: "Blowfish",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
-						ENOJI: this.emoji.blowfish,
+						EMOJI: this.emoji.blowfish,
 						SELLABLE: true,
 						PRICE: 25,
 						CD: null,
@@ -796,8 +806,9 @@ const Constants = {
 					{
 						ID: 107,
 						DISPLAY_NAME: "Dolphin",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
-						ENOJI: ":dolphin:",
+						EMOJI: ":dolphin:",
 						SELLABLE: true,
 						PRICE: 25,
 						CD: null,

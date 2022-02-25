@@ -1,5 +1,4 @@
 ﻿"use strict";
-/* eslint-env node es6 */
 import { Collection, Client, Options, Intents } from "discord.js";
 import { config } from "dotenv";
 import Sequelize, { DataTypes } from "sequelize";
@@ -112,4 +111,4 @@ eventHandler.load();
 
 process.on("unhandledRejection", client.utils.notify);
 
-client.login(process.env.token);
+client.login(process.env.token)
