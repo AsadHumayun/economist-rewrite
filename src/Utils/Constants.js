@@ -1,6 +1,5 @@
 "use strict";
 
-import { MessageEmbed } from "discord.js";
 import { readdirSync } from "fs";
 
 import petaliases from "./petaliases.js";
@@ -15,7 +14,7 @@ const Constants = {
 	 * Array of owner IDs. These users always bypass all permission checks and have maximum bot access priviliges.
 	 * @const {string[]}
 	 */
-	owners: ["501710994293129216", "757958112992034918"],
+	owners: ["501710994293129216", "D-757958112992034918"],
 	/**
 	 * The ID of the owner to display on every command (eg `Contact User#1234 for help!`, User#1234 would be the owner's tag).
 	 * Default: owners[0]
@@ -382,6 +381,11 @@ const Constants = {
 	 * @const {object}
 	 */
 	emoji: {
+		fish: ":fish:",
+		dolphin: ":dolphin:",
+		shark: ":shark:",
+		blowfish: ":blowfish:",
+		trop: ":tropical_fish:",
 		tick: "<:tick:912982622731370576>",
 		err: "<:error:912982623830282281>",
 		fishing_rod: "<:fishrod:912982603425005588>",
@@ -533,125 +537,6 @@ const Constants = {
 		];
 	},
 	/**
-	 * The shop items
-	 * @see `buy`
-	 * @const {object}
-	 */
-	get shop() {
-		return {
-			fishrod: {
-				displayName: "Fishing rod",
-				id: 1,
-				emoji: this.emoji.fishing_rod,
-				description: "Allows you to go fishing via `~fish`",
-				price: 250,
-				method: "cst",
-				condt: null,
-			},
-			slrprmt: {
-				displayName: "The Seller's Permit",
-				id: 2,
-				emoji: this.emoji.slrprmt,
-				description: "Allows you to sell in-game items via `~sell`",
-				price: 50_000,
-				method: "cst",
-				condt: null,
-			},
-			chillpills: {
-				displayName: "1x Chill Pill",
-				id: 101,
-				emoji: this.emoji.chill,
-				description: "clears **all** exisiting cooldowns, 6 hour cooldown for consuimg this item; consume with `~dose chill`",
-				price: 10,
-				// method: incremental of (chillpills)
-				// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
-				method: "drgs.0",
-				condt: null,
-			},
-			adren: {
-				displayName: "1x Adrenaline Syringe",
-				id: 101,
-				emoji: this.emoji.chill,
-				description: "clears **all** exisiting cooldowns, 6 hour cooldown for consuimg this item; consume with `~dose chill`",
-				price: 10,
-				// method: incremental of (chillpills)
-				// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
-				method: "drgs.0",
-				condt: null,
-			},
-			bvault: {
-				displayName: "Bank Vault",
-				id: 201,
-				emoji: this.emoji.bvault,
-				description: "Allows you to store money where it's safely hidden away from robbers; `~vault` to view your vault",
-				price: 25_000,
-				condt: null,
-			},
-			rc: {
-				displayName: "Random Colour Preference",
-				id: 202,
-				emoji: this.emoji.rc,
-				description: "Set a random colour preference whilst using commands",
-				price: 2_500,
-				execute: (async (id, client) => {
-					await client.db.getUserData(id);
-					// I'm aware this can be written as one line, but I've decided to write it like this so it's easier to read.
-					await client.db.USERS.udpate({
-						clr: "RANDOM;0",
-					}, {
-						where: {
-							id,
-						},
-					});
-				}),
-				condt: "message.author.color == \"RANDOM;0\"",
-			},
-		};
-	},
-	/**
-	 * Different dosable items, along with a function that contains code and subtracts 1 from the current number of items and checks to see if they have enough to dose on that.
-	 * @see `dose` command
-	 * @type {Array<Array<string, function>>}
-	 */
-	get doses() {
-		return [
-			[ `ch;chillpill;1;chillc;6h;${this.emoji.chill}`, (async (message) => {
-				const x = await message.client.db.get(`chillpills${message.author.id}`) || 0;
-				if (Number(x) == 0) {
-					return message.reply(`${this.emoji.chill} You don"t have any chill pills!`);
-				}
-				await message.client.db.set(`chillpills${message.author.id}`, Number(x - 1));
-				this.cds.forEach(async (c) => {
-					c = c.split(";")[0];
-					await message.client.db.delete(c + message.author.id);
-				});
-				message.reply({
-					embeds: [
-						new MessageEmbed()
-							.setColor(message.author.color)
-							.setDescription(`${message.author.tag} has consumed a ${this.emoji.chill} and cleared all of their cooldowns!`),
-					],
-				});
-			}),
-			], [
-				"adren;adrenaline;45m;adrenc;3h;💉", (async (message) => {
-					let adren = await message.client.db.get("adren" + message.author.id);
-					if (!adren || (isNaN(adren))) adren = 0; else adren = Number(adren);
-					if (adren - 1 < 0) return message.reply("You don't have any adrenaline left!");
-					adren -= 1;
-					await message.client.db.set("adren" + message.author.id, adren);
-					message.reply({
-						embeds: [
-							new MessageEmbed()
-								.setColor(message.author.color)
-								.setDescription(`${message.author.tag} has injected themselves with 💉!`),
-						],
-					});
-				}),
-			],
-		];
-	},
-	/**
 	 * The different pet aliases,  imported from `Utils/petaliases.js`.
 	 * Attached to client.
 	 * @const {object}
@@ -676,13 +561,180 @@ const Constants = {
 	 */
 	cstMessages: {
 		administrator132465798: "You must be a bot administrator in order to use this command!",
-		bvault: "You must own a bank vault in order to use this command!",
+		bvault: "You must own a bank vault in order to use this command! Take a look in `<Prefix>shop` to view more information",
 		dragon: "You must own a dragon in order to use this command! You may purchase one by using `<Prefix>tame`",
+		fishrod: "You must own a fishing rod in order to use this command! Take a look in `<Prefix>shop` and purchase one",
 		judge: "You must be a judge in order to use this command!",
 		moderator: "You must be a moderator in order to use this command!",
 		qts: "You really thought that you were cool enough to use this command?",
+		slrprmt: "You must be a own a seller's permit in order to sell items! Take a look in `<Prefix>shop` for more information",
 		srmod: "You must be a senior moderator in order to use this command!",
 		supreme: "You must have the SUPREME permission in order to use this command!",
+	},
+	/**
+	 * An array consisting of purchaseable items.
+	 * @type {Array<record<{ categoryName: string, items: Array<record<{ ID: number, DISPLAY_NAME: string, DESCRIPTION: string, CST: string | null, EMOJI: string, SELLABLE: boolean, PRICE: number, CD: number | null, POTENCY: number | null }>> }>>}
+	 */
+	get shopItems() {
+		return [
+			{
+				categoryName: "General",
+				// was previously named "shopItems" but later changed to just "items"
+				// to prevent confusion
+				items: [
+					{
+						ID: 1,
+						DISPLAY_NAME: "Fishing Rod",
+						DESCRIPTION: "Allows you to go fishing via `<Prefix>fish`",
+						CST: "fishrod",
+						EMOJI: this.emoji.fishing_rod,
+						SELLABLE: true,
+						PRICE: 25,
+						// no cooldown here as there is a command cooldown on the fish command globally
+						CD: null,
+					},
+					{
+						ID: 2,
+						DISPLAY_NAME: "The Seller's Permit",
+						DESCRIPTION: "Allows you to sell certain in-game items via `<Prefix>sell` for a neat profit",
+						CST: "slrprmt",
+						EMOJI: this.emoji.slrprmt,
+						SELLABLE: false,
+						PRICE: 25,
+						CD: null,
+					},
+				],
+			},
+			{
+				categoryName: "Consumables/Drugs",
+				items: [
+					{
+						ID: 101,
+						DISPLAY_NAME: "Chill Pill",
+						DESCRIPTION: "removes all cooldowns, 6 hour cooldown for consuimg this item; consume with `<Prefix>dose chill`",
+						CST: null,
+						INDX: 0,
+						EMOJI: this.emoji.chill,
+						SELLABLE: true,
+						PRICE: 25,
+						// 6h
+						CD: 21600000,
+						CDK: "chillc",
+						async executeUponDose(user, data, message) {
+							const obj = {};
+							// here, "this.cds" could not be used, as the this scope changed.
+							// instead, we use an alternate route:
+							message.client.const.cds.forEach(async (c) => {
+								c = c.split(";")[0];
+								obj[c] = null;
+							});
+							await message.client.db.USERS.update(obj, { where: { id: user.id } });
+						},
+					},
+					{
+						ID: 102,
+						DISPLAY_NAME: "Adrenaline",
+						DESCRIPTION: "Inject yourself with this energizing hormone! Enter either a `<Prefix>fight` or `<Prefix>flight` state!",
+						CST: null,
+						INDX: 1,
+						EMOJI: this.emoji.adrenaline,
+						SELLABLE: true,
+						PRICE: 25,
+						// 90m, 1.5hr
+						CD: 5400000,
+						// how long the affects of this drug will last
+						// 30m, .5 hr
+						POTENCY: 1800000,
+						CDK: "adrnc",
+					},
+					{
+						ID: 103,
+						DISPLAY_NAME: "Fish",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
+						CST: null,
+						INDX: 2,
+						EMOJI: this.emoji.fish,
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
+					},
+					{
+						ID: 104,
+						DISPLAY_NAME: "Tropical Fish",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
+						CST: null,
+						INDX: 3,
+						EMOJI: this.emoji.trop,
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
+					},
+					{
+						ID: 105,
+						DISPLAY_NAME: "Shark",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
+						CST: null,
+						INDX: 4,
+						EMOJI: this.emoji.shark,
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
+					},
+					{
+						ID: 106,
+						DISPLAY_NAME: "Blowfish",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
+						CST: null,
+						INDX: 5,
+						EMOJI: this.emoji.blowfish,
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
+					},
+					{
+						ID: 107,
+						DISPLAY_NAME: "Dolphin",
+						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
+						CST: null,
+						INDX: 6,
+						EMOJI: ":dolphin:",
+						SELLABLE: true,
+						PRICE: 25,
+						CD: null,
+						POTENCY: null,
+					},
+				],
+			},
+			{
+				categoryName: "Utils",
+				items: [
+					{
+						ID: 201,
+						DISPLAY_NAME: "Bank Vault",
+						DESCRIPTION: "Allows you to store money where it's safely hidden away from attackers; `<Prefix>vault` to view your vault",
+						CST: "bvault",
+						EMOJI: this.emoji.bvault,
+						SELLABLE: true,
+						PRICE: 10_000,
+						CD: null,
+					},
+					{
+						ID: 202,
+						DISPLAY_NAME: "Random Colour Preference",
+						DESCRIPTION: "Set a random colour preference whilst using commands (different each time)",
+						CST: "rc",
+						EMOJI: this.emoji.rc,
+						SELLABLE: true,
+						PRICE: 500,
+						CD: null,
+					},
+				],
+			},
+		];
 	},
 };
 

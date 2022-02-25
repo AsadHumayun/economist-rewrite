@@ -7,7 +7,7 @@ export default {
 		client.channels.cache.get(client.const.channels.ready).send({ content: `[${new Date().toISOString()}]: instance created with ${client.guilds.cache.size} (U:${client.users.cache.size}) guilds cached` });
 		// cache support server guild members.
 		try {
-			client.guilds.cache.get(client.const.supportServer).members.fetch();
+			await client.guilds.cache.get(client.const.supportServer).members.fetch();
 			client.emit("debug", `[CLIENT => Cache] [GuildMember] ${client.guilds.cache.get(client.const.supportServer).members.cache.size}/${client.guilds.cache.get(client.const.supportServer).memberCount} members of ${client.const.supportServer} cached`);
 		}
 		catch (e) {

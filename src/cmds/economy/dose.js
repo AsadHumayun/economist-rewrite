@@ -1,6 +1,5 @@
 "use strict";
 import { MessageEmbed } from "discord.js";
-import ms from "ms";
 
 export default {
 	name: "dose",
@@ -8,28 +7,43 @@ export default {
 	description: "dose on something",
 	usage: "<drug: string>",
 	async run(client, message, args) {
-		const dose = (args[0] || "").toLowerCase();
-		const res = client.utils.doses.findIndex((d) => dose.startsWith(d[0].split(";")[0]));
-		if (res < 0) return message.reply(`The different types of consumables are: ${client.utils.list(client.utils.doses.map((d) => d[0].split(";")[1]))}`);
-		const active = message.author.data.get(`dose${res}`) || 0;
-		if ((message.createdTimestamp / 60_000) < active) return message.reply(`Your ${client.utils.doses[res][0].split(";")[5]} is active for another ${client.utils.cooldown(message.createdTimestamp, active * 60_000)} after your last dose.`);
-		const lastUsed = message.author.data.get(client.utils.doses[res][0].split(";")[3]);
+		const names = (client.const.shopItems.map(({ items }) => items.map(({ DISPLAY_NAME }) => DISPLAY_NAME).join(";")).join(";")).split(";");
+		console.log(names, client.utils.rossCaps(args.join(" ")));
+		console.log(names.find(e => e.startsWith(client.utils.rossCaps(args.join(" ")))));
+		if (!names.find(e => e.startsWith(client.utils.rossCaps(args.join(" "))))) return message.reply("You must provide a valid ID of what you would like to purchase (the ID of an item is the number in brackets next to that item in the shop) in order for this command to work!");
+		const item = client.const.shopItems.map(({ items }) => items.find(({ DISPLAY_NAME }) => DISPLAY_NAME.startsWith(client.utils.rossCaps(args.join(" "))))).filter(f => typeof f != "undefined")[0];
+		if (item.CST || !item.CDK) return message.reply("You cannot consume that item");
+		const drgs = message.author.data.get("drgs")?.split(";") || [];
+		if (!drgs[item.INDX] || drgs[item.INDX] - 1 < 0) return message.reply(`You don't have ${item.EMOJI} 1`);
+		const dose = message.author.data.get(`dose${item.INDX}`);
+		if (Math.floor(message.createdTimestamp / 60_000) < dose) return message.reply(`Your ${item.EMOJI} is active for another ${client.utils.cooldown(message.createdTimestamp, dose * 60_000)}!`);
+		const lastUsed = message.author.data.get(item.CDK);
 		if (lastUsed) {
 			const time = client.utils.cooldown(message.createdTimestamp, lastUsed * 60_000);
 			if (time) {
-				return message.reply(`You must wait ${time} before consuming another ${client.utils.doses[res][0].split(";")[5]}`);
+				return message.reply(`You must wait ${time} before consuming another ${item.EMOJI}`);
 			}
 		}
-		const scs = await client.utils.doses[res][1](message, MessageEmbed);
-		if (!scs) {
+		message.channel.send({
+			embeds: [
+				new MessageEmbed()
+					.setColor(message.author.color)
+					.setDescription(`${message.author.tag} has dosed on ${item.EMOJI}!`),
+			],
+		});
+		try {
+			drgs[item.INDX] -= 1;
 			await client.db.USERS.update({
-				[`dose${res}`]: client.utils.parseCd(message.createdTimestamp, ms(client.utils.doses[res][0].split(";")[2])),
-				[client.utils.doses[res][0].split(";")[3]]: client.utils.parseCd(message.createdTimestamp, ms(client.utils.doses[res][0].split(";")[4])),
+				drgs: client.utils.removeZeros(drgs).join(";"),
 			}, {
 				where: {
 					id: message.author.id,
 				},
 			});
+			item.executeUponDose(message.author, message.author.data, message);
+		}
+		catch (e) {
+			return;
 		}
 	},
 };

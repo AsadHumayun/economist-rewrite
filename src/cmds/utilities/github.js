@@ -11,13 +11,13 @@ export default {
 	usage: "<username: string>",
 	async run(client, message, args) {
 		if (!args.length) return message.reply("You must specify a query in order for this command to work!");
-		args[0] = encodeURIComponent(args[0]);
-		let res = await fetch(`https://api.github.com/users/${args[0]}`);
-		if (!res) return message.reply("Your search has yielded no results!");
-		res = await res.json();
+		let res = await fetch(`https://api.github.com/users/${encodeURIComponent(args[0])}`);
+		if (res) res = await res.json();
+		if (!res || (res.message === "Not Found")) return message.reply({ content: `Your search term, "${args[0]}", has yielded no results`, allowedMentions: { parse: [] } });
 		if (message.content.toLowerCase().endsWith("-r")) {
 			return message.reply("```js\n" + inspect(res, { depth: 0 }) + "\n```");
 		}
+
 		const emb = new MessageEmbed()
 			.setColor(message.author.color)
 			.setAuthor({ name: "GitHub User Search", iconURL: "https://cdn.asad.codes/static/github.png", url: `https://github.com/${args[0]}` })

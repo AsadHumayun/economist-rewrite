@@ -401,7 +401,7 @@ class Funcs {
 	notify(e, msgCont, client) {
 		if (client) process.logger.warn("DEPRECATION", "Client does not need to be passed into the client.utils.notify method.");
 		const rn = new Date().toISOString();
-		process.logger.error("CommandError", e);
+		process.logger.error("CommandError", e.stack);
 		if (!msgCont) {
 			this.client.channels.cache.get(this.client.const.channels.error).send({
 				content: `[${rn}]: <unhandledRejection>:\n\`${e}\``,
@@ -420,6 +420,20 @@ class Funcs {
 			})
 				.catch(() => {return;});
 		}
+	}
+	/**
+	 * Removes zeros from an array.
+	 * @param {number[]} array Removes all zeros from the array.
+	 * @returns {number[]}
+	 */
+	removeZeros(array) {
+		for (const elmt in array) {
+			if (array[elmt] == 0) array[elmt] = "";
+		}
+		return array;
+	}
+	rossCaps(str) {
+		return str.split(" ").map(this.capital).join(" ");
 	}
 }
 

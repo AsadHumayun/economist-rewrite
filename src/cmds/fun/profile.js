@@ -23,7 +23,7 @@ export default {
 			newStr = newStr.split(/ +/).map(x => `${x[0].toUpperCase()}${x.slice(1)}`).join(" ");
 			return newStr.replace("Vad", "VAD").replace("Tts", "TTS");
 		}
-		const flags = Object.keys(UserFlags.FLAGS).filter((flag) => usr.flags.has(flag)).map(format).join(", ");
+		const flags = Object.keys(UserFlags.FLAGS).filter((flag) => usr.flags.has(flag)).map(format).join(", ") || "None";
 		const emb = new MessageEmbed()
 			.setColor(message.author.color)
 			.setTitle(`${usr.tag}'s Profile`)

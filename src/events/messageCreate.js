@@ -166,24 +166,29 @@ export default {
 				}
 			}
 		}
-
-		message.author.color = data.get("clr") || client.const.clr;
-		const m = message.author.color.split(";");
-		if (isNaN(m[m.length - 1])) m[m.length - 1] = "0";
-		if (Number(m[m.length - 1]) + 1 >= (m.length - 1)) {
-			m[m.length - 1] = "0";
+		if (cst.includes("rc")) {
+			message.author.color = "RANDOM";
 		}
 		else {
-			m[m.length - 1] = Number(m[m.length - 1]) + 1;
+			message.author.color = data.get("clr") || client.const.clr;
+			const m = message.author.color.split(";");
+			if (isNaN(m[m.length - 1])) m[m.length - 1] = "0";
+			if (Number(m[m.length - 1]) + 1 >= (m.length - 1)) {
+				m[m.length - 1] = "0";
+			}
+			else {
+				m[m.length - 1] = Number(m[m.length - 1]) + 1;
+			}
+			await client.db.USERS.update({
+				clr: m.join(";"),
+			}, {
+				where: {
+					id: message.author.id,
+				},
+			});
+			message.author.color = message.author.color.split(";")[Number(m[m.length - 1])];
 		}
-		await client.db.USERS.update({
-			clr: m.join(";"),
-		}, {
-			where: {
-				id: message.author.id,
-			},
-		});
-		message.author.color = message.author.color.split(";")[Number(m[m.length - 1])];
+
 		const bcmd = data.get("bcmd") ? data.get("bcmd").split(";") : [];
 		if (bcmd.includes(command.name) && (!cst.includes("administrator132465798") || client.const.owners.includes(message.author.id))) {
 			// this allows for blacklisting of specific commands. Practically speaking, it is very useful as it allows me
@@ -229,7 +234,7 @@ export default {
 		}
 
 		function err(e) {
-			process.logger.error("CommandError", e);
+			process.logger.error("CommandError", e.stack);
 			if (!cst.includes("debugger")) {
 				return message.reply(`Sorry, but an error occurred :/\n\`${e}\``);
 			}
