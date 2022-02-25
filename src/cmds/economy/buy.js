@@ -8,7 +8,7 @@ export default {
 	usage: "<item index: number>",
 	async run(client, message, args) {
 		const ids = (client.const.shopItems.map(({ items }) => items.map(({ ID }) => ID).join(";")).join(";")).split(";");
-		if (!ids.includes(args[0])) return message.reply("You must provide a valid ID of what you would like to purchase (the ID of an item is the number in brackets next to that item) in order for this command to work!");
+		if (!ids.includes(args[0])) return message.reply("You must provide a valid ID of what you would like to purchase (the ID of an item is the number in brackets next to that item in the shop) in order for this command to work!");
 		const item = client.const.shopItems.map(({ items }) => items.find(({ ID }) => ID == args[0])).filter(f => typeof f != "undefined")[0];
 		const bal = Number(message.author.data.get("bal") || 0);
 		// now that we've isolated the item the user wants to purchase, we can add it to them depeneding on its type
