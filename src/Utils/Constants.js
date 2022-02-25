@@ -1,6 +1,5 @@
 "use strict";
 
-import { MessageEmbed } from "discord.js";
 import { readdirSync } from "fs";
 
 import petaliases from "./petaliases.js";
@@ -538,125 +537,6 @@ const Constants = {
 		];
 	},
 	/**
-	 * The shop items
-	 * @see `buy`
-	 * @const {object}
-	 */
-	get shop() {
-		return {
-			fishrod: {
-				displayName: "Fishing rod",
-				id: 1,
-				emoji: this.emoji.fishing_rod,
-				description: "Allows you to go fishing via `~fish`",
-				price: 250,
-				method: "cst",
-				condt: null,
-			},
-			slrprmt: {
-				displayName: "The Seller's Permit",
-				id: 2,
-				emoji: this.emoji.slrprmt,
-				description: "Allows you to sell in-game items via `~sell`",
-				price: 50_000,
-				method: "cst",
-				condt: null,
-			},
-			chillpills: {
-				displayName: "1x Chill Pill",
-				id: 101,
-				emoji: this.emoji.chill,
-				description: "clears **all** exisiting cooldowns, 6 hour cooldown for consuimg this item; consume with `~dose chill`",
-				price: 10,
-				// method: incremental of (chillpills)
-				// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
-				method: "drgs.0",
-				condt: null,
-			},
-			adren: {
-				displayName: "1x Adrenaline Syringe",
-				id: 101,
-				emoji: this.emoji.chill,
-				description: "clears **all** exisiting cooldowns, 6 hour cooldown for consuimg this item; consume with `~dose chill`",
-				price: 10,
-				// method: incremental of (chillpills)
-				// todo: dump [chillpills, adren] into a `drugs` or `drgs` key.
-				method: "drgs.0",
-				condt: null,
-			},
-			bvault: {
-				displayName: "Bank Vault",
-				id: 201,
-				emoji: this.emoji.bvault,
-				description: "Allows you to store money where it's safely hidden away from robbers; `~vault` to view your vault",
-				price: 25_000,
-				condt: null,
-			},
-			rc: {
-				displayName: "Random Colour Preference",
-				id: 202,
-				emoji: this.emoji.rc,
-				description: "Set a random colour preference whilst using commands",
-				price: 2_500,
-				execute: (async (id, client) => {
-					await client.db.getUserData(id);
-					// I'm aware this can be written as one line, but I've decided to write it like this so it's easier to read.
-					await client.db.USERS.udpate({
-						clr: "RANDOM;0",
-					}, {
-						where: {
-							id,
-						},
-					});
-				}),
-				condt: "message.author.color == \"RANDOM;0\"",
-			},
-		};
-	},
-	/**
-	 * Different dosable items, along with a function that contains code and subtracts 1 from the current number of items and checks to see if they have enough to dose on that.
-	 * @see `dose` command
-	 * @type {Array<Array<string | function>>}
-	 */
-	get doses() {
-		return [
-			[ `ch;chillpill;1;chillc;6h;${this.emoji.chill}`, (async (message) => {
-				const x = await message.client.db.get(`chillpills${message.author.id}`) || 0;
-				if (Number(x) == 0) {
-					return message.reply(`${this.emoji.chill} You don"t have any chill pills!`);
-				}
-				await message.client.db.set(`chillpills${message.author.id}`, Number(x - 1));
-				this.cds.forEach(async (c) => {
-					c = c.split(";")[0];
-					await message.client.db.delete(c + message.author.id);
-				});
-				message.reply({
-					embeds: [
-						new MessageEmbed()
-							.setColor(message.author.color)
-							.setDescription(`${message.author.tag} has consumed a ${this.emoji.chill} and cleared all of their cooldowns!`),
-					],
-				});
-			}),
-			], [
-				"adren;adrenaline;45m;adrenc;3h;💉", (async (message) => {
-					let adren = await message.client.db.get("adren" + message.author.id);
-					if (!adren || (isNaN(adren))) adren = 0; else adren = Number(adren);
-					if (adren - 1 < 0) return message.reply("You don't have any adrenaline left!");
-					adren -= 1;
-					await message.client.db.set("adren" + message.author.id, adren);
-					message.reply({
-						embeds: [
-							new MessageEmbed()
-								.setColor(message.author.color)
-								.setDescription(`${message.author.tag} has injected themselves with 💉!`),
-						],
-					});
-				}),
-			],
-		];
-	},
-	/**
 	 * The different pet aliases,  imported from `Utils/petaliases.js`.
 	 * Attached to client.
 	 * @const {object}
@@ -739,6 +619,17 @@ const Constants = {
 						PRICE: 25,
 						// 6h
 						CD: 21600000,
+						CDK: "chillc",
+						async executeUponDose(user, data, message) {
+							const obj = {};
+							// here, "this.cds" could not be used, as the this scope changed.
+							// instead, we use an alternate route:
+							message.client.const.cds.forEach(async (c) => {
+								c = c.split(";")[0];
+								obj[c] = null;
+							});
+							await message.client.db.USERS.update(obj, { where: { id: user.id } });
+						},
 					},
 					{
 						ID: 102,
@@ -754,6 +645,7 @@ const Constants = {
 						// how long the affects of this drug will last
 						// 30m, .5 hr
 						POTENCY: 1800000,
+						CDK: "adrnc",
 					},
 					{
 						ID: 103,
@@ -843,9 +735,6 @@ const Constants = {
 				],
 			},
 		];
-	},
-	debug() {
-		return this.emoji;
 	},
 };
 
