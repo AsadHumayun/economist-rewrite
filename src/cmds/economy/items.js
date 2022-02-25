@@ -6,7 +6,7 @@ export default {
 	aliases: ["i", "inventory", "stuff", "items", "collectables"],
 	description: "See what items another user has",
 	async run(client, message, args) {
-		let user = await client.utils.fetchUser(args[0] || message.author.id).catch(() => {});
+		let user = await client.utils.fetchUser(args[0] || message.author.id).catch(() => {return;});
 		let data;
 		if (!user) {
 			user = message.author;
@@ -15,7 +15,7 @@ export default {
 		else {data = await client.db.getUserData(user.id);}
 		const drgs = await data.get("drgs")?.split(";") || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		const itms = client.const.shopItems.map(({ items }) => items.filter(f => typeof f.INDX !== "undefined")).filter(a => a.length >= 1);
-		console.log(itms)
+
 		const embed = new MessageEmbed()
 			.setColor(message.author.color)
 			.setAuthor({ name: `Inventory - ${message.author.tag}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) });
