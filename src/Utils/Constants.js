@@ -692,10 +692,9 @@ const Constants = {
 	},
 	/**
 	 * An array consisting of purchaseable items.
-	 * @type {Array<record<{ categoryName: string, items: Array<record<{ ID: number, DISPLAY_NAME: string, DESCRIPTION: string, CST: string, EMOJI: string, SELLABLE: boolean, PRICE: number, CD: ?number, POTENCY: ?number }>> }>>}
+	 * @type {Array<record<{ categoryName: string, items: Array<record<{ ID: number, DISPLAY_NAME: string, DESCRIPTION: string, CST: string | null, EMOJI: string, SELLABLE: boolean, PRICE: number, CD: number | null, POTENCY: number | null }>> }>>}
 	 */
 	get shopItems() {
-		const currThis = this;
 		return [
 			{
 				categoryName: "General",
@@ -733,6 +732,7 @@ const Constants = {
 						DISPLAY_NAME: "Chill Pill",
 						DESCRIPTION: "removes all cooldowns, 6 hour cooldown for consuimg this item; consume with `<Prefix>dose chill`",
 						CST: null,
+						INDX: 0,
 						EMOJI: this.emoji.chill,
 						SELLABLE: true,
 						PRICE: 25,
@@ -744,6 +744,7 @@ const Constants = {
 						DISPLAY_NAME: "Adrenaline",
 						DESCRIPTION: "Inject yourself with this energizing hormone! Enter either a `<Prefix>fight` or `<Prefix>flight` state!",
 						CST: null,
+						INDX: 1,
 						EMOJI: this.emoji.adrenaline,
 						SELLABLE: true,
 						PRICE: 25,
@@ -758,6 +759,7 @@ const Constants = {
 						DISPLAY_NAME: "Fish",
 						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
+						INDX: 2,
 						EMOJI: this.emoji.fish,
 						SELLABLE: true,
 						PRICE: 25,
@@ -769,6 +771,7 @@ const Constants = {
 						DISPLAY_NAME: "Tropical Fish",
 						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
+						INDX: 3,
 						EMOJI: this.emoji.trop,
 						SELLABLE: true,
 						PRICE: 25,
@@ -780,6 +783,7 @@ const Constants = {
 						DISPLAY_NAME: "Shark",
 						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
+						INDX: 4,
 						EMOJI: this.emoji.shark,
 						SELLABLE: true,
 						PRICE: 25,
@@ -791,6 +795,7 @@ const Constants = {
 						DISPLAY_NAME: "Blowfish",
 						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
+						INDX: 5,
 						EMOJI: this.emoji.blowfish,
 						SELLABLE: true,
 						PRICE: 25,
@@ -802,6 +807,7 @@ const Constants = {
 						DISPLAY_NAME: "Dolphin",
 						DESCRIPTION: "Obtain via `<Prefix>fish`, can be sold or collected for bragging rights",
 						CST: null,
+						INDX: 6,
 						EMOJI: ":dolphin:",
 						SELLABLE: true,
 						PRICE: 25,
