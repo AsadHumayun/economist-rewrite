@@ -20,8 +20,8 @@ export default {
 				const days = Math.trunc(message.createdTimestamp / 60_000) - streak[1];
 				message.reply({ content: `Oh no! You forgot to claim your daily reward ${days} days ago and lost your streak! :weary:`, allowedMentions: { repliedUser: true } });
 				amountAdded = client.const.dailyReward;
+				await client.utils.updateBalance(message.author, amountAdded, message, { a: "daily-reward-streak-0" });
 				await client.db.USERS.update({
-					bal: message.author.data.get("bal") + amountAdded,
 					dlc: client.utils.parseCd(message.createdTimestamp, ms("1d")),
 					dlstr: `0;${Math.trunc(message.createdTimestamp / 60_000) + (1440 * 2)}`,
 				}, {
@@ -34,10 +34,10 @@ export default {
 			else {
 				streak = streak ? streak.split(";").map(Number) : [0, 0];
 				amountAdded = client.const.dailyReward * (streak[0] == 0 || isNaN(streak[0]) ? 1 : streak[0]);
+				await client.utils.updateBalance(message.author, amountAdded, message, { a: `daily-reward-streak-${streak[0]}` });
 				// increment streak
 				streak[0]++;
 				await client.db.USERS.update({
-					bal: message.author.data.get("bal") + amountAdded,
 					dlc: client.utils.parseCd(message.createdTimestamp, ms("1d")),
 					dlstr: `${streak[0]};${Math.trunc(message.createdTimestamp / 60_000) + (1440 * 2)}`,
 				}, {

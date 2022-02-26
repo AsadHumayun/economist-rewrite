@@ -13,13 +13,12 @@ export default {
 		if (!ids.includes(args[0])) return message.reply("You must provide a valid ID of what you would like to sell (the ID of an item is the number in brackets next to that item in the shop) in order for this command to work!");
 		const item = client.const.shopItems.map(({ items }) => items.find(({ ID }) => ID == args[0])).filter(f => typeof f != "undefined")[0];
 		if (!item.SELLABLE) return message.reply("You may not sell that item");
-		const bal = Number(message.author.data.get("bal") || 0);
 		if (item.CST) {
 			if (!cst.includes(item.CST)) return message.reply(`You do not own a ${item.EMOJI} ${item.DISPLAY_NAME}... How do you expect to sell it?`);
 			cst = cst.filter(f => f !== item.CST);
+			await client.utils.updateBalance(message.author, item.DISPLAY_NAME == client.const.shopItems[2].items[1].DISPLAY_NAME ? item.PRICE : (item.PRICE / 2), message, { a: `sell-itm-${item.DISPLAY_NAME.toLowerCase()}` });
 			await client.db.USERS.update({
 				cst: cst.join(";"),
-				bal: item.DISPLAY_NAME == client.const.shopItems[2].items[1].DISPLAY_NAME ? bal + item.PRICE : bal + (item.PRICE / 2),
 			}, {
 				where: {
 					id: message.author.id,
@@ -38,9 +37,9 @@ export default {
 			const drgs = message.author.data.get("drgs")?.split(";").map(Number) || [];
 			if (drgs[item.INDX] - amt < 0 || !drgs[item.INDX]) return message.reply(`You don't have ${item.EMOJI} ${client.utils.comma(amt)}`);
 			drgs[item.INDX] -= amt;
+			await client.utils.updateBalance(message.author, Math.round((item.PRICE / 2) * amt), message, { a: `sell-itm-${item.DISPLAY_NAME.toLowerCase()}-${amt}` });
 			await client.db.USERS.update({
 				drgs: client.utils.removeZeros(drgs).join(";"),
-				bal: bal + Math.round((item.PRICE / 2) * amt),
 			}, {
 				where: {
 					id: message.author.id,

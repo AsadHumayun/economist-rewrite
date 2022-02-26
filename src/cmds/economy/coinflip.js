@@ -16,8 +16,8 @@ export default {
 		const bal = message.author.data.get("bal");
 		const bet = isNaN(args[1]) ? 1 : Number(args[1]);
 		if (bal - bet < 0 || (bet < 0)) return message.reply("That number exceeds your current balance.");
+		await client.utils.updateBalance(message.author, -bal, message, { r: "coinflip-bet-reset-bal" });
 		await client.db.USERS.update({
-			bal: 0,
 			cfc: client.utils.parseCd(message.createdTimestamp, ms("2m"), true),
 		}, {
 			where: {
@@ -26,32 +26,20 @@ export default {
 		});
 		let e = new MessageEmbed()
 			.setColor(message.author.color)
-			.setTitle(`Coinflip - ${message.author.tag} (💵 ${client.utils.comma(client.utils.noExponent(bet))})`)
+			.setTitle(`Coinflip - ${message.author.tag} (💵 ${client.utils.comma(bet)})`)
 			.setDescription("**Flipping a coin...**");
 		const msg = await message.reply({ embeds: [e] });
 		const cst = message.author.data.get("cst").split(";");
 		await delay(2000);
 		if ((res.startsWith(args[0]) || (cst.includes("cfw"))) && (!cst.includes("cfl"))) {
 			const sads = [":(", ":/", ":c", ";(", ">:(", "(´；ω；`)", "(＃ﾟДﾟ)"];
-			e = e.setDescription(`It landed ${res} up ${sads[Math.floor(Math.random() * sads.length)]}... here's your :dollar: ${client.utils.comma(client.utils.noExponent(bet))} bet back, along with an extra :dollar: ${client.utils.comma(client.utils.noExponent(bet))} :((`);
+			e = e.setDescription(`It landed ${res} up ${sads[Math.floor(Math.random() * sads.length)]}... here's your :dollar: ${client.utils.comma(bet)} bet back, along with an extra :dollar: ${client.utils.comma(client.utils.noExponent(bet))} :((`);
 			msg.edit({ embeds: [e] });
-			await client.db.USERS.update({
-				bal: bal + (bet * 2),
-			}, {
-				where: {
-					id: message.author.id,
-				},
-			});
+			await client.utils.updateBalance(message.author, bal + (bet * 2), message, { a: `coinflip-${res},${args[0]}` });
 		}
 		else {
-			await client.db.USERS.update({
-				bal: bal - bet,
-			}, {
-				where: {
-					id: message.author.id,
-				},
-			});
-			e = e.setDescription(`It landed ${res} up! Thanks for the free :dollar: ${client.utils.comma(client.utils.noExponent(bet))}, see you next time!`).setColor("#da0000");
+			await client.utils.updateBalance(message.author, bal - bet, message, { a: `coinflip ${res},${args[0]}` });
+			e = e.setDescription(`It landed ${res} up! Thanks for the free :dollar: ${client.utils.comma(bet)}, see you next time!`).setColor("#da0000");
 			msg.edit({ embeds: [e] });
 		}
 	},

@@ -32,8 +32,8 @@ export default {
 			if (cbal < 0) levelups--;
 
 			v[0] += levelups;
+			await client.utils.updateBalance(message.author, (bal - bal) + cbal0, message, { r: `vupgrade-t=${v[0]}` });
 			await client.db.USERS.update({
-				bal: cbal0,
 				v: v.join(";"),
 			}, {
 				where: {
@@ -51,8 +51,8 @@ export default {
 		const c = v[0] * 500;
 		if (bal - c < 0) return message.reply("You must have at least :dollar: " + client.utils.comma(c) + " in order to upgrade your Bank Vault.");
 		v[0]++;
+		await client.utils.updateBalance(message.author, -c, message, { r: `vupgrade-t=${v[0]}` });
 		await client.db.USERS.update({
-			bal: bal - c,
 			v: v.join(";"),
 		}, {
 			where: {

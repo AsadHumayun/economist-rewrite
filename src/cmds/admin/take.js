@@ -16,21 +16,12 @@ export default {
 		if (!usr) return message.reply("Try running the command again, this time actually ping a user llolololololl");
 		const data = await client.db.getUserData(usr.id);
 		if (!isNaN(args[1])) {
-			let bal = data.get("bal") || 0;
-			const amt = Number(args[1]);
-			bal -= amt;
-			await client.db.USERS.update({
-				bal,
-			}, {
-				where: {
-					id: usr.id,
-				},
-			});
+			client.utils.updateBalance(usr, 0 - Number(args[1]), message);
 			return message.reply({
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`:dollar: ${client.utils.comma(amt)} have been removed from ${usr.tag}'s account`),
+						.setDescription(`:dollar: ${client.utils.comma(Number(args[1]))} have been removed from ${usr.tag}'s account`),
 				],
 			});
 		}

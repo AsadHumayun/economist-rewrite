@@ -432,8 +432,38 @@ class Funcs {
 		}
 		return array;
 	}
+	/**
+	 * Applies the Ross Capitalisation technique to the specified string
+	 * @example "hi how are you" -> "Hi How Are You"
+	 * @param {string} str String to be capitalised
+	 * @returns {string}
+	 */
 	rossCaps(str) {
 		return str.split(" ").map(this.capital).join(" ");
+	}
+	/**
+	 * The is used for updating a user's balance.
+	 * This method should be used instead of raw SQL queries as this method will
+	 * log successful transactions.
+	 * @param {Discord.UserResolvable} user A Discord user resolvable
+	 * @param {number} amount Amount to be added to the user's balance. May be negative.
+	 * @param {Discord.Message} message The message received by the `messageCreate` event
+	 * @param {object} overrides Optional overrides
+	 * @param {string} [overrides.a] Optional override for text next to "A<"
+	 * @param {string} [overrides.r] Optional overrides for text next to "R<"
+	 */
+	async updateBalance(user, amount, message, overrides = {}) {
+		const data = await this.client.db.getUserData(user.id);
+		await this.client.db.USERS.update({
+			bal: Number(data.get("bal")) + amount,
+		}, {
+			where: {
+				id: user.id,
+			},
+		});
+		this.client.channels.cache.get(this.client.const.channels.tt).send({
+			content: `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}$${Math.abs(amount)}`,
+		});
 	}
 }
 

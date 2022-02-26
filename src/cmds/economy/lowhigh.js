@@ -65,13 +65,7 @@ export default {
 					});
 				}
 				const add = client.utils.getRandomInt(750, 1000);
-				await client.db.USERS.update({
-					bal: message.author.data.get("bal") + add,
-				}, {
-					where: {
-						id: message.author.id,
-					},
-				});
+				await client.utils.updateBalance(message.author, add, message, { a: `hl-win-${ops[interaction.customId]}` });
 				msg.edit({
 					embeds: [
 						new MessageEmbed()

@@ -18,8 +18,8 @@ export default {
 		if (curr + dep > capacity && (v[0] < 9999999999)) return message.reply(`Your vault does not have enough space to hold that much money; upgrade your vault with \`${message.guild ? message.guild.prefix : client.const.prefix}vupgrade\` in order to increase your Bank Vault's capacity!`);
 		curr += dep;
 		v[1] = curr;
+		await client.utils.updateBalance(message.author, -dep, message, { r: "vault-dep" });
 		await client.db.USERS.update({
-			bal: bal - dep,
 			v: v.join(";"),
 		}, {
 			where: {

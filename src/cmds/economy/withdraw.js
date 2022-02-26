@@ -8,7 +8,6 @@ export default {
 	cst: "bvault",
 	usage: "<amount: number>",
 	async run(client, message, args) {
-		const bal = message.author.data.get("bal") || 0;
 		const v = message.author.data.get("v").split(";").map(Number);
 
 		if (args[0].toLowerCase() === "max") args[0] = v[1];
@@ -18,9 +17,8 @@ export default {
 		if (curr - w < 0) return message.reply("Your vault doesn't contain enough money!");
 		curr -= w;
 		v[1] = curr;
-
+		await client.utils.updateBalance(message.author, w, message, { r: "vault-with" });
 		await client.db.USERS.update({
-			bal: bal + w,
 			v: v.join(";"),
 		}, {
 			where: {

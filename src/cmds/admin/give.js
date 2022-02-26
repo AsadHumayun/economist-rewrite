@@ -10,25 +10,16 @@ export default {
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply(`You must follow the following format: \`${message.guild ? message.guild.prefix : client.const.prefix}give <user> <...upgrade>\``);
 		const usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
-		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
+		if (!usr) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		const data = await client.db.getUserData(usr.id);
 
 		if (!isNaN(args[1])) {
-			let bal = data.get("bal") || 0;
-			const amt = Number(args[1]);
-			bal += amt;
-			await client.db.USERS.update({
-				bal,
-			}, {
-				where: {
-					id: usr.id,
-				},
-			});
+			client.utils.updateBalance(usr, Number(args[1]), message);
 			return message.channel.send({
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`:dollar: ${client.utils.comma(client.utils.noExponents(amt))} have been added to ${usr.tag}'s account`),
+						.setDescription(`:dollar: ${client.utils.comma(client.utils.noExponents(Number(args[1])))} have been added to ${usr.tag}'s account`),
 				],
 			});
 		}
