@@ -34,7 +34,6 @@ export default {
 		const bal = data.get("bal") || 0;
 		let amtLost = Math.floor(bal / 5);
 		if (bal - amtLost < 0) amtLost = bal;
-		//		await client.utils.dm()
 		await client.utils.dm({
 			userId: user.id,
 			message: {
@@ -122,20 +121,8 @@ export default {
 				},
 				channel: message.channel,
 			});
-			await client.db.USERS.update({
-				bal: bal - amtLost,
-			}, {
-				where: {
-					id: user.id,
-				},
-			});
-			await client.db.USERS.update({
-				bal: bal + amtLost,
-			}, {
-				where: {
-					id: message.author.id,
-				},
-			});
+			await client.utils.updateBalance(message.author, amtLost, message, { a: `sentence-U-${user.tag}(${user.id})` });
+			await client.utils.updateBalance(user, -amtLost, message, { a: `sentenced-by-U-${message.author.tag}(${message.author.id})` });
 			await client.utils.dm({
 				userId: user.id,
 				message: {

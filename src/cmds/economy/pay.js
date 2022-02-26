@@ -14,7 +14,6 @@ export default {
 		const authorBal = isNaN(message.author.data.get("bal")) ? 0 : message.author.data.get("bal");
 		const usr = await client.utils.fetchUser(args[0]);
 		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
-		const data = await client.db.getUserData(usr.id);
 		if (message.author.id == usr.id) return message.reply("You can't pay yourself!");
 		let amt = isNaN(args[1]) ? 1 : args[1].toLowerCase();
 		if (amt.toString().startsWith("all")) amt = authorBal;
@@ -24,21 +23,8 @@ export default {
 		if (isNaN(amt) && (!amt.startsWith("all") || !amt.startsWith("half"))) return message.reply("You must provide a valid number! (or just `all` or `half`)");
 		if (authorBal < 0 || (authorBal - amt < 0)) return notEnough();
 		if (authorBal - amt < 0) return notEnough();
-		const oldBal = isNaN(data.get("bal")) ? 0 : data.get("bal");
-		await client.db.USERS.update({
-			bal: authorBal - amt,
-		}, {
-			where: {
-				id: message.author.id,
-			},
-		});
-		await client.db.USERS.update({
-			bal: oldBal + amt,
-		}, {
-			where: {
-				id: usr.id,
-			},
-		});
+		await client.utils.updateBalance(message.author, -amt, message, { r: `pay-ac-${usr.tag}(${usr.id})` });
+		await client.utils.updateBalance(usr, amt, message, { a: `pay-from-ac-${message.author.tag}(${message.author.id})` });
 		message.reply({
 			embeds: [
 				new MessageEmbed()

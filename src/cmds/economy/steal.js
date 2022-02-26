@@ -16,13 +16,7 @@ export default {
 			},
 		});
 		const amt = Math.floor(Math.random() * 1000);
-		await client.db.USERS.update({
-			bal: message.author.data.get("bal") + amt,
-		}, {
-			where: {
-				id: message.author.id,
-			},
-		});
+		await client.utils.updateBalance(message.author, amt, message, { a: `steal-pkg-${message.channel.id}` });
 		message.reply({
 			embeds: [
 				new MessageEmbed()

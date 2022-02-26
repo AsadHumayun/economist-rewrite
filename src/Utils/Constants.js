@@ -239,6 +239,12 @@ const Constants = {
 		 * @const {string}
 		 */
 		cmdLog: "912616134057025536",
+		/**
+		 * The ID of the channel in which transactions are logged (transaction tracing, TT)
+		 * @note GitHub issue #49
+		 * @const {string}
+		 */
+		tt: "946894911909818368",
 	},
 	/**
 	 * The role IDs which are registered by the bot.
