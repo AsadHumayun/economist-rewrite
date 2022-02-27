@@ -2,7 +2,6 @@ import { existsSync, writeFile, createWriteStream } from "fs";
 import { Collection, MessageEmbed, Util } from "discord.js";
 import delay from "delay";
 import ms from "ms";
-import { r } from "tar";
 
 export default {
 	name: "messageCreate",
@@ -88,17 +87,18 @@ export default {
 		}
 
 		const bal = data.get("bal");
-		const chp = data.get("chillpills");
-		const fish = data.get("fsh") ? data.get("fsh").split(";") : [0, 0, 0, 0, 0, 0, 0];
+		const drgs = data.get("drgs")?.split(";").map(Number) || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		message.content = message.content
-			.replace(/myid/g, message.author.id)
-			.replace(/allmoney/g, bal)
-			.replace(/alldolphin/g, fish[0])
-			.replace(/allshark/g, fish[1])
-			.replace(/allblowfish/g, fish[2])
-			.replace(/alltropical/g, fish[3])
-			.replace(/allfish/g, fish[4])
-			.replace(/allchp/g, chp);
+		// previously, regexes were used here.
+			.replaceAll("myid", message.author.id)
+			.replaceAll("allmoney", bal)
+			.replaceAll("allchp", drgs[0])
+			.replaceAll("alladren", drgs[1])
+			.replaceAll("allfish", drgs[2])
+			.replaceAll("alltropical", drgs[3])
+			.replaceAll("allshark", drgs[4])
+			.replaceAll("allblowfish", drgs[5])
+			.replaceAll("alldolphin", drgs[6]);
 		/*	const replacers = data.get("replacers");
 		if (replacers && (typeof replacers === "object")) {
 			for (const x in replacers) {
@@ -267,7 +267,7 @@ export default {
 			// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 			// and refresh data while you're at it, thank youp
 			message.author.data = await data.reload();
-			await command.run(client, message, args)
+			await command.run(client, message, args);
 		}
 		catch (e) {
 			client.channels.cache.get(client.const.channels.error).send({
