@@ -7,6 +7,7 @@ export default {
 	description: "Bans a user from the current guild.",
 	ssOnly: true,
 	cst: "moderator",
+	usage: "<user: UserResolvable> <reason: ?string>",
 	async run(client, message, args) {
 		if (args.length < 1) return message.reply("You must provide a `user` resolvable for your ban.");
 		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
