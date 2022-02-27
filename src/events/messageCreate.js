@@ -2,6 +2,7 @@ import { existsSync, writeFile, createWriteStream } from "fs";
 import { Collection, MessageEmbed, Util } from "discord.js";
 import delay from "delay";
 import ms from "ms";
+import { r } from "tar";
 
 export default {
 	name: "messageCreate",
@@ -11,7 +12,7 @@ export default {
 	},
 	async execute(client, message, execOptions) {
 		if (!message.author || message.webhookId) return;
-		if (!client.const.owners.includes(message.author.id)) return;
+		// if (!client.const.owners.includes(message.author.id)) return;
 		// If the message is a partial structure, fetch the full one form the API.
 		// Note that you cannot fetch deleted information from the API - hence the catch statement (to prevent errors from occurring).
 		if (message.partial) message = await message.fetch().catch(() => {return;});
@@ -236,14 +237,14 @@ export default {
 		function err(e) {
 			process.logger.error("CommandError", e.stack);
 			if (!cst.includes("debugger")) {
-				return message.reply(`Sorry, but an error occurred :/\n\`${e}\``);
+				return message.reply(`Sorry, but an error occurred :/\n\`${e.message.replaceAll(process.cwd(), "[cwd]/")}\``);
 			}
 			else {
 				message.reply({ embeds: [
 					new MessageEmbed()
 						.setColor("#da0000")
 						.setTitle("[DEBUGGER]: Sorry, but an error occured :/")
-						.setDescription(`\`\`\`\n${e}\n\`\`\`\n\n(stacktrace hidden)`),
+						.setDescription(`\`\`\`\n${e.replaceAll(process.cwd(), "[cwd]/")}\n\`\`\`\n\n(stacktrace hidden)`),
 				],
 				});
 			}
@@ -266,7 +267,7 @@ export default {
 			// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 			// and refresh data while you're at it, thank youp
 			message.author.data = await data.reload();
-			await command.run(client, message, args);
+			await command.run(client, message, args)
 		}
 		catch (e) {
 			client.channels.cache.get(client.const.channels.error).send({
