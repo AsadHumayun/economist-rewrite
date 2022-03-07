@@ -27,19 +27,23 @@ export default {
 			":tropical_fish:",
 			":fish:",
 		];
-
 		message.reply({ embeds: [ new MessageEmbed().setDescription(`${message.author.tag} locates their ${client.const.emoji.fishing_rod} and goes fishing...`).setColor(message.author.color) ] });
 		await delay(2000);
 		const Fish = Math.floor(Math.random() * fishes.length);
 		const fish = fishes[Fish];
 		const amtGained = Math.floor(Math.random() * 250 / 5);
 		let dollarsEarned = Math.round(amtGained / 5) * 10;
-		// todo: merge fsh into an itms key or something similar.
-		const f = (message.author.data.get("fsh") || "0;0;0;0;0;0;0;0").split(";").map(Number);
-		f[Fish] = Number(f[Fish]) + amtGained;
+		const indx = client.const.shopItems.map(({ items }) => items.find(({ EMOJI }) => EMOJI === fish)).filter(f => typeof f != "undefined")[0].INDX;
+		const drgs = message.author.data.get("drgs")?.split(";").map(Number) || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		if (!drgs[indx]) {
+			drgs[indx] = amtGained;
+		}
+		else {
+			drgs[indx] += amtGained;
+		}
 		await client.utils.updateBalance(message.author, dollarsEarned, message, { a: `fish-get-${fishes[Fish]}-${amtGained}` });
 		await client.db.USERS.update({
-			fsh: f.join(";"),
+			drgs: client.utils.removeZeros(drgs).join(";"),
 		}, {
 			where: {
 				id: message.author.id,
