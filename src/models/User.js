@@ -208,7 +208,7 @@ export default (sequelize, DataTypes) => {
 			type: DataTypes.TEXT,
 		},
 		replacers: {
-			type: DataTypes.TEXT,
+			type: DataTypes.JSON,
 		},
 		rbc: {
 			type: DataTypes.NUMBER,

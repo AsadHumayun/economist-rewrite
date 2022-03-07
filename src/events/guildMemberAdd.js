@@ -12,12 +12,12 @@ export default {
 		const channel = member.guild.channels.cache.get(client.const.channels.general);
 		const nick = user.get("nick");
 		if (nick) member.setNickname(nick);
-		client.utils.ditems.forEach((i) => {
+		client.const.ditems.forEach((i) => {
 			if (cst.includes(i.split(";")[1]) && (!cst.includes(i.split(";")[2]))) {
 				cst.push(i.split(";")[2]);
 			}
 		});
-		client.utils.cstSpecials.forEach((i) => {
+		client.const.cstSpecials.forEach((i) => {
 			if (cst.includes(i[0]) && (!cst.includes(i[1]))) {
 				cst.push(i[1]);
 			}
@@ -100,8 +100,8 @@ export default {
 					.run(client, { createdTimestamp: now, guild: member.guild, channel: channel, member: member.guild.member(client.user), author: client.user }, [member.id, "[automatic-unmute]: Time's up"]);
 			}
 		}
-		if (Number(member.user.createdTimestamp) > Date.now() - 1209600000) {
-			client.channels.cache.get(client.const.channels.modlogs).send({ content: `${Math.trunc(Date.now() / 60_000)}: mute: M:<${member.user.tag} (${member.id})>: anti-raid [M:<${client.user.tag} (${client.user.id})>]` });
+		if (Number(member.user.createdTimestamp) > Date.now() - 1209600000 || !user.get("cmds") || !member.user.avatarURL()) {
+			client.channels.cache.get(client.const.channels.modlogs).send({ content: `${Math.trunc(Date.now() / 60_000)}: mute(${client.user.tag}(${client.user.id})): M:<${member.user.tag} (${member.id})>: anti-raid [M:<${client.user.tag} (${client.user.id})>]` });
 			await member.roles.add(client.const.roles.muted);
 			await client.db.USERS.update({
 				mt: "-1;anti raid",

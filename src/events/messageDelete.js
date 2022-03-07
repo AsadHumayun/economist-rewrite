@@ -8,7 +8,7 @@ export default {
 		if (!message.content) return;
 		const { executor } = (await message.guild.fetchAuditLogs({ limit: 1, type: "MESSAGE_DELETE" })).entries.first();
 		if (!message.author.bot) {
-			const channel = await client.db.CHNL.findOne({ where: { id: message.channel.id } });
+			const channel = await client.db.CHNL.findByPk(message.channel.id);
 			if (channel) {
 				await client.db.CHNL.update({ snipe: `${message.author.id};${Buffer.from(message.content).toString("base64")}` }, { where: { id: message.channel.id } });
 			}

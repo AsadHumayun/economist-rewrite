@@ -11,7 +11,7 @@ export default {
 	},
 	async execute(client, message, execOptions) {
 		if (!message.author || message.webhookId) return;
-		if (!client.const.owners.includes(message.author.id)) return;
+		// if (!client.const.owners.includes(message.author.id)) return;
 		// If the message is a partial structure, fetch the full one form the API.
 		// Note that you cannot fetch deleted information from the API - hence the catch statement (to prevent errors from occurring).
 		if (message.partial) message = await message.fetch().catch(() => {return;});
@@ -45,7 +45,7 @@ export default {
 						const limit = "5/2s";
 						await message.member.roles.add(client.const.roles.muted);
 						await client.db.USERS.update({
-							mt: `${(message.createdTimestamp + ms("10m")) - client.utils.epoch};hitting the message send rate limit (${limit})`,
+							mt: `${Math.floor((message.createdTimestamp + ms("10m")))};hitting the message send rate limit (${limit})`,
 						}, {
 							where: {
 								id: message.author.id,
@@ -87,24 +87,25 @@ export default {
 		}
 
 		const bal = data.get("bal");
-		const chp = data.get("chillpills");
-		const fish = data.get("fsh") ? data.get("fsh").split(";") : [0, 0, 0, 0, 0, 0, 0];
+		const drgs = data.get("drgs")?.split(";").map(Number) || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		message.content = message.content
-			.replace(/myid/g, message.author.id)
-			.replace(/allmoney/g, bal)
-			.replace(/alldolphin/g, fish[0])
-			.replace(/allshark/g, fish[1])
-			.replace(/allblowfish/g, fish[2])
-			.replace(/alltropical/g, fish[3])
-			.replace(/allfish/g, fish[4])
-			.replace(/allchp/g, chp);
-		/*	const replacers = data.get("replacers");
-		if (replacers && (typeof replacers === "object")) {
-			for (const x in replacers) {
-				if (!replacers[x].content) continue;
-				message.content = message.content.replace(new RegExp(`{${x}}`, "gm"), replacers[x].content);
+		// previously, regexes were used here.
+			.replaceAll("myid", message.author.id)
+			.replaceAll("allmoney", bal)
+			.replaceAll("allchp", drgs[0])
+			.replaceAll("alladren", drgs[1])
+			.replaceAll("allfish", drgs[2])
+			.replaceAll("alltropical", drgs[3])
+			.replaceAll("allshark", drgs[4])
+			.replaceAll("allblowfish", drgs[5])
+			.replaceAll("alldolphin", drgs[6]);
+		let replacers = data.get("replacers");
+		if (replacers) {
+			replacers = JSON.parse(replacers);
+			for (const entry of Object.entries(replacers)) {
+				message.content = message.content.replaceAll(`{${entry[0]}}`, entry[1]);
 			}
-		} */
+		}
 		const rand = Math.floor(Math.random() * 10);
 		if (rand >= 9.5 && !this.isDM(message.channel)) {
 			await client.db.CHNL.update({
@@ -236,14 +237,14 @@ export default {
 		function err(e) {
 			process.logger.error("CommandError", e.stack);
 			if (!cst.includes("debugger")) {
-				return message.reply(`Sorry, but an error occurred :/\n\`${e}\``);
+				return message.reply(`Sorry, but an error occurred :/\n\`${e.message.replaceAll(process.cwd(), "[cwd]/")}\``);
 			}
 			else {
 				message.reply({ embeds: [
 					new MessageEmbed()
 						.setColor("#da0000")
 						.setTitle("[DEBUGGER]: Sorry, but an error occured :/")
-						.setDescription(`\`\`\`\n${e}\n\`\`\`\n\n(stacktrace hidden)`),
+						.setDescription(`\`\`\`\n${e.replaceAll(process.cwd(), "[cwd]")}\n\`\`\`\n\n(stacktrace hidden)`),
 				],
 				});
 			}
@@ -260,7 +261,7 @@ export default {
 		});
 		// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
 		const LOG = Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
-		const fLog = Util.splitMessage(`${old + 1}<${client.uptime} [${Math.trunc(message.createdTimestamp / 60000)}]>: ${this.isDM(message.channel) ? `[<DMChannel> (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})].[${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+		const fLog = Util.splitMessage(`${old + 1}<${client.uptime} [${Math.trunc(message.createdTimestamp / 60000)}]>: ${this.isDM(message.channel) ? `[<DMChannel> (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})] [${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
 
 		try {
 			// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
@@ -313,7 +314,7 @@ export default {
 					writeFile(`./.adminlogs/${today}`, fLog.join(""), ((err) => {
 						if (err) process.logger.error("ADMINLOGS.FSERROR(CREATE_FILE)", err) && client.channels.cache.get(client.const.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
 						client.channels.cache.get(client.const.channels.adminlog).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
-						process.logger.success("ADMINLOGS", "Created file in " + (Date.now() - b) + " ms");
+						process.logger.success("ADMINLOGS", "Created file in ~" + (Date.now() - b) + " ms");
 					}));
 				}
 				else {

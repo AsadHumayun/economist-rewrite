@@ -399,12 +399,13 @@ class Funcs {
  * @param {Discord.Client} client The currently instantiated Discord client
  */
 	notify(e, msgCont, client) {
-		if (client) process.logger.warn("DEPRECATION", "Client does not need to be passed into the client.utils.notify method.");
+		if (client && typeof e === "string") process.logger.warn("DEPRECATION", "Client does not need to be passed into the client.utils.notify method.");
+		if (typeof e !== "string") e = e.stack;
 		const rn = new Date().toISOString();
 		process.logger.error("CommandError", e.stack);
 		if (!msgCont) {
-			this.client.channels.cache.get(this.client.const.channels.error).send({
-				content: `[${rn}]: <unhandledRejection>:\n\`${e}\``,
+			(this.client || client).channels.cache.get((this.client).const.channels.error).send({
+				content: `[${rn}]: <unhandledRejection>:\n\`${e.replaceAll(process.cwd(), "[cwd]/")}\``,
 			// very unliekly that a normal exception/error will exceed 2,000 characters in length.
 			}).catch(() => {return;});
 		// to prevent messageSendFailure erros from throwing. They flood the console and often I can't do anything about it so it's better to just ignore those.

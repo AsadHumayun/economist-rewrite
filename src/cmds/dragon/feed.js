@@ -20,7 +20,7 @@ export default {
 				return message.reply(`Your dragon is convulsing its wings in annoyance; you should try again in ${data}`);
 			}
 		}
-		const alias = await client.utils.getDragonAlias(message.author.id, client);
+		const alias = await client.utils.getDragonAlias(message.author.id);
 		const input = (args[0] || "").toLowerCase();
 		const foods = client.const.foods;
 		const type = foods[Object.keys(foods).find((x) => input.startsWith(x))];

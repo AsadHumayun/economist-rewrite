@@ -109,6 +109,6 @@ const eventHandler = new EventHandler(client, false);
 
 eventHandler.load();
 
-process.on("unhandledRejection", client.utils.notify);
+process.on("unhandledRejection", e => process.logger.error("unhandledRej", e.stack));
 
 client.login(process.env.token);

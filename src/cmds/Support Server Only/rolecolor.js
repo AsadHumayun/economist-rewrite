@@ -9,7 +9,7 @@ export default {
 	ssOnly: true,
 	async run(client, message, args) {
 		if (args.length < 2) {
-			return message.reply("You must specify a valid role keyword and a new hex colour code under the format of `" + message.guild ? message.guild.prefix : client.const.prefix + "rolecolor <keyword> <hex colour>`");
+			return message.reply("You must specify a valid role keyword and a new hex colour code under the format of `" + (message.guild?.prefix || client.const.prefix) + "rolecolor <keyword> <hex colour>`");
 		}
 
 		let roles = message.author.data.get("cstmrl");
