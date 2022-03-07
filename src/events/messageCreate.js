@@ -45,7 +45,7 @@ export default {
 						const limit = "5/2s";
 						await message.member.roles.add(client.const.roles.muted);
 						await client.db.USERS.update({
-							mt: `${(message.createdTimestamp + ms("10m")) - client.utils.epoch};hitting the message send rate limit (${limit})`,
+							mt: `${Math.floor((message.createdTimestamp + ms("10m")))};hitting the message send rate limit (${limit})`,
 						}, {
 							where: {
 								id: message.author.id,
@@ -99,13 +99,13 @@ export default {
 			.replaceAll("allshark", drgs[4])
 			.replaceAll("allblowfish", drgs[5])
 			.replaceAll("alldolphin", drgs[6]);
-		/*	const replacers = data.get("replacers");
-		if (replacers && (typeof replacers === "object")) {
-			for (const x in replacers) {
-				if (!replacers[x].content) continue;
-				message.content = message.content.replace(new RegExp(`{${x}}`, "gm"), replacers[x].content);
+		let replacers = data.get("replacers");
+		if (replacers) {
+			replacers = JSON.parse(replacers);
+			for (const entry of Object.entries(replacers)) {
+				message.content = message.content.replaceAll(`{${entry[0]}}`, entry[1]);
 			}
-		} */
+		}
 		const rand = Math.floor(Math.random() * 10);
 		if (rand >= 9.5 && !this.isDM(message.channel)) {
 			await client.db.CHNL.update({
@@ -244,7 +244,7 @@ export default {
 					new MessageEmbed()
 						.setColor("#da0000")
 						.setTitle("[DEBUGGER]: Sorry, but an error occured :/")
-						.setDescription(`\`\`\`\n${e.replaceAll(process.cwd(), "[cwd]/")}\n\`\`\`\n\n(stacktrace hidden)`),
+						.setDescription(`\`\`\`\n${e.replaceAll(process.cwd(), "[cwd]")}\n\`\`\`\n\n(stacktrace hidden)`),
 				],
 				});
 			}
@@ -261,7 +261,7 @@ export default {
 		});
 		// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
 		const LOG = Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
-		const fLog = Util.splitMessage(`${old + 1}<${client.uptime} [${Math.trunc(message.createdTimestamp / 60000)}]>: ${this.isDM(message.channel) ? `[<DMChannel> (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})].[${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+		const fLog = Util.splitMessage(`${old + 1}<${client.uptime} [${Math.trunc(message.createdTimestamp / 60000)}]>: ${this.isDM(message.channel) ? `[<DMChannel> (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})] [${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
 
 		try {
 			// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
@@ -314,7 +314,7 @@ export default {
 					writeFile(`./.adminlogs/${today}`, fLog.join(""), ((err) => {
 						if (err) process.logger.error("ADMINLOGS.FSERROR(CREATE_FILE)", err) && client.channels.cache.get(client.const.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
 						client.channels.cache.get(client.const.channels.adminlog).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
-						process.logger.success("ADMINLOGS", "Created file in " + (Date.now() - b) + " ms");
+						process.logger.success("ADMINLOGS", "Created file in ~" + (Date.now() - b) + " ms");
 					}));
 				}
 				else {
