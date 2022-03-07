@@ -20,7 +20,7 @@ export default {
 		if (!cst.includes("dragon")) return message.reply("You do not have a pet dragon!");
 		let pet = message.author.data.get("drgn");
 		if (cst.includes("maxdragon888")) pet = client.const.naxDragon;
-		const alias = await client.utils.getDragonAlias(message.author.id, client);
+		const alias = await client.utils.getDragonAlias(message.author.id);
 		pet = pet.split(";");
 		const stat = (args[0] || "").toLowerCase();
 		let Stat = client.utils.upgr.find((x) => stat.startsWith(x.split(";")[0]));
