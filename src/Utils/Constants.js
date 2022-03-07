@@ -1,6 +1,7 @@
 "use strict";
 
 import { readdirSync } from "fs";
+import { deprecate } from "util";
 
 import petaliases from "./petaliases.js";
 
@@ -11,10 +12,15 @@ import petaliases from "./petaliases.js";
  */
 const Constants = {
 	/**
+	 * The current status of my will to live.
+	 * @const {any}
+	 */
+	willToLive: null,
+	/**
 	 * Array of owner IDs. These users always bypass all permission checks and have maximum bot access priviliges.
 	 * @const {string[]}
 	 */
-	owners: ["501710994293129216", "D-757958112992034918"],
+	owners: ["501710994293129216", "757958112992034918"],
 	/**
 	 * The ID of the owner to display on every command (eg `Contact User#1234 for help!`, User#1234 would be the owner's tag).
 	 * Default: owners[0]
@@ -33,7 +39,7 @@ const Constants = {
 	 * An invite to the bot's support server
 	 * @const {string}
 	 */
-	ssInvite: "https://discord.gg/",
+	ssInvite: "https://discord.gg/MzQD2nDzx4",
 	/**
 	 * The ID of the bot's support server
 	 * @const {string}
@@ -205,13 +211,6 @@ const Constants = {
 		 * @const {string}
 		 */
 		modlog: "801010508689571851",
-		/**
-		 * The ID of the channel in which uses of the set command are logged.
-		 * This is no longer necessary due to the addition of `adminlogs` and will be removed in the future.
-		 * @deprecated
-		 * @const {string}
-		 */
-		set: "",
 		/**
 		 * The ID of the channel in which users' suggestions are forwarded to.
 		 * @const {string}
@@ -411,7 +410,7 @@ const Constants = {
 		/**
 		 * The colour that embeds will be changed to once they have expired.
 		 * Typically something orange/red.
-		 * @const {hexColourCode as String}
+		 * @const {hex}
 		 */
 		expired: "#ff3c00",
 	},
