@@ -233,11 +233,11 @@ export default {
 		if (command.ssOnly && (message.guild.id != client.const.supportServer)) {
 			return message.reply(`Sorry but this command can only be used in my support guild! Join by using the \`${message.guild ? message.guild.prefix : client.const.prefix}links\` command!`);
 		}
-
+		// (local function) err(e: Error): void
 		function err(e) {
 			process.logger.error("CommandError", e.stack);
 			if (!cst.includes("debugger")) {
-				return message.reply(`Sorry, but an error occurred :/\n\`${e.message.replaceAll(process.cwd(), "[cwd]/")}\``);
+				message.reply(`Sorry, but an error occurred :/\n\`${e.message.replaceAll(process.cwd(), "[cwd]/")}\``);
 			}
 			else {
 				message.reply({ embeds: [
@@ -296,7 +296,6 @@ export default {
 				content: `${message.createdTimestamp / 60_000}: error while updating db values "${message.author.id}.cmds"`,
 			});
 		}
-
 		// eslint-disable-next-line prefer-const
 		let send = true;
 		/**
@@ -344,5 +343,6 @@ export default {
 				}
 			}
 		}
+		// END messageCreate
 	},
 };
