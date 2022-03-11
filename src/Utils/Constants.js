@@ -1,7 +1,6 @@
 "use strict";
 
 import { readdirSync } from "fs";
-import { deprecate } from "util";
 
 import petaliases from "./petaliases.js";
 
@@ -380,20 +379,20 @@ const Constants = {
 	 * @const {object}
 	 */
 	emoji: {
+		tick: "<:tick:912982622731370576>",
+		err: "<:error:912982623830282281>",
+		fishing_rod: "<:fishrod:912982603425005588>",
+		chill: "<:chillpill:912982008077107280>",
+		loading: "<a:googleloading:912982110556545094>",
+		target: "<:target:912982532461588600>",
+		heart: "<:heart:912982056802340877>",
 		fish: ":fish:",
 		dolphin: ":dolphin:",
 		shark: ":shark:",
 		blowfish: ":blowfish:",
 		trop: ":tropical_fish:",
-		tick: "<:tick:912982622731370576>",
-		err: "<:error:912982623830282281>",
-		fishing_rod: "<:fishrod:912982603425005588>",
 		mobile_phone: ":iphone:",
 		phonebook: ":book:",
-		chill: "<:chillpill:912982008077107280>",
-		loading: "<a:googleloading:912982110556545094>",
-		target: "<:target:912982532461588600>",
-		heart: "<:heart:912982056802340877>",
 		adrenaline: "💉",
 		slrprmt: ":receipt:",
 		bvault: ":bank:",
@@ -734,6 +733,20 @@ const Constants = {
 				],
 			},
 		];
+	},
+	/**
+	 * This object contains logTypes (see Logger.js) which their corresponding channel IDs.
+	 * Some have been set to `null` as they are either not designed to be sent to a text channel within this
+	 * sector of code, are handled elsewhere, or should not be logged in a Discord channel.
+	 * @type {record<K<string>, V<string>>}
+	 */
+	get logTypes() {
+		return {
+			sql: null,
+			admin: this.channels.adminlog,
+			tt: this.channels.tt,
+			cmd: null,
+		};
 	},
 };
 

@@ -462,9 +462,8 @@ class Funcs {
 				id: user.id,
 			},
 		});
-		this.client.channels.cache.get(this.client.const.channels.tt).send({
-			content: `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}$${Math.abs(amount)}`,
-		});
+		const logMsg = `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}$${Math.abs(amount)}`;
+		process.logger.updateLogsFile("tt", message, true, logMsg, logMsg);
 	}
 }
 

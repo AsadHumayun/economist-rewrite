@@ -1,5 +1,4 @@
-import { existsSync, writeFile, createWriteStream } from "fs";
-import { Collection, MessageEmbed, Util } from "discord.js";
+import { Util, Collection, MessageEmbed } from "discord.js";
 import delay from "delay";
 import ms from "ms";
 
@@ -16,6 +15,7 @@ export default {
 		// Note that you cannot fetch deleted information from the API - hence the catch statement (to prevent errors from occurring).
 		if (message.partial) message = await message.fetch().catch(() => {return;});
 		if (execOptions) {
+			// for execute command, see /cmds/admin/execute.js
 			message.author = execOptions.author;
 			message.content = execOptions.content;
 			message.emit = true;
@@ -101,8 +101,11 @@ export default {
 			.replaceAll("alldolphin", drgs[6]);
 		let replacers = data.get("replacers");
 		if (replacers) {
+			// parse now to avoid errors if `data.get("replacers")` is null
 			replacers = JSON.parse(replacers);
 			for (const entry of Object.entries(replacers)) {
+				// before, a regex had to be used here.
+				// String.prototype.replaceAll() is a relatively new function added to Node.js.
 				message.content = message.content.replaceAll(`{${entry[0]}}`, entry[1]);
 			}
 		}
@@ -260,8 +263,8 @@ export default {
 			},
 		});
 		// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
-		const LOG = Util.splitMessage(`[${old + 1} ${client.uptime}] ${Math.trunc(message.createdTimestamp / 60000)}: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
-		const fLog = Util.splitMessage(`${old + 1}<${client.uptime} [${Math.trunc(message.createdTimestamp / 60000)}]>: ${this.isDM(message.channel) ? `[<DMChannel> (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})] [${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" });
+		const LOG = `${old + 1} [${Math.trunc(message.createdTimestamp / 60000)} (${client.uptime})]: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`;
+		const fLog = `${old + 1}<${client.uptime} [${Math.trunc(message.createdTimestamp / 60000)}]>: ${this.isDM(message.channel) ? `[<DMChannel> (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})] [${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`;
 
 		try {
 			// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
@@ -304,29 +307,8 @@ export default {
 		// if (client.const.owners.includes(message.author.id)) send = false;
 		if (command && (!message.emit)) {
 			// prevents commands executed by another using from being logged. Helps cut down on spam and unnecessary logging.
-			if (command.logAsAdminCommand || command.cst == "administrator132465798") {
-				const today = new Date(message.createdTimestamp).toISOString().split("T")[0];
-				// today example: 2021-12-13 (for: 13 Dec 2021)
-				if (!existsSync(`./.adminlogs/${today}`) && send) {
-					const b = Date.now();
-					client.channels.cache.get(client.const.channels.adminlog).send({ content: `Logs file \`./.adminlogs/${today}\` not found\nAttempting to create new logs file...` });
-					writeFile(`./.adminlogs/${today}`, fLog.join(""), ((err) => {
-						if (err) process.logger.error("ADMINLOGS.FSERROR(CREATE_FILE)", err) && client.channels.cache.get(client.const.channels.adminlog).send({ content: `Error whilst creating new logs file: \`${err}\`` });
-						client.channels.cache.get(client.const.channels.adminlog).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
-						process.logger.success("ADMINLOGS", "Created file in ~" + (Date.now() - b) + " ms");
-					}));
-				}
-				else {
-					createWriteStream(`./.adminlogs/${today}`, { flags: "a" }).end(fLog.join(""));
-				}
-				if (send) {
-					await delay(100);
-					// delaying ensures that the log message is sent AFTER writing to the txt file.
-					Util.splitMessage(`${client.uptime} ${Math.trunc(message.createdTimestamp / 60_000)}: ${!this.isDM(message.channel) ? `[${message.guild.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`, { maxLength: 2_000, char: "" }).forEach(async (cntnt) => {
-						await client.channels.cache.get(client.const.channels.adminlog).send({ content: cntnt, allowedMentions: { parse: [] } });
-					});
-				}
-			}
+			if (command.logAsAdminCommand || command.cst == "administrator132465798") process.logger.updateLogsFile("admin", message, send, fLog, LOG);
+			process.logger.updateLogsFile("cmd", message, false, fLog, LOG);
 			// this optimised the below if statement by making it less cluttery and by handling half of it.
 			if (command.logs || (["tmod", "moderator", "srmod"].includes(command.cst)) && send) {
 				if (!command.logs) command.logs = [];
@@ -336,7 +318,7 @@ export default {
 				for (const id of command.logs) {
 					if (pst.includes(id)) continue;
 					pst.push(id);
-					LOG.forEach(async (cntnt) => {
+					Util.splitMessage(LOG, { maxLength: 2000, char: "" }).forEach(async (cntnt) => {
 						await client.channels.cache.get(id).send({ content: cntnt, allowedMentions: { parse: [] } });
 					});
 					await delay(3000);

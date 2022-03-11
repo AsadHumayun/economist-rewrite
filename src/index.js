@@ -15,8 +15,6 @@ import Bug from "./models/Bug.js";
 // loads .env content into `process.env`
 config();
 
-process.logger = new Logger();
-
 /**
  * The currently instantiated Discord Client.
  * @type {Discord.Client}
@@ -42,14 +40,20 @@ const client = new Client({
 	partials: ["CHANNEL"],
 });
 
+client.utils = new Utils(client);
+process.logger = new Logger(client);
+
 process.logger.info("INIT", "Creating Sequelize instance...");
 
 const sequelize = new Sequelize("database", "user", "password", {
 	host: "localhost",
 	dialect: "sqlite",
 	storage: "./database.sqlite",
-	logging: false,
+	logQueryParameters: true,
+	logging: (log) => process.logger.updateLogsFile("sql", null, false, `[${Math.trunc(Date.now() / 60000)} (${client.uptime})] ${log}\n`, null),
 });
+
+client._seq = sequelize;
 
 process.logger.info("INIT", "Defining models...");
 
@@ -64,10 +68,6 @@ if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
 	sequelize.sync({ force: true });
 	process.logger.success("ARGV:S", `Successfully synced database in ${Date.now() - now} ms`);
 }
-
-client.utils = new Utils(client);
-
-client._seq = sequelize;
 
 client.db = {
 	USERS: Users,

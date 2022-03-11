@@ -1,12 +1,22 @@
 import chalk from "chalk";
+import { existsSync, createWriteStream, writeFile } from "fs";
+import { Util } from "discord.js";
 
 /**
  * Custom logger.
  * Sends to the console just the same as `console.log()`, but it's pretty :)
+ * It also contains an essential function for updating logs files in the logs folder.
  */
 class Logger {
-	constructor() {
-		return this;
+	/**
+	 * @param {Discord.Client} client The currently instantiated Discord client.
+	 */
+	constructor(client) {
+		/**
+		 * The currently instantiated Discord client.
+		 * @type {Discord.Client}
+		 */
+		this.client = client;
 	}
 	/**
 	 * Sends an error to the console.
@@ -49,6 +59,47 @@ class Logger {
 	 */
 	raw(...args) {
 		console.log(...args);
+	}
+	/**
+	 * Updates a log file with the necessary information.
+	 * If none is present, then one will be automatically created.
+	 * @param {string} logType The type of log to parse (eg sql, cmd, admincmd, etc).
+	 * @param {Discord.Message} message The Discord message which initiated the request.
+	 * @param {boolean} sendToChannel Whether or not `cLog` should be sent to the parsed Discord text channel. This exists for security purposes.
+	 * @param {string} fLog The log message that is to be sent to the file (this may contain extra information useful for debugging
+	 * and may contain sensitive information)
+	 * @param {string} cLog The log message that is to be sent to the Discord logs channel associated with parsed `logType`; this should not be
+	 * as detailed, and is used more informatively and should NOT contain sensitive content, as a Discord channel is most certainly not a place
+	 * secure enough.
+	 * @returns {void}
+	 */
+	async updateLogsFile(logType, message, sendToChannel, fLog, cLog) {
+		if (!logType) return;
+		fLog = Util.splitMessage(fLog, { maxLength: 2000, char: "" });
+		if (sendToChannel) cLog = Util.splitMessage(cLog, { maxLength: 2000, char: "" });
+		const today = new Date(message?.createdTimestamp || Date.now()).toISOString().split("T")[0];
+		const path = `${process.cwd()}/.logs/${logType}/${today}.log`;
+		// today example: 2021-12-13 (for: 13 Dec 2021)
+		if (!existsSync(path)) {
+			const b = Date.now();
+			if (sendToChannel) this.client.channels.cache.get(this.client.const.logTypes[logType]).send({ content: `Logs file \`${path.replaceAll(process.cwd(), "[cwd]")}\` not found\nAttempting to create new logs file...` });
+			writeFile(path, fLog.join(""), (async (err) => {
+				if (err) process.logger.error("FSERROR(CREATE_FILE)", err) && this.client.channels.cache.get(this.client.const.logTypes[logType]).send({ content: `Error whilst creating new logs file: \`${err}\`` });
+				if (sendToChannel) this.client.channels.cache.get(this.client.const.logTypes[logType]).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
+			}));
+		}
+		else {
+			createWriteStream(path, { flags: "a" }).end(fLog.join(""));
+		}
+		if (sendToChannel) {
+			await Promise.all(
+				cLog.map(async (log) => {
+					return await this.client.channels.cache.get(this.client.const.logTypes[logType]).send({
+						content: log,
+					});
+				}),
+			);
+		}
 	}
 }
 
