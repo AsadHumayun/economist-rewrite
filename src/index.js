@@ -50,7 +50,7 @@ const sequelize = new Sequelize("database", "user", "password", {
 	dialect: "sqlite",
 	storage: "./database.sqlite",
 	logQueryParameters: true,
-	logging: (log) => process.logger.updateLogsFile("sql", null, false, `[${Math.trunc(Date.now() / 60000)} (${client.uptime})] ${log}\n`, null),
+	logging: (log, { type }) => type === "SELECT" ? null : process.logger.updateLogsFile("sql", null, false, `[${Math.trunc(Date.now() / 60000)} (${client.uptime})] ${log}\n`, null),
 });
 
 client._seq = sequelize;
