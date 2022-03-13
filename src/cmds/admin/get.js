@@ -6,7 +6,7 @@ export default {
 	aliases: ["get", "getv"],
 	description: "gets a value from the database and returns it. (also shows its data type and how it is formatted by the interpreter)",
 	usage: "<user: UserResolvable> <key: string>",
-	cst: "adminitrator132465798",
+	cst: "administrator132465798",
 	async run(client, message, args) {
 		if (args.length < 2) return message.reply("You must specify a user and a key");
 		const user = await client.utils.fetchUser(args[0]);
