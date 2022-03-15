@@ -1,0 +1,12 @@
+[27452205 (19310060)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":355,"$2":"2022-03-13 00:45:33.415 +00:00","$3":"671708767813107724"}
+[27452212 (19714787)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":356,"$2":"2022-03-13 00:52:18.145 +00:00","$3":"671708767813107724"}
+[27452212 (19716097)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":215,"$2":"2022-03-13 00:52:19.453 +00:00","$3":"501710994293129216"}
+[27452215 (4743)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":357,"$2":"2022-03-13 00:55:56.112 +00:00","$3":"671708767813107724"}
+[27452215 (4987)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":216,"$2":"2022-03-13 00:55:56.359 +00:00","$3":"501710994293129216"}
+[27452216 (13252)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":358,"$2":"2022-03-13 00:56:04.625 +00:00","$3":"671708767813107724"}
+[27452216 (13267)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":217,"$2":"2022-03-13 00:56:04.639 +00:00","$3":"501710994293129216"}
+[27452315 (5957098)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":359,"$2":"2022-03-13 02:35:08.469 +00:00","$3":"671708767813107724"}
+[27452315 (5957110)] Executing (default): UPDATE `users` SET `stn`=$1,`dns`=$2,`updatedAt`=$3 WHERE `id` = $4; {"$1":27452325,"$2":27452325,"$3":"2022-03-13 02:35:08.482 +00:00","$4":"501710994293129216"}
+[27452315 (5957119)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":218,"$2":"2022-03-13 02:35:08.490 +00:00","$3":"501710994293129216"}
+[27452348 (7983795)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":360,"$2":"2022-03-13 03:08:55.167 +00:00","$3":"671708767813107724"}
+[27452348 (7985052)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":219,"$2":"2022-03-13 03:08:56.424 +00:00","$3":"501710994293129216"}
