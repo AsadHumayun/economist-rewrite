@@ -25,30 +25,36 @@ export default {
 		newPerms.forEach(async (x) => {
 			const usr = await client.utils.fetchUser(x.id);
 			const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
-			const wasManager = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id) ? oldChannel.permissionOverwrites.cache.find(({ id }) => id == x.id).allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false) || false : false;
-			const isManager = mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS, false);
-			let doAnything = false;
+			const wasNotManager = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id)?.allow.missing(Permissions.FLAGS.MANAGE_CHANNELS).length >= 1 ? true : false || false;
+			const isNotManager = mmbr.permissionsIn(newChannel).missing(Permissions.FLAGS.MANAGE_CHANNELS).length >= 1 ? true : false;
+			const wasManager = !wasNotManager;
+			const isManager = !isNotManager;
+			let doNothnig = false;
 			let addingManager = false;
 			let removingManager = false;
-			if (mmbr.permissionsIn(newChannel).missing(Permissions.FLAGS.MANAGE_CHANNELS) && (wasManager)) {
+			/**
+			 * wasNotManager false (was manager)
+				isNotManager false (is manager)
+				addingManager?: false (should be removing)
+				904733092764332093;0;0 (contradictory to info bot thinks is right)
+			 */
+			console.log("isManager: ", isManager);
+			// carefully restructured if conditions
+			if (wasManager && !isManager) {
 				removingManager = true;
-				doAnything = true;
 			}
-			if (!wasManager && (isManager)) {
+			else if (!wasManager && isManager) {
 				addingManager = true;
-				doAnything = true;
 			}
-			if (wasManager && (!isManager)) {
-				removingManager = true;
-				doAnything = true;
+			else {
+				doNothnig = true;
 			}
-			if (!doAnything) {
+			if (doNothnig) {
 				addingManager = false;
 				removingManager = false;
 			}
-			console.log("!wasManager", !wasManager);
-			console.log("wasManager", wasManager);
-			console.log("isManager", isManager);
+			console.log("wasNotManager", wasNotManager);
+			console.log("isNotManager", isNotManager);
 			console.log("addingManager?: " + addingManager);
 
 			const user = await client.db.getUserData(x.id);
@@ -73,7 +79,7 @@ export default {
 			client.channels.cache.get(client.const.channels.sflp).send({
 				content: `
 Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag} (${audit.executor.id})
-Can manage: ${mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
+Can manage: ${!mmbr.permissionsIn(newChannel).missing(Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
 ${addingManager ? `Adding ${usr.id} as a manager of ${newChannel.id}` : ""}${removingManager ? `Removing ${x.id} as a manager of ${newChannel.id}` : ""}
 				`,
 			});
