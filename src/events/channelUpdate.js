@@ -1,14 +1,14 @@
-import { Permissions } from "discord.js";
+import { Permissions, BitField } from "discord.js";
 
 export default {
 	name: "channelUpdate",
 	once: false,
 	async execute(client, oldChannel, newChannel) {
 		if (["DM", "GROUP_DM"].includes(oldChannel.type) || (oldChannel.guild.id != client.const.supportServer)) return;
-		// ensure that the user is still in the server. If yes, then edit data.
+		// ensure that the user` is still in the server. If yes, then edit data.
 		// fetch full structure from Discord API
 		// Only the partial structure is sent through the event.
-		const audit = (await oldChannel.guild.fetchAuditLogs({ limit: 1, type: "CHANNEL_UPDAYE" })).entries.first();
+		const audit = (await oldChannel.guild.fetchAuditLogs({ limit: 1, type: "CHANNEL_UPDATE" })).entries.first();
 		const oldPerms = [...oldChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
 		const newPerms = [...newChannel.permissionOverwrites.cache.values()].filter((d) => d.type == "member");
 		// if below statement is true, then the channel permissionOverwrites have not changed.
@@ -27,10 +27,25 @@ export default {
 			const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
 			const wasManager = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id) ? oldChannel.permissionOverwrites.cache.find(({ id }) => id == x.id).allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false) || false : false;
 			const isManager = mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS, false);
+			let doAnything = false;
 			let addingManager = false;
 			let removingManager = false;
-			if (!wasManager && (isManager)) addingManager = true;
-			if (wasManager && (!isManager)) removingManager = true;
+			if (mmbr.permissionsIn(newChannel).missing(Permissions.FLAGS.MANAGE_CHANNELS) && (wasManager)) {
+				removingManager = true;
+				doAnything = true;
+			}
+			if (!wasManager && (isManager)) {
+				addingManager = true;
+				doAnything = true;
+			}
+			if (wasManager && (!isManager)) {
+				removingManager = true;
+				doAnything = true;
+			}
+			if (!doAnything) {
+				addingManager = false;
+				removingManager = false;
+			}
 			console.log("!wasManager", !wasManager);
 			console.log("wasManager", wasManager);
 			console.log("isManager", isManager);
@@ -57,9 +72,9 @@ export default {
 			}
 			client.channels.cache.get(client.const.channels.sflp).send({
 				content: `
-	Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag} (${audit.executor.id})
-	Can manage: ${mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
-	${addingManager ? `Adding ${usr.id} as a manager of ${newChannel.id}` : ""}${removingManager ? `Removing ${x.id} as a manager of ${newChannel.id}` : ""}
+Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag} (${audit.executor.id})
+Can manage: ${mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id}, allow: ${x.allow.bitfield}, deny: ${x.deny.bitfield})
+${addingManager ? `Adding ${usr.id} as a manager of ${newChannel.id}` : ""}${removingManager ? `Removing ${x.id} as a manager of ${newChannel.id}` : ""}
 				`,
 			});
 			console.log([...new Set(chn.map((e) => Array.from(e).join(";")))].join(";"));
@@ -78,9 +93,9 @@ export default {
 			if (!mmbr) return;
 			client.channels.cache.get(client.const.channels.sflp).send({
 				content: `
-	Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag} (${audit.executor.id})
-	Can manage: ${mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id})
-	Removing permissions for ${id} in ${newChannel.id} (k: chnl)
+Audit log entry executed at ${new Date(audit.createdAt).toISOString()} by M:${audit.executor.tag} (${audit.executor.id})
+Can manage: ${mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS)} (member: ${usr.id}, channel: ${newChannel.id})
+Removing data for ${id} in ${newChannel.id}
 				`,
 			});
 			const user = await client.db.getUserData(id);
