@@ -1,4 +1,4 @@
-import { Permissions } from "discord.js";
+import { Permissions, BitField } from "discord.js";
 
 export default {
 	name: "channelUpdate",
