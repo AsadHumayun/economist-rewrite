@@ -278,7 +278,7 @@ export default {
 				embeds: [
 					new MessageEmbed()
 						.setColor(client.const.colors.invisible)
-						.setDescription(LOG.join("")),
+						.setDescription(LOG),
 					// embed description has a max of 4k chars, very very unlikely that a normal message sent by a user will ever exceed that
 				],
 			});

@@ -20,7 +20,8 @@ config();
  * @type {Discord.Client}
  */
 const client = new Client({
-	// Overriding the cache used in GuildManager, ChannelManager, GuildChannelManager, RoleManager, and PermissionOverwriteManager is unsupported and will break functionality
+	// Overriding the cache used in GuildManager, ChannelManager, GuildChannelManager, RoleManager
+	// and PermissionOverwriteManager is unsupported and will break functionality
 	makeCache: Options.cacheWithLimits({
 		MessageManager: 100,
 		GuildMemberManager: 100,

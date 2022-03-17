@@ -1,5 +1,5 @@
 "use strict";
-import { MessageEmbed } from "discord.js";
+import Discord from "discord.js";
 import { inspect } from "util";
 
 export default {
@@ -48,7 +48,7 @@ export default {
 			msg.edit({
 				content: null,
 				embeds: [
-					new MessageEmbed()
+					new Discord.MessageEmbed()
 						.setColor(client.const.colors.green)
 						.setTitle("Successfully evaluated in " + (Date.now() - s) + " ms")
 						.setFooter(new Date(message.createdTimestamp).toISOString())
@@ -60,7 +60,7 @@ export default {
 			msg.edit({
 				content: null,
 				embeds: [
-					new MessageEmbed()
+					new Discord.MessageEmbed()
 						.setTitle("Error")
 						.setDescription(`\`\`\`\n${err}\n\`\`\``)
 						.setColor([255, 0, 0])
