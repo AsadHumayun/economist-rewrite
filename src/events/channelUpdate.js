@@ -1,4 +1,4 @@
-import { Permissions, BitField } from "discord.js";
+import { Permissions } from "discord.js";
 
 export default {
 	name: "channelUpdate",
@@ -25,24 +25,29 @@ export default {
 		newPerms.forEach(async (x) => {
 			const usr = await client.utils.fetchUser(x.id);
 			const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
-			const wasManager = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id) ? oldChannel.permissionOverwrites.cache.find(({ id }) => id == x.id).allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false) || false : false;
-			const isManager = mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS, false);
-			let doAnything = false;
+			const mmbrOld = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id);
+			const wasManager = mmbrOld?.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false) || false;
+			console.log(mmbrOld.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false), mmbrOld.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, true));
+			const isManager = newChannel.permissionOverwrites.cache.find(({ id }) => id === x.id).allow.has(Permissions.FLAGS.MANAGE_CHANNELS, true);
+//			const isManager = mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS, false);
+			if ((x.allow.bitfield === mmbrOld.allow.bitfield) && (x.deny.bitfield === mmbrOld.deny.bitfield)) return console.log(`Ignoring U ${x.id}`);
+			console.log(mmbr.permissionsIn(newChannel).serialize());
+			let respond = false;
 			let addingManager = false;
 			let removingManager = false;
 			if (mmbr.permissionsIn(newChannel).missing(Permissions.FLAGS.MANAGE_CHANNELS) && (wasManager)) {
 				removingManager = true;
-				doAnything = true;
+				respond = true;
 			}
-			if (!wasManager && (isManager)) {
+			if (!wasManager && isManager) {
 				addingManager = true;
-				doAnything = true;
+				respond = true;
 			}
 			if (wasManager && (!isManager)) {
 				removingManager = true;
-				doAnything = true;
+				respond = true;
 			}
-			if (!doAnything) {
+			if (!respond) {
 				addingManager = false;
 				removingManager = false;
 			}
