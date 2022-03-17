@@ -25,31 +25,32 @@ export default {
 		newPerms.forEach(async (x) => {
 			const usr = await client.utils.fetchUser(x.id);
 			const mmbr = await client.guilds.cache.get(newChannel.guildId).members.fetch({ user: usr.id, force: true });
-			const mmbrOld = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id);
-			const wasManager = mmbrOld?.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false) || false;
-			console.log(mmbrOld.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false), mmbrOld.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, true));
-			const isManager = newChannel.permissionOverwrites.cache.find(({ id }) => id === x.id).allow.has(Permissions.FLAGS.MANAGE_CHANNELS, true);
+			const oldOverwrites = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id);
+			const newOverwrites = newChannel.permissionOverwrites.cache.find(({ id }) => id === x.id);
+			const wasManager = oldOverwrites?.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false) || false;
+			console.log(oldOverwrites?.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false), oldOverwrites?.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, true));
+			const isManager = newOverwrites.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, true);
 //			const isManager = mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS, false);
-			if ((x.allow.bitfield === mmbrOld.allow.bitfield) && (x.deny.bitfield === mmbrOld.deny.bitfield)) return console.log(`Ignoring U ${x.id}`);
+			if ((x.allow.bitfield === oldOverwrites?.allow.bitfield) && (x.deny.bitfield === oldOverwrites?.deny.bitfield)) return console.log(`Ignoring U ${x.id}`);
 			console.log(mmbr.permissionsIn(newChannel).serialize());
-			let respond = false;
+			let respond = true;
 			let addingManager = false;
 			let removingManager = false;
 			if (mmbr.permissionsIn(newChannel).missing(Permissions.FLAGS.MANAGE_CHANNELS) && (wasManager)) {
 				removingManager = true;
-				respond = true;
 			}
-			if (!wasManager && isManager) {
+			else if (!wasManager && isManager) {
 				addingManager = true;
-				respond = true;
 			}
-			if (wasManager && (!isManager)) {
+			else if (wasManager && (!isManager)) {
 				removingManager = true;
-				respond = true;
 			}
 			if (!respond) {
 				addingManager = false;
 				removingManager = false;
+			}
+			else {
+				respond = false;
 			}
 			console.log("!wasManager", !wasManager);
 			console.log("wasManager", wasManager);
