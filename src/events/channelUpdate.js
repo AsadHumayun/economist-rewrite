@@ -28,34 +28,25 @@ export default {
 			const oldOverwrites = oldChannel.permissionOverwrites.cache.find(({ id }) => id === x.id);
 			const newOverwrites = newChannel.permissionOverwrites.cache.find(({ id }) => id === x.id);
 			const wasManager = oldOverwrites?.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false) || false;
-			console.log(oldOverwrites?.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, false), oldOverwrites?.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, true));
 			const isManager = newOverwrites.allow.has(Permissions.FLAGS.MANAGE_CHANNELS, true);
-//			const isManager = mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNELS, false);
-			if ((x.allow.bitfield === oldOverwrites?.allow.bitfield) && (x.deny.bitfield === oldOverwrites?.deny.bitfield)) return console.log(`Ignoring U ${x.id}`);
-			console.log(mmbr.permissionsIn(newChannel).serialize());
+			if ((x.allow.bitfield === oldOverwrites?.allow.bitfield) && (x.deny.bitfield === oldOverwrites?.deny.bitfield)) return;
 			let respond = true;
 			let addingManager = false;
 			let removingManager = false;
-			if (mmbr.permissionsIn(newChannel).missing(Permissions.FLAGS.MANAGE_CHANNELS) && (wasManager)) {
+			if (!isManager && (wasManager)) {
 				removingManager = true;
 			}
-			else if (!wasManager && isManager) {
+			else if (!wasManager && (isManager)) {
 				addingManager = true;
-			}
-			else if (wasManager && (!isManager)) {
-				removingManager = true;
-			}
-			if (!respond) {
-				addingManager = false;
-				removingManager = false;
 			}
 			else {
 				respond = false;
 			}
-			console.log("!wasManager", !wasManager);
-			console.log("wasManager", wasManager);
-			console.log("isManager", isManager);
-			console.log("addingManager?: " + addingManager);
+
+			if (!respond) {
+				addingManager = false;
+				removingManager = false;
+			}
 
 			const user = await client.db.getUserData(x.id);
 			let chn = user.get("chnl");
@@ -83,7 +74,6 @@ Can manage: ${mmbr.permissionsIn(newChannel).has(Permissions.FLAGS.MANAGE_CHANNE
 ${addingManager ? `Adding ${usr.id} as a manager of ${newChannel.id}` : ""}${removingManager ? `Removing ${x.id} as a manager of ${newChannel.id}` : ""}
 				`,
 			});
-			console.log([...new Set(chn.map((e) => Array.from(e).join(";")))].join(";"));
 			await client.db.USERS.update({
 				chnl: [...new Set(chn.map((e) => Array.from(e).join(";")))].join(";"),
 			}, {
