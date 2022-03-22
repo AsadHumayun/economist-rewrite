@@ -1,0 +1,231 @@
+415<29439 [27465008]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~remove 501710994293129216 drgn
+419<15561 [27465010]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~remove 501710994293129216 strc
+422<52936 [27465010]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~get 501710994293129216 drgn
+428<30976 [27465012]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~get 501710994293129216 drgn
+430<55683 [27465013]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~get 501710994293129216 drn
+431<16474 [27465015]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~set 501710994293129216 drgn "1;10000;100;0;435789243574230987509483275908243730925704239754932857430987509843275000000000000000000000000000000000000000000000000000000000000000;1;1;1;2;1"
+433<64804 [27465018]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~set 501710994293129216 drgn "1;10000;100;0;435789243574230987509483275908243730925704239754932857430987509843275000000000000000000000000000000000000000000000000000000000000000;1;1;1;2;1"
+436<61229 [27465022]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~get 501710994293129216 drgn
+437<100646 [27465022]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval BigInt("435789243574230987509483275908243730925704239754932857430987509843275000000000000000000000000000000000000000000000000000000000000000")
+439<111075 [27465022]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval
+440<412180 [27465027]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval BigInt.asIntN(64, "435789243574230987509483275908243730925704239754932857430987509843275000000000000000000000000000000000000000000000000000000000000000");
+441<418071 [27465028]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval BigInt.asIntN(1, "435789243574230987509483275908243730925704239754932857430987509843275000000000000000000000000000000000000000000000000000000000000000");
+442<425902 [27465028]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval BigInt.asIntN(99999, "435789243574230987509483275908243730925704239754932857430987509843275000000000000000000000000000000000000000000000000000000000000000");
+443<1743964 [27465050]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const number = BigInt("4357800000");
+let NewNumber; // E : 43578&5
+const array = number.toString().split("");
+
+let incurredZero = false;
+let zeros = 0;
+for (let index in array) {
+    const element = array[index];
+    const prevElement = array[index - 1];
+    
+    if (element !== "0") continue;
+    if (!incurredZero) continue;
+}
+444<2130890 [27465056]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const index = 1;
+const array = [1,2,3,4,5,6];
+array.slice(index, array.length)
+445<2176591 [27465057]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const index = 1;
+const array = [1,2,3,4,5,6];
+array.slice(index, array.length).join("")
+446<2648751 [27465065]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const number = BigInt("4357800000");
+let NewNumber; // E : 43578&5  (string)
+const array = number.toString().split("");
+
+while (array[0] === "0") {
+    array.shift();
+}
+
+let incurredZero = false;
+let zeros = 0;
+let lastNonZero;
+for (let index in array) {
+    const element = array[index];
+    const prevElement = array[index - 1];
+
+    if (element !== "0") {
+        lastNonZero = array[index];
+        continue;
+    }
+    // EQ 0
+   // check to make sure no non-zero digits after this index
+   if (Number(array.slice(index, array.length).join("")) > 0) continue;
+   zeros++;
+}
+
+NewNumber = `${array.slice(0, lastNonZero)}&${zeros}`;
+NewNumberl
+447<2657554 [27465065]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const number = BigInt("4357800000");
+let NewNumber; // E : 43578&5  (string)
+const array = number.toString().split("");
+
+while (array[0] === "0") {
+    array.shift();
+}
+
+let incurredZero = false;
+let zeros = 0;
+let lastNonZero;
+for (let index in array) {
+    const element = array[index];
+    const prevElement = array[index - 1];
+
+    if (element !== "0") {
+        lastNonZero = array[index];
+        continue;
+    }
+    // EQ 0
+   // check to make sure no non-zero digits after this index
+   if (Number(array.slice(index, array.length).join("")) > 0) continue;
+   zeros++;
+}
+
+NewNumber = `${array.slice(0, lastNonZero)}&${zeros}`;
+NewNumber;
+448<2667678 [27465065]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const number = BigInt("4357800000");
+let NewNumber; // E : 43578&5  (string)
+const array = number.toString().split("");
+
+while (array[0] === "0") {
+    array.shift();
+}
+
+let incurredZero = false;
+let zeros = 0;
+let lastNonZero;
+for (let index in array) {
+    const element = array[index];
+    const prevElement = array[index - 1];
+
+    if (element !== "0") {
+        lastNonZero = array[index];
+        continue;
+    }
+    // EQ 0
+   // check to make sure no non-zero digits after this index
+   if (Number(array.slice(index, array.length).join("")) > 0) continue;
+   zeros++;
+}
+
+NewNumber = `${array.slice(0, lastNonZero).join("")}&${zeros}`;
+NewNumberl
+449<2677668 [27465065]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const number = BigInt("4357800000");
+let NewNumber; // E : 43578&5  (string)
+const array = number.toString().split("");
+
+while (array[0] === "0") {
+    array.shift();
+}
+
+let incurredZero = false;
+let zeros = 0;
+let lastNonZero;
+for (let index in array) {
+    const element = array[index];
+    const prevElement = array[index - 1];
+
+    if (element !== "0") {
+        lastNonZero = array[index];
+        continue;
+    }
+    // EQ 0
+   // check to make sure no non-zero digits after this index
+   if (Number(array.slice(index, array.length).join("")) > 0) continue;
+   zeros++;
+}
+
+NewNumber = `${array.slice(0, lastNonZero).join("")}&${zeros}`;
+NewNumber;
+450<2725082 [27465066]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const number = BigInt("4357800000");
+let NewNumber; // E : 43578&5  (string)
+const array = number.toString().split("");
+
+while (array[0] === "0") {
+    array.shift();
+}
+
+let incurredZero = false;
+let zeros = 0;
+let lastNonZero;
+for (let index in array) {
+    const element = array[index];
+    const prevElement = array[index - 1];
+
+    if (element !== "0") {
+        lastNonZero = index;
+        continue;
+    }
+    // EQ 0
+   // check to make sure no non-zero digits after this index
+   if (Number(array.slice(index, array.length).join("")) > 0) continue;
+   zeros++;
+}
+
+NewNumber = `${array.slice(0, lastNonZero).join("")}&${zeros}`;
+NewNumber;
+451<2846280 [27465068]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const number = BigInt("00000000004357800000");
+let NewNumber; // E : 43578&5  (string)
+const array = number.toString().split("");
+
+while (array[0] === "0") {
+    array.shift();
+}
+
+let incurredZero = false;
+let zeros = 0;
+let lastNonZero;
+for (let index in array) {
+    const element = array[index];
+    const prevElement = array[index - 1];
+
+    if (element !== "0") {
+        lastNonZero = index;
+        continue;
+    }
+    // EQ 0
+   // check to make sure no non-zero digits after this index
+   if (Number(array.slice(index, array.length).join("")) > 0) continue;
+   zeros++;
+}
+
+NewNumber = `${array.slice(0, lastNonZero).join("")}&${zeros}`;
+NewNumber;
+452<3063063 [27465072]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const number = BigInt("0044574000000");
+let NewNumber; // E : 43578&5  (string)
+const array = number.toString().split("");
+
+while (array[0] === "0") {
+    array.shift();
+}
+
+let incurredZero = false;
+let zeros = 0;
+let lastNonZero;
+for (let index in array) {
+    const element = array[index];
+    const prevElement = array[index - 1];
+
+    if (element !== "0") {
+        lastNonZero = index;
+        continue;
+    }
+    // EQ 0
+   // check to make sure no non-zero digits after this index
+   if (Number(array.slice(index, array.length).join("")) > 0) continue;
+   zeros++;
+}
+
+NewNumber = `${array.slice(0, lastNonZero).join("")}&${zeros}`;
+NewNumber;
+453<9807 [27465094]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval client.utils.expand("0&0")
+454<631855 [27465104]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~stun 501710994293129216 5
+455<635058 [27465104]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~get 501710994293129216 stn
+456<30917 [27465112]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~stun 911799544017199124 10
+457<6372 [27465114]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~stun 911799544017199124 10
+458<23731 [27465117]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~stun 911799544017199124 5
+459<8309 [27465118]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~stun 911799544017199124 5
+460<4624 [27465118]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~stun 911799544017199124 5
+461<2410 [27465119]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~stun 911799544017199124 5
+462<3837 [27465119]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~stun 911799544017199124 5

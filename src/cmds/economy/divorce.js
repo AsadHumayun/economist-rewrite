@@ -8,7 +8,6 @@ export default {
 	async run(client, message) {
 		const spouse = message.author.data.get("spse");
 		const usr = await client.utils.fetchUser(spouse).catch(() => {return;});
-		const data = await client.db.getUserData(usr.id);
 		if (!usr) return message.reply(`You're not married to anyone yet!\nUse \`${message.guild ? message.guild.prefix : client.const.prefix}marry <user>\` to marry someone.`);
 		const buttons = [
 			new MessageButton()
@@ -31,11 +30,8 @@ export default {
 		msg.awaitMessageComponent({ filter, componentType: "BUTTON", time: 30_000 })
 			.then(async (interaction) => {
 				if (interaction.customId == "1") {
-					// divorce - split total balance between couples evenly.
-					const newBal = Math.floor((Number(message.author.data.get("bal") || 0) + Number(data.get("bal") || 0)) / 2);
 					await client.db.USERS.update({
 						spse: null,
-						bal: newBal,
 					}, {
 						where: {
 							id: message.author.id,
@@ -43,7 +39,6 @@ export default {
 					});
 					await client.db.USERS.update({
 						spse: null,
-						bal: newBal,
 					}, {
 						where: {
 							id: spouse,

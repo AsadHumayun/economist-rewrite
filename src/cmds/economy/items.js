@@ -13,7 +13,7 @@ export default {
 			data = message.author.data;
 		}
 		else {data = await client.db.getUserData(user.id);}
-		const drgs = await data.get("drgs")?.split(";") || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		const drgs = await data.get("drgs")?.split(";").map(BigInt) || [];
 		const itms = client.const.shopItems.map(({ items }) => items.filter(f => typeof f.INDX !== "undefined")).filter(a => a.length >= 1);
 
 		const embed = new MessageEmbed()

@@ -34,16 +34,16 @@ export default {
 		const amtGained = Math.floor(Math.random() * 250 / 5);
 		let dollarsEarned = Math.round(amtGained / 5) * 10;
 		const indx = client.const.shopItems.map(({ items }) => items.find(({ EMOJI }) => EMOJI === fish)).filter(f => typeof f != "undefined")[0].INDX;
-		const drgs = message.author.data.get("drgs")?.split(";").map(Number) || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		const drgs = message.author.data.get("drgs")?.split(";").map(BigInt) || [];
 		if (!drgs[indx]) {
-			drgs[indx] = amtGained;
+			drgs[indx] = BigInt(amtGained);
 		}
 		else {
-			drgs[indx] += amtGained;
+			drgs[indx] = BigInt(drgs[indx]) + BigInt(amtGained);
 		}
-		await client.utils.updateBalance(message.author, dollarsEarned, message, { a: `fish-get-${fishes[Fish]}-${amtGained}` });
+		await client.utils.updateBalance(message.author, BigInt(dollarsEarned), message, { a: `fish-get-${fishes[Fish]}-${amtGained}` });
 		await client.db.USERS.update({
-			drgs: client.utils.removeZeros(drgs).join(";"),
+			drgs: client.utils.removeZeros(drgs).map(String).join(";"),
 		}, {
 			where: {
 				id: message.author.id,

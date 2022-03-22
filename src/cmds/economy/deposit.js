@@ -9,13 +9,13 @@ export default {
 	cst: "bvault",
 	async run(client, message, args) {
 		if (isNaN(args[0]) || (Number(args[0]) <= 0)) return message.reply("You must enter a positive number");
-		const dep = Number(args[0]);
-		const bal = message.author.data.get("bal") || 0;
-		if (bal - dep < 0) return message.reply("Your current balance is insufficient to make this transaction!");
-		const v = message.author.data.get("v").split(";").map(Number);
-		const capacity = v[0] * 5_000;
+		const dep = BigInt(args[0]);
+		const bal = BigInt(message.author.data.get("bal") || 0);
+		if (bal - dep < 0n) return message.reply("Your current balance is insufficient to make this transaction!");
+		const v = message.author.data.get("v").split(";").map(BigInt);
+		const capacity = v[0] * 5_000n;
 		let curr = v[1];
-		if (curr + dep > capacity && (v[0] < 9999999999)) return message.reply(`Your vault does not have enough space to hold that much money; upgrade your vault with \`${message.guild ? message.guild.prefix : client.const.prefix}vupgrade\` in order to increase your Bank Vault's capacity!`);
+		if (curr + dep > capacity && (v[0] < 9999999999n)) return message.reply(`Your vault does not have enough space to hold that much money; upgrade your vault with \`${message.guild ? message.guild.prefix : client.const.prefix}vupgrade\` in order to increase your Bank Vault's capacity!`);
 		curr += dep;
 		v[1] = curr;
 		await client.utils.updateBalance(message.author, -dep, message, { r: "vault-dep" });

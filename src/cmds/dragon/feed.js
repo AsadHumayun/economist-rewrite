@@ -7,13 +7,16 @@ export default {
 	usage: "<food: string>",
 	description: "Feed your dragon and do *stuff*...",
 	cst: "dragon",
+	disabled: true,
+	// feed needs to be updated to the new shop system
+	// A separate issue will be created.
 	async run(client, message, args) {
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		let pet = message.author.data.get("drgn");
 		if (cst.includes("maxdragon888")) pet = client.const.naxDragon;
 		pet = pet.split(";");
 
-		const cooldown = message.author.data.get("fdc");
+		const cooldown = message.author.data.get("fdc") || 0;
 		if (cooldown && (!cst.includes("maxdragon888"))) {
 			const data = client.utils.cooldown(message.createdTimestamp, cooldown * 60_000);
 			if (data) {
@@ -26,10 +29,10 @@ export default {
 		const type = foods[Object.keys(foods).find((x) => input.startsWith(x))];
 		if (!type || (!args.length)) return message.reply(`The different types of food are ${client.utils.list(Object.values(foods).map((x) => x.name))}`);
 		if (!cst.includes("maxdragon888")) {
-			const health = Number(pet[1]);
-			const en = Number(pet[2]);
-			pet[1] = health + type.gives.hp > 100 ? 100 : health + type.gives.hp;
-			pet[2] = en + type.gives.en > 100 ? 100 : en + type.gives.en;
+			const health = BigInt(pet[1]);
+			const en = BigInt(pet[2]);
+			pet[1] = health + type.gives.hp > 100n ? 100n : health + type.gives.hp;
+			pet[2] = en + type.gives.en > 100n ? 100n : en + type.gives.en;
 			if (type.key.split(";").length > 1 && (!cst.includes("allfood"))) {
 				const fsh = (message.author.data.get("fsh") ? message.author.data.get("fsh").split(";") : []).map((v) => v ? Number(v) : 0);
 				if (fsh[type.key.split(";")[1]] - 1 < 0) return message.reply("You don't have that type of food!");

@@ -11,7 +11,7 @@ export default {
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
 		await client.db.getUserData(user.id);
 		const stnb = args.slice(1).join(" ") || "stunned";
-		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
+		const cst = message.author.data.get("cst")?.split(";") || [];
 		// pstn just perm stuns the user - this acts as a blacklist and blocks the user from using the bot.
 		cst.push("pstn");
 		await client.db.USERS.update({

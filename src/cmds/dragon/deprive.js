@@ -9,9 +9,9 @@ export default {
 	description: "Completely deprive your pet's credits on a stat, reducing it to 1 and receive the appropriate amount of credits in return; 2h cooldown",
 	cst: "supreme",
 	async run(client, message, args) {
-		const cd = message.author.data.get("dpc") || 0;
+		const cd = BigInt(message.author.data.get("dpc") || 0);
 		if (cd) {
-			const data = client.utils.cooldown(message.createdTimestamp, cd * 60_000);
+			const data = client.utils.cooldown(message.createdTimestamp, cd * BigInt(60_000));
 			if (data) {
 				return message.reply(`You must wait ${data} before depriving another stat!`);
 			}
@@ -26,18 +26,18 @@ export default {
 		let Stat = client.utils.upgr.find((x) => stat.startsWith(x.split(";")[0]));
 		if (!Stat) return message.reply(`The different types of stats are: ${client.utils.list(client.utils.upgr.map((x) => x.split(";")[1]))}`);
 		Stat = Stat.split(";");
-		const Credits = Number(pet[Stat[2]]);
-		const amt = Credits - 1;
+		const Credits = BigInt(pet[Stat[2]]);
+		const amt = Credits - 1n;
 		if (amt < 0) {
 			return message.reply("You must have at least 2 credits on a specified `<stat>` before depriving your dragon of said stat.");
 		}
 		pet[Stat[2]] = Credits - amt;
-		pet[4] = Number(pet[4]) + amt;
+		pet[4] = BigInt(pet[4]) + amt;
 		// shouldn't affect users with the maxdragon -- the maxdragon is intended to be a "ghost" type thing; it doesn't change no matter what the user does.
 		if (!cst.includes("maxdragon888")) {
 			await client.db.USERS.update({
 				dpc: client.utils.parseCd(message.createdTimestamp, ms("6h")),
-				drgn: pet.join(";"),
+				drgn: pet.map(String).join(";"),
 			}, {
 				where: {
 					id: message.author.id,

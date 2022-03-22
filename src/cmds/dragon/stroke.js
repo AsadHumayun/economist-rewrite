@@ -8,14 +8,14 @@ export default {
 	description: "Stroke your pet and increase its Affection by 1",
 	cst: "dragon",
 	async run(client, message) {
-		const cooldown = message.author.data.get("strc");
+		const cooldown = message.author.data.get("strc") || 0;
 		const cd = client.utils.cooldown(message.createdTimestamp, cooldown * 60_000);
-		const pet = message.author.data.get("drgn").split(";").map(Number);
+		const pet = message.author.data.get("drgn").split(";").map(BigInt);
 		if (!pet)	return message.reply("It looks like you don't own a dragon! Why not tame one by using `" + message.guild?.prefix || "~" + "tame`");
 		const alias = await client.utils.getDragonAlias(message.author.id);
 		if (cd) return message.reply(`You must wait another ${cd} before stroking your ${alias[0]} again!`);
-		pet[8] += 1;
-		if (!message.author.data.get("cst")?.split(";").includes("maxdragon888")) await client.db.USERS.update({ drgn: pet.join(";"), strc: client.utils.parseCd(message.createdTimestamp, ms("3h"))	}, { where: { id: message.author.id } });
+		pet[8] += 1n;
+		if (!message.author.data.get("cst")?.split(";").includes("maxdragon888")) await client.db.USERS.update({ drgn: pet.map(String).join(";"), strc: client.utils.parseCd(message.createdTimestamp, ms("3h"))	}, { where: { id: message.author.id } });
 		message.reply({
 			embeds: [
 				new MessageEmbed()

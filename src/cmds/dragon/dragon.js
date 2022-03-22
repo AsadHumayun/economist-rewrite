@@ -18,7 +18,7 @@ export default {
 				data = client.const.maxDragon;
 			}
 			const alias = await client.utils.getDragonAlias(message.author.id);
-			data = data.split(";");
+			data = data.split(";").map(BigInt);
 			if (data.length < client.const.intendedPetLength) return message.reply("Malformed dragon data; please contact an administrator in the support server and they'll gladly fix it for you!");
 			const emb = new MessageEmbed()
 				.setColor(message.author.color)
@@ -28,21 +28,21 @@ export default {
 				.addField(
 					"Basic Stats",
 					`
-${alias[1][0]} Health — ${client.utils.comma(client.utils.noExponents(data[1]))}/10000
-${alias[1][1]} Energy —  ${client.utils.comma(client.utils.noExponents(data[2]))}/100
+${alias[1][0]} Health — ${client.utils.digits(data[1])}/10000
+${alias[1][1]} Energy —  ${client.utils.digits(data[2])}/100
 `
 					, true,
 				)
 				.addField(
 					"Advanced Stats",
 					`
-${alias[1][2]} Experience — ${client.utils.comma(client.utils.noExponents(data[3]))}/${client.const.reqs[Number(data[0]) - 1] ? client.utils.comma(client.utils.noExponents(client.const.reqs[Number(data[0]) - 1])) : "∞"}
-${alias[1][3]} Credits  — ${client.utils.comma(client.utils.noExponents(data[4]))}
-${alias[1][4]} Intellect  — ${client.utils.comma(client.utils.noExponents(data[5]))}
-${alias[1][5]} Endurance  — ${client.utils.comma(client.utils.noExponents(data[6]))}
-${alias[1][6]} Strength —  ${client.utils.comma(client.utils.noExponents(data[7]))}
-${alias[1][7]} Affection  — ${client.utils.comma(client.utils.noExponents(data[8]))}
-${alias[1][8]} Glycogenesis — ${client.utils.comma(client.utils.noExponents(data[9]))}
+${alias[1][2]} Experience — ${client.utils.digits(data[3])}/${client.const.reqs[Number(data[0]) - 1] ? client.utils.digits(client.const.reqs[Number(data[0]) - 1]) : "∞"}
+${alias[1][3]} Credits  — ${client.utils.digits(data[4])}
+${alias[1][4]} Intellect  — ${client.utils.digits(data[5])}
+${alias[1][5]} Endurance  — ${client.utils.digits(data[6])}
+${alias[1][6]} Strength —  ${client.utils.digits(data[7])}
+${alias[1][7]} Affection  — ${client.utils.digits(data[8])}
+${alias[1][8]} Glycogenesis — ${client.utils.digits(data[9])}
 `,
 				);
 			return message.reply({ embeds: [ emb ] });
