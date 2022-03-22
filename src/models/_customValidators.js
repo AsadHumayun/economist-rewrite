@@ -10,5 +10,14 @@ export function isNumericString(data) {
 }
 
 export function _isNumber(data) {
-	if (isNaN(Number(data))) throw new Error(`\n[CustomValidator => isNumber] [Fail] Value must be a valid JavaScript number. Received type: ${typeof data}`);
+	let invalid = false;
+
+	if (isNaN(Number(data))) {
+		invalid = true;
+		return;
+	}
+	else if (data.toString().split("&").length !== 2 && isNaN(data)) {
+		invalid = true;
+	}
+	if (invalid === true) throw new Error(`\n[CustomValidator => isNumber] [Fail] Value must be a valid JavaScript number or formatted via utils/Functions/format. Received type: ${typeof data}`);
 }

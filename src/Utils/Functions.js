@@ -75,7 +75,7 @@ class Funcs {
 	 * @param {number} bal String to show digits; may be str instance but not NaN
 	 * @returns {string}
 	 */
-	digits(bal = 0) {
+	digits(bal = 0n) {
 		bal = bal.toString();
 		if (!bal || (bal == "0")) return "0";
 		bal = String(bal).toLowerCase().replace("+", "").replace("-", "");
@@ -132,41 +132,42 @@ class Funcs {
 	 * @returns {string} message containing cooldown information
 	 */
 	cooldown(now, future, ws = false) {
-		now = Number(now);
-		future = Number(future);
+		now = BigInt(now);
+		future = BigInt(future);
 		// if there's no cooldown, return false and exit function (just makes it faster):
-		if (((now - future) / 100) >= 0) return false;
-		let d = Math.abs(now - future) / 1000;
+		if (((now - future) / 100n) >= 0n) return false;
+		let d = BigInt(String(now - future).replace("-", "")) / 1000n;
 		let r = {};
 		const s = {
-			years: 31536000,
-			months: 2592000,
-			weeks: 604800,
-			days: 86400,
-			hours: 3600,
-			minutes: 60,
-			seconds: 1,
+			years: 31536000n,
+			months: 2592000n,
+			weeks: 604800n,
+			days: 86400n,
+			hours: 3600n,
+			minutes: 60n,
+			seconds: 1n,
 		};
 		Object.keys(s).forEach((key) => {
-			r[key] = Math.floor(d / s[key]);
+			r[key] = BigInt(String(d / s[key]).split(".")[0]);
 			d -= r[key] * s[key];
 		});
-		r = Object.entries(r).filter((x) => x[1] > 0);
+		r = Object.entries(r).filter((x) => x[1] > 0n);
 		if (r.length < 1) return false;
 		if (r.length > 1 && (!ws)) r = r.filter((x) => x[0] != "seconds");
 		if (r.length == 2) return `${r[0][1]} ${r[0][0]} and ${r[1][1]} ${r[1][0]}`;
 		// Property 'length' does not exist on type '{}'.ts(2339)
 		// ignore ts(2339) error; this shouldn't be popping up for plain JS files. Microsoft, you need to up your game! (I am using VSC as my IDE)
-		return r.length >= 2 ? this.list(r.map((x) => `${x[1]} ${x[1] == 1 ? x[0].slice(0, -1) : x[0]}`)).join(", ") : r.map((g) => `${g[1]} ${g[1] == 1 ? g[0].slice(0, -1) : g[0]}`).join(", ");
+		console.log(r);
+		return r.length >= 2 ? this.list(r.map((x) => `${x[1]} ${x[1] == 1 ? x[0].slice(0, -1) : x[0]}`)) : r.map((g) => `${g[1]} ${g[1] == 1 ? g[0].slice(0, -1) : g[0]}`);
 	}
 	/**
 	 * Removes the exponent ("E") on numbers expressed in scientific notation
-	 * @param {?number} x Number that is to be expanded.
+	 * @param {?bigint} x Number that is to be expanded.
 	 * @returns {string}
 	 */
-	noExponents(x = 0) {
-		if (isNaN(x)) return "0";
-		const data = String(Number(x)).split(/[eE]/);
+	noExponents(x = 0n) {
+		if (isNaN(Number(x))) return "0";
+		const data = String(x).split(/[eE]/);
 		if (data.length == 1) return data[0];
 
 		const sign = x < 0 ? "-" : "";
@@ -196,10 +197,10 @@ class Funcs {
 		const user = await this.client.users.fetch(userId).catch(() => {return;});
 		if (!user) return;
 		const data = await this.client.db.getUserData(userId);
-		const dns = (isNaN(data.get("dns")) ? 0 : Number(data.get("dns"))) * 60_000;
+		const dns = (isNaN(data.get("dns")) ? BigInt(0) : BigInt(data.get("dns"))) * BigInt(60_000);
 		if (dns && (Date.now() < dns)) return;
 		await this.client.db.USERS.update({
-			stn: Math.trunc((Date.now() / 60_000) + minutes),
+			stn: String(Math.trunc((BigInt(Date.now()) / BigInt(60_000)) + BigInt(minutes))),
 			stnb,
 		}, {
 			where: {
@@ -282,11 +283,13 @@ class Funcs {
 	 * @returns {Date} Date at which the cooldown will end --- in MS
 	 */
 	parseCd(now, cd, includeDecimals = false) {
+		now = Number(now);
+		cd = Number(cd);
 		if (includeDecimals == true) {
-			return parseFloat(((now + cd) / 60_000)).toFixed(2);
+			return (parseFloat(((now + cd) / 60_000))).toFixed(2);
 		}
 		else {
-			return Math.trunc(((now + cd) / 60_000));
+			return (Math.trunc(((now + cd) / 60_000)));
 		}
 	}
 	/**
@@ -447,23 +450,66 @@ class Funcs {
 	 * This method should be used instead of raw SQL queries as this method will
 	 * log successful transactions.
 	 * @param {Discord.UserResolvable} user A Discord user resolvable
-	 * @param {number} amount Amount to be added to the user's balance. May be negative.
+	 * @param {number | bigint} amount Amount to be added to the user's balance. May be negative.
 	 * @param {Discord.Message} message The message received by the `messageCreate` event
 	 * @param {object} overrides Optional overrides
 	 * @param {string} [overrides.a] Optional override for text next to "A<"
 	 * @param {string} [overrides.r] Optional overrides for text next to "R<"
 	 */
 	async updateBalance(user, amount, message, overrides = {}) {
+		amount = BigInt(amount);
 		const data = await this.client.db.getUserData(user.id);
 		await this.client.db.USERS.update({
-			bal: Number(data.get("bal")) + amount,
+			bal: this.format(BigInt(data.get("bal") || "0") + amount),
 		}, {
 			where: {
 				id: user.id,
 			},
 		});
-		const logMsg = `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}$${Math.abs(amount)}`;
+		const logMsg = `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}${Math.abs(Number(amount))}`;
 		process.logger.updateLogsFile("tt", message, true, logMsg, logMsg);
+	}
+	/**
+	 * Converts a number with either leading or trailing whitespaces to the shorthand notation.
+	 * In the example, all leading zeros are removed. As the trailing zeros are important, they are
+	 * represented by the number after the "&" symbol. Eg 1&10 means "1" with 10 zeros after it.
+	 * @example 0044574000000 becomes "4457&6"
+	 * @param {BigInteger | String} number Number to be converted to shorthand notation
+	 * @returns {string}
+	 */
+	format(number) {
+		number = BigInt(number);
+		if (number === 0n) return "0&0";
+		const array = number.toString().split("");
+
+		while (array[0] === "0") {
+			array.shift();
+		}
+
+		let zeros = 0;
+		let lastNonZero;
+		for (const index in array) {
+			const element = array[index];
+			if (element !== "0") {
+				lastNonZero = Number(index);
+				continue;
+			}
+			// EQ 0
+			// check to make sure no non-zero digits after this index
+			if (Number(array.slice(index, array.length).join("")) > 0) continue;
+			zeros++;
+		}
+		return `${lastNonZero === 0 ? array[0] : array.slice(0, lastNonZero).join("")}&${zeros}`;
+	}
+	/**
+	 * Expands any formatted numbers and returns them as `BigInteger`s.
+	 * @param {string} str The string to be expanded
+	 * @returns {BigInteger}
+	 */
+	expand(str) {
+		if (!str) return 0n;
+		str = String(str).split("&");
+		return BigInt(`${str[0]}${"0".repeat(Number(str[1]))}`);
 	}
 }
 
