@@ -79,13 +79,16 @@ class Funcs {
 		const maximumLen = 18;
 		if (typeof bal !== "string") bal = this.format(bal);
 		const BAL = bal;
-		if (this.expand(bal) <= 0n) return "0";
+		if (this.expand(bal) === 0n) return "0";
+
 		bal = bal.split("&");
+		if (!bal[1]) bal[1] = 0;
 		bal[1] = Number(bal[1]);
+
 		const combinedLength = bal[0].length + bal[1];
 		if (combinedLength <= maximumLen) return this.comma(this.expand(BAL));
+		if (bal[0].length >= maximumLen) return `${this.comma(bal[0].slice(0, maximumLen))}... (${(bal[0].length + bal[1]) - maximumLen} digits)`;
 
-		if (bal[0].length >= 18) return `${this.comma(bal[0].slice(0, maximumLen))}... (${(bal[0].length + bal[1]) - maximumLen} digits)`;
 		const zeros = "0".repeat(maximumLen - bal[0].length);
 		return `${this.comma(bal[0] + zeros)}... (${this.expand(`${bal[0]}&${bal[1]}`).toString().length - maximumLen} digits)`;
 	}
@@ -454,7 +457,7 @@ class Funcs {
 		amount = BigInt(amount);
 		const data = await this.client.db.getUserData(user.id);
 		await this.client.db.USERS.update({
-			bal: this.format(BigInt(data.get("bal") || "0") + amount),
+			bal: this.format(this.expand(data.get("bal") || "0") + amount),
 		}, {
 			where: {
 				id: user.id,
