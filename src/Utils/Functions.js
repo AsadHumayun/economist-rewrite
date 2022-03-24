@@ -15,7 +15,7 @@ class Funcs {
 	 */
 	constructor(client) {
 		/**
-		 * The currently instantiated client.
+		 * The currently instantiated Discord client.
 		 * @type {Discord.Client}
 		 */
 		this.client = client;
@@ -505,7 +505,9 @@ class Funcs {
 	 */
 	expand(str) {
 		if (!str) return 0n;
-		str = String(str).split("&");
+		str = str.toString();
+		if (!str.includes("&")) return BigInt(str);
+		str = str.split("&");
 		return BigInt(`${str[0]}${"0".repeat(Number(str[1]))}`);
 	}
 }
