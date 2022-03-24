@@ -72,27 +72,22 @@ class Funcs {
 	}
 	/**
 	 * Applies digit trimming to a `str` instance
-	 * @param {number} bal String to show digits; may be str instance but not NaN
+	 * @param {string} bal String to show digits; must be in standardised number format
 	 * @returns {string}
 	 */
-	digits(bal = 0n) {
-		bal = bal.toString();
-		if (!bal || (bal == "0")) return "0";
-		bal = String(bal).toLowerCase().replace("+", "").replace("-", "");
-		if (bal.includes("e")) {
-			if (isNaN(bal.split("e")[1])) {
-				return this.comma(bal);
-			}
-			let digits = Number(bal.split("e")[1]);
-			digits -= 15;
-			if (digits <= 0) {
-				return this.comma(bal);
-			}
-			return `${this.comma(bal.split("e")[0].replace(".", "") + "0".repeat(20 - bal.split("e")[0].replace(".", "").length))}... [${digits} digits]`;
-		}
-		else {
-			return this.comma(bal);
-		}
+	digits(bal) {
+		const maximumLen = 18;
+		if (typeof bal !== "string") bal = this.format(bal);
+		const BAL = bal;
+		if (this.expand(bal) <= 0n) return "0";
+		bal = bal.split("&");
+		bal[1] = Number(bal[1]);
+		const combinedLength = bal[0].length + bal[1];
+		if (combinedLength <= maximumLen) return this.comma(this.expand(BAL));
+
+		if (bal[0].length >= 18) return `${this.comma(bal[0].slice(0, maximumLen))}... (${(bal[0].length + bal[1]) - maximumLen} digits)`;
+		const zeros = "0".repeat(maximumLen - bal[0].length);
+		return `${this.comma(bal[0] + zeros)}... (${this.expand(`${bal[0]}&${bal[1]}`).toString().length - maximumLen} digits)`;
 	}
 	/**
 	 * This function will add hyphens to a string every X characters; view [the article type thingy](https://repl.it/talk/share/Insert-Hyphens-in-JavaScript-String/50244) for additional information.
