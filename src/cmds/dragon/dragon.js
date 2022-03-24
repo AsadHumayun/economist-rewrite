@@ -18,11 +18,11 @@ export default {
 				data = client.const.maxDragon;
 			}
 			const alias = await client.utils.getDragonAlias(message.author.id);
-			data = data.split(";").map(BigInt);
+			data = data.split(";");
 			if (data.length < client.const.intendedPetLength) return message.reply("Malformed dragon data; please contact an administrator in the support server and they'll gladly fix it for you!");
 			const emb = new MessageEmbed()
 				.setColor(message.author.color)
-				.setTitle(`${u.tag}'s ${client.utils.capital(alias[0])} [${cst.includes("maxdragon888") ? "∞" : data[0]}]`)
+				.setTitle(`${u.tag}'s ${client.utils.capital(alias[0])} [${cst.includes("maxdragon888") ? "∞" : client.utils.digits(data[0])}]`)
 			// alias[0] is the alias.displayname - refer to ../config.js: Funcs.getDragonAlias (async function)
 				.setDescription(`\`${message.guild?.prefix || "~"}disown\` to disown your ${alias[0]} and delete it.\n\`${message.guild?.prefix || "~"}feed\` to feed your ${alias[0]} and completely refill its energy.\n\`${message.guild?.prefix || "~"}name <new name>\` to name your ${alias[0]}. (requires Supreme)\n\`${message.guild?.prefix || "~"}stroke\` to stroke your ${alias[0]} and increase its affection by 1.\n\`${message.guild?.prefix || "~"}search\` to get your ${alias[0]} to go out searching for fish and gain a certain amount of XP depending on your ${alias[0]}'s intellect.\n\`${message.guild?.prefix || "~"}upgrade <stat> <amount>\` to upgrade \`<stat>\` by \`<amount>\` points, \`<amount>\` defaults to 1.\n\`${message.guild?.prefix || "~"}downgrade <stat>\` to downgrade a stat by 1 point and receive ${alias[1][3]} 1 in return \`${message.guild?.prefix || "~"}deprive <stat>\` to completely remove all invested ${alias[1][3]} on the stat and receive the appropriate amount of credits in return. For example, say a user has 5 total points on strength: \`${message.guild?.prefix || "~"}deprive strength\` would set the strength stat to 1 and return 4 credits to the user.\n\`${message.guild?.prefix || "~"}defend\` to toggle your ${alias[0]}'s protection     —     your ${alias[0]} must have at least 200 health in order for it successively to protect you from attackers.`)
 				.addField(
@@ -47,7 +47,7 @@ ${alias[1][8]} Glycogenesis — ${client.utils.digits(data[9])}
 				);
 			return message.reply({ embeds: [ emb ] });
 		}
-		// end function
+
 		let usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) usr = message.author;
 		Embed(usr);
