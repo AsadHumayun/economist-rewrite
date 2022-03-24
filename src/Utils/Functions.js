@@ -73,10 +73,10 @@ class Funcs {
 	/**
 	 * Applies digit trimming to a `str` instance
 	 * @param {string} bal String to show digits; must be in standardised number format
+	 * @param {?number} maximumLen The maximum length of the string to be brought down (or brought up) to this integer. Default: 18
 	 * @returns {string}
 	 */
-	digits(bal) {
-		const maximumLen = 18;
+	digits(bal, maximumLen = 18) {
 		if (typeof bal !== "string") bal = this.format(bal);
 		const BAL = bal;
 		if (this.expand(bal) === 0n) return "0";
