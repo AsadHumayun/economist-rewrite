@@ -150,8 +150,6 @@ export default {
 			let stun = client.utils.expand(data.get("stn")) || 0n;
 			if (stun && (!cst.includes("antistun"))) {
 				stun *= 60_000n;
-				console.log(`stn*60_000: ${stun}`);
-				console.log(`-message.createdTimestamp: ${stun - BigInt(message.createdTimestamp)}`);
 				if (stun - BigInt(message.createdTimestamp) >= 1000n) {
 					return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.utils.cooldown(message.createdTimestamp, stun)} left)` });
 				}
