@@ -20,7 +20,7 @@ export default {
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`:dollar: ${client.utils.comma(client.utils.noExponents(BigInt(args[1])))} have been added to ${usr.tag}'s account`),
+						.setDescription(`:dollar: ${client.utils.digits(args[1])} have been added to ${usr.tag}'s account`),
 				],
 			});
 		}
