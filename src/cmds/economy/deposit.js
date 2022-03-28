@@ -14,6 +14,7 @@ export default {
 		if (bal - dep < 0n) return message.reply("Your current balance is insufficient to make this transaction!");
 		const v = message.author.data.get("v").split(";").map(client.utils.expand);
 		const capacity = v[0] * 5_000n;
+		console.log("v[1]", v[1] + dep, client.utils.format(v[1] + dep));
 		let curr = v[1];
 		if (curr + dep > capacity && (v[0] < 9999999999n)) return message.reply(`Your vault does not have enough space to hold that much money; upgrade your vault with \`${message.guild ? message.guild.prefix : client.const.prefix}vupgrade\` in order to increase your Bank Vault's capacity!`);
 		curr += dep;

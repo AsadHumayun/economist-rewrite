@@ -145,7 +145,7 @@ export default {
 			});
 		}
 
-		// todo: make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>
+		// @todo : make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>
 		if (!["punish", "unpunish", "offences", "ban", "mute", "unmute", "warn"].includes(command?.name)) {
 			let stun = client.utils.expand(data.get("stn")) || 0n;
 			if (stun && (!cst.includes("antistun"))) {

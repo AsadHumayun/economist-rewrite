@@ -13,7 +13,7 @@ export default {
 			data = message.author.data;
 		}
 		else {data = await client.db.getUserData(user.id);}
-		const drgs = await data.get("drgs")?.split(";").map(BigInt) || [];
+		const drgs = await data.get("drgs")?.split(";").map(client.utils.expand) || [];
 		const itms = client.const.shopItems.map(({ items }) => items.filter(f => typeof f.INDX !== "undefined")).filter(a => a.length >= 1);
 
 		const embed = new MessageEmbed()
@@ -22,7 +22,7 @@ export default {
 		let description = "";
 		itms.forEach(i => {
 			i.forEach(ITEM => {
-				description = `${description}\n${ITEM.EMOJI} ${ITEM.DISPLAY_NAME} - ${!drgs[ITEM.INDX] ? "0" : client.utils.comma(drgs[ITEM.INDX])}`;
+				description = `${description}\n${ITEM.EMOJI} ${ITEM.DISPLAY_NAME} - ${!drgs[ITEM.INDX] ? "0" : client.utils.digits(drgs[ITEM.INDX])}`;
 			});
 		});
 		embed.setDescription(description);

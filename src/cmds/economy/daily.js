@@ -22,7 +22,7 @@ export default {
 				await client.utils.updateBalance(message.author, amountAdded, message, { a: "daily-reward-streak-0(reset?: true)" });
 				await client.db.USERS.update({
 					dlc: client.utils.parseCd(message.createdTimestamp, ms("1d")),
-					dlstr: `0;${client.utils.format(Math.trunc(message.createdTimestamp / 60_000) + (1440 * 2))}`,
+					dlstr: `0;${Math.trunc(message.createdTimestamp / 60_000) + (1440 * 2)}`,
 				}, {
 					where: {
 						id: message.author.id,

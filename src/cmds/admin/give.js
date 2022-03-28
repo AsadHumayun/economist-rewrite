@@ -15,7 +15,6 @@ export default {
 
 		if (!isNaN(args[1])) {
 			client.utils.updateBalance(usr, BigInt(args[1]), message);
-			console.log(BigInt(args[1]));
 			return message.channel.send({
 				embeds: [
 					new MessageEmbed()
