@@ -427,11 +427,11 @@ class Funcs {
 	 * @param {number[]} array Removes all zeros from the array.
 	 * @returns {number[]}
 	 */
-	removeZeros(array) {
-		for (const elmt in array) {
-			if (array[elmt] == 0) array[elmt] = "";
+	removeZeros(arr) {
+		for (const elmt in arr) {
+			if (arr[elmt] == 0 || arr[elmt].toString() == "0&0") arr[elmt] = "";
 		}
-		return array;
+		return arr;
 	}
 	/**
 	 * Applies the Ross Capitalisation technique to the specified string
@@ -475,28 +475,41 @@ class Funcs {
 	 * @returns {string}
 	 */
 	format(number) {
+		// console.log("NEW ROUND");
+		// console.log("Raw input", number, typeof number);
 		number = BigInt(number);
-		if (number === 0n) return "0&0";
-		const array = number.toString().split("");
-
-		while (array[0] === "0") {
-			array.shift();
+		// console.log("casted", number, typeof number);
+		if (number === 0n) return "0";
+		const arr = number.toString().split("");
+		// console.log(array);
+		while (arr[0] === "0") {
+			arr.shift();
 		}
 
 		let zeros = 0;
 		let lastNonZero;
-		for (const index in array) {
-			const element = array[index];
+		// console.log("zeros, lastNonZero: ", zeros, lastNonZero);
+		for (const index in arr) {
+			const element = arr[index];
 			if (element !== "0") {
+			//	console.log(`NonZero on index ${index}`, element);
 				lastNonZero = Number(index);
 				continue;
 			}
 			// EQ 0
 			// check to make sure no non-zero digits after this index
-			if (Number(array.slice(index, array.length).join("")) > 0) continue;
+			if (Number(arr.slice(index, arr.length + 1).join("")) > 0) continue;
+			// console.log("sliced array, chk no further non-zero, indx " + index, array.slice(index, array.length + 1))
 			zeros++;
 		}
-		return `${lastNonZero === 0 ? array[0] : array.slice(0, lastNonZero).join("")}&${zeros}`;
+		if (zeros === 0) {
+			// console.log(array.join(""));
+			return arr.join("");
+		}
+		// console.log("NonZero", array[lastNonZero], lastNonZero);
+		// console.log("Sliced (0, lastNonZero)", array.slice(0, lastNonZero));
+		// console.log("Result", `${lastNonZero === 0 ? array[0] : array.slice(0, lastNonZero + 1).join("")}&${zeros}`);
+		return `${lastNonZero === 0 ? arr[0] : arr.slice(0, lastNonZero + 1).join("")}&${zeros}`;
 	}
 	/**
 	 * Expands any formatted numbers and returns them as `BigInteger`s.
