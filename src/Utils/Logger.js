@@ -79,7 +79,7 @@ class Logger {
 		fLog = Util.splitMessage(fLog, { maxLength: 2000, char: "" });
 		if (sendToChannel) cLog = Util.splitMessage(cLog, { maxLength: 2000, char: "" }).join("");
 		if (!fLog.endsWith("\n")) {
-			flags += "\n";
+			fLog += "\n";
 		}
 		const today = new Date(message?.createdTimestamp || Date.now()).toISOString().split("T")[0];
 		const path = `${process.cwd()}/.logs/${logType}/${today}.log`;
