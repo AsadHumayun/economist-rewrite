@@ -93,7 +93,7 @@ const Constants = {
 	 * Shown on embeds when the user does not have a custom preference set.
 	 * @const {string}
 	 */
-	clr: "#00aaaa;0",
+	clr: "00aaaa;0",
 	/**
 	 * The maximum level that a dragon may be before it is counted as "maxed" out.
 	 * @const {number}
