@@ -76,11 +76,9 @@ class Logger {
 	 */
 	async updateLogsFile(logType, message, sendToChannel, fLog, cLog) {
 		if (!logType) return;
-		fLog = Util.splitMessage(fLog, { maxLength: 2000, char: "" });
-		if (sendToChannel) cLog = Util.splitMessage(cLog, { maxLength: 2000, char: "" }).join("");
-		if (!fLog.endsWith("\n")) {
-			fLog += "\n";
-		}
+		fLog = Util.splitMessage(fLog, { maxLength: 2000, char: "" }).join("");
+		if (sendToChannel) cLog = Util.splitMessage(cLog, { maxLength: 2000, char: "" });
+		if (!fLog.endsWith("\n")) fLog += "\n";
 		const today = new Date(message?.createdTimestamp || Date.now()).toISOString().split("T")[0];
 		const path = `${process.cwd()}/.logs/${logType}/${today}.log`;
 		// today example: 2021-12-13 (for: 13 Dec 2021)
