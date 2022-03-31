@@ -185,7 +185,7 @@ class Funcs {
 	 * Stuns a user whilst performing required validatory actions beforehand
 	 * @param {object} opts Options for the stun
 	 * @param {string} [opts.userId] Snowflake ID of the user who must be stunned
-	 * @param {number} [opts.minutes] Amount of minutes for which the user is stunned
+	 * @param {bigint} [opts.minutes] Amount of minutes for which the user is stunned
 	 * @param {?string} [opts.stnb] Stnb value (You can't do anything while you're {stnb}!)
 	 * @returns {void} void
 	 * @async
@@ -197,7 +197,7 @@ class Funcs {
 		const dns = (isNaN(data.get("dns")) ? BigInt(0) : BigInt(data.get("dns"))) * BigInt(60_000);
 		if (dns && (Date.now() < dns)) return;
 		await this.client.db.USERS.update({
-			stn: String(Math.trunc((BigInt(Date.now()) / BigInt(60_000)) + BigInt(minutes))),
+			stn: String((BigInt(Date.now()) / BigInt(60_000)) + BigInt(minutes)).split(".")[0],
 			stnb,
 		}, {
 			where: {
@@ -464,7 +464,7 @@ class Funcs {
 				id: user.id,
 			},
 		});
-		const logMsg = `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}${Math.abs(Number(amount))}`;
+		const logMsg = `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}${this.digits(amount, 1)}`;
 		process.logger.updateLogsFile("tt", message, true, logMsg, logMsg);
 	}
 	/**
