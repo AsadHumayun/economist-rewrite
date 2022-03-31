@@ -76,7 +76,7 @@ class Funcs {
 	 * @param {?number} maximumLen The maximum length of the string to be brought down (or brought up) to this integer. Default: 18
 	 * @returns {string}
 	 */
-	digits(bal, maximumLen = 18) {
+	digits(bal, maximumLen = 19) {
 		if (typeof bal !== "string") bal = this.format(bal);
 		const BAL = bal;
 		if (this.expand(bal) === 0n) return "0";
@@ -456,6 +456,7 @@ class Funcs {
 	async updateBalance(user, amount, message, overrides = {}) {
 		amount = BigInt(amount);
 		const data = await this.client.db.getUserData(user.id);
+		// console.log("Set bal ID as ", bal, typeof bal);
 		await this.client.db.USERS.update({
 			bal: this.format(this.expand(data.get("bal") || "0") + amount),
 		}, {
