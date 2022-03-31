@@ -17,19 +17,19 @@ export default {
 		data = message.author.data.get("drgn");
 		const cst = message.author.data.get("cst") ? message.author.data.get("cst").split(";") : [];
 		if (cst.includes("maxdragon888")) data = client.const.maxDragon;
-		data = data.split(";");
+		data = data.split(";").map(client.utils.expand);
 		const stat = (args[0] || "").toLowerCase();
-		let Stat = client.utils.upgr.find((x) => stat.startsWith(x.split(";")[0]));
-		if (!Stat) return message.reply(`The different types of stats are: ${client.utils.list(client.utils.upgr.map((x) => x.split(";")[1]))}`);
+		let Stat = client.const.upgr.find((x) => stat.startsWith(x.split(";")[0]));
+		if (!Stat) return message.reply(`The different types of stats are: ${client.utils.list(client.const.upgr.map((x) => x.split(";")[1]))}`);
 		Stat = Stat.split(";");
 		const alias = await client.utils.getDragonAlias(message.author.id);
-		data[4] = BigInt(data[4]) + 1n;
-		data[Stat[2]] = BigInt(data[Stat[2]]) - 1n;
+		data[4] = client.utils.expand(data[4]) + 1n;
+		data[Stat[2]] = client.utils.expand(data[Stat[2]]) - 1n;
 		if (data[Stat[2]] <= 1) return message.reply(`Each of your ${alias[0]}'s stats must have at least 1 point.`);
 		if (!cst.includes("maxdragon888")) {
 			await client.db.USERS.update({
 				dgrc: client.utils.parseCd(message.createdTimestamp, ms("30m")),
-				pet: data.map(String).join(";"),
+				drgn: data.map(client.utils.format).join(";"),
 			}, {
 				where: {
 					id: message.author.id,

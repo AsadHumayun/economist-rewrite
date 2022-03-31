@@ -10,6 +10,7 @@ export default {
 		let usr = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!usr) usr = message.author;
 		const data = await client.db.getUserData(usr.id);
+
 		message.reply({
 			embeds: [
 				new MessageEmbed()

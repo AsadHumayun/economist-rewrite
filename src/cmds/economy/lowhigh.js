@@ -32,7 +32,8 @@ export default {
 			embeds: [
 				new MessageEmbed()
 					.setColor(message.author.color)
-					.setTitle(`The Low-High Game - ${message.author.tag}`)
+					.setAuthor({ name: `LowHigh - ${message.author.tag}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+				//	.setTitle(`The Low-High Game - ${message.author.tag}`)
 					.setDescription(`Your number is: **${random0}**.\n\nIt is your job to guess as to whether or not the other random number that I generated is either lower, higher, or exactly the same as **${random0}**)`),
 			],
 		}).catch(() => {return;});
@@ -65,7 +66,7 @@ export default {
 					});
 				}
 				const add = client.utils.getRandomInt(750, 1000);
-				await client.utils.updateBalance(message.author, add, message, { a: `hl-win-${ops[interaction.customId]}` });
+				await client.utils.updateBalance(message.author, BigInt(add), message, { a: `hl-win-op?:${ops[interaction.customId]}` });
 				msg.edit({
 					embeds: [
 						new MessageEmbed()
@@ -76,6 +77,7 @@ export default {
 				});
 			})
 			.catch(() => {
+				// console.debug(e)
 				msg.edit({
 					embeds: [
 						new MessageEmbed(msg.embeds[0])

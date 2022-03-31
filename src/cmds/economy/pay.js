@@ -11,13 +11,13 @@ export default {
 		function notEnough() {
 			return message.reply("That amount exceeds your current balance");
 		}
-		const authorBal = isNaN(message.author.data.get("bal")) ? 0 : message.author.data.get("bal");
+		const authorBal = client.utils.expand(message.author.data.get("bal") || "0");
 		const usr = await client.utils.fetchUser(args[0]);
 		if (!usr) return message.reply(`Invalid user "${args[0]}"`, { allowedMentions: { parse: [] } });
 		if (message.author.id == usr.id) return message.reply("You can't pay yourself!");
 		let amt = isNaN(args[1]) ? 1 : args[1].toLowerCase();
 		if (amt.toString().startsWith("all")) amt = authorBal;
-		if (amt.toString().startsWith("half")) amt = authorBal / 2;
+		if (amt.toString().startsWith("half")) amt = authorBal / 2n;
 		amt = Math.trunc(amt);
 		if (amt < 1) return message.reply("You must enter a positive number");
 		if (isNaN(amt) && (!amt.startsWith("all") || !amt.startsWith("half"))) return message.reply("You must provide a valid number! (or just `all` or `half`)");
