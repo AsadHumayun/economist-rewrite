@@ -7,10 +7,9 @@ export default {
 	description: "Upgrade your vault, costing :dollar: 500 at first, but every time you upgrade, the more you'll need to pay the next time you upgrade again.",
 	cst: "bvault",
 	async run(client, message, args) {
-		const bal = message.author.data.get("bal");
-		const v = message.author.data.get("v").split(";").map(Number);
-		v[0] = Number(v[0]);
-		if (v[0] == 9999999999) return message.reply("Bruh you already have a maxvault...");
+		const bal = client.utils.expand(message.author.data.get("bal"));
+		const v = message.author.data.get("v").split(";").map(client.utils.expand);
+		if (v[0] == 9999999999) return message.reply("You already have a maxvault...");
 		if ((args[0] || "").toLowerCase() == "max") {
 			let cbal = bal;
 			let loops = 0;
@@ -28,13 +27,14 @@ export default {
 					levelups++;
 				}
 			}
-			if (levelups == 0) return message.reply(`Sorry mate, but you need at least :dollar: ${client.utils.comma(v[0] * 500)} in order to upgrade your bnk vault!`);
+			if (levelups == 0) return message.reply(`Sorry mate, but you need at least :dollar: ${client.utils.digits(v[0] * 500)} in order to upgrade your bnk vault!`);
 			if (cbal < 0) levelups--;
 
-			v[0] += levelups;
-			await client.utils.updateBalance(message.author, (bal - bal) + cbal0, message, { r: `vupgrade-t=${v[0]}` });
+			v[0] += BigInt(levelups);
+			await client.utils.updateBalance(message.author, (bal - bal) + cbal0, message, { r: `vupgrade-t?:${v[0]}` });
 			await client.db.USERS.update({
-				v: v.join(";"),
+				// @todo have client.utils.removeZeros for everything
+				v: v.map(client.utils.format).join(";"),
 			}, {
 				where: {
 					id: message.author.id,

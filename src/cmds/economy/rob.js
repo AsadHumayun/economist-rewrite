@@ -33,7 +33,7 @@ export default {
 			},
 		});
 		// 25% chance the robber gets caught by the police :cry:
-		if (result <= 10.00) {
+		if (result <= 7.5) {
 			const stolen = BigInt(((bal * BigInt(Math.floor(Math.random() * 100))) / 2n).toString().split(".")[0]);
 			await client.utils.updateBalance(message.author, stolen, message, { a: `robbed-U-${usr.tag}(${usr.id})` });
 			await client.utils.updateBalance(usr, -stolen, message, { a: `robbed-by-U-${message.author.tag}(${message.author.id})` });
@@ -51,7 +51,7 @@ export default {
 						new MessageEmbed()
 							.setColor(client.const.colors.red)
 							.setTitle("Uh Oh!")
-							.setDescription(`${message.author.tag} has stolen :dollar: ${client.utils.comma(client.utils.noExponents(stolen))} from you!`),
+							.setDescription(`${message.author.tag} has stolen :dollar: ${client.utils.digits(stolen)} from you!`),
 					],
 				},
 			});
