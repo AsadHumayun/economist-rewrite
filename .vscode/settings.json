@@ -3,6 +3,10 @@
 	"editor.insertSpaces": false,
 	"editor.tabSize": 2,
 	"discord.detailsEditing": "Editing {file_name}, {total_lines} lines",
-	"discord.detailsIdling": "Being lazy (no surprise there!)",
-	"discord.lowerDetailsNoWorkspaceFound": "{total_lines} ({file_size})",
+	"discord.detailsIdling": "Being lazy (no surprise there)",
+	"discord.lowerDetailsNoWorkspaceFound": "{total_lines} lines ({file_size})",
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true,
+		"source.organizeImports": false
+	}
 }
