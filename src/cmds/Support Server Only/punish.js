@@ -130,11 +130,8 @@ export default {
 			}
 		}
 		ofncs[index - 1] = Number(ofncs[index - 1]) + 1;
-		while (ofncs[ofncs.length - 1] == 0) {
-			ofncs.pop();
-		}
 		await client.db.USERS.update({
-			ofncs: ofncs.join(";"),
+			ofncs: client.utils.removeZeros(ofncs).join(";"),
 		}, {
 			where: {
 				id: user.id,

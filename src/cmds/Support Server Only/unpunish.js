@@ -9,9 +9,6 @@ export default {
 	ssOnly: true,
 	cst: "moderator",
 	async run(client, message, args) {
-		/**
-		 * @todo implement removeZeros function
-		 */
 		if (args.length < 2) return message.reply("Correct usage: `" + message.guild ? message.guild.prefix : client.const.prefix + "unpunish <user> <offence index> <?reason>`; requires mod");
 		const user = await client.utils.fetchUser(args[0]).catch(() => {return;});
 		if (!user) return message.reply({ content: `Invalid user "${args[0]}"`, allowedMentions: { parse: [] } });
@@ -23,18 +20,15 @@ export default {
 			return message.reply(`Index ${index} out of bounds for length ${Object.keys(client.const.ofncs).length}`);
 		}
 		if (!ofncs[index - 1]) ofncs[index - 1] = 0;
-		ofncs[index - 1] = ofncs[index - 1] - 1;
-		while (ofncs[ofncs.length - 1] == 0) {
-			ofncs.pop();
-		}
+		ofncs[index - 1] -= 1;
 		await client.db.USERS.update({
-			ofncs: ofncs.join(";"),
+			ofncs: client.utils.removeZeros(ofncs).join(";"),
 		}, {
 			where: {
 				id: user.id,
 			},
 		});
-		message.reply(`Successfully updated ofncs ${index} ${user.id} from ${ofncs[index - 1] + 1} to ${ofncs[index - 1]} ${reason ? `(reason: ${reason})` : ""}`);
+		message.reply(`Successfully updated ofncs ${index} ${user.id} from ${ofncs[index - 1] + 1} to ${ofncs[index - 1]} ${reason ? `R: ${reason}` : ""}`);
 		const level = Object.values(client.const.ofncs)[index - 1][1];
 		const mem = await client.guilds.cache.get(client.const.supportServer).members.fetch(user.id);
 		if (!mem) return;
