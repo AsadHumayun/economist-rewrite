@@ -518,7 +518,7 @@ class Funcs {
 	 * @returns {BigInteger}
 	 */
 	expand(str) {
-		if (!str) return 0n;
+		if (!str || str === "" || str === "0") return 0n;
 		str = str.toString();
 		if (!str.includes("&")) return BigInt(str);
 		str = str.split("&");
