@@ -64,3 +64,39 @@
 252<54926 [27482019]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~unpunish 757958112992034918 1
 253<61827 [27482019]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~get 757958112992034918 ofncs
 254<72878 [27482019]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~unpunish 757958112992034918 12 only because I have to
+255<566987 [27482028]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~Eval client.utils.format(149032184901324839414310)
+256<573778 [27482028]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~Eval client.utils.format(149032184901324839414310n)
+257<1050097 [27482036]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval args = "title, description, description, lol"
+
+const split = args.join(" ").split(",");
+const title = split[0];
+const description = split.slice(0).join(" ");
+
+title, description
+258<1070409 [27482036]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval args = "title, description, description, lol".split(",");
+const split = args.join(" ").split(",");
+const title = split[0];
+const description = split.slice(0).join(" ");
+
+title, description
+259<1078731 [27482036]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval args = "title, description, description, lol".split(",");
+const split = args.join(" ").split(",");
+const title = split[0];
+const description = split.slice(0).join(" ");
+
+title
+260<1090833 [27482036]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval args = "title, description, description, lol".split(",");
+const split = args.join(" ").split(",");
+const title = split[0];
+const description = split.slice(0).join(" ");
+
+title
+261<1107241 [27482037]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~bal
+262<1112135 [27482037]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [private (801010484052099084)]<Yukikaze#7777 (501710994293129216)>: ~eval const args = "title, description, description, lol".split(",");
+const split = args.join(" ").split(",");
+const title = split[0];
+const description = split.slice(0).join(" ");
+
+title
+263<33920 [27482050]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [tt (947063513568911360)]<Yukikaze#7777 (501710994293129216)>: ~dep 1
+264<6195 [27482051]>:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)] [tt (947063513568911360)]<Yukikaze#7777 (501710994293129216)>: ~dep 1

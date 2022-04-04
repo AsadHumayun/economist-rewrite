@@ -24,7 +24,7 @@ export default {
 		const data = await client.db.getUserData(message.author.id);
 		let channel = await client.db.CHNL.findByPk(message.channel.id);
 		if (!channel) channel = await client.db.CHNL.create({ id: message.channel.id });
-		const cst = data.get("cst") ? data.get("cst").split(";") : [];
+		const cst = data.get("cst")?.split(";") || [];
 		if (message.guild) {
 			let guild = await client.db.GUILDS.findByPk(message.guild.id);
 			if (!guild) guild = await client.db.GUILDS.create({ id: message.guild.id });

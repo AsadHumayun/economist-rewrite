@@ -464,11 +464,11 @@ class Funcs {
 				id: user.id,
 			},
 		});
-		const logMsg = `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}${this.digits(amount, 1)}`;
+		const logMsg = `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}${this.digits(amount, 18).replace(/[-+]/gi, "")}`;
 		process.logger.updateLogsFile("tt", message, true, logMsg, logMsg);
 	}
 	/**
-	 * Converts a number with either leading or trailing whitespaces to the shorthand notation.
+	 * Converts a number with either leading or trailing zeros to the shorthand notation.
 	 * In the example, all leading zeros are removed. As the trailing zeros are important, they are
 	 * represented by the number after the "&" symbol. Eg 1&10 means "1" with 10 zeros after it.
 	 * @example 0044574000000 becomes "4457&6"
@@ -476,40 +476,29 @@ class Funcs {
 	 * @returns {string}
 	 */
 	format(number) {
-		// console.log("NEW ROUND");
-		// console.log("Raw input", number, typeof number);
 		number = BigInt(number);
-		// console.log("casted", number, typeof number);
 		if (number === 0n) return "0";
 		const arr = number.toString().split("");
-		// console.log(array);
 		while (arr[0] === "0") {
 			arr.shift();
 		}
 
 		let zeros = 0;
 		let lastNonZero;
-		// console.log("zeros, lastNonZero: ", zeros, lastNonZero);
 		for (const index in arr) {
 			const element = arr[index];
 			if (element !== "0") {
-			//	console.log(`NonZero on index ${index}`, element);
 				lastNonZero = Number(index);
 				continue;
 			}
 			// EQ 0
 			// check to make sure no non-zero digits after this index
 			if (Number(arr.slice(index, arr.length + 1).join("")) > 0) continue;
-			// console.log("sliced array, chk no further non-zero, indx " + index, array.slice(index, array.length + 1))
 			zeros++;
 		}
 		if (zeros === 0) {
-			// console.log(array.join(""));
 			return arr.join("");
 		}
-		// console.log("NonZero", array[lastNonZero], lastNonZero);
-		// console.log("Sliced (0, lastNonZero)", array.slice(0, lastNonZero));
-		// console.log("Result", `${lastNonZero === 0 ? array[0] : array.slice(0, lastNonZero + 1).join("")}&${zeros}`);
 		return `${lastNonZero === 0 ? arr[0] : arr.slice(0, lastNonZero + 1).join("")}&${zeros}`;
 	}
 	/**

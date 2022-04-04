@@ -1,6 +1,7 @@
 "use strict";
 
 import { readdirSync } from "fs";
+import { number } from "mathjs/lib/entry/pureFunctionsAny.generated";
 
 import petaliases from "./petaliases.js";
 
