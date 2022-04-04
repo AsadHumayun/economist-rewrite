@@ -496,9 +496,7 @@ class Funcs {
 			if (Number(arr.slice(index, arr.length + 1).join("")) > 0) continue;
 			zeros++;
 		}
-		if (zeros === 0) {
-			return arr.join("");
-		}
+		if (zeros === 0) return arr.join("");
 		return `${lastNonZero === 0 ? arr[0] : arr.slice(0, lastNonZero + 1).join("")}&${zeros}`;
 	}
 	/**
