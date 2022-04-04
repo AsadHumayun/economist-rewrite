@@ -14,12 +14,12 @@ export default {
 		const data = await client.db.getUserData(usr.id);
 
 		if (!isNaN(args[1])) {
-			client.utils.updateBalance(usr, Number(args[1]), message);
+			client.utils.updateBalance(usr, BigInt(args[1]), message);
 			return message.channel.send({
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`:dollar: ${client.utils.comma(client.utils.noExponents(Number(args[1])))} have been added to ${usr.tag}'s account`),
+						.setDescription(`:dollar: ${client.utils.digits(args[1])} have been added to ${usr.tag}'s account`),
 				],
 			});
 		}

@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { existsSync, createWriteStream, writeFile } from "fs";
 import { Util } from "discord.js";
+import delay from "delay";
 
 /**
  * Custom logger.
@@ -75,22 +76,24 @@ class Logger {
 	 */
 	async updateLogsFile(logType, message, sendToChannel, fLog, cLog) {
 		if (!logType) return;
-		fLog = Util.splitMessage(fLog, { maxLength: 2000, char: "" });
+		fLog = Util.splitMessage(fLog, { maxLength: 2000, char: "" }).join("");
 		if (sendToChannel) cLog = Util.splitMessage(cLog, { maxLength: 2000, char: "" });
+		if (!fLog.endsWith("\n")) fLog += "\n";
 		const today = new Date(message?.createdTimestamp || Date.now()).toISOString().split("T")[0];
 		const path = `${process.cwd()}/.logs/${logType}/${today}.log`;
 		// today example: 2021-12-13 (for: 13 Dec 2021)
 		if (!existsSync(path)) {
 			const b = Date.now();
 			if (sendToChannel) this.client.channels.cache.get(this.client.const.logTypes[logType]).send({ content: `Logs file \`${path.replaceAll(process.cwd(), "[cwd]")}\` not found\nAttempting to create new logs file...` });
-			writeFile(path, fLog.join(""), (async (err) => {
+			writeFile(path, fLog, (async (err) => {
 				if (err) process.logger.error("FSERROR(CREATE_FILE)", err) && this.client.channels.cache.get(this.client.const.logTypes[logType]).send({ content: `Error whilst creating new logs file: \`${err}\`` });
 				if (sendToChannel) this.client.channels.cache.get(this.client.const.logTypes[logType]).send({ content: `Successfully created new logs file in ${Date.now() - b} ms` });
 			}));
 		}
 		else {
-			createWriteStream(path, { flags: "a" }).end(fLog.join(""));
+			createWriteStream(path, { flags: "a" }).end(fLog);
 		}
+		await delay(1000);
 		if (sendToChannel) {
 			await Promise.all(
 				cLog.map(async (log) => {

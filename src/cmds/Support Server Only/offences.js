@@ -21,8 +21,8 @@ export default {
 					.setTitle(`${user.tag}'s Offences [${ofncs.reduce((a, b) => a + b, 0)}]`)
 					.setDescription(
 						`
-\`${message.guild ? message.guild.prefix : client.const.prefix}punish <user> <offence>\` to punish a user for an offence;
-\`${message.guild ? message.guild.prefix : client.const.prefix}unpunish <user> <offence>\` to unpunish a user for an offence.
+\`${message.guild?.prefix || client.const.prefix}punish <user> <offence>\` to punish a user for an offence;
+\`${message.guild?.prefix || client.const.prefix}unpunish <user> <offence>\` to unpunish a user for an offence.
 
 ${Object.entries(client.const.ofncs).map((ofnc, index) => `[${ofnc[0]}]: ${ofnc[1][0]} - ${ofncs[index]}`).join("\n")}
 						`,

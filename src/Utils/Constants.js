@@ -1,6 +1,7 @@
 "use strict";
 
 import { readdirSync } from "fs";
+import { number } from "mathjs/lib/entry/pureFunctionsAny.generated";
 
 import petaliases from "./petaliases.js";
 
@@ -12,7 +13,7 @@ import petaliases from "./petaliases.js";
 const Constants = {
 	/**
 	 * The current status of my will to live.
-	 * @const {any}
+	 * @type {WillResolvable}
 	 */
 	willToLive: null,
 	/**
@@ -69,9 +70,9 @@ const Constants = {
 	/**
 	 * The amount of XP required to obtain each dragon level, starting with the amount of XP needed to obtain level 2 being `400`.
 	 * Doubles each time, so it becomes more difficult as they (the users) progress.
-	 * @const {number[]}
+	 * @const {BigInt[]}
 	 */
-	reqs: [400, 800, 1600, 3200, 6400, 12800, 25600, 51200, 102400, 204800, 409600, 819200, 1638400, 3276800, 6553600, 13107200, 26214400, 52428800, 104857600, 209715200, 419430400, 838860800, 1677721600, 3355443200, 6710886400, 13421772800, 26843545600, 53687091200, 107374182400, 214748364800, 429496729600, 858993459200, 1717986918400, 3435973836800, 6871947673600, 13743895347200, 27487790694400, 54975581388800, 109951162777600, 219902325555200, 439804651110400, 879609302220800, 1759218604441600, 3518437208883200, 7036874417766400, 14073748835532800, 28147497671065600, 56294995342131200, 112589990684262400, 225179981368524800],
+	reqs: [400n, 800n, 1600n, 3200n, 6400n, 12800n, 25600n, 51200n, 102400n, 204800n, 409600n, 819200n, 1638400n, 3276800n, 6553600n, 13107200n, 26214400n, 52428800n, 104857600n, 209715200n, 419430400n, 838860800n, 1677721600n, 3355443200n, 6710886400n, 13421772800n, 26843545600n, 53687091200n, 107374182400n, 214748364800n, 429496729600n, 858993459200n, 1717986918400n, 3435973836800n, 6871947673600n, 13743895347200n, 27487790694400n, 54975581388800n, 109951162777600n, 219902325555200n, 439804651110400n, 879609302220800n, 1759218604441600n, 3518437208883200n, 7036874417766400n, 14073748835532800n, 28147497671065600n, 56294995342131200n, 112589990684262400n, 225179981368524800n],
 	/**
 	 * The intended array length for dragons.
 	 * Prevents unexpected behaviours.
@@ -93,7 +94,7 @@ const Constants = {
 	 * Shown on embeds when the user does not have a custom preference set.
 	 * @const {string}
 	 */
-	clr: "#00aaaa;0",
+	clr: "00aaaa;0",
 	/**
 	 * The maximum level that a dragon may be before it is counted as "maxed" out.
 	 * @const {number}
@@ -451,8 +452,8 @@ const Constants = {
 			key: "fsh;0",
 			emoji: ":dolphin:",
 			gives: {
-				hp: 100,
-				en: 10,
+				hp: 100n,
+				en: 10n,
 			},
 		},
 		sh: {
@@ -460,8 +461,8 @@ const Constants = {
 			key: "fsh;1",
 			emoji: ":shark:",
 			gives: {
-				hp: 0,
-				en: 50,
+				hp: 0n,
+				en: 50n,
 			},
 		},
 		blow: {
@@ -469,8 +470,8 @@ const Constants = {
 			key: "fsh;2",
 			emoji: ":blowfish:",
 			gives: {
-				hp: 0,
-				en: 15,
+				hp: 0n,
+				en: 15n,
 			},
 		},
 		trop: {
@@ -478,8 +479,8 @@ const Constants = {
 			key: "fsh;3",
 			emoji: ":tropical_fish:",
 			gives: {
-				hp: 500,
-				en: 35,
+				hp: 500n,
+				en: 35n,
 			},
 		},
 		f: {
@@ -487,8 +488,8 @@ const Constants = {
 			key: "fsh;4",
 			emoji: ":fish:",
 			gives: {
-				hp: 2500,
-				en: 55,
+				hp: 2500n,
+				en: 55n,
 			},
 		},
 		ch: {
@@ -496,8 +497,8 @@ const Constants = {
 			key: "chillpills",
 			emoji: "<:chillpill:722828409331253349>",
 			gives: {
-				hp: 0,
-				en: 100,
+				hp: 0n,
+				en: 100n,
 			},
 		},
 	},
@@ -587,7 +588,7 @@ const Constants = {
 						CST: "fishrod",
 						EMOJI: this.emoji.fishing_rod,
 						SELLABLE: true,
-						PRICE: 25,
+						PRICE: 25n,
 						// no cooldown here as there is a command cooldown on the fish command globally
 						CD: null,
 					},
@@ -598,7 +599,7 @@ const Constants = {
 						CST: "slrprmt",
 						EMOJI: this.emoji.slrprmt,
 						SELLABLE: false,
-						PRICE: 25,
+						PRICE: 25n,
 						CD: null,
 					},
 				],
@@ -614,7 +615,7 @@ const Constants = {
 						INDX: 0,
 						EMOJI: this.emoji.chill,
 						SELLABLE: true,
-						PRICE: 25,
+						PRICE: 25n,
 						// 6h
 						CD: 21600000,
 						CDK: "chillc",
@@ -637,7 +638,7 @@ const Constants = {
 						INDX: 1,
 						EMOJI: this.emoji.adrenaline,
 						SELLABLE: true,
-						PRICE: 25,
+						PRICE: 25n,
 						// 90m, 1.5hr
 						CD: 5400000,
 						// how long the affects of this drug will last
@@ -653,7 +654,7 @@ const Constants = {
 						INDX: 2,
 						EMOJI: this.emoji.fish,
 						SELLABLE: true,
-						PRICE: 25,
+						PRICE: 25n,
 						CD: null,
 						POTENCY: null,
 					},
@@ -665,7 +666,7 @@ const Constants = {
 						INDX: 3,
 						EMOJI: this.emoji.trop,
 						SELLABLE: true,
-						PRICE: 25,
+						PRICE: 25n,
 						CD: null,
 						POTENCY: null,
 					},
@@ -677,7 +678,7 @@ const Constants = {
 						INDX: 4,
 						EMOJI: this.emoji.shark,
 						SELLABLE: true,
-						PRICE: 25,
+						PRICE: 25n,
 						CD: null,
 						POTENCY: null,
 					},
@@ -689,7 +690,7 @@ const Constants = {
 						INDX: 5,
 						EMOJI: this.emoji.blowfish,
 						SELLABLE: true,
-						PRICE: 25,
+						PRICE: 25n,
 						CD: null,
 						POTENCY: null,
 					},
@@ -701,7 +702,7 @@ const Constants = {
 						INDX: 6,
 						EMOJI: ":dolphin:",
 						SELLABLE: true,
-						PRICE: 25,
+						PRICE: 25n,
 						CD: null,
 						POTENCY: null,
 					},
@@ -717,7 +718,7 @@ const Constants = {
 						CST: "bvault",
 						EMOJI: this.emoji.bvault,
 						SELLABLE: true,
-						PRICE: 10_000,
+						PRICE: 10_000n,
 						CD: null,
 					},
 					{
@@ -727,7 +728,7 @@ const Constants = {
 						CST: "rc",
 						EMOJI: this.emoji.rc,
 						SELLABLE: true,
-						PRICE: 500,
+						PRICE: 500n,
 						CD: null,
 					},
 				],

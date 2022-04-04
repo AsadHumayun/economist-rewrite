@@ -24,7 +24,7 @@ export default {
 		const data = await client.db.getUserData(message.author.id);
 		let channel = await client.db.CHNL.findByPk(message.channel.id);
 		if (!channel) channel = await client.db.CHNL.create({ id: message.channel.id });
-		const cst = data.get("cst") ? data.get("cst").split(";") : [];
+		const cst = data.get("cst")?.split(";") || [];
 		if (message.guild) {
 			let guild = await client.db.GUILDS.findByPk(message.guild.id);
 			if (!guild) guild = await client.db.GUILDS.create({ id: message.guild.id });
@@ -134,23 +134,12 @@ export default {
 			return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
 		}
 
-		if (cst.includes("debugger")) {
-			message.reply({
-				embeds: [
-					new MessageEmbed()
-						.setColor(message.author.color)
-						.setTitle("Message content parsed as:")
-						.setDescription("```\n" + message.content + "\n```"),
-				],
-			});
-		}
-
-		// todo: make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>
+		// @todo : make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>
 		if (!["punish", "unpunish", "offences", "ban", "mute", "unmute", "warn"].includes(command?.name)) {
-			let stun = data.get("stn") || 0;
+			let stun = client.utils.expand(data.get("stn")) || 0n;
 			if (stun && (!cst.includes("antistun"))) {
-				stun = Number(stun) * 60_000;
-				if (stun - message.createdTimestamp >= 1000) {
+				stun *= 60_000n;
+				if (stun - BigInt(message.createdTimestamp) >= 1000n) {
 					return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.utils.cooldown(message.createdTimestamp, stun)} left)` });
 				}
 			}
@@ -224,9 +213,7 @@ export default {
 		}
 
 		if (command.disabled) {
-			return message.reply({
-				content: "🤧 This command has been disabled by an administrator. Sorreh.",
-			});
+			return message.reply({ content: "🤧 This command has been disabled by an administrator. Sorreh." });
 		}
 
 		if (command.cst && (!cst.includes(command.cst) && ((!client.const.owners.includes(message.author.id))))) {
@@ -243,12 +230,16 @@ export default {
 				message.reply(`Sorry, but an error occurred :/\n\`${e.message.replaceAll(process.cwd(), "[cwd]/")}\``);
 			}
 			else {
-				message.reply({ embeds: [
-					new MessageEmbed()
-						.setColor("#da0000")
-						.setTitle("[DEBUGGER]: Sorry, but an error occured :/")
-						.setDescription(`\`\`\`\n${e.replaceAll(process.cwd(), "[cwd]")}\n\`\`\`\n\n(stacktrace hidden)`),
-				],
+				// Sometimes Windows uses \ in their absolute paths and ESM uses /
+				// Therefore we replace all instances of "\" with "/" to ensure that the cwd is hidden
+				e.stack = e.stack.replaceAll("\\", "[/b]");
+				message.reply({
+					embeds: [
+						new MessageEmbed()
+							.setColor("#da0000")
+							.setTitle("[DEBUGGER]: Sorry, but an error occured :/")
+							.setDescription(`\`\`\`\n${e.stack.replaceAll(process.cwd().replaceAll("\\", "/"), "[cwd]")}\n\`\`\``),
+					],
 				});
 			}
 		}
@@ -265,7 +256,16 @@ export default {
 		// do NOT remove the \n at the end of the log message. Doing so makes all the logs in the logs file being clumped together on the same line.
 		const LOG = `${old + 1} [${Math.trunc(message.createdTimestamp / 60000)} (${client.uptime})]: ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})][${message.channel.name}]` : `[DMChannel (${message.channel.id})]`}<${message.author.tag} (${message.author.id})>: ${message.content}\n`;
 		const fLog = `${old + 1}<${client.uptime} [${Math.trunc(message.createdTimestamp / 60000)}]>: ${this.isDM(message.channel) ? `[<DMChannel> (${message.channel.id})]` : ""} ${!this.isDM(message.channel) ? `[${message.guild.name} (${message.guild.id})] [${message.channel.name} (${message.channelId})]` : ""}<${message.author.tag} (${message.author.id})>: ${message.content}\n`;
-
+		if (cst.includes("debugger")) {
+			message.reply({
+				embeds: [
+					new MessageEmbed()
+						.setColor(message.author.color)
+						.setTitle("Arguments :")
+						.setDescription("```\n" + args + "\n```"),
+				],
+			});
+		}
 		try {
 			// this just attaches data onto message.author, meaning that I can use it anywhere where I have message.author. Beautiful!
 			// and refresh data while you're at it, thank youp

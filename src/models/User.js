@@ -28,7 +28,7 @@ export default (sequelize, DataTypes) => {
 			},
 		},
 		bal: {
-			type: DataTypes.NUMBER,
+			type: DataTypes.STRING,
 			validate: {
 				_isNumber: customValidators._isNumber,
 			},
@@ -115,7 +115,7 @@ export default (sequelize, DataTypes) => {
 			},
 		},
 		dns: {
-			type: DataTypes.NUMBER,
+			type: DataTypes.STRING,
 			validate: {
 				_isNumber: customValidators._isNumber,
 			},

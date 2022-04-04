@@ -31,9 +31,9 @@ export default {
 		});
 		const didntWork = Math.floor(Math.random() * 100);
 
-		const bal = data.get("bal") || 0;
-		let amtLost = Math.floor(bal / 5);
-		if (bal - amtLost < 0) amtLost = bal;
+		const bal = client.utils.expand(data.get("bal")) || 0n;
+		let amtLost = BigInt((bal / 5).toString().split(".")[0]);
+		if (bal - amtLost < 0n) amtLost = bal;
 		await client.utils.dm({
 			userId: user.id,
 			message: {
@@ -52,7 +52,7 @@ export default {
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`It turns out ${user.tag} is a loser and ends up pissing on the floor, losing their dignity`),
+						.setDescription(`${user.tag} was attacked with tomatoes as they were entering the court, lol`),
 				],
 			},
 			channel: message.channel,
@@ -67,7 +67,7 @@ export default {
 					embeds: [
 						new MessageEmbed()
 							.setColor(message.author.color)
-							.setDescription(`${user.tag}'s lawyer was able to save ${user.tag}'s ass this time round!`),
+							.setDescription(`${user.tag}'s lawyer was able to save ${user.tag} time round!`),
 					],
 				},
 				channel: message.channel,

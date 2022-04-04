@@ -16,7 +16,8 @@ export default {
 		if (item.CST) {
 			if (!cst.includes(item.CST)) return message.reply(`You do not own a ${item.EMOJI} ${item.DISPLAY_NAME}... How do you expect to sell it?`);
 			cst = cst.filter(f => f !== item.CST);
-			await client.utils.updateBalance(message.author, item.DISPLAY_NAME == client.const.shopItems[2].items[1].DISPLAY_NAME ? item.PRICE : (item.PRICE / 2), message, { a: `sell-itm-${item.DISPLAY_NAME.toLowerCase()}` });
+			const price = item.DISPLAY_NAME == client.const.shopItems[2].items[1].DISPLAY_NAME ? item.PRICE : (BigInt(Math.round(Number(item.PRICE) / 2)));
+			await client.utils.updateBalance(message.author, price, message, { a: `sell-itm-${item.DISPLAY_NAME.toLowerCase()}` });
 			await client.db.USERS.update({
 				cst: cst.join(";"),
 			}, {
@@ -28,18 +29,19 @@ export default {
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`${message.author.tag} has successfully sold ${item.EMOJI} ${item.DISPLAY_NAME} and received :dollar: ${client.utils.comma(Math.round(item.DISPLAY_NAME == client.const.shopItems[2].items[1].DISPLAY_NAME ? client.const.shopItems[2].items[1].PRICE : item.PRICE / 2))}`),
+						.setDescription(`${message.author.tag} has successfully sold ${item.EMOJI} ${item.DISPLAY_NAME} and received :dollar: ${client.utils.digits(price)}`),
 				],
 			});
 		}
 		else {
-			const amt = isNaN(args[1]) || Number(args[1]) < 0 ? 1 : Number(args[1]);
-			const drgs = message.author.data.get("drgs")?.split(";").map(Number) || [];
-			if (drgs[item.INDX] - amt < 0 || !drgs[item.INDX]) return message.reply(`You don't have ${item.EMOJI} ${client.utils.comma(amt)}`);
+			const amt = isNaN(args[1]) || BigInt(args[1]) < 0n ? 1n : BigInt(args[1]);
+			const drgs = message.author.data.get("drgs")?.split(";").map(client.utils.expand) || [];
+			if (drgs[item.INDX] - amt < 0n || !drgs[item.INDX]) return message.reply(`You don't have ${item.EMOJI} ${client.utils.digits(amt)}`);
 			drgs[item.INDX] -= amt;
-			await client.utils.updateBalance(message.author, Math.round((item.PRICE / 2) * amt), message, { a: `sell-itm-${item.DISPLAY_NAME.toLowerCase()}-${amt}` });
+			const price = BigInt(BigInt(Math.round(Number(item.PRICE) / 2)) * amt).toString().split(".")[0];
+			await client.utils.updateBalance(message.author, price, message, { a: `sell-itm-${item.DISPLAY_NAME.toLowerCase()}-${amt}` });
 			await client.db.USERS.update({
-				drgs: client.utils.removeZeros(drgs).join(";"),
+				drgs: client.utils.removeZeros(drgs.map(client.utils.format)).join(";"),
 			}, {
 				where: {
 					id: message.author.id,
@@ -49,7 +51,7 @@ export default {
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`${message.author.tag} has successfully sold ${item.EMOJI} ${client.utils.comma(amt)} and received :dollar: ${client.utils.comma(Math.round(item.PRICE / 2) * amt)}`),
+						.setDescription(`${message.author.tag} has successfully sold ${item.EMOJI} ${client.utils.digits(amt)} and received :dollar: ${client.utils.digits(price)}`),
 				],
 			});
 		}

@@ -11,10 +11,10 @@ export default {
 		if (!names.find(e => e.startsWith(client.utils.rossCaps(args.join(" "))))) return message.reply("You must provide a valid ID of what you would like to purchase (the ID of an item is the number in brackets next to that item in the shop) in order for this command to work!");
 		const item = client.const.shopItems.map(({ items }) => items.find(({ DISPLAY_NAME }) => DISPLAY_NAME.startsWith(client.utils.rossCaps(args.join(" "))))).filter(f => typeof f != "undefined")[0];
 		if (item.CST || !item.CDK) return message.reply("You cannot consume that item");
-		const drgs = message.author.data.get("drgs")?.split(";") || [];
-		if (!drgs[item.INDX] || drgs[item.INDX] - 1 < 0) return message.reply(`You don't have ${item.EMOJI} 1`);
+		const drgs = message.author.data.get("drgs")?.split(";").map(client.utils.expand) || [];
+		if (!drgs[item.INDX] || drgs[item.INDX] - 1n < 0n) return message.reply(`You don't have ${item.EMOJI} 1`);
 		const dose = message.author.data.get(`dose${item.INDX}`);
-		if (Math.floor(message.createdTimestamp / 60_000) < dose) return message.reply(`Your ${item.EMOJI} is active for another ${client.utils.cooldown(message.createdTimestamp, dose * 60_000)}!`);
+		if (Math.floor(message.createdTimestamp / 60_000) < dose) return message.reply(`Your ${item.EMOJI} is still active for another ${client.utils.cooldown(message.createdTimestamp, dose * 60_000)}!`);
 		const lastUsed = message.author.data.get(item.CDK);
 		if (lastUsed) {
 			const time = client.utils.cooldown(message.createdTimestamp, lastUsed * 60_000);
@@ -30,14 +30,15 @@ export default {
 			],
 		});
 		try {
-			drgs[item.INDX] -= 1;
+			drgs[item.INDX] -= 1n;
 			await client.db.USERS.update({
-				drgs: client.utils.removeZeros(drgs).join(";"),
+				drgs: client.utils.removeZeros(drgs.map(client.utils.format)).join(";"),
 			}, {
 				where: {
 					id: message.author.id,
 				},
 			});
+			// @todo - Make it so this function only uses the Message parameter as that's the only thing necessary here.
 			item.executeUponDose(message.author, message.author.data, message);
 		}
 		catch (e) {

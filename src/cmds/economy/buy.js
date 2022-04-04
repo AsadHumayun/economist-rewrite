@@ -10,13 +10,13 @@ export default {
 		const ids = (client.const.shopItems.map(({ items }) => items.map(({ ID }) => ID).join(";")).join(";")).split(";");
 		if (!ids.includes(args[0])) return message.reply("You must provide a valid ID of what you would like to purchase (the ID of an item is the number in brackets next to that item in the shop) in order for this command to work!");
 		const item = client.const.shopItems.map(({ items }) => items.find(({ ID }) => ID == args[0])).filter(f => typeof f != "undefined")[0];
-		const bal = Number(message.author.data.get("bal") || 0);
+		const bal = BigInt(message.author.data.get("bal") || 0);
 		// now that we've isolated the item the user wants to purchase, we can add it to them depeneding on its type
 		// eg if it's a cst, it'll be set differently etc
 		if (item.CST) {
 			const cst = message.author.data.get("cst")?.split(";") || [];
 			if (cst.includes(item.CST)) return message.reply(`It seems that you already own ${item.EMOJI} ${item.DISPLAY_NAME}!`);
-			if (bal - item.PRICE < 0) return message.reply(`Your balance of :dollar: ${client.utils.comma(bal)} is insufficient to complete this transaction`);
+			if (bal - item.PRICE < 0n) return message.reply(`Your balance of :dollar: ${client.utils.comma(bal)} is insufficient to complete this transaction`);
 			cst.push(item.CST);
 			await client.db.USERS.update({
 				bal: bal - item.PRICE,
@@ -38,14 +38,14 @@ export default {
 		else {
 			// user is purchasing a collectable item
 			// stored in drgs key
-			const drgs = message.author.data.get("drgs")?.split(";").map(Number) || [];
-			const amt = isNaN(args[1]) || Number(args[1]) <= 0 ? 1 : Number(args[1]);
+			const drgs = message.author.data.get("drgs")?.split(";").map(BigInt) || [];
+			const amt = isNaN(args[1]) || BigInt(args[1]) <= 0n ? 1n : BigInt(args[1]);
 			if (bal - (item.PRICE * amt) < 0) return message.reply(`Your balance of :dollar: ${client.utils.comma(bal)} is insufficient to complete this transaction`);
 			if (!drgs[item.INDX]) drgs[item.INDX] = 0;
 			drgs[item.INDX] += amt;
 			await client.db.USERS.update({
-				bal: bal - (item.PRICE * amt),
-				drgs: client.utils.removeZeros(drgs).join(";"),
+				bal: String(bal - (item.PRICE * amt)),
+				drgs: client.utils.removeZeros(drgs.map(String)).join(";"),
 			}, {
 				where: {
 					id: message.author.id,
