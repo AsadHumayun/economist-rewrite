@@ -1,7 +1,6 @@
 "use strict";
 
 import { readdirSync } from "fs";
-import { number } from "mathjs/lib/entry/pureFunctionsAny.generated";
 
 import petaliases from "./petaliases.js";
 
@@ -629,6 +628,10 @@ const Constants = {
 							});
 							await message.client.db.USERS.update(obj, { where: { id: user.id } });
 						},
+				/*		gives: {
+							hp: ,
+							ener: ,
+						}, */
 					},
 					{
 						ID: 102,

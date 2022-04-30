@@ -29,7 +29,7 @@ class Logger {
 	error(mode, err) {
 		console.log(`${chalk.rgb(100, 100, 100)(`[${mode} => `)}${chalk.red(" ERROR")}${chalk.rgb(100, 100, 100)("]")} ${err}`);
 	}
-	/**
+	/**h
 	 * Sends a warning to the console.
 	 * @param {string} mode General context for error
 	 * @param {string} warning Warning to be sent to console
