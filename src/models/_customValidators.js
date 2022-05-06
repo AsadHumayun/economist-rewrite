@@ -1,6 +1,9 @@
 "use strict";
 
+import { client } from "../index.js";
+
 export function allNumbers(data) {
+	console.log(data, data.toString().replaceAll("&", "").split(";").map(e => e == "" ? "0" : e).map(Number));
 	data = data.toString().replaceAll("&", "").split(";").map(e => e == "" ? "0" : e).map(Number);
 	if (data.includes(NaN)) throw new Error("\n[CustomValidator => allNumbers] [Fail] All values must be numeric.");
 }

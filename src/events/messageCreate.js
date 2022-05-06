@@ -65,9 +65,9 @@ export default {
 				}
 				else if (!cst.includes("noxp")) {
 				// no cooldown; add xp.
-					const xp = data.get("xp").split(";").map(Number);
+					const xp = (data.get("xp") || "0;0").split(";").map(Number);
 					xp[1] += client.utils.getRandomInt(14, 35);
-					if ((xp[1] / 200) > xp[0]) {
+					if (xp[1] / 200 > xp[0]) {
 						message.channel.send({ content: `Congratulations, you've levelled up! You're now level **${xp[0] + 1}**! View your XP and level by typing \`${message.guild ? message.guild.prefix : client.const.prefix}level\``, allowedMentions: { repliedUser: false } });
 						xp[0]++;
 					}
