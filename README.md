@@ -3,7 +3,7 @@
 
 ## Author
 
-**Economist** © [Asad Humayun](https://github.com/asadhumayun).  
+**Economist** © [Asad Humayun](https://github.com/asadhumayun).
 Authored and maintained by Asad.
 
 > GitHub [@AsadHumayun](https://github.com/asadhumayun)
