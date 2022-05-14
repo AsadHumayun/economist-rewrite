@@ -113,3 +113,6 @@ eventHandler.load();
 process.on("unhandledRejection", e => process.logger.error("unhandledRej", e.stack));
 
 client.login(process.env.token);
+
+// necessary to export so utils can be accessed in custom validators file
+export { client };

@@ -76,7 +76,7 @@ class Funcs {
 	 * @param {?number} maximumLen The maximum length of the string to be brought down (or brought up) to this integer. Default: 18
 	 * @returns {string}
 	 */
-	digits(bal, maximumLen = 19) {
+	digits(bal, maximumLen = 18) {
 		if (typeof bal !== "string") bal = this.format(bal);
 		const BAL = bal;
 		if (this.expand(bal) === 0n) return "0";
@@ -464,7 +464,7 @@ class Funcs {
 				id: user.id,
 			},
 		});
-		const logMsg = `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}${this.digits(amount, 18).replace(/[-+]/gi, "")}`;
+		const logMsg = `${Math.floor(Date.now() / 60_000)} (${message.guild.name} (${message.guild.id})) A<${overrides.a ?? `${message.author.tag} (${message.author.id})`}> R<${overrides.r ?? `${user.tag} (${user.id})`}> ${amount < 0 ? "-" : "+"}${this.digits(amount, 10).replace(/[+-]/gi, "")}`;
 		process.logger.updateLogsFile("tt", message, true, logMsg, logMsg);
 	}
 	/**
@@ -496,9 +496,7 @@ class Funcs {
 			if (Number(arr.slice(index, arr.length + 1).join("")) > 0) continue;
 			zeros++;
 		}
-		if (zeros === 0) {
-			return arr.join("");
-		}
+		if (zeros === 0) return arr.join("");
 		return `${lastNonZero === 0 ? arr[0] : arr.slice(0, lastNonZero + 1).join("")}&${zeros}`;
 	}
 	/**

@@ -65,14 +65,14 @@ export default {
 				}
 				else if (!cst.includes("noxp")) {
 				// no cooldown; add xp.
-					const xp = data.get("xp").split(";").map(Number);
+					const xp = (data.get("xp") || "0;0").split(";").map((dataValue) => Number(client.utils.expand(dataValue)) || 0);
 					xp[1] += client.utils.getRandomInt(14, 35);
-					if ((xp[1] / 200) > xp[0]) {
+					if (xp[1] / 200 > xp[0]) {
 						message.channel.send({ content: `Congratulations, you've levelled up! You're now level **${xp[0] + 1}**! View your XP and level by typing \`${message.guild ? message.guild.prefix : client.const.prefix}level\``, allowedMentions: { repliedUser: false } });
 						xp[0]++;
 					}
 					await client.db.USERS.update({
-						xp: xp.join(";"),
+						xp: client.utils.removeZeros(xp).join(";"),
 						xpc: Math.trunc(message.createdTimestamp / 60_000) + 1,
 					}, {
 						where: {
@@ -130,14 +130,14 @@ export default {
 		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 		const stnb = data.get("stnb") || "stunned";
 		if (channel.get("dsbs") && command.name !== "disable") return;
-		if (cst.includes("pstn") && (!cst.includes("antistun"))) {
+		if (cst.includes("pstn") && (!cst.includes("antistun")) && !client.const.owners.includes(message.author.id)) {
 			return message.reply({ content: `You can't do anything while you're ${stnb}! (${Math.round(message.createdTimestamp / 60_000)} minutes left)` });
 		}
 
 		// @todo : make a <Command>.usableWS? : <Boolean> - stands for command.useableWhileStunned?<Boolean>
 		if (!["punish", "unpunish", "offences", "ban", "mute", "unmute", "warn"].includes(command?.name)) {
 			let stun = client.utils.expand(data.get("stn")) || 0n;
-			if (stun && (!cst.includes("antistun"))) {
+			if (stun && (!cst.includes("antistun") || (!client.const.owners.includes(message.author.id)))) {
 				stun *= 60_000n;
 				if (stun - BigInt(message.createdTimestamp) >= 1000n) {
 					return message.reply({ content: `You can't do anything while you're ${stnb}! (${client.utils.cooldown(message.createdTimestamp, stun)} left)` });
