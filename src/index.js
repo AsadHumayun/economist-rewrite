@@ -1,4 +1,9 @@
 ﻿"use strict";
+/**
+ * 
+ * @author asadhumayun
+ */
+
 import { Collection, Client, Options, Intents } from "discord.js";
 import { config } from "dotenv";
 import Sequelize, { DataTypes } from "sequelize";
@@ -114,5 +119,5 @@ process.on("unhandledRejection", e => process.logger.error("unhandledRej", e.sta
 
 client.login(process.env.token);
 
-// necessary to export so utils can be accessed in custom validators file
+// necessary to export so utils can be accessed in files where client is not available
 export { client };
