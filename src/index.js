@@ -9,8 +9,8 @@ import { config } from "dotenv";
 import Sequelize, { DataTypes } from "sequelize";
 
 import { EventHandler } from "./events/EventHandler.js";
-import { Logger } from "./Utils/Logger.js";
-import { Utils, Constants } from "./Utils/Construct.js";
+import { Logger } from "./utils/Logger.js";
+import { Utils, Constants } from "./utils/utils.js";
 
 import User from "./models/User.js";
 import Guild from "./models/Guild.js";
