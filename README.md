@@ -3,7 +3,7 @@
 
 ## Author
 
-**Economist** © [Static](https://github.com/almoststatic).  
-Authored and maintained by Static.
+**Economist** © [Asad Humayun](https://github.com/asadhumayun).  
+Authored and maintained by Asad.
 
-> GitHub [@almoststatic](https://github.com/iCrawl)
+> GitHub [@AsadHumayun](https://github.com/asadhumayun)
