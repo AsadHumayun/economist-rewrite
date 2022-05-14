@@ -1,5 +1,5 @@
 "use strict";
-import { Constants } from "../Utils/Constants.js";
+import { Constants } from "../utils/Constants.js";
 
 export default (sequelize, DataTypes) => {
 	return sequelize.define("guild", {

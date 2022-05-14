@@ -127,3 +127,14 @@
 [27541509 (855662)] Executing (default): UPDATE `users` SET `clr`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":"BLACK;RED;GREEN;1","$2":"2022-05-14 01:09:10.814 +00:00","$3":"501710994293129216"}
 [27541509 (855674)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":740,"$2":"2022-05-14 01:09:10.825 +00:00","$3":"671708767813107724"}
 [27541509 (855689)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":397,"$2":"2022-05-14 01:09:10.840 +00:00","$3":"501710994293129216"}
+[27542252 (1718)] Executing (default): UPDATE `users` SET `xp`=$1,`xpc`=$2,`updatedAt`=$3 WHERE `id` = $4; {"$1":"1;64","$2":27542253,"$3":"2022-05-14 13:32:09.314 +00:00","$4":"501710994293129216"}
+[27542252 (1730)] Executing (default): UPDATE `users` SET `clr`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":"BLACK;RED;GREEN;2","$2":"2022-05-14 13:32:09.335 +00:00","$3":"501710994293129216"}
+[27542252 (1745)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":741,"$2":"2022-05-14 13:32:09.350 +00:00","$3":"671708767813107724"}
+[27542252 (1761)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":398,"$2":"2022-05-14 13:32:09.365 +00:00","$3":"501710994293129216"}
+[27542252 (9683)] Executing (default): UPDATE `users` SET `clr`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":"BLACK;RED;GREEN;0","$2":"2022-05-14 13:32:17.288 +00:00","$3":"501710994293129216"}
+[27542252 (9698)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":742,"$2":"2022-05-14 13:32:17.303 +00:00","$3":"671708767813107724"}
+[27542252 (9712)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":26666,"$2":"2022-05-14 13:32:17.317 +00:00","$3":"671708767813107724"}
+[27542252 (9721)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":399,"$2":"2022-05-14 13:32:17.326 +00:00","$3":"501710994293129216"}
+[27542252 (19420)] Executing (default): UPDATE `users` SET `clr`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":"BLACK;RED;GREEN;1","$2":"2022-05-14 13:32:27.025 +00:00","$3":"501710994293129216"}
+[27542252 (19435)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":26667,"$2":"2022-05-14 13:32:27.040 +00:00","$3":"671708767813107724"}
+[27542252 (19652)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":400,"$2":"2022-05-14 13:32:27.257 +00:00","$3":"501710994293129216"}
