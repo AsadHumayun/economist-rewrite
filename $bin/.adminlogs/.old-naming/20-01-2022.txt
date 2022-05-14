@@ -1,9 +1,0 @@
-[733854]: 27377369:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~eval             const names = Object.keys({A:"b"}).map(String.prototype.toLowerCase);
-names;
-[759203]: 27377370:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~eval             const names = Object.keys({A:"b"})
-[775040]: 27377370:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~eval             const names = Object.keys({a:"b"}).map(String.prototype.toLowerCase);
-[797058]: 27377370:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~eval Object.keys({ test: "t", test2: "ugh" })
-[814255]: 27377370:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~eval Object.keys({ e: "" })
-[834199]: 27377371:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~eval Object.keys({a:"b"}).map(String.prototype.toLowerCase);
-[851051]: 27377371:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~eval Object.keys({a:"b"}).map(String.prototype.toLowerCase).call;
-[860983]: 27377371:  [ER-PRIV (911784758600679455)][private (911802238442287124)]<Yukikaze#0240 (501710994293129216)>: ~eval Object.keys({a:"b"}).map(String.prototype.toLowerCase.call);

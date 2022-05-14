@@ -1,3 +1,0 @@
-[78385]: 27366257:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)][testing (930410432664051792)]<Yukikaze#0240 (501710994293129216)>: ;eval client.commands.get('bal')
-[88719]: 27366257:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)][testing (930410432664051792)]<Yukikaze#0240 (501710994293129216)>: ;eval client.commands.get('balance')
-[25626]: 27366262:  [Economist's Economists ✧*̣̩⋆̩☽⋆゜ (706845688969035897)][testing (930410432664051792)]<Yukikaze#0240 (501710994293129216)>: ;get 501710994293129216 cstmrl
