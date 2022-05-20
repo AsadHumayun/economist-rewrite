@@ -14,12 +14,12 @@ const Constants = {
 	 * The current status of my will to live.
 	 * @type {WillResolvable}
 	 */
-	willToLive: null,
+	willToLive: "lost-it-a-long-time-ago",
 	/**
 	 * Array of owner IDs. These users always bypass all permission checks and have maximum bot access priviliges.
 	 * @const {string[]}
 	 */
-	owners: ["501710994293129216", "757958112992034918"],
+	owners: ["501710994293129216", "757958112992034918", "974480619432206336"],
 	/**
 	 * The ID of the owner to display on every command (eg `Contact User#1234 for help!`, User#1234 would be the owner's tag).
 	 * Default: owners[0]
@@ -43,7 +43,7 @@ const Constants = {
 	 * The ID of the bot's support server
 	 * @const {string}
 	 */
-	supportServer: "706845688969035897",
+	supportServer: "975566112827785236",
 	/**
 	 * A static invite URL for the bot.
 	 * Users can use this to add the bot to their guild (supplied by Discord).
@@ -143,88 +143,88 @@ const Constants = {
 		 * The ID of the channel in which dragon disowns are logged.
 		 * @const {string}
 		 */
-		dsl: "947062299959627787",
+		dsl: "977281828094378054",
 		/**
 		 * The ID of the channel in which guild prefix changes are logged.
 		 * @const {string}
 		 */
-		pfx: "906187191858901002",
+		pfx: "977281921212104804",
 		/**
 		 * The ID of the channel in which the usage of administrator-level commands are logged.
 		 * **Pretty important**.
 		 * @const {string}
 		 */
-		adminlog: "831855178327523339",
+		adminlog: "977282017920188506",
 		/**
 		 * The ID of the channel in which channel overwrites are logged (refer to events/channelUpdate.js and events/channelCreate.js)
 		 * @const {string}
 		 */
-		sflp: "904733092764332093",
+		sflp: "977282146035175504",
 		/**
 		 * The ID of the category in which users are allowed to freely spam, and hence will not be muted upon hitting the msg send rate limit.
 		 * @const {string}
 		 */
-		spamCat: "803232332017434674",
+		spamCat: "977282212594589769",
 		/**
-		 * The ID of the channel in which notifications for staff applications are sent to.=
+		 * The ID of the channel in which notifications for staff applications are sent to.
 		 * @const {string}
 		 */
-		appNotifs: "801016923814101023",
+		appNotifs: "977282400075788298",
 		/**
 		 * The ID of the category in which users' application channels will be created.
 		 * @const {string}
 		 */
-		appCat: "801016861650452490",
+		appCat: "977282507781328979",
 		/**
 		 * The ID of the channel in which bugs are logged.
 		 * @const {string}
 		 */
-		bug: "801010499331686410",
+		bug: "977282585052983346",
 		/**
 		 * The ID of the `general` guild channel in the support server.
 		 * @const {string}
 		 */
-		general: "801010489105711104",
+		general: "975566112827785239",
 		/**
 		 * The ID of the channel in which instances of the `ready` event are logged.
 		 * @const {string}
 		 */
-		ready: "801010503778172959",
+		ready: "977280570478460948",
 		/**
 		 * The ID of the channel in which errors are logged.
 		 * @const {string}
 		 */
-		error: "801010505514745856",
+		error: "977280589109526548",
 		/**
 		 * The ID of the channel in which the bot's entrance and exit of guilds is logged.
 		 * @const {string}
 		 */
-		guildLogs: "947063013515616256",
+		guildLogs: "977282728678547486",
 		/**
 		 * The ID of the channel in which member joins/leaves are logged, only in the support server.
 		 * @const {string}
 		 */
-		memberLog: "801010502088130561",
+		memberLog: "977282779123417189",
 		/**
 		 * The ID of the channel in which moderator actions are logged. (Support server only)
 		 * @const {string}
 		 */
-		modlog: "801010508689571851",
+		modlog: "977282951727448085",
 		/**
 		 * The ID of the channel in which users' suggestions are forwarded to.
 		 * @const {string}
 		 */
-		suggestions: "801010481623990272",
+		suggestions: "977282970677309491",
 		/**
 		 * The ID of the channel in which message edits/deleted messages are logged.
 		 * @const {string}
 		 */
-		msgLogs: "801010503001833482",
+		msgLogs: "977283907219226664",
 		/**
 		 * The ID of the channel in which boost messages are sent in.
 		 * @const {string}
 		 */
-		boostAnnCh: "801010488141283339",
+		boostAnnCh: "977283972323233812",
 		/**
 		 * The ID of the channel in which bugs are logged.
 		 * @const {string}
@@ -242,7 +242,7 @@ const Constants = {
 		 * @note GitHub issue #49
 		 * @const {string}
 		 */
-		tt: "947063513568911360",
+		tt: "977284291333611560",
 	},
 	/**
 	 * The role IDs which are registered by the bot.
@@ -253,17 +253,17 @@ const Constants = {
 		 * The ID of the role bound to the Keyboard Warrior role.
 		 * @const {string}
 		 */
-		kw: "801010425704873984",
+		kw: "977289281418723328",
 		/**
 		 * The ID of the role which users receive once they use the `apply` command.
 		 * @const {string}
 		 */
-		applicant: "801017269941567528",
+		applicant: "977289358996562002",
 		/**
 		 * The ID of the role bound to the Judge permission.
 		 * @const {string}
 		 */
-		judge: "801010424157962250",
+		judge: "977289432237477898",
 		/**
 		 * The ID of the role bound to the Businessman permission.
 		 * @deprecated
@@ -275,12 +275,12 @@ const Constants = {
 		 * This role gets mentioned for updates/announcements.
 		 * @const {string}
 		 */
-		updates: "801010437193596949",
+		updates: "977289695740432474",
 		/**
 		 * The ID of the Server Booster role.
 		 * @const {string}
 		 */
-		SERVER_BOOSTER: "760248449525350401",
+		SERVER_BOOSTER: "",
 		/**
 		 * DBM, may be removed soon.
 		 * @deprecated
@@ -291,34 +291,34 @@ const Constants = {
 		 * The ID of the role bound to the Nerd permission.
 		 * @const {string}
 		 */
-		nerd: "801010427818934272",
+		nerd: "977289815504597052",
 		/**
 		 * The ID of the Civilian role.
 		 * @const {string}
 		 */
-		civilian: "801010431535743027",
+		civilian: "977289914838310932",
 		/**
 		 * The ID of the Admin role.
 		 * @const {string}
 		 */
-		admin: "801010409817374751",
+		admin: "977289979220856852",
 		/**
 		 * The IDs of the `moderator` roles, which the exception of `srmod`, which has its own key.
 		 * @property {string} trial - ID of the trial moderator role
 		 * @property {string} normal - ID of the normal moderator role
 		 * @const {object}
 		 */
-		mod: { trial: "801010415110193163", normal: "801010414116012082" },
+		mod: { trial: "977290091175243806", normal: "977290218224893992" },
 		/**
 		 * The ID of the role bound to the Rebel permission.
 		 * @const {string}
 		 */
-		rebel: "801010426405322762",
+		rebel: "977290272050413568",
 		/**
 		 * The ID of the role bound to the Sargent permission.
 		 * @const {string}
 		 */
-		sarg: "801010421640593459",
+		sarg: "977290344259539034",
 		/**
 		 * The ID of the staff role
 		 * @deprecated
@@ -329,17 +329,17 @@ const Constants = {
 		 * The ID of the Citizen role.
 		 * @const {string}
 		 */
-		cit: "801010432538050560",
+		cit: "977290456847249448",
 		/**
 		 * The ID of the role bound to the Colorist permission.
 		 * @const {string}
 		 */
-		col: "801010427151515678",
+		col: "977290539776999474",
 		/**
 		 * the ID of the role bound to the Supreme permission.
 		 * @const {string}
 		 */
-		supreme: "801010422634643476",
+		supreme: "977290587210395718",
 		/**
 		 * Not sure about this one, I'll fill out the comment for this later.
 		 * @const {string}
@@ -350,28 +350,31 @@ const Constants = {
 		 * The ID of the role that all new members of the support server will receive upon joining.
 		 * @const {string}
 		 */
-		memberRole: "801010428582297640",
+		memberRole: "977290722086617149",
 		/**
 		 * The ID of the muted role
 		 * @see `mute`, `unmute`, `events/guildMemberAdd`
 		 */
-		muted: "801010436401004574",
+		muted: "977290786930585670",
 		/**
-		 * The ID of the Civilian role
+		 * **[DEPRECATED]** The ID of the Civilian role
+		 * @deprecated `<Config>.roles.civilian` should be used instead.
 		 * @const {string}
 		 */
-		civ: "801010431535743027",
+		get civ() {
+			return this.civilian;
+		},
 		/**
 		 * The bot developer role ID
 		 * @const {string}
 		 */
-		botDeveloper: "801010406998278165",
+		botDeveloper: "977291387911422022",
 		/**
 		 * The ID of the senior moderator role.
 		 * Controls ability to accept/deny staff applications
 		 * @const {string}
 		 */
-		srmod: "801010413382139924",
+		srmod: "977291484200046612",
 	},
 	/**
 	 * An object consisting of the emojis which are used by the bot.
@@ -419,7 +422,7 @@ const Constants = {
 	 * @const {object}
 	 */
 	webhooks: {
-		debugger: "https://discord.com/api/webhooks/947065129189666876/4uWrecvhGmQzlJNYpEebLZhIAPhfn2Flcy1IteuDbSaKLJfx3MjPyA21yISqYbZUScq8",
+		debugger: "https://discord.com/api/webhooks/977292438743949313/JnH-aycURcr05ETt_LtunFLmX5HEPNFRRy0DZ1QJqUFzzT5Lh1OFu6ido-Cou6uVdsMK",
 	},
 	/**
 	 * Contains punishable offences in regard to `punish` and `unpunish` commands.
