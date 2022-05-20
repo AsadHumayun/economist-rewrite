@@ -12,7 +12,7 @@ class Utils extends Funcs {
 	 * @param {Discord.Client} client The currently instantiated Discord client.
 	 */
 	constructor(client) {
-		if (!client) throw new TypeError("[Class: Utils => Constructor]: client may not be null");
+		if (!client) throw new TypeError("Economist.utils.errors.malformedParameters: client may not be null");
 		super(client);
 		this.client = client;
 	}
