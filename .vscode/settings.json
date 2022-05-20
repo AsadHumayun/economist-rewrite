@@ -2,9 +2,6 @@
   "editor.detectIndentation": false,
 	"editor.insertSpaces": false,
 	"editor.tabSize": 2,
-	"discord.detailsEditing": "Editing {file_name}, {total_lines} lines",
-	"discord.detailsIdling": "Being lazy (no surprise there)",
-	"discord.lowerDetailsNoWorkspaceFound": "{total_lines} lines ({file_size})",
 	"javascript.updateImportsOnFileMove.enabled": "prompt",
 	"editor.codeActionsOnSave": {
 		"source.fixAll": true,
