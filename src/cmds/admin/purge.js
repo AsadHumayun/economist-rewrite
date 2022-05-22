@@ -43,7 +43,7 @@ export default {
 				embeds: [
 					new MessageEmbed()
 						.setColor(message.author.color)
-						.setDescription(`Received ${data.count} accounts, edited ${updated} accounts`),
+						.setDescription(`Updated ${data.count} accounts`),
 				],
 			});
 		});
