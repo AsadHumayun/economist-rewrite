@@ -13,7 +13,7 @@ export default {
 		if (!args.length) return message.reply("You must specify a query in order for this command to work!");
 		let res = await fetch(`https://api.github.com/users/${encodeURIComponent(args[0])}`);
 		if (res) res = await res.json();
-		if (!res || (res.message === "Not Found")) return message.reply({ content: `Your search term, "${args[0]}", has yielded no results`, allowedMentions: { parse: [] } });
+		if (!res || (res?.message === "Not Found")) return message.reply({ content: `Your search term, "${args[0]}", has yielded no results`, allowedMentions: { parse: [] } });
 		if (message.content.toLowerCase().endsWith("-r")) {
 			return message.reply("```js\n" + inspect(res, { depth: 0 }) + "\n```");
 		}
