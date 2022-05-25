@@ -753,6 +753,7 @@ const Constants = {
 			admin: this.channels.adminlog,
 			tt: this.channels.tt,
 			cmd: null,
+			debugger: null, // Sent to channel via WebhookClient
 		};
 	},
 };

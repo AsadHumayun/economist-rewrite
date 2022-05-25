@@ -4,6 +4,7 @@ export default {
 	name: "debug",
 	once: false,
 	async execute(client, dbg) {
+		process.logger.updateLogsFile("debugger", null, false, dbg, null);
 		/**
 		 * Oirginally when I first tried using the client.Notify function here, it errored out saying: `TypeError: Cannot read properties of undefined (reading 'send')`. This error means that the client couldn't find the channel, which was awkward since it was getting the correct channel ID (hence the commented out console.log statement-that's me checking if the func is actually getting the right channel ID).
 		 * As it wasn't an issue with the ID, it had to be an issue wit the Client not getting the channel from Discord. I had a read of the [discord.js documentation](https://discord.js.org/#/docs/main/stable/general/welcome) and realised that this event must...
