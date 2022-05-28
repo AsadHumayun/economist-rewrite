@@ -745,7 +745,7 @@ const Constants = {
 	 * This object contains logTypes (see Logger.js) which their corresponding channel IDs.
 	 * Some have been set to `null` as they are either not designed to be sent to a text channel within this
 	 * sector of code, are handled elsewhere, or should not be logged in a Discord channel.
-	 * @type {record<K<string>, V<string>>}
+	 * @type {record<K, V>}
 	 */
 	get logTypes() {
 		return {
