@@ -13,6 +13,7 @@ export default {
 		catch (e) {
 			client.emit("debug", `[Client => Cache] [GuildMember] [CacheFailure (on 'ready')]: Failed to cache members of guild ${client.const.supportServer}.\nError: ${e}`);
 		}
+		await client.users.fetch(client.const.display);
 		client.user.color = client.const.clr;
 		client.user.data = await client.db.getUserData(client.user.id);
 	},

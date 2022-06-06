@@ -4,7 +4,7 @@ import { Util } from "discord.js";
 export default {
 	name: "data",
 	aliases: ["getdata", "data", "gd", "userdata"],
-	usage: "<id: Snowflake(User | Channel | Guild)>",
+	usage: "<id: Snowflake(User | Channel | Guild) | @Mention(Channel | User)>",
 	description: "View stored data in context of a Snowflake ID. This command provides support for channel, user, and guild snowflakes.",
 	logAsAdminCommand: true,
 	cst: "gdt",
@@ -34,6 +34,7 @@ export default {
 		/**
 		 * This functions dissects the JSON data fetched from the database, and compiles it into a key=value format, and sends it off to the current channel.
 		 * @param {JSON} data
+		 * @returns {Promise<Discord.Message>}
 		 */
 		async function dissect(data) {
 			if (!data) return message.reply({ content: `No results matching query "${query}"`, allowedMentions: { parse: [] }});
@@ -45,13 +46,16 @@ export default {
 		const type = await determineSnowflakeType(query);
 		switch (type) {
 		case "user":
-			await client.db.USERS.findOne({ where: { id: query } }).then((data) => dissect(data));
+			await client.db.USERS.findByPk(query)
+				.then(dissect);
 			break;
 		case "channel":
-			await client.db.CHNL.findOne({ where: { id: query } }).then((data) => dissect(data));
+			await client.db.CHNL.findByPk(query)
+				.then(dissect);
 			break;
 		case "guild":
-			await client.db.GUILDS.findOne({ where: { id: query } }).then((data) => dissect(data));
+			await client.db.GUILDS.findByPk(query)
+				.then(dissect);
 			break;
 		default:
 			message.reply({ content: `Invalid ID "${query}"`, allowedMentions: { parse: [] } });

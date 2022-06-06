@@ -1,5 +1,11 @@
 {
-  "editor.detectIndentation": false,
+	"editor.detectIndentation": false,
+	"editor.comments.insertSpace": true,
+	"editor.fontFamily": "Consolas, 'Courier New', monospace",
+	"editor.bracketPairColorization.enabled": true,
+	"editor.copyWithSyntaxHighlighting": false,
+	"editor.inlayHints.enabled": "on",
+	"editor.inlayHints.fontFamily": "'Courier New', Consolas, monospace",
 	"editor.insertSpaces": false,
 	"editor.tabSize": 2,
 	"javascript.updateImportsOnFileMove.enabled": "prompt",
