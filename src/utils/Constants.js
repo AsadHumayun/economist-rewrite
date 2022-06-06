@@ -31,7 +31,7 @@ const Constants = {
 	/**
 	 * A list of command categories
 	 * @const {string[]}
-	 * @see help
+	 * @see /src/cmds/utilities/help.js
 	 */
 	commandCategories: readdirSync(`${process.cwd()}/src/cmds`),
 	/**
