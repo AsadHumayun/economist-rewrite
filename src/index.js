@@ -6,19 +6,10 @@
 
 import { Collection, Client, Options, Intents } from "discord.js";
 import { config } from "dotenv";
-import Sequelize, { DataTypes } from "sequelize";
-
 import { EventHandler } from "./events/EventHandler.js";
 import { Logger } from "./utils/Logger.js";
 import { Utils, Constants } from "./utils/utils.js";
-
-import User from "./models/User.js";
-import Guild from "./models/Guild.js";
-import Channel from "./models/Channel.js";
-import Bug from "./models/Bug.js";
-
-// loads .env content into `process.env`
-config();
+import { dbInit } from "./utils/dbInit.js";
 
 /**
  * The currently instantiated Discord Client.
@@ -35,8 +26,8 @@ const client = new Client({
 		GuildInviteManager: 0,
 		GuildBanManager: 0,
 	}),
-	allowedMentions: { parse: ["users", "roles"], repliedUser: false },
-	intents: new Intents().add([
+	allowedMentions: { parse: [], repliedUser: false },
+	intents: new Intents([
 		Intents.FLAGS.GUILDS,
 		Intents.FLAGS.GUILD_MESSAGES,
 		Intents.FLAGS.GUILD_MEMBERS,
@@ -49,31 +40,15 @@ const client = new Client({
 client.utils = new Utils(client);
 process.logger = new Logger(client);
 
-process.logger.info("INIT", "Creating Sequelize instance...");
-
-const sequelize = new Sequelize("database", "user", "password", {
-	host: "localhost",
-	dialect: "sqlite",
-	storage: "./database.sqlite",
-	logQueryParameters: true,
-	logging: (log, { type }) => type === "SELECT" ? null : process.logger.updateLogsFile("sql", null, false, `[${Math.trunc(Date.now() / 60000)} (${client.uptime})] ${log}\n`, null),
-});
-
-client._seq = sequelize;
+const {
+	sequelize,
+	Users,
+	Channels,
+	Guilds,
+	Bugs,
+} = dbInit();
 
 process.logger.info("INIT", "Defining models...");
-
-const Users = User(sequelize, DataTypes);
-const Guilds = Guild(sequelize, DataTypes);
-const Channels = Channel(sequelize, DataTypes);
-const Bugs = Bug(sequelize, DataTypes);
-
-if (process.argv.includes("--syncdb") || process.argv.includes("-s")) {
-	process.logger.warn("ARGV:S", "Attempting to sync database...");
-	const now = Date.now();
-	sequelize.sync({ force: true });
-	process.logger.success("ARGV:S", `Successfully synced database in ${Date.now() - now} ms`);
-}
 
 client.db = {
 	USERS: Users,
@@ -84,7 +59,7 @@ client.db = {
 	 * Returns the data for a user.
 	 * Creates an account for the user in the database if none found.
 	 * @param {string} uid Discord User ID to fetch data for.
-	 * @returns {Promise<UserData<record<K, V>>>} UserData as Object
+	 * @returns {Promise<UserData<record<K<string>, V<any>>>>} UserData as Object
 	 */
 	async getUserData(uid) {
 		const user = await Users.findByPk(uid);
@@ -117,6 +92,7 @@ eventHandler.load();
 
 process.on("unhandledRejection", e => process.logger.error("unhandledRej", e.stack));
 
+config();
 client.login(process.env.token);
 
 // necessary to export so utils can be accessed in files where client is not available
