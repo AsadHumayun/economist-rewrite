@@ -1,6 +1,6 @@
 "use strict";
 
-import { readdirSync } from "fs";
+import { readdirSync } from "node:fs";
 
 import petaliases from "./petaliases.js";
 

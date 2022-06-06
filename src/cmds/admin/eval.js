@@ -1,6 +1,6 @@
 "use strict";
 import Discord from "discord.js";
-import { inspect } from "util";
+import { inspect } from "node:util";
 
 export default {
 	name: "eval",

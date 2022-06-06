@@ -1,6 +1,6 @@
 "use strict";
 import { Util } from "discord.js";
-import { inspect } from "util";
+import { inspect } from "node:util";
 import delay from "delay";
 
 export default {

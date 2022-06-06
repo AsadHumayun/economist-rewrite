@@ -1,5 +1,4 @@
 "use strict";
-
 import { client } from "../index.js";
 
 export function allNumbers(data) {

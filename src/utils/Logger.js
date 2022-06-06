@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { existsSync, createWriteStream, writeFile } from "fs";
+import { existsSync, createWriteStream, writeFile } from "node:fs";
 import { Util } from "discord.js";
 import delay from "delay";
 

@@ -1,4 +1,4 @@
-import { readdirSync } from "fs";
+import { readdirSync } from "node:fs";
 
 /**
  * EventHandler class, will be used for collecting and registering different events from their separate files.

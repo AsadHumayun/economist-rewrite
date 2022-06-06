@@ -1,6 +1,6 @@
 "use strict";
 import { MessageEmbed } from "discord.js";
-import { inspect } from "util";
+import { inspect } from "node:util";
 import fetch from "node-fetch";
 import moment from "moment";
 

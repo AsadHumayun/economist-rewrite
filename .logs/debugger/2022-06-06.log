@@ -50,3 +50,1532 @@
 [WS => Shard 0] Heartbeat acknowledged, latency of 126ms.
 [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
 [WS => Shard 0] Heartbeat acknowledged, latency of 218ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 124ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 268ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 251ms.
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Manager] Spawning shards: 0
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 998
+[WS => Shard 0] [CONNECTED] Took 543ms
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] [READY] Session af64c085f103d53667d6f8e1dc457bcb.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 147ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Manager] Spawning shards: 0
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 997
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Shard 0] [CONNECTED] Took 440ms
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] [READY] Session 41c4de0e65f1928924f0a5af8a60efca.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 180ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 996
+[WS => Manager] Spawning shards: 0
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECTED] Took 390ms
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] [READY] Session f3b63bec45b221305b28c80fbbb93d2c.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 149ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 180ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 213ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 181ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 273ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 168ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 173ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 278ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 186ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 265ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 149ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 162ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 152ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 199ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 185ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 174ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 192ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 169ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 146ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 169ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 151ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 171ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 181ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 183ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 173ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 181ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Clearing the heartbeat interval.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] WS State: CLOSED
+[WS => Shard 0] [WebSocket] Destroy: Attempting to close the WebSocket. | WS State: CLOSED
+[WS => Shard 0] [WebSocket] Adding a WebSocket close timeout to ensure a correct WS reconnect.
+        Timeout: 5000ms
+[WS => Shard 0] [CLOSE]
+    Event Code: 1006
+    Clean     : false
+    Reason    : 
+[WS => Manager] Shard Queue Size: 1; continuing in 5 seconds...
+[WS => Shard 0] Failed to connect to the gateway, requeueing...
+[WS => Shard 0] [WebSocket] did not close properly, assuming a zombie connection.
+Emitting close and reconnecting again.
+[WS => Shard 0] [WebSocket] Close Emitted: false
+[WS => Shard 0] [WebSocket] Clearing the close timeout.
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CLOSE]
+    Event Code: 1011
+    Clean     : false
+    Reason    : INTERNAL_ERROR
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] [CONNECTED] Took 415ms
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] [READY] Session 571a1683c2d3df4e1f6b2432882bbbd6.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 189ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 166ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 175ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 361ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 184ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 140ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 167ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 185ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 168ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 182ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 166ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 296ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 167ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 180ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 168ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 148ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 149ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 173ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 182ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 196ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 279ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 188ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 162ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 175ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 171ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 181ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 150ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 160ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 240ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 161ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 166ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 173ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 160ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 185ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 161ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 177ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 169ms.
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 994
+[WS => Manager] Spawning shards: 0
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECTED] Took 396ms
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [READY] Session 501bacc75ddd9fc76ac8bce32b59cc30.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 145ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 173ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 180ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 146ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 162ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 155ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 171ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 162ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 993
+[WS => Manager] Spawning shards: 0
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] [CONNECTED] Took 444ms
+[WS => Shard 0] [READY] Session 70136375b549f1c5d3668922add92325.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 144ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 168ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 180ms.
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Manager] Spawning shards: 0
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 992
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECTED] Took 492ms
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] [READY] Session 0293c5b64f5fbd8ea221a8abf825f6b9.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 265ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Manager] Spawning shards: 0
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 991
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECTED] Took 453ms
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] [READY] Session b481b729cf4345a2e31b77c7193c1027.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 141ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 170ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 168ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 154ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 162ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 153ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 169ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 171ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 181ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 176ms.
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Manager] Spawning shards: 0
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 990
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] [CONNECTED] Took 351ms
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] [READY] Session 4c1a3a70b879ff7813e8eedf4515d391.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 153ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 144ms.
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 989
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Manager] Spawning shards: 0
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECTED] Took 337ms
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] [READY] Session 1eea2414065ee1ab2770ef0e9a81f3ff.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 152ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 175ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 163ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 149ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 164ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 988
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Manager] Spawning shards: 0
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECTED] Took 321ms
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] [READY] Session e693e1d9fff0e254b481bb149f5c2099.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 146ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 147ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 174ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 158ms.
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 987
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Manager] Spawning shards: 0
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECTED] Took 400ms
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] [READY] Session a75a41912fabe85d2f978897dc898461.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 133ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 147ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 277ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 164ms.
+[WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[WS => Shard 0] Heartbeat acknowledged, latency of 154ms.
+[WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 986
+[WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 9
+    Encoding   : etf
+    Compression: zlib-stream
+[WS => Manager] Spawning shards: 0
+[WS => Shard 0] Setting a HELLO timeout for 20s.
+[WS => Shard 0] [CONNECTED] Took 405ms
+[WS => Shard 0] [IDENTIFY] Shard 0/1 with intents: 4611
+[WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[WS => Shard 0] Clearing the HELLO timeout.
+[WS => Shard 0] [READY] Session f378f07242828dffe6a2e7dbe63f7bf0.
+[WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[WS => Shard 0] Heartbeat acknowledged, latency of 150ms.
+[Client => Cache] [GuildMember] 2/2 members of 975566112827785236 cached

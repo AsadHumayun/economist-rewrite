@@ -1,7 +1,6 @@
 import { MessageEmbed } from "discord.js";
-import { readdirSync } from "fs";
+import { readdirSync } from "node:fs";
 import { inspect } from "util";
-
 import aliases from "./petaliases.js";
 
 /**
@@ -217,9 +216,10 @@ class Funcs {
 	}
 	/**
 	 * Converts a normal array to a 2d array of optional number of subvalues.
-	 * @param {Any[]} list Original 1d array
-	 * @param {Number} elementsPerSubArray Number of elements per subArray
-	 * @returns {Any[]} matrix matrix (the new array)
+	 * @param {any[]} list Original 1d array
+	 * @param {number} elementsPerSubArray Number of elements per subArray
+	 * @returns {any[]} matrix matrix (the new array)
+	 * @source {@link https://stackoverflow.com/questions/4492385/convert-simple-array-into-two-dimensional-array-matrix}
 	 */
 	listToMatrix(list, elementsPerSubArray) {
 		const matrix = [];
@@ -235,10 +235,11 @@ class Funcs {
 	}
 	/**
 	 * Used for moving elements around in arrays.
-	 * @param {Any[]} arr Original list
+	 * @param {any[]} arr Original list
 	 * @param {number} old_index index of old item
 	 * @param {number} new_index new index of item
-	 * @returns {Any[]}
+	 * @returns {any[]}
+	 * @source {@link https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another}
 	 */
 	arrayMove(arr, old_index, new_index) {
 		if (new_index >= arr.length) {
