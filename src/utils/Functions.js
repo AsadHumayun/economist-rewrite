@@ -279,8 +279,7 @@ class Funcs {
 	 * @param {?boolean} includeDecimals Whether or not to include decimals into the date returned
 	 * @returns {Date} Date at which the cooldown will end --- in MS
 	 */
-	parseCd(now,
-	 cd, includeDecimals = false) {
+	parseCd(now, cd, includeDecimals = false) {
 		now = Number(now);
 		cd = Number(cd);
 		if (includeDecimals == true) {
