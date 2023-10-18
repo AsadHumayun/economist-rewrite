@@ -45,6 +45,7 @@ const Constants = {
 	 */
 	supportServer: "975566112827785236",
 	/**
+	 * 
 	 * A static invite URL for the bot.
 	 * Users can use this to add the bot to their guild (supplied by Discord).
 	 * @const {string}

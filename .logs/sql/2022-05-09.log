@@ -1,7 +1,0 @@
-[27534778 (190607)] Executing (default): UPDATE `users` SET `clr`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":"BLACK;RED;GREEN;2","$2":"2022-05-09 08:58:31.436 +00:00","$3":"501710994293129216"}
-[27534778 (190633)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":707,"$2":"2022-05-09 08:58:31.472 +00:00","$3":"671708767813107724"}
-[27534778 (190922)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":369,"$2":"2022-05-09 08:58:31.762 +00:00","$3":"501710994293129216"}
-[27534778 (197859)] Executing (default): UPDATE `users` SET `clr`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":"BLACK;RED;GREEN;0","$2":"2022-05-09 08:58:38.698 +00:00","$3":"501710994293129216"}
-[27534778 (197883)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":708,"$2":"2022-05-09 08:58:38.723 +00:00","$3":"671708767813107724"}
-[27534778 (197906)] Executing (default): UPDATE `users` SET `cst`=$1,`stnb`=$2,`updatedAt`=$3 WHERE `id` = $4; {"$1":"pstn","$2":"dead","$3":"2022-05-09 08:58:38.747 +00:00","$4":"501710994293129216"}
-[27534778 (203944)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":370,"$2":"2022-05-09 08:58:44.783 +00:00","$3":"501710994293129216"}
