@@ -77,7 +77,6 @@ export default {
 				});
 			})
 			.catch(() => {
-				// console.debug(e)
 				msg.edit({
 					embeds: [
 						new MessageEmbed(msg.embeds[0])

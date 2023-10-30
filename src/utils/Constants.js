@@ -11,11 +11,6 @@ import petaliases from "./petaliases.js";
  */
 const Constants = {
 	/**
-	 * The current status of my will to live.
-	 * @type {WillResolvable}
-	 */
-	willToLive: "lost-it-a-long-time-ago",
-	/**
 	 * Array of owner IDs. These users always bypass all permission checks and have maximum bot access priviliges.
 	 * @const {string[]}
 	 */
