@@ -1,6 +1,0 @@
-[27499459 (5308)] Executing (default): UPDATE `users` SET `clr`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":"#00aaaa;0","$2":"2022-04-14 20:19:07.723 +00:00","$3":"501710994293129216"}
-[27499459 (5327)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":387,"$2":"2022-04-14 20:19:07.749 +00:00","$3":"671708767813107724"}
-[27499459 (5339)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":255,"$2":"2022-04-14 20:19:07.761 +00:00","$3":"501710994293129216"}
-[27499459 (12435)] Executing (default): UPDATE `users` SET `clr`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":"#00aaaa;0","$2":"2022-04-14 20:19:14.858 +00:00","$3":"501710994293129216"}
-[27499459 (12447)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":388,"$2":"2022-04-14 20:19:14.870 +00:00","$3":"671708767813107724"}
-[27499459 (12463)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":256,"$2":"2022-04-14 20:19:14.885 +00:00","$3":"501710994293129216"}

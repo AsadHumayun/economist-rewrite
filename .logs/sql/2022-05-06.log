@@ -1,3 +1,0 @@
-[27531088 (23364)] Executing (default): UPDATE `users` SET `clr`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":"BLACK;RED;GREEN;1","$2":"2022-05-06 19:28:26.425 +00:00","$3":"501710994293129216"}
-[27531088 (23376)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":706,"$2":"2022-05-06 19:28:26.442 +00:00","$3":"671708767813107724"}
-[27531088 (23389)] Executing (default): UPDATE `users` SET `cmds`=$1,`updatedAt`=$2 WHERE `id` = $3; {"$1":368,"$2":"2022-05-06 19:28:26.455 +00:00","$3":"501710994293129216"}
