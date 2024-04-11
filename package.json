@@ -33,7 +33,7 @@
     "node-os-utils": "^1.2.2",
     "sequelize": "^6.19.2",
     "sqlite3": "^5.0.2",
-    "tar": "6.1.11",
+    "tar": "6.2.1",
     "utf-8-validate": "^5.0.9",
     "zlib-sync": "^0.1.7"
   },
